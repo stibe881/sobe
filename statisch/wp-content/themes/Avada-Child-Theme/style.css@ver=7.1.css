@@ -7,3 +7,7 @@ Template: Avada
 Version: 1.0.0
 Text Domain:  Avada
 */
+/* Barrierefreiheit: */
+/* Der Datenschutz-Link im Cookie-Balken war nur an der Farbe
+   erkennbar (WCAG 1.4.1). */
+.fusion-privacy-bar-main a { text-decoration: underline; }
