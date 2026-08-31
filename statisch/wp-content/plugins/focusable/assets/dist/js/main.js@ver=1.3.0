@@ -1,0 +1,135 @@
+function createFocusable() {
+  if (!ally.hasOwnProperty("style") || !ally.hasOwnProperty("query")) {
+    return;
+  }
+
+  const focusSource = ally.style.focusSource();
+  const focusableElements = ally.query.focusable();
+  let activeElement = ally.event.activeElement();
+  let activeElementBoundingRect = {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  };
+  const focusRingElement = document.createElement("span");
+  const settings = focusableData.settings;
+  let ringColor = window
+    .getComputedStyle(document.body, null)
+    .getPropertyValue("color");
+
+  mountElement(focusRingElement);
+  addClasses(focusRingElement, focusableElements);
+  addAttributes(focusRingElement, settings);
+  addEvents();
+
+  function mountElement(focusRingElement) {
+    let mountToElement = document.body;
+    const footer = document.querySelector("footer");
+    if (footer) {
+      mountToElement = footer;
+    }
+    mountToElement.insertAdjacentElement("beforeend", focusRingElement);
+  }
+
+  function addClasses(focusRingElement, focusableElements) {
+    focusRingElement.classList.add("focusable__ring");
+    for (const element of focusableElements) {
+      element.classList.add("focusable");
+    }
+  }
+
+  function addAttributes(focusRingElement, settings) {
+    focusRingElement.setAttribute(
+      "data-focusable-transition",
+      settings.transition
+    );
+  }
+
+  function addEvents() {
+    document.addEventListener(
+      "active-element",
+      (event) => {
+        if (focusSource.used("key") === false) {
+          return;
+        }
+        activeElement = event.detail.focus;
+        updateRingStyle();
+      },
+      false
+    );
+    document.addEventListener("scroll", () => {
+      if (focusSource.used("key") === false) {
+        return;
+      }
+      updateRingPosition();
+    });
+  }
+
+  function updateRingStyle() {
+    if (!isElement(activeElement)) {
+      return;
+    }
+    activeElementBoundingRect = activeElement.getBoundingClientRect();
+    updateRingColor(activeElement, "color");
+    const style = {
+      transform: `translate(${activeElementBoundingRect.left}px, ${activeElementBoundingRect.top}px)`,
+      width: activeElementBoundingRect.width + "px",
+      height: activeElementBoundingRect.height + "px",
+      outlineColor: ringColor,
+    };
+    applyStyle(style);
+  }
+
+  function updateRingColor(element, property) {
+    if (!isElement(element)) {
+      return;
+    }
+    if (!isElement(element.parentElement)) {
+      return;
+    }
+    let color = window
+      .getComputedStyle(element.parentElement, null)
+      .getPropertyValue(property);
+    if (color === "rgba(0, 0, 0, 0)" && element !== document.body) {
+      updateRingColor(element.parentElement, "color");
+    } else {
+      ringColor = color;
+    }
+    return;
+  }
+
+  function updateRingPosition() {
+    if (!isElement(activeElement)) {
+      return;
+    }
+    activeElementBoundingRect = activeElement.getBoundingClientRect();
+    const style = {
+      transform: `translate(${activeElementBoundingRect.left}px, ${activeElementBoundingRect.top}px)`,
+    };
+    applyStyle(style);
+  }
+
+  function applyStyle(style) {
+    for (const property in style) {
+      if (Object.hasOwnProperty.call(style, property)) {
+        const value = style[property];
+        focusRingElement.style[property] = value;
+      }
+    }
+  }
+
+  function isElement(element) {
+    return element instanceof Element || element instanceof HTMLDocument;
+  }
+}
+
+if (typeof jQuery === "function") {
+  jQuery(document).ready(function () {
+    createFocusable();
+  });
+} else {
+  document.addEventListener("DOMContentLoaded", function () {
+    createFocusable();
+  });
+}
