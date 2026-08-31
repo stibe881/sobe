@@ -4,3 +4,5 @@ werkzeuge/spiegeln.sh. 164 Seiten laut Sitemap, 1164 Dateien.
 
 Bekannte Lücken der Live-Seite (fehlten auch dort, HTTP 404):
 - wp-content/uploads/2025/09/250929-Tenero-Weekend_3-225x300.jpg
+
+Browservorschau über GitHub Pages: https://stibe881.github.io/sobe/
