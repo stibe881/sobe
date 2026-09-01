@@ -56,17 +56,19 @@ Diese Punkte kamen bisher vom WordPress-Server und brauchen einen
 Entscheid, bevor das WordPress abgestellt wird:
 
 1. **Shop-Bestellungen** (`/warenkorb/`, `/kasse/`, `/mein-konto/`):
-   Die Produktseiten sind da, aber Warenkorb und Kasse waren
-   WooCommerce. Möglichkeiten: Bestellung per Mail-Link auf den
-   Produktseiten, oder ein leichtgewichtiger Dienst (z. B. Snipcart).
+   Warenkorb und Kasse waren WooCommerce und sind stillgelegt. Jede
+   Produktseite hat stattdessen einen Knopf «Per E-Mail bestellen»
+   (vorausgefüllte Mail an info@, `werkzeuge/bestellknopf.py`). Wer
+   später einen echten Warenkorb will: leichtgewichtiger Dienst wie
+   Snipcart, und den Stilllegungs-Block im Child-Theme-CSS entfernen.
 2. **Kontakt-/Newsletter-Formulare**: Das Formular-Markup ist
    vorhanden, aber der Versand lief über WordPress. Braucht einen
    Formular-Dienst (z. B. Formspree) oder einen kleinen Mail-Endpunkt.
-3. **Die Suche** (Lupe im Menü): fragte WordPress ab. Sie ist – wie
-   der Warenkorb – zurzeit per CSS stillgelegt (Block «stillgelegte
-   Bedienelemente» im Child-Theme-CSS), damit keine toten
-   Bedienelemente auf der Seite stehen. Clientseitig nachrüstbar
-   (z. B. Pagefind).
+3. **Die Suche** funktioniert wieder – clientseitig mit Pagefind:
+   Die Lupe im Menü führt auf `/suche/`, gesucht wird direkt im
+   Browser über den eingecheckten Index (`statisch/pagefind/`).
+   Nach inhaltlichen Änderungen den Index neu bauen:
+   `cd werkzeuge && npx pagefind --site ../statisch`.
 4. **Neue Inhalte einpflegen** (News, Stellen, Team): Es gibt kein
    Redaktionssystem mehr. Kleine Textänderungen gehen direkt im HTML;
    für regelmässige News-Pflege wäre der nächste Schritt, die Inhalte

@@ -81,6 +81,23 @@ auf einem frischen Abzug wiederholbar.
   Inhalt. Die beschlossenen Texte können danach per Skript auf allen
   betroffenen Seiten eingetragen werden.
 
+## Nachträge vom 01.09.2026, zweite Runde
+
+- **Suche wieder in Betrieb**: clientseitig mit Pagefind (`/suche/`,
+  Lupe im Menü führt dorthin). Indexiert wird nur der Inhaltsbereich
+  (`data-pagefind-body`), ohne Duplikate und Autoren-Archive; die
+  Suchoberfläche ist deutsch beschriftet und tastaturbedienbar.
+- **Bestellung per E-Mail**: Jede Produktseite trägt einen gelben
+  Knopf «Per E-Mail bestellen» (vorausgefüllte Mail an info@) –
+  ersetzt den stillgelegten WooCommerce-Warenkorb
+  (`werkzeuge/bestellknopf.py`).
+- **Alt-Text-Vorschläge**: Alle 43 Bilder der Durchsichtsliste sind
+  gesichtet; unter jedem steht ein Vorschlag (Schmuck oder
+  Beschreibung, ohne Namen von Kindern). Nach der Freigabe werden die
+  Texte per Skript eingetragen.
+- Die Zeitungs-Scans bleiben gemäss Entscheid online und als
+  Drittinhalte deklariert.
+
 ## Was noch aussteht
 
 - **Prüfung mit echten Screenreadern** (NVDA/JAWS/VoiceOver) durch

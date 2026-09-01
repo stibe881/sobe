@@ -95,6 +95,9 @@ print(f'{anker} Icon-Links benannt, {iframes} Karten-iframes betitelt.')
 for vorlage_name, ziel_pfad in [
     ('barrierefreiheit-seite.html', 'barrierefreiheit/index.html'),
     ('404-seite.html', '404.html'),
+    # Nach dem Einsetzen der Suchseite den Index frisch bauen:
+    #   npx pagefind --site <statisch-verzeichnis>
+    ('suche-seite.html', 'suche/index.html'),
 ]:
     vorlage = Path(__file__).with_name(vorlage_name)
     seite = WURZEL / ziel_pfad
@@ -158,6 +161,87 @@ if MARKER2 not in inhalt:
     print('CSS: Suche und Warenkorb stillgelegt.')
 else:
     print('Stilllegungs-CSS war schon da.')
+
+# --- Suche: Der Suchindex (Pagefind) soll nur den Inhalt erfassen,
+# nicht Menüs und Fusszeile – sonst findet jede Suche jede Seite.
+# Markiert wird nur die Ordnerfassung jeder Seite (index.html), damit
+# die flachen Zwillinge und die ?p=-Duplikate nicht doppelt im Index
+# landen; Autoren-Archive bleiben draussen.
+markiert = 0
+for datei in sorted(WURZEL.rglob('index.html')):
+    if 'author' in datei.parts or 'suche' in datei.parts:
+        continue
+    src = datei.read_text(encoding='utf-8', errors='replace')
+    if 'data-pagefind-body' in src:
+        continue
+    neu = src.replace('<section id="content"',
+                      '<section data-pagefind-body id="content"', 1)
+    if neu != src:
+        datei.write_text(neu, encoding='utf-8')
+        markiert += 1
+print(f'{markiert} Seiten für den Suchindex markiert.')
+
+# Das Lupen-Symbol im Menü öffnete das WordPress-Suchfeld (tot im
+# statischen Abzug, deshalb per CSS ausgeblendet). Es wird zum
+# schlichten Link auf die Suchseite: Avada-Klassen des Auslösers und
+# die ARIA-Reste des Aufklapp-Verhaltens entfernen, Ziel setzen.
+lupen = 0
+for datei in sorted(WURZEL.rglob('*.html')):
+    if datei.name == '404.html':
+        continue
+    src = datei.read_text(encoding='utf-8', errors='replace')
+    if 'awb-menu__overlay-search-trigger' not in src:
+        continue
+    tiefe = len(datei.relative_to(WURZEL).parts) - 1
+    praefix = '../' * tiefe if tiefe else './'
+
+    def lupe(m: re.Match) -> str:
+        global lupen
+        tag = m.group(0)
+        # Das Lupen-Glyph hängt per ::before an der Auslöser-Klasse –
+        # die Ersatzklasse suche-link bekommt dieselbe Regel im
+        # Child-Theme-CSS.
+        tag = tag.replace(' awb-menu__overlay-search-trigger', ' suche-link')
+        tag = tag.replace(' trigger-overlay', '')
+        tag = re.sub(r'\s(?:role="button"|aria-expanded="[^"]*"|data-title="[^"]*")', '', tag)
+        tag = re.sub(r'href="[^"]*"', f'href="{praefix}suche/index.html"', tag)
+        lupen += 1
+        return tag
+
+    neu = re.sub(r'<a [^>]*awb-menu__overlay-search-trigger[^>]*>', lupe, src)
+    if neu != src:
+        datei.write_text(neu, encoding='utf-8')
+print(f'{lupen} Lupen-Symbole auf die Suchseite umgelenkt.')
+
+# Reparatur für Anker, die eine frühere Fassung dieses Skripts ohne
+# die Ersatzklasse umgeschrieben hat.
+repariert = 0
+for datei in sorted(WURZEL.rglob('*.html')):
+    src = datei.read_text(encoding='utf-8', errors='replace')
+    if 'suche/index.html' not in src or 'suche-link' in src:
+        continue
+    neu, n = re.subn(
+        r'(<a class="[^"]*fusion-main-menu-icon)([^"]*" href="[^"]*suche/index\.html")',
+        r'\1 suche-link\2', src)
+    if n:
+        datei.write_text(neu, encoding='utf-8')
+        repariert += n
+if repariert:
+    print(f'{repariert} Lupen-Anker um die Klasse suche-link ergänzt.')
+
+MARKER3 = '/* Suche (statische Fassung): */'
+inhalt = css.read_text(encoding='utf-8', errors='replace')
+if MARKER3 not in inhalt:
+    inhalt += (
+        f'\n{MARKER3}\n'
+        '/* Das Lupen-Symbol hing per ::before an der Klasse des alten\n'
+        '   WordPress-Such-Overlays; der neue Link zur Suchseite trägt\n'
+        '   die Klasse suche-link und braucht dieselbe Regel. */\n'
+        '.suche-link:before { content: "\\f002"; font-family: awb-icons;\n'
+        '  color: currentColor !important;\n'
+        '  font-size: calc(var(--awb-icons-size) * 1px); }\n')
+    css.write_text(inhalt, encoding='utf-8')
+    print('CSS: Lupen-Symbol für suche-link ergänzt.')
 
 # --- Zusatzskript (Menü-Semantik, Cookie-Balken) einsetzen und auf
 # jeder Seite einbinden.

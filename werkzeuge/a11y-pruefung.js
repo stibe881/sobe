@@ -24,7 +24,7 @@ const SEITEN = [
   '/produkt/kinderbuch-beno-und-flecki/',
   '/mitarbeiter/stefan-gross/', '/skilager-in-arosa/',
   '/impressum/', '/datenschutzerklaerung/',
-  '/barrierefreiheit/', '/404.html',
+  '/barrierefreiheit/', '/suche/', '/404.html',
 ];
 
 (async () => {

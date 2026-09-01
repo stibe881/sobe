@@ -25,3 +25,19 @@ form.searchform,
 .awb-menu a[href*="warenkorb"],
 form.cart,
 .single_add_to_cart_button { display: none !important; }
+
+/* Suche (statische Fassung): */
+/* Das Lupen-Symbol hing per ::before an der Klasse des alten
+   WordPress-Such-Overlays; der neue Link zur Suchseite trägt
+   die Klasse suche-link und braucht dieselbe Regel. */
+.suche-link:before { content: "\f002"; font-family: awb-icons;
+  color: currentColor !important;
+  font-size: calc(var(--awb-icons-size) * 1px); }
+
+/* Bestellknopf (statische Fassung): */
+.bestellung-per-mail .button {
+  display: inline-block; padding: 13px 29px; border-radius: 2px;
+  background: #f0b91d; color: #17383e !important;
+  font-weight: 700; text-decoration: none; }
+.bestellung-per-mail .button:hover,
+.bestellung-per-mail .button:focus { background: #ffd04a; }
