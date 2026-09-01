@@ -46,6 +46,15 @@ for datei in sorted(WURZEL.rglob('*.html')):
     src = re.sub(r'(<a\s[^>]*icon-only[^>]*>)((?:(?!</a>)[\s\S]){0,600})',
                  benennen, src)
 
+    # Der Skip-Link («Zum Inhalt springen») zeigte nach der Spiegelung
+    # auf Dateien – teils sogar auf andere Seiten –, weil wget den
+    # ursprünglichen Selbstverweis (/?p=NNN#content) in einen Dateilink
+    # umgeschrieben hat. Er muss schlicht zum Anker der aktuellen
+    # Seite springen (WCAG 2.4.1).
+    src, n = re.subn(r'(class="skip-link[^"]*"\s+href=")[^"#]*#content"',
+                     r'\1#content"', src)
+    anker += n
+
     def kachel(m: re.Match) -> str:
         """Produktkacheln im Shop: Der Link liegt als Überlagerung auf
         dem Bild und hat keinen Text – der Produktname steht erst in
@@ -78,6 +87,37 @@ for datei in sorted(WURZEL.rglob('*.html')):
         datei.write_text(src, encoding='utf-8')
 
 print(f'{anker} Icon-Links benannt, {iframes} Karten-iframes betitelt.')
+
+# --- Erklärung zur Barrierefreiheit: Seite einsetzen und in der
+# Fusszeile neben Impressum/Datenschutz verlinken. Die Seite existiert
+# im WordPress nicht; sie liegt als Vorlage neben diesem Skript, damit
+# sie einen frischen Abzug überlebt.
+vorlage = Path(__file__).with_name('barrierefreiheit-seite.html')
+seite = WURZEL / 'barrierefreiheit' / 'index.html'
+if vorlage.is_file() and not seite.is_file():
+    seite.parent.mkdir(exist_ok=True)
+    seite.write_text(vorlage.read_text(encoding='utf-8'), encoding='utf-8')
+    print('Erklärungs-Seite eingesetzt.')
+
+fusszeilen = 0
+FUSS = re.compile(
+    r'(>Impressum</a> \| <a href="([^"]*?)(?:datenschutzerklaerung|datenschutz)'
+    r'(?:\.html|/index\.html|/)?">Datenschutzerklärung</a>)')
+for datei in sorted(WURZEL.rglob('*.html')):
+    src = datei.read_text(encoding='utf-8', errors='replace')
+    if 'barrierefreiheit/index.html">Barrierefreiheit' in src:
+        continue
+
+    def fuss(m: re.Match) -> str:
+        global fusszeilen
+        fusszeilen += 1
+        return (m.group(1) + ' | <a href="' + m.group(2)
+                + 'barrierefreiheit/index.html">Barrierefreiheit</a>')
+
+    neu = FUSS.sub(fuss, src, count=1)
+    if neu != src:
+        datei.write_text(neu, encoding='utf-8')
+print(f'{fusszeilen} Fusszeilen um den Barrierefreiheit-Link ergänzt.')
 
 css = WURZEL / 'wp-content/themes/Avada-Child-Theme/style.css@ver=7.1.css'
 MARKER = '/* Barrierefreiheit: */'

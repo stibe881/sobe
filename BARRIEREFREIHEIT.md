@@ -1,60 +1,63 @@
-# Barrierefreiheitserklärung – ENTWURF zur Prüfung
+# Barrierefreiheit – Stand und Nachweise
 
-> **Noch nicht veröffentlichen.** Dieser Text ist eine Vorlage nach dem
-> Muster der EU-Websites-Richtlinie bzw. eCH-0059. Die mit ⟨…⟩
-> markierten Stellen muss der SONNENBERG selbst bestätigen oder
-> ergänzen; erst danach gehört die Erklärung als eigene Seite auf die
-> Webseite und in die Fusszeile verlinkt.
+Die **Erklärung zur Barrierefreiheit ist eingebaut**: Sie liegt unter
+`statisch/barrierefreiheit/index.html`, ist auf jeder Seite in der
+Fusszeile neben Impressum und Datenschutzerklärung verlinkt und nennt
+den Feedback-Kontakt. Die Vorlage für frische Abzüge liegt in
+`werkzeuge/barrierefreiheit-seite.html`; `werkzeuge/barrierefrei.py`
+setzt sie ein und verlinkt sie.
 
-## Erklärung zur Barrierefreiheit
+## Was geprüft wurde (31.08./01.09.2026)
 
-Der SONNENBERG ⟨genaue Rechtsträgerin einsetzen: Stiftung/Verein⟩ ist
-bestrebt, seine Webseite www.sonnenberg-baar.ch für alle Menschen
-zugänglich zu machen. Massgebend sind die Web Content Accessibility
-Guidelines (WCAG) 2.1, Konformitätsstufe AA, gemäss der europäischen
-Norm EN 301 549 und dem Schweizer Standard eCH-0059.
+- **Automatisiert (axe-core)** über 16 repräsentative Seiten gegen
+  WCAG 2.1 A/AA **und** die zusätzlichen Kriterien der WCAG 2.2 AA:
+  nach den Korrekturen **0 Verstösse** auf allen Seiten.
+- **Tastatur:** Alle Menüs samt Untermenüs sind per Tab erreichbar,
+  Untermenüs werden bei Fokus sichtbar, der Fokus ist überall
+  sichtbar, der Sprunglink «Zum Inhalt springen» funktioniert (er war
+  durch die Spiegelung auf falsche Ziele geraten und ist korrigiert).
+- **Reflow:** 320 px Fensterbreite ohne horizontales Scrollen auf
+  allen Stichproben.
+- **Medien:** keine Video-/Audio-Einbettungen, also keine offenen
+  Untertitel-/Transkript-Pflichten.
+- **PDF-Bestand (33 Dateien):** alle mit Textebene; 20 getaggt
+  (Grundlage für PDF/UA), 13 ohne Tag-Struktur – überwiegend
+  eingescannte Zeitungsartikel Dritter, dazu einzelne ältere
+  Eigenpublikationen. In der Erklärung deklariert.
 
-### Stand der Vereinbarkeit
+## Behobene Befunde
 
-Diese Webseite ist mit WCAG 2.1 Stufe AA ⟨«vollständig» /
-«teilweise»⟩ vereinbar. Die automatisiert prüfbaren Kriterien wurden
-am 31.08.2026 mit axe-core über 16 repräsentative Seiten geprüft und
-erfüllt (einschliesslich der zusätzlichen Kriterien der WCAG 2.2 AA).
+1. 293 Icon-Links (v. a. Warenkorb) ohne zugänglichen Namen →
+   `aria-label`.
+2. 39 Produkt-/Teaser-Kacheln, deren Klickfläche nur ein Bild
+   enthielt → `aria-label` aus der Folgeüberschrift.
+3. Google-Maps-Karte auf /kontakt/ ohne Titel → `title`.
+4. Datenschutz-Link im Cookie-Balken nur farblich erkennbar →
+   unterstrichen (Child-Theme-CSS).
+5. Sprunglinks aller ~290 Seiten zeigten auf Dateien statt auf
+   `#content` → korrigiert.
 
-### Nicht barrierefreie Inhalte
+Alle Korrekturen sind in `werkzeuge/barrierefrei.py` festgehalten und
+auf einem frischen Abzug wiederholbar.
 
-- **PDF-Dokumente** (Magazine, Jahresberichte, ca. 29 Dateien): Ältere
-  Ausgaben sind möglicherweise nicht als barrierefreie PDFs (PDF/UA)
-  erstellt. ⟨Prüfen; Abhilfe oder hier deklarieren.⟩
-- ⟨Weitere bekannte Einschränkungen aus der manuellen Prüfung
-  eintragen oder Abschnitt streichen.⟩
+## Was noch aussteht
 
-### Erstellung dieser Erklärung
+- **Prüfung mit echten Screenreadern** (NVDA/JAWS/VoiceOver) durch
+  geübte Nutzerinnen und Nutzer – als Kompetenzzentrum Sehen hat der
+  SONNENBERG die Fachpersonen dafür im Haus.
+- **Ältere eigene PDFs nachtaggen** (Magazin-Ausgaben 52/55/56,
+  Jubiläumsbroschüre, Spendenreglement) – braucht das
+  Layoutprogramm (InDesign/Acrobat); bei Neuauflagen direkt
+  barrierefrei exportieren.
+- **Externe Zertifizierung**, wenn maximale Rechtssicherheit gewünscht
+  ist: Die Stiftung «Zugang für alle» prüft nach eCH-0059.
 
-Diese Erklärung wurde am ⟨Datum⟩ erstellt. Grundlage:
-Selbstbewertung mit automatisierter Prüfung (axe-core, WCAG 2.1/2.2 AA)
-am 31.08.2026 sowie ⟨manuelle Prüfung mit Tastatur und Screenreader am
-⟨Datum⟩ / externe Prüfung durch ⟨Stelle⟩⟩.
+## Rechtlicher Rahmen (Kurzfassung)
 
-### Rückmeldungen und Kontakt
-
-Ihnen ist ein Mangel bei der Barrierefreiheit aufgefallen? Wir freuen
-uns auf Ihre Nachricht:
-
-- E-Mail: info@sonnenberg-baar.ch
-- Telefon: 041 767 78 33
-
----
-
-## Warum diese Erklärung wichtig ist (interner Hinweis, nicht Teil der Erklärung)
-
-- **Schweiz:** Das BehiG und der Standard eCH-0059 (verlangt WCAG 2.1
-  AA) binden Bund und Anbieter öffentlicher Aufgaben. Als
-  Kompetenzzentrum mit öffentlichem Leistungsauftrag ist die
-  Orientierung daran fachlich und rechtlich geboten.
-- **EU:** Der European Accessibility Act (Richtlinie 2019/882, in Kraft
-  seit 28.06.2025) erfasst u. a. Webshops, die sich an Konsumentinnen
-  und Konsumenten in der EU richten. Der Shop dieser Webseite fällt
-  darunter, sofern in die EU verkauft wird.
-- Eine veröffentlichte, aktuelle Erklärung mit Feedback-Kanal ist in
-  beiden Rahmenwerken fester Bestandteil der Konformität.
+- **Schweiz:** BehiG und eCH-0059 (WCAG 2.1 AA) für Bund und Träger
+  öffentlicher Aufgaben.
+- **EU:** European Accessibility Act (2019/882, seit 28.06.2025) –
+  erfasst u. a. Webshops mit Angebot an EU-Konsumenten; Norm
+  EN 301 549 (WCAG 2.1 AA).
+- Erklärung zur Barrierefreiheit mit Feedback-Kanal: vorhanden (siehe
+  oben).
