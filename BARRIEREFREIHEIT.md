@@ -40,6 +40,24 @@ setzt sie ein und verlinkt sie.
 Alle Korrekturen sind in `werkzeuge/barrierefrei.py` festgehalten und
 auf einem frischen Abzug wiederholbar.
 
+## Nachträge vom 01.09.2026
+
+- **Prüfung in der Auslieferung:** Der Pages-Workflow führt vor jeder
+  Veröffentlichung `werkzeuge/a11y-pruefung.js` aus (axe-core,
+  WCAG 2.1/2.2 AA über 18 Seiten inkl. Erklärung und 404-Seite).
+  Ein Verstoss stoppt die Veröffentlichung.
+- **Kontrast-Graubereiche ausgemessen:** Alle 59 Stellen, die axe als
+  «nicht automatisch prüfbar» einstuft (Text auf Verläufen/Fotos),
+  wurden pixelgenau gemessen (Text ausblenden, Hintergrund ablichten,
+  jedes Pixel gegen die Textfarbe rechnen): **keine** liegt unter der
+  Grenze von 4.5:1 bzw. 3:1.
+- **PDF-Metadaten:** Alle 33 PDFs tragen jetzt Dokumenttitel und
+  Sprachangabe (`werkzeuge/pdf-metadaten.py`); die Tag-Struktur blieb
+  unangetastet. Das Tagging der 13 ungetaggten Dateien bleibt offen
+  (siehe unten).
+- **Eigene 404-Seite** (`statisch/404.html`): barrierefrei, deutsch,
+  ohne externe Abhängigkeiten, mit Rückweg zur Startseite.
+
 ## Was noch aussteht
 
 - **Prüfung mit echten Screenreadern** (NVDA/JAWS/VoiceOver) durch

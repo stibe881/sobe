@@ -1,9 +1,10 @@
-# Veröffentlicht statisch/ (den statischen Abzug von sonnenberg-baar.ch)
-# über GitHub Pages, damit man die Seite im Browser durchklicken kann,
-# ohne etwas lokal zu starten.
+# Prüft die statische Webseite auf Barrierefreiheit (WCAG 2.1/2.2 AA,
+# axe-core) und veröffentlicht sie erst bei sauberem Ergebnis über
+# GitHub Pages. Ein Rückschritt bei der Zugänglichkeit stoppt die
+# Auslieferung, statt unbemerkt live zu gehen.
 #
 # URL nach dem Lauf: https://stibe881.github.io/sobe/
-name: Webseite veröffentlichen
+name: Webseite prüfen und veröffentlichen
 
 on:
   push:
@@ -20,7 +21,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pruefen:
+    name: Barrierefreiheit prüfen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Prüfwerkzeuge installieren
+        working-directory: werkzeuge
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Webseite lokal ausliefern und prüfen
+        run: |
+          python3 -m http.server 8189 --directory statisch &
+          sleep 2
+          node werkzeuge/a11y-pruefung.js http://127.0.0.1:8189
+
   veroeffentlichen:
+    name: Auf GitHub Pages veröffentlichen
+    needs: pruefen
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -28,11 +50,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-        with:
-          # Versucht, Pages beim ersten Lauf gleich einzuschalten. Wenn
-          # das Token dafür nicht reicht, einmalig von Hand: Settings →
-          # Pages → Source auf «GitHub Actions» stellen.
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: statisch

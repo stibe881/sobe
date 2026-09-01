@@ -92,12 +92,16 @@ print(f'{anker} Icon-Links benannt, {iframes} Karten-iframes betitelt.')
 # Fusszeile neben Impressum/Datenschutz verlinken. Die Seite existiert
 # im WordPress nicht; sie liegt als Vorlage neben diesem Skript, damit
 # sie einen frischen Abzug überlebt.
-vorlage = Path(__file__).with_name('barrierefreiheit-seite.html')
-seite = WURZEL / 'barrierefreiheit' / 'index.html'
-if vorlage.is_file() and not seite.is_file():
-    seite.parent.mkdir(exist_ok=True)
-    seite.write_text(vorlage.read_text(encoding='utf-8'), encoding='utf-8')
-    print('Erklärungs-Seite eingesetzt.')
+for vorlage_name, ziel_pfad in [
+    ('barrierefreiheit-seite.html', 'barrierefreiheit/index.html'),
+    ('404-seite.html', '404.html'),
+]:
+    vorlage = Path(__file__).with_name(vorlage_name)
+    seite = WURZEL / ziel_pfad
+    if vorlage.is_file() and not seite.is_file():
+        seite.parent.mkdir(exist_ok=True)
+        seite.write_text(vorlage.read_text(encoding='utf-8'), encoding='utf-8')
+        print(f'{ziel_pfad} eingesetzt.')
 
 fusszeilen = 0
 FUSS = re.compile(

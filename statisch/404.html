@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seite nicht gefunden - SONNENBERG Kompetenzzentrum Sehen Verhalten Sprechen</title>
+<meta name="robots" content="noindex">
+<!-- Bewusst ohne externe Dateien: GitHub Pages und die meisten
+     Webserver liefern diese Seite unter jedem beliebigen Pfad aus,
+     relative Verweise würden dann ins Leere greifen. -->
+<style>
+  :root { --gruen: #17383e; --gruen-hell: #1d4c43; --gelb: #f0b91d; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--gruen) 0%, var(--gruen-hell) 100%);
+    color: #ffffff;
+  }
+  header { padding: 1.25rem 1.5rem; background: rgba(0,0,0,0.25); }
+  header span { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.04em; }
+  main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.5rem; }
+  .karte { max-width: 34rem; text-align: center; }
+  h1 { font-size: 2rem; margin: 0 0 0.75rem; }
+  p { font-size: 1.1rem; line-height: 1.6; margin: 0 0 1.5rem; }
+  a.knopf {
+    display: inline-block; padding: 0.8rem 1.6rem; border-radius: 3px;
+    background: var(--gelb); color: #17383e; font-weight: 700;
+    text-decoration: none; font-size: 1.05rem;
+  }
+  a.knopf:hover { background: #ffd04a; }
+  a.knopf:focus-visible, a:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+  footer { padding: 1rem 1.5rem; text-align: center; font-size: 0.9rem; background: rgba(0,0,0,0.25); }
+  footer a { color: #ffffff; }
+</style>
+</head>
+<body>
+<header><span>SONNENBERG</span></header>
+<main id="content">
+  <div class="karte">
+    <h1>Diese Seite gibt es nicht (mehr)</h1>
+    <p>Die aufgerufene Adresse führt ins Leere – vielleicht wurde die
+    Seite verschoben oder der Link enthält einen Tippfehler.</p>
+    <p><a class="knopf" id="zur-startseite" href="/">Zur Startseite</a></p>
+  </div>
+</main>
+<footer>
+  <p>SONNENBERG · Landhausstrasse 20 · 6340 Baar ·
+  <a href="tel:+41417677833">041&nbsp;767&nbsp;78&nbsp;33</a> ·
+  <a href="mailto:info@sonnenberg-baar.ch">info@sonnenberg-baar.ch</a></p>
+</footer>
+<script>
+  // Auf der GitHub-Pages-Vorschau liegt die Seite unter /sobe/ statt
+  // an der Domain-Wurzel; nur dort muss der Startseiten-Link
+  // umgebogen werden. Ohne JavaScript bleibt "/" als Rückgriff.
+  if (location.pathname.indexOf('/sobe/') === 0) {
+    document.getElementById('zur-startseite').href = '/sobe/';
+  }
+</script>
+</body>
+</html>
