@@ -11,3 +11,17 @@ Text Domain:  Avada
 /* Der Datenschutz-Link im Cookie-Balken war nur an der Farbe
    erkennbar (WCAG 1.4.1). */
 .fusion-privacy-bar-main a { text-decoration: underline; }
+
+/* Statische Fassung – stillgelegte Bedienelemente: */
+/* Suche und Warenkorb liefen über den WordPress-Server; ein
+   Bedienelement, das ins Leere führt, ist schlimmer als keines
+   (und ein sicherer Befund jeder Zertifizierung). Sobald eine
+   Such- bzw. Shop-Lösung angebunden ist, diesen Block wieder
+   entfernen. */
+.awb-menu__overlay-search-trigger,
+.awb-menu__search-inline,
+form.searchform,
+.awb-menu a[aria-label="Warenkorb"],
+.awb-menu a[href*="warenkorb"],
+form.cart,
+.single_add_to_cart_button { display: none !important; }

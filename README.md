@@ -62,8 +62,11 @@ Entscheid, bevor das WordPress abgestellt wird:
 2. **Kontakt-/Newsletter-Formulare**: Das Formular-Markup ist
    vorhanden, aber der Versand lief über WordPress. Braucht einen
    Formular-Dienst (z. B. Formspree) oder einen kleinen Mail-Endpunkt.
-3. **Die Suche** (Lupe im Menü): fragte WordPress ab. Entweder
-   weglassen oder clientseitig nachrüsten (z. B. Pagefind).
+3. **Die Suche** (Lupe im Menü): fragte WordPress ab. Sie ist – wie
+   der Warenkorb – zurzeit per CSS stillgelegt (Block «stillgelegte
+   Bedienelemente» im Child-Theme-CSS), damit keine toten
+   Bedienelemente auf der Seite stehen. Clientseitig nachrüstbar
+   (z. B. Pagefind).
 4. **Neue Inhalte einpflegen** (News, Stellen, Team): Es gibt kein
    Redaktionssystem mehr. Kleine Textänderungen gehen direkt im HTML;
    für regelmässige News-Pflege wäre der nächste Schritt, die Inhalte

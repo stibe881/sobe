@@ -136,3 +136,51 @@ if MARKER not in inhalt:
     print('CSS-Ergänzung für den Cookie-Balken geschrieben.')
 else:
     print('CSS-Ergänzung war schon da.')
+
+MARKER2 = '/* Statische Fassung – stillgelegte Bedienelemente: */'
+inhalt = css.read_text(encoding='utf-8', errors='replace')
+if MARKER2 not in inhalt:
+    inhalt += (
+        f'\n{MARKER2}\n'
+        '/* Suche und Warenkorb liefen über den WordPress-Server; ein\n'
+        '   Bedienelement, das ins Leere führt, ist schlimmer als keines\n'
+        '   (und ein sicherer Befund jeder Zertifizierung). Sobald eine\n'
+        '   Such- bzw. Shop-Lösung angebunden ist, diesen Block wieder\n'
+        '   entfernen. */\n'
+        '.awb-menu__overlay-search-trigger,\n'
+        '.awb-menu__search-inline,\n'
+        'form.searchform,\n'
+        '.awb-menu a[aria-label="Warenkorb"],\n'
+        '.awb-menu a[href*="warenkorb"],\n'
+        'form.cart,\n'
+        '.single_add_to_cart_button { display: none !important; }\n')
+    css.write_text(inhalt, encoding='utf-8')
+    print('CSS: Suche und Warenkorb stillgelegt.')
+else:
+    print('Stilllegungs-CSS war schon da.')
+
+# --- Zusatzskript (Menü-Semantik, Cookie-Balken) einsetzen und auf
+# jeder Seite einbinden.
+js_vorlage = Path(__file__).with_name('barrierefrei-js.js')
+js_ziel = WURZEL / 'barrierefrei.js'
+if js_vorlage.is_file():
+    js_ziel.write_text(js_vorlage.read_text(encoding='utf-8'), encoding='utf-8')
+
+eingebunden = 0
+for datei in sorted(WURZEL.rglob('*.html')):
+    # Die 404-Seite wird unter beliebiger Pfadtiefe ausgeliefert –
+    # ein relativer Skriptpfad griffe dort ins Leere, und Menüs hat
+    # sie keine.
+    if datei.name == '404.html':
+        continue
+    src = datei.read_text(encoding='utf-8', errors='replace')
+    if 'barrierefrei.js' in src or '</body>' not in src:
+        continue
+    tiefe = len(datei.relative_to(WURZEL).parts) - 1
+    praefix = '../' * tiefe if tiefe else './'
+    src = src.replace(
+        '</body>',
+        f'<script src="{praefix}barrierefrei.js" defer></script></body>', 1)
+    datei.write_text(src, encoding='utf-8')
+    eingebunden += 1
+print(f'barrierefrei.js auf {eingebunden} Seiten eingebunden.')

@@ -58,6 +58,29 @@ auf einem frischen Abzug wiederholbar.
 - **Eigene 404-Seite** (`statisch/404.html`): barrierefrei, deutsch,
   ohne externe Abhängigkeiten, mit Rückweg zur Startseite.
 
+## Nachträge zur Zertifizierungs-Vorbereitung (01.09.2026)
+
+- **Suche und Warenkorb stillgelegt** (Child-Theme-CSS, Block
+  «stillgelegte Bedienelemente»): Beide führten statisch ins Leere –
+  ein totes Bedienelement ist ein sicherer Prüfbefund. Der CSS-Block
+  ist kommentiert und wird wieder entfernt, sobald eine Such- bzw.
+  Shop-Lösung angebunden ist.
+- **Menü-Semantik**: `/barrierefrei.js` (auf allen Seiten eingebunden,
+  Vorlage `werkzeuge/barrierefrei-js.js`) setzt an Menüpunkten mit
+  Untermenü `aria-haspopup`/`aria-expanded` und führt den Zustand bei
+  Hover und Tastaturfokus nach; der Cookie-Balken bekommt Rolle und
+  Namen. Geprüft: expanded wird bei Fokus «true», bei Fokusverlust
+  «false».
+- **Lightbox getestet** (kommt nur auf den Mitarbeiter-Profilseiten
+  vor, ein Porträt pro Seite): öffnet, Fokus wandert hinein, Escape
+  schliesst. Anmerkung für die Prüfung: Der Fokus landet auf einem
+  Teilen-Knopf statt auf «Schliessen» – kein Verstoss, aber
+  erwähnenswert.
+- **`ALT-TEXTE-DURCHSICHT.md`**: 43 Bilder mit leerem alt-Attribut,
+  als Checkliste für den redaktionellen Entscheid Schmuck vs.
+  Inhalt. Die beschlossenen Texte können danach per Skript auf allen
+  betroffenen Seiten eingetragen werden.
+
 ## Was noch aussteht
 
 - **Prüfung mit echten Screenreadern** (NVDA/JAWS/VoiceOver) durch
