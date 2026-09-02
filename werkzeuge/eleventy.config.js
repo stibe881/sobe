@@ -28,6 +28,21 @@ export default function (eleventyConfig) {
     return `${t}. ${MONATE[m - 1]} ${j}`;
   });
 
+
+  // Das Redaktionssystem schreibt Bildpfade absolut (/wp-content/…) –
+  // Sveltia erlaubt nur absolute public_folder. Damit die Seite auch
+  // unter einem Unterpfad (GitHub-Pages-Vorschau /sobe/) funktioniert,
+  // werden solche Pfade beim Bau tiefenabhängig relativiert.
+  eleventyConfig.addTransform('wpContentRelativ', function (inhalt) {
+    if (!this.page.outputPath || !this.page.outputPath.endsWith('.html')) {
+      return inhalt;
+    }
+    const tiefe = this.page.url.split('/').length - 2;
+    const praefix = '../'.repeat(Math.max(tiefe, 0)) || './';
+    return inhalt.replace(/(src|href)="\/wp-content\//g,
+      (treffer, attr) => `${attr}="${praefix}wp-content/`);
+  });
+
   return {
     dir: { input: '../quelle', output: '../statisch', includes: '_includes' },
     htmlTemplateEngine: false,

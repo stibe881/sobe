@@ -4,7 +4,7 @@ backend:
   repo: stibe881/sobe
   branch: main
 media_folder: statisch/wp-content/uploads/redaktion
-public_folder: ../wp-content/uploads/redaktion
+public_folder: /wp-content/uploads/redaktion
 locale: de
 collections:
   - name: news
