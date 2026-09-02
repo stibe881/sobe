@@ -6,14 +6,639 @@
 <title>Redaktion - SONNENBERG Webseite</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:,">
+<!--
+  Eigenes Redaktionssystem des SONNENBERG – bewusst ohne fremde
+  CMS-Software: eine einzelne Seite, die direkt mit der GitHub-API
+  arbeitet. Jede Speicherung wird ein Commit im Repository und läuft
+  automatisch durch Bau und Barrierefreiheits-Prüfung, bevor sie
+  live geht.
+
+  Bereiche und Dateiformate sind auf quelle/ abgestimmt:
+  - News:            quelle/news/*.md    (Alt-Beiträge .html: nur löschen)
+  - Team:            quelle/team/*.md
+  - Stelleninserate: quelle/stellen/*.md (Alt-Inserate .html: nur löschen)
+  - Textbausteine:   quelle/texte/*.md
+-->
+<style>
+  :root {
+    --gruen: #17383e; --gruen-hell: #1d4c43; --gelb: #f0b91d;
+    --grau: #f0efe9; --rot: #a33; --rand: #d6d4cb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: #1c1c1c; background: var(--grau);
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px; line-height: 1.5;
+  }
+  header {
+    background: var(--gruen); color: #fff; padding: 0.9rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  header .marke { font-weight: 700; letter-spacing: 0.04em; font-size: 1.2rem; }
+  header .zusatz { opacity: 0.85; }
+  header button { margin-left: auto; background: transparent; color: #fff; border-color: #fff; }
+  main { max-width: 60rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  h1 { font-size: 1.6rem; margin: 0.5rem 0 1rem; }
+  nav.bereiche { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
+  nav.bereiche button {
+    background: #fff; border: 1px solid var(--rand); border-radius: 4px;
+    padding: 0.55rem 1rem; font-size: 1rem; cursor: pointer; color: #1c1c1c;
+  }
+  nav.bereiche button[aria-current="true"] {
+    background: var(--gruen); color: #fff; border-color: var(--gruen); font-weight: 700;
+  }
+  .karte {
+    background: #fff; border: 1px solid var(--rand); border-radius: 6px;
+    padding: 1.2rem; margin-bottom: 1rem;
+  }
+  ul.liste { list-style: none; padding: 0; margin: 0; }
+  ul.liste li {
+    display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+    padding: 0.7rem 0.4rem; border-bottom: 1px solid var(--rand);
+  }
+  ul.liste li:last-child { border-bottom: none; }
+  ul.liste .titel { flex: 1 1 16rem; }
+  ul.liste .meta { color: #555; font-size: 0.9rem; }
+  label { display: block; font-weight: 700; margin: 0.9rem 0 0.25rem; }
+  label .hinweis { font-weight: 400; color: #555; font-size: 0.9rem; }
+  input[type=text], input[type=date], input[type=number],
+  select, textarea {
+    width: 100%; padding: 0.55rem 0.65rem; font: inherit;
+    border: 1px solid #767676; border-radius: 4px; background: #fff;
+  }
+  textarea { min-height: 14rem; resize: vertical; }
+  fieldset { border: 1px solid var(--rand); border-radius: 4px; margin: 0.9rem 0 0; }
+  legend { font-weight: 700; padding: 0 0.3rem; }
+  fieldset label { display: inline-flex; gap: 0.4rem; font-weight: 400; margin: 0.3rem 1rem 0.3rem 0; align-items: center; }
+  button {
+    font: inherit; border-radius: 4px; cursor: pointer;
+    padding: 0.55rem 1.1rem; border: 1px solid var(--gruen);
+    background: #fff; color: var(--gruen);
+  }
+  button.primaer { background: var(--gelb); border-color: var(--gelb); color: var(--gruen); font-weight: 700; }
+  button.gefahr { border-color: var(--rot); color: var(--rot); }
+  button:focus-visible, a:focus-visible, input:focus-visible,
+  select:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--gruen); outline-offset: 2px;
+  }
+  .zeile { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .meldung { border-radius: 4px; padding: 0.8rem 1rem; margin: 1rem 0; }
+  .meldung.ok { background: #e3efe3; border: 1px solid #7a7; }
+  .meldung.fehler { background: #f7e3e3; border: 1px solid var(--rot); }
+  .meldung a { color: inherit; }
+  .still { color: #555; }
+  [hidden] { display: none !important; }
+</style>
 </head>
 <body>
-<!-- Sveltia CMS: Redaktionsoberfläche, die direkt ins GitHub-Repo
-     schreibt. Anmeldung: «Sign in with GitHub» und dort ein
-     Personal Access Token (fein granuliert, nur dieses Repo,
-     Contents: Read/Write) einsetzen. Jede Speicherung wird ein
-     Commit; die Veröffentlichung läuft automatisch über die
-     Prüf-Pipeline. -->
-<script src="https://cdn.jsdelivr.net/npm/@sveltia/cms@0.113.4/dist/sveltia-cms.js"></script>
+<header>
+  <span class="marke">SONNENBERG</span>
+  <span class="zusatz">Redaktion der Webseite</span>
+  <button id="abmelden" hidden>Abmelden</button>
+</header>
+<main>
+  <div id="meldung" role="status" aria-live="polite"></div>
+
+  <!-- Anmeldung -->
+  <section id="ansicht-anmelden" hidden>
+    <h1>Anmelden</h1>
+    <div class="karte">
+      <p>Zum Arbeiten braucht es ein GitHub-Zugangstoken für das
+      Repository der Webseite (Fine-grained Token, nur Repository
+      «sobe», Berechtigung «Contents: Read and write»).</p>
+      <form id="form-anmelden">
+        <label for="token">Zugangstoken</label>
+        <input type="text" id="token" autocomplete="off" spellcheck="false" required>
+        <label style="font-weight:400; display:inline-flex; gap:0.4rem; align-items:center;">
+          <input type="checkbox" id="token-merken"> Auf diesem Gerät merken
+        </label>
+        <div class="zeile">
+          <button type="submit" class="primaer">Anmelden</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Übersicht -->
+  <section id="ansicht-bereiche" hidden>
+    <h1 id="bereich-titel">Redaktion</h1>
+    <nav class="bereiche" aria-label="Bereiche"></nav>
+    <p id="bereich-erklaerung" class="still"></p>
+    <div class="zeile" style="margin:0 0 1rem;">
+      <button id="neu" class="primaer" hidden></button>
+    </div>
+    <div class="karte"><ul class="liste" id="liste"></ul></div>
+  </section>
+
+  <!-- Editor -->
+  <section id="ansicht-editor" hidden>
+    <h1 id="editor-titel"></h1>
+    <form id="form-editor" class="karte"></form>
+  </section>
+</main>
+
+<script>
+'use strict';
+const REPO = 'stibe881/sobe';
+const API = 'https://api.github.com/repos/' + REPO + '/contents/';
+const ACTIONS_URL = 'https://github.com/' + REPO + '/actions';
+
+/* ---------- Bereichs-Definitionen ---------- */
+const BEREICHE = {
+  news: {
+    name: 'News-Beiträge',
+    ordner: 'quelle/news',
+    erklaerung: 'Neue Beiträge erscheinen automatisch auf der Pinnwand. ' +
+      'Alt-Beiträge aus WordPress (mit Schloss) lassen sich nur löschen – ' +
+      'ihr Layout würde beim Bearbeiten beschädigt.',
+    neuText: 'Neuen Beitrag schreiben',
+    felder: [
+      { id: 'titel', art: 'text', name: 'Titel', pflicht: true },
+      { id: 'datum', art: 'datum', name: 'Datum', pflicht: true },
+      { id: 'kategorien', art: 'mehrfach', name: 'Kategorien',
+        optionen: ['aktuelles', 'medien', 'spendenprojekte'],
+        beschriftungen: { aktuelles: 'Aktuelles', medien: 'Medien', spendenprojekte: 'Spendenprojekte' } },
+      { id: 'body', art: 'lauftext', name: 'Beitragstext', pflicht: true, bilder: true },
+    ],
+    anzeige: (d) => d.titel || '(ohne Titel)',
+    meta: (d) => d.datum || '',
+  },
+  team: {
+    name: 'Team',
+    ordner: 'quelle/team',
+    erklaerung: 'Die Personen erscheinen auf der Seite «Organisation», ' +
+      'gruppiert und innerhalb der Gruppe nach Reihenfolge sortiert.',
+    neuText: 'Person hinzufügen',
+    felder: [
+      { id: 'name', art: 'text', name: 'Name', pflicht: true },
+      { id: 'funktion', art: 'text', name: 'Funktion', pflicht: true },
+      { id: 'gruppe', art: 'auswahl', name: 'Gruppe',
+        optionen: ['Geschäftsleitung', 'Stabstellen', 'Angebots- und Fachbereichsleitungen'] },
+      { id: 'bild', art: 'bild', name: 'Porträtfoto',
+        hinweis: 'Querformat, ca. 800 × 540 Pixel' },
+      { id: 'email', art: 'text', name: 'E-Mail-Adresse' },
+      { id: 'reihenfolge', art: 'zahl', name: 'Reihenfolge',
+        hinweis: 'Kleinere Zahl = weiter vorne in der Gruppe', standard: 500 },
+    ],
+    anzeige: (d) => d.name || '(ohne Name)',
+    meta: (d) => (d.gruppe || '') + (d.funktion ? ' · ' + d.funktion : ''),
+  },
+  stellen: {
+    name: 'Stelleninserate',
+    ordner: 'quelle/stellen',
+    erklaerung: 'Inserate erscheinen automatisch unter «Offene Stellen» ' +
+      'auf der Jobs-Seite. Ein besetztes Inserat einfach löschen. ' +
+      'Alt-Inserate aus WordPress (mit Schloss) lassen sich nur löschen.',
+    neuText: 'Neues Inserat erfassen',
+    felder: [
+      { id: 'titel', art: 'text', name: 'Titel', pflicht: true,
+        hinweis: 'z. B. «Logopädin/Logopäde 40–100 %»' },
+      { id: 'bewerbungslink', art: 'text', name: 'Bewerbungslink', pflicht: true,
+        hinweis: 'Link zum Inserat im Bewerbungsportal (umantis)' },
+      { id: 'reihenfolge', art: 'zahl', name: 'Reihenfolge', standard: 500 },
+      { id: 'body', art: 'lauftext', name: 'Beschrieb', pflicht: true },
+    ],
+    anzeige: (d) => d.titel || '(ohne Titel)',
+    meta: () => '',
+  },
+  texte: {
+    name: 'Textbausteine',
+    ordner: 'quelle/texte',
+    erklaerung: 'Einzelne Texte auf festen Seiten, z. B. der Hinweis zur ' +
+      'Platzsituation auf der Aufnahme-Seite.',
+    neuText: null,
+    felder: [
+      { id: 'titel', art: 'text', name: 'Bezeichnung', nurLesen: true },
+      { id: 'body', art: 'lauftext', name: 'Text', pflicht: true },
+    ],
+    anzeige: (d) => d.titel || '(ohne Bezeichnung)',
+    meta: () => '',
+  },
+};
+
+/* ---------- Zustand ---------- */
+let token = '';
+let bereichId = 'news';
+let aktuelleDatei = null;   // { pfad, sha, daten, body, alt }
+
+/* ---------- Kleinsthelfer ---------- */
+const $ = (s) => document.querySelector(s);
+function zeige(id) {
+  for (const a of ['anmelden', 'bereiche', 'editor']) {
+    $('#ansicht-' + a).hidden = (a !== id);
+  }
+}
+function meldung(text, art, link) {
+  const el = $('#meldung');
+  el.innerHTML = '';
+  if (!text) return;
+  const div = document.createElement('div');
+  div.className = 'meldung ' + (art || 'ok');
+  div.textContent = text + ' ';
+  if (link) {
+    const a = document.createElement('a');
+    a.href = link.url; a.textContent = link.text; a.target = '_blank'; a.rel = 'noopener';
+    div.appendChild(a);
+  }
+  el.appendChild(div);
+}
+function slugify(text) {
+  let s = String(text || '').toLowerCase();
+  const map = { 'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'é': 'e', 'è': 'e', 'ê': 'e', 'à': 'a', 'ß': 'ss' };
+  s = s.replace(/[äöüéèêàß]/g, (z) => map[z] || z);
+  return s.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'eintrag';
+}
+/* UTF-8-sichere Base64-Umwandlung */
+function b64codieren(text) {
+  let bin = '';
+  for (const byte of new TextEncoder().encode(text)) bin += String.fromCharCode(byte);
+  return btoa(bin);
+}
+function b64lesen(b64) {
+  const roh = atob(b64.replace(/\s/g, ''));
+  return new TextDecoder().decode(Uint8Array.from(roh, (z) => z.charCodeAt(0)));
+}
+
+/* ---------- Frontmatter (bewusst nur die hier nötige Untermenge) ---------- */
+function yamlWert(w) {
+  if (typeof w === 'number') return String(w);
+  if (Array.isArray(w)) return '[' + w.map((x) => yamlWert(x)).join(', ') + ']';
+  return '"' + String(w).replace(/\\/g, '').replace(/"/g, '\\"') + '"';
+}
+function frontmatterSchreiben(daten, body) {
+  const zeilen = ['---'];
+  for (const [k, w] of Object.entries(daten)) zeilen.push(k + ': ' + yamlWert(w));
+  zeilen.push('---');
+  return zeilen.join('\n') + '\n' + (body ? body.replace(/\r\n/g, '\n').trim() + '\n' : '');
+}
+function frontmatterLesen(text) {
+  const daten = {};
+  let body = text;
+  let m = text.match(/^---json\s*\n([\s\S]*?)\n---\s*\n?/);
+  if (m) {
+    try { Object.assign(daten, JSON.parse(m[1])); } catch (e) { /* nur Anzeige */ }
+    return { daten, body: text.slice(m[0].length), alt: true };
+  }
+  m = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  if (m) {
+    for (const zeile of m[1].split('\n')) {
+      const t = zeile.match(/^([A-Za-z_]+):\s*(.*)$/);
+      if (!t) continue;
+      const w = t[2].trim();
+      if (w.startsWith('[')) {
+        daten[t[1]] = w.slice(1, -1).split(',')
+          .map((x) => x.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+      } else if (/^-?\d+$/.test(w)) {
+        daten[t[1]] = parseInt(w, 10);
+      } else {
+        daten[t[1]] = w.replace(/^["']|["']$/g, '').replace(/\\"/g, '"');
+      }
+    }
+    body = text.slice(m[0].length);
+  }
+  return { daten, body, alt: false };
+}
+
+/* ---------- GitHub-API ---------- */
+async function api(pfad, optionen = {}) {
+  const antwort = await fetch(API + pfad, {
+    ...optionen,
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/vnd.github+json',
+      ...(optionen.headers || {}),
+    },
+  });
+  if (!antwort.ok) {
+    let details = '';
+    try { details = (await antwort.json()).message || ''; } catch (e) { /* egal */ }
+    throw new Error('GitHub antwortet mit ' + antwort.status +
+      (details ? ' – ' + details : ''));
+  }
+  return antwort.status === 204 ? null : antwort.json();
+}
+
+/* ---------- Anmeldung ---------- */
+function anmeldungAufbauen() {
+  $('#form-anmelden').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    token = $('#token').value.trim();
+    meldung('');
+    try {
+      await api('README.md');
+    } catch (fehler) {
+      meldung('Anmeldung fehlgeschlagen: ' + fehler.message +
+        ' – stimmt das Token, und hat es Zugriff auf «' + REPO + '»?', 'fehler');
+      return;
+    }
+    if ($('#token-merken').checked) {
+      try { localStorage.setItem('sonnenberg.redaktion.token', token); } catch (e2) { /* privat */ }
+    }
+    $('#abmelden').hidden = false;
+    bereichZeigen(bereichId);
+  });
+  $('#abmelden').addEventListener('click', () => {
+    token = '';
+    try { localStorage.removeItem('sonnenberg.redaktion.token'); } catch (e) { /* egal */ }
+    $('#abmelden').hidden = true;
+    $('#token').value = '';
+    meldung('');
+    zeige('anmelden');
+  });
+}
+
+/* ---------- Übersicht ---------- */
+function tabsAufbauen() {
+  const nav = $('nav.bereiche');
+  for (const [id, b] of Object.entries(BEREICHE)) {
+    const knopf = document.createElement('button');
+    knopf.textContent = b.name;
+    knopf.dataset.bereich = id;
+    knopf.addEventListener('click', () => bereichZeigen(id));
+    nav.appendChild(knopf);
+  }
+}
+
+async function bereichZeigen(id) {
+  bereichId = id;
+  const b = BEREICHE[id];
+  zeige('bereiche');
+  meldung('');
+  for (const k of document.querySelectorAll('nav.bereiche button')) {
+    k.setAttribute('aria-current', k.dataset.bereich === id ? 'true' : 'false');
+  }
+  $('#bereich-titel').textContent = b.name;
+  $('#bereich-erklaerung').textContent = b.erklaerung;
+  const neu = $('#neu');
+  neu.hidden = !b.neuText;
+  if (b.neuText) {
+    neu.textContent = b.neuText;
+    neu.onclick = () => editorOeffnen(null);
+  }
+  const liste = $('#liste');
+  liste.innerHTML = '<li>Lade …</li>';
+  let eintraege;
+  try {
+    eintraege = await api(b.ordner);
+  } catch (fehler) {
+    liste.innerHTML = '';
+    meldung('Konnte die Liste nicht laden: ' + fehler.message, 'fehler');
+    return;
+  }
+  const dateien = eintraege.filter((d) =>
+    d.type === 'file' && (d.name.endsWith('.md') || d.name.endsWith('.html')));
+  const geladen = await Promise.all(dateien.map(async (d) => {
+    const inhalt = await api(b.ordner + '/' + encodeURIComponent(d.name));
+    const { daten, body, alt } = frontmatterLesen(b64lesen(inhalt.content));
+    return { name: d.name, pfad: b.ordner + '/' + d.name, sha: inhalt.sha,
+             daten, body, alt: alt || d.name.endsWith('.html') };
+  }));
+  geladen.sort((a, z) => {
+    if (a.daten.datum && z.daten.datum) return z.daten.datum < a.daten.datum ? -1 : 1;
+    if (a.daten.reihenfolge != null && z.daten.reihenfolge != null) {
+      return a.daten.reihenfolge - z.daten.reihenfolge;
+    }
+    return a.name.localeCompare(z.name);
+  });
+  liste.innerHTML = '';
+  if (!geladen.length) {
+    liste.innerHTML = '<li class="still">Noch keine Einträge.</li>';
+  }
+  for (const datei of geladen) {
+    const li = document.createElement('li');
+    const titel = document.createElement('span');
+    titel.className = 'titel';
+    titel.textContent = (datei.alt ? '🔒 ' : '') + b.anzeige(datei.daten);
+    const meta = document.createElement('span');
+    meta.className = 'meta';
+    meta.textContent = b.meta(datei.daten);
+    li.append(titel, meta);
+    if (!datei.alt) {
+      const bearbeiten = document.createElement('button');
+      bearbeiten.textContent = 'Bearbeiten';
+      bearbeiten.addEventListener('click', () => editorOeffnen(datei));
+      li.appendChild(bearbeiten);
+    }
+    if (id !== 'texte') {
+      const loeschen = document.createElement('button');
+      loeschen.className = 'gefahr';
+      loeschen.textContent = 'Löschen';
+      loeschen.addEventListener('click', () => eintragLoeschen(datei));
+      li.appendChild(loeschen);
+    }
+    liste.appendChild(li);
+  }
+}
+
+/* ---------- Editor ---------- */
+function feldAufbauen(feld, wert) {
+  const halter = document.createElement('div');
+  let eingabe;
+  if (feld.art === 'mehrfach') {
+    eingabe = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    legend.textContent = feld.name;
+    eingabe.appendChild(legend);
+    for (const o of feld.optionen) {
+      const l = document.createElement('label');
+      const box = document.createElement('input');
+      box.type = 'checkbox'; box.value = o; box.name = 'feld-' + feld.id;
+      if ((wert || []).includes(o)) box.checked = true;
+      l.append(box, feld.beschriftungen[o] || o);
+      eingabe.appendChild(l);
+    }
+    halter.appendChild(eingabe);
+  } else {
+    const label = document.createElement('label');
+    label.textContent = feld.name + (feld.pflicht ? ' *' : '');
+    label.htmlFor = 'feld-' + feld.id;
+    if (feld.hinweis) {
+      const h = document.createElement('span');
+      h.className = 'hinweis';
+      h.textContent = ' – ' + feld.hinweis;
+      label.appendChild(h);
+    }
+    halter.appendChild(label);
+    if (feld.art === 'lauftext') {
+      eingabe = document.createElement('textarea');
+      eingabe.value = wert || '';
+    } else if (feld.art === 'auswahl') {
+      eingabe = document.createElement('select');
+      for (const o of feld.optionen) {
+        const opt = document.createElement('option');
+        opt.value = o; opt.textContent = o;
+        if (o === wert) opt.selected = true;
+        eingabe.appendChild(opt);
+      }
+    } else {
+      eingabe = document.createElement('input');
+      eingabe.type = feld.art === 'datum' ? 'date' : feld.art === 'zahl' ? 'number' : 'text';
+      eingabe.value = wert != null ? wert : (feld.standard != null ? feld.standard : '');
+    }
+    eingabe.id = 'feld-' + feld.id;
+    if (feld.pflicht) eingabe.required = true;
+    if (feld.nurLesen) eingabe.readOnly = true;
+    halter.appendChild(eingabe);
+  }
+  if (feld.art === 'bild' || feld.bilder) {
+    const dateiWahl = document.createElement('input');
+    dateiWahl.type = 'file';
+    dateiWahl.accept = 'image/*';
+    dateiWahl.setAttribute('aria-label', 'Bild für «' + feld.name + '» hochladen');
+    dateiWahl.style.marginTop = '0.5rem';
+    halter.appendChild(dateiWahl);
+    dateiWahl.addEventListener('change', () => bildHochladen(feld, dateiWahl, eingabe));
+  }
+  return halter;
+}
+
+async function bildHochladen(feld, dateiWahl, zielEingabe) {
+  const datei = dateiWahl.files[0];
+  if (!datei) return;
+  const alt = prompt('Was ist auf dem Bild zu sehen? (Alternativtext für ' +
+    'blinde Besucherinnen und Besucher – ein kurzer Satz)');
+  if (alt === null) { dateiWahl.value = ''; return; }
+  meldung('Bild wird hochgeladen …');
+  const endung = (datei.name.split('.').pop() || 'jpg').toLowerCase();
+  const name = Date.now() + '-' + slugify(datei.name.replace(/\.[^.]+$/, '')) + '.' + endung;
+  const pfad = 'statisch/wp-content/uploads/redaktion/' + name;
+  const bytes = new Uint8Array(await datei.arrayBuffer());
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  try {
+    await api(pfad, {
+      method: 'PUT',
+      body: JSON.stringify({
+        message: 'Redaktion: Bild ' + name + ' hochgeladen',
+        content: btoa(bin),
+      }),
+    });
+  } catch (fehler) {
+    meldung('Bild-Upload fehlgeschlagen: ' + fehler.message, 'fehler');
+    return;
+  }
+  const webPfad = '/wp-content/uploads/redaktion/' + name;
+  if (feld.art === 'bild') {
+    zielEingabe.value = webPfad;
+  } else {
+    const kasten = document.getElementById('feld-body');
+    kasten.value = (kasten.value ? kasten.value.trimEnd() + '\n\n' : '')
+      + '![' + alt.replace(/[\[\]]/g, '') + '](' + webPfad + ')\n';
+  }
+  dateiWahl.value = '';
+  meldung('Bild hochgeladen und eingefügt.');
+}
+
+function editorOeffnen(datei) {
+  const b = BEREICHE[bereichId];
+  aktuelleDatei = datei;
+  zeige('editor');
+  meldung('');
+  $('#editor-titel').textContent = datei
+    ? b.anzeige(datei.daten) + ' bearbeiten'
+    : (b.neuText || 'Neu');
+  const form = $('#form-editor');
+  form.innerHTML = '';
+  for (const feld of b.felder) {
+    const wert = feld.art === 'lauftext'
+      ? (datei ? datei.body : '')
+      : (datei ? datei.daten[feld.id] : undefined);
+    form.appendChild(feldAufbauen(feld, wert));
+  }
+  const zeile = document.createElement('div');
+  zeile.className = 'zeile';
+  const speichern = document.createElement('button');
+  speichern.type = 'submit';
+  speichern.className = 'primaer';
+  speichern.textContent = 'Speichern und veröffentlichen';
+  const abbrechen = document.createElement('button');
+  abbrechen.type = 'button';
+  abbrechen.textContent = 'Zurück ohne Speichern';
+  abbrechen.addEventListener('click', () => bereichZeigen(bereichId));
+  zeile.append(speichern, abbrechen);
+  form.appendChild(zeile);
+  form.onsubmit = eintragSpeichern;
+  const erstes = form.querySelector('input:not([readonly]), textarea, select');
+  if (erstes) erstes.focus();
+}
+
+async function eintragSpeichern(e) {
+  e.preventDefault();
+  const b = BEREICHE[bereichId];
+  const daten = {};
+  let body = '';
+  for (const feld of b.felder) {
+    if (feld.art === 'lauftext') {
+      body = document.getElementById('feld-' + feld.id).value;
+    } else if (feld.art === 'mehrfach') {
+      daten[feld.id] = Array.from(
+        document.querySelectorAll('input[name="feld-' + feld.id + '"]:checked'),
+        (x) => x.value);
+    } else if (feld.art === 'zahl') {
+      daten[feld.id] = parseInt(document.getElementById('feld-' + feld.id).value, 10) || 0;
+    } else {
+      daten[feld.id] = document.getElementById('feld-' + feld.id).value.trim();
+    }
+  }
+  const pfad = aktuelleDatei
+    ? aktuelleDatei.pfad
+    : b.ordner + '/' + slugify(daten.titel || daten.name) + '.md';
+  const inhalt = frontmatterSchreiben(daten, body);
+  meldung('Wird gespeichert …');
+  try {
+    await api(pfad, {
+      method: 'PUT',
+      body: JSON.stringify({
+        message: 'Redaktion: ' + b.name + ' – ' + b.anzeige(daten),
+        content: b64codieren(inhalt),
+        ...(aktuelleDatei ? { sha: aktuelleDatei.sha } : {}),
+      }),
+    });
+  } catch (fehler) {
+    meldung('Speichern fehlgeschlagen: ' + fehler.message, 'fehler');
+    return;
+  }
+  await bereichZeigen(bereichId);
+  meldung('Gespeichert. Die Veröffentlichung läuft automatisch und ist ' +
+    'in wenigen Minuten online.', 'ok',
+    { url: ACTIONS_URL, text: 'Stand der Veröffentlichung ansehen' });
+}
+
+async function eintragLoeschen(datei) {
+  const b = BEREICHE[bereichId];
+  if (!confirm('«' + b.anzeige(datei.daten) + '» wirklich löschen?')) return;
+  meldung('Wird gelöscht …');
+  try {
+    await api(datei.pfad, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        message: 'Redaktion: ' + b.name + ' – ' + b.anzeige(datei.daten) + ' gelöscht',
+        sha: datei.sha,
+      }),
+    });
+  } catch (fehler) {
+    meldung('Löschen fehlgeschlagen: ' + fehler.message, 'fehler');
+    return;
+  }
+  await bereichZeigen(bereichId);
+  meldung('Gelöscht. Die Änderung ist in wenigen Minuten online.', 'ok',
+    { url: ACTIONS_URL, text: 'Stand der Veröffentlichung ansehen' });
+}
+
+/* ---------- Start ---------- */
+anmeldungAufbauen();
+tabsAufbauen();
+let gemerkt = '';
+try { gemerkt = localStorage.getItem('sonnenberg.redaktion.token') || ''; } catch (e) { /* egal */ }
+if (gemerkt) {
+  token = gemerkt;
+  $('#abmelden').hidden = false;
+  bereichZeigen('news');
+} else {
+  zeige('anmelden');
+}
+</script>
 </body>
 </html>

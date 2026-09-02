@@ -20,15 +20,18 @@ GitHub Pages …) kann sie ausliefern.
   Filter daraus. Der Generator (Eleventy) schreibt das Ergebnis nach
   `statisch/` – lokal mit `cd werkzeuge && npx eleventy
   --config=eleventy.config.js`, in der Pipeline automatisch.
-- **`statisch/admin/`** – die **Redaktionsoberfläche** (Sveltia CMS):
-  News schreiben und bearbeiten im Browser, ohne HTML. Anmeldung mit
-  einem GitHub-Zugangstoken (fein granuliert, nur dieses Repository,
-  Contents: Read/Write). Jede Speicherung wird ein Commit und läuft
-  automatisch durch Bau und Barrierefreiheits-Prüfung. **Hinweis:**
-  Die 72 übernommenen Alt-Beiträge (`.html` mit WordPress-Markup)
-  erscheinen bewusst nicht in der Oberfläche – sie im CMS zu
-  bearbeiten würde ihr Layout beschädigen. Neue Beiträge entstehen
-  als einfache Markdown-Dateien und sind voll bearbeitbar.
+- **`statisch/admin/`** – die **Redaktionsoberfläche**: ein eigenes,
+  schlankes System (eine einzige Seite, keine fremde CMS-Software,
+  keine fremden Server). Sie spricht direkt mit der GitHub-API;
+  Anmeldung mit einem GitHub-Zugangstoken (fein granuliert, nur
+  dieses Repository, Contents: Read/Write), auf Wunsch auf dem Gerät
+  gemerkt. Vier Bereiche: News, Team, Stelleninserate, Textbausteine
+  – mit Bild-Upload samt Alternativtext-Abfrage. Jede Speicherung
+  wird ein Commit und läuft automatisch durch Bau und
+  Barrierefreiheits-Prüfung. **Hinweis:** Übernommene Alt-Inhalte
+  (`.html` mit WordPress-Markup, in der Liste mit 🔒) lassen sich
+  bewusst nur löschen, nicht bearbeiten – ihr Layout würde dabei
+  beschädigt.
 - **`werkzeuge/`** – die Skripte, mit denen diese Fassung erzeugt wurde:
   - `spiegeln.sh` zieht die Seite frisch vom (noch laufenden) WordPress.
   - `nachbearbeiten.py` entfernt danach die WordPress-Reste und macht
