@@ -22,7 +22,7 @@ const SEITEN = [
   '/kompetenzen/', '/ueber-uns/organisation/', '/aufnahme/',
   '/jobs/', '/medien/', '/kontakt/', '/shop/',
   '/produkt/kinderbuch-beno-und-flecki/',
-  '/mitarbeiter/stefan-gross/', '/skilager-in-arosa/',
+  '/mitarbeiter/stefan-gross/', '/skilager-in-arosa/', '/pinnwand/',
   '/impressum/', '/datenschutzerklaerung/',
   '/barrierefreiheit/', '/suche/', '/404.html',
 ];

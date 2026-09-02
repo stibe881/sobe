@@ -1,10 +1,13 @@
-# Prüft die statische Webseite auf Barrierefreiheit (WCAG 2.1/2.2 AA,
-# axe-core) und veröffentlicht sie erst bei sauberem Ergebnis über
-# GitHub Pages. Ein Rückschritt bei der Zugänglichkeit stoppt die
-# Auslieferung, statt unbemerkt live zu gehen.
+# Baut die generierten Teile der Webseite (News, Pinnwand, Suchindex),
+# prüft alles auf Barrierefreiheit (WCAG 2.1/2.2 AA, axe-core) und
+# veröffentlicht erst bei sauberem Ergebnis über GitHub Pages.
+#
+# Wichtig für die Redaktion: Auch ein Commit aus dem Redaktionssystem
+# (nur quelle/news/…) läuft hier durch – gebaut wird immer frisch,
+# ein Barrierefreiheits-Rückschritt stoppt die Veröffentlichung.
 #
 # URL nach dem Lauf: https://stibe881.github.io/sobe/
-name: Webseite prüfen und veröffentlichen
+name: Webseite bauen, prüfen und veröffentlichen
 
 on:
   push:
@@ -21,37 +24,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pruefen:
-    name: Barrierefreiheit prüfen
+  bauen-und-pruefen:
+    name: Bauen und Barrierefreiheit prüfen
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Prüfwerkzeuge installieren
+      - name: Werkzeuge installieren
         working-directory: werkzeuge
         run: |
           npm install --no-audit --no-fund
           npx playwright install --with-deps chromium
-      - name: Webseite lokal ausliefern und prüfen
+      - name: Generierte Seiten und Suchindex bauen
+        working-directory: werkzeuge
+        run: |
+          npx eleventy --config=eleventy.config.js
+          npx pagefind --site ../statisch
+      - name: Lokal ausliefern und prüfen
         run: |
           python3 -m http.server 8189 --directory statisch &
           sleep 2
           node werkzeuge/a11y-pruefung.js http://127.0.0.1:8189
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: statisch
 
   veroeffentlichen:
     name: Auf GitHub Pages veröffentlichen
-    needs: pruefen
+    needs: bauen-und-pruefen
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: statisch
       - id: deployment
         uses: actions/deploy-pages@v4

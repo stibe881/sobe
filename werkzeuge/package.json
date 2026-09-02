@@ -3,6 +3,7 @@
   "private": true,
   "description": "Prüf- und Pflegewerkzeuge der statischen Webseite. Die Barrierefreiheits-Prüfung läuft vor jeder Veröffentlichung (siehe .github/workflows/webseite.yml).",
   "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
     "axe-core": "4.10.2",
     "pagefind": "^1.5.2",
     "playwright": "1.49.1"

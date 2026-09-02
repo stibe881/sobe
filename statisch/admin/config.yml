@@ -1,0 +1,40 @@
+# Konfiguration der Redaktionsoberfläche (Sveltia CMS).
+backend:
+  name: github
+  repo: stibe881/sobe
+  branch: main
+media_folder: statisch/wp-content/uploads/redaktion
+public_folder: ../wp-content/uploads/redaktion
+locale: de
+collections:
+  - name: news
+    label: News-Beiträge
+    label_singular: News-Beitrag
+    folder: quelle/news
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    slug: '{{fields.titel | localize}}'
+    sortable_fields: [datum, titel]
+    view_filters:
+      - { label: Aktuelles, field: kategorien, pattern: aktuelles }
+      - { label: Medien, field: kategorien, pattern: medien }
+    fields:
+      - { name: titel, label: Titel, widget: string }
+      - { name: datum, label: Datum, widget: string,
+          hint: 'Format JJJJ-MM-TT, z. B. 2026-09-01' }
+      - name: kategorien
+        label: Kategorien
+        widget: select
+        multiple: true
+        default: [aktuelles]
+        options:
+          - { label: Aktuelles, value: aktuelles }
+          - { label: Medien, value: medien }
+          - { label: Spendenprojekte, value: spendenprojekte }
+      - name: body
+        label: Beitragstext
+        widget: markdown
+        hint: 'Bilder bitte mit kurzem Alternativtext einfügen –
+          er beschreibt für blinde Besucherinnen und Besucher,
+          was auf dem Bild zu sehen ist.'

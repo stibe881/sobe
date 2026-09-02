@@ -13,6 +13,22 @@ GitHub Pages …) kann sie ausliefern.
   den Webserver gehört. Jede Seite liegt unter ihrem bisherigen Pfad
   (`/angebot/sehen/` → `statisch/angebot/sehen/index.html`), damit alle
   bestehenden Links und Suchmaschinen-Einträge weiter stimmen.
+- **`quelle/`** – die redaktionell gepflegten Inhalte und ihre
+  Vorlagen. Die News-Beiträge liegen hier als einzelne Dateien
+  (`quelle/news/`), die Vorlage `_includes/news-rahmen.njk` rendert
+  sie im Sonnenberg-Design, `pinnwand.njk` baut die Übersicht mit
+  Filter daraus. Der Generator (Eleventy) schreibt das Ergebnis nach
+  `statisch/` – lokal mit `cd werkzeuge && npx eleventy
+  --config=eleventy.config.js`, in der Pipeline automatisch.
+- **`statisch/admin/`** – die **Redaktionsoberfläche** (Sveltia CMS):
+  News schreiben und bearbeiten im Browser, ohne HTML. Anmeldung mit
+  einem GitHub-Zugangstoken (fein granuliert, nur dieses Repository,
+  Contents: Read/Write). Jede Speicherung wird ein Commit und läuft
+  automatisch durch Bau und Barrierefreiheits-Prüfung. **Hinweis:**
+  Die 72 übernommenen Alt-Beiträge (`.html` mit WordPress-Markup)
+  erscheinen bewusst nicht in der Oberfläche – sie im CMS zu
+  bearbeiten würde ihr Layout beschädigen. Neue Beiträge entstehen
+  als einfache Markdown-Dateien und sind voll bearbeitbar.
 - **`werkzeuge/`** – die Skripte, mit denen diese Fassung erzeugt wurde:
   - `spiegeln.sh` zieht die Seite frisch vom (noch laufenden) WordPress.
   - `nachbearbeiten.py` entfernt danach die WordPress-Reste und macht
