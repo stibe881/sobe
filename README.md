@@ -85,11 +85,12 @@ Entscheid, bevor das WordPress abgestellt wird:
    Browser über den eingecheckten Index (`statisch/pagefind/`).
    Nach inhaltlichen Änderungen den Index neu bauen:
    `cd werkzeuge && npx pagefind --site ../statisch`.
-4. **Neue Inhalte einpflegen** (News, Stellen, Team): Es gibt kein
-   Redaktionssystem mehr. Kleine Textänderungen gehen direkt im HTML;
-   für regelmässige News-Pflege wäre der nächste Schritt, die Inhalte
-   in einen statischen Generator zu überführen – dieser Abzug ist
-   dafür die vollständige Ausgangsbasis.
+4. **Neue Inhalte einpflegen** (News, Stellen, Team, Textbausteine):
+   gelöst – über die Redaktionsoberfläche unter `/admin/`, siehe
+   Abschnitt «Redaktionell pflegbare Bereiche» unten. Die übrigen
+   festen Seiten (Angebot, Über uns …) sind weiterhin gespiegeltes
+   HTML; nach dem Muster der Extraktions-Skripte lassen sie sich
+   schrittweise ebenfalls pflegbar machen.
 
 ## Neu abziehen (solange WordPress noch läuft)
 
