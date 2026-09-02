@@ -97,3 +97,18 @@ Entscheid, bevor das WordPress abgestellt wird:
 cd werkzeuge
 ./spiegeln.sh          # lädt nach ./spiegel/ und bearbeitet nach
 ```
+
+## Redaktionell pflegbare Bereiche (Stand 02.09.2026)
+
+Über die Redaktionsoberfläche (`/admin/`) pflegbar:
+
+| Bereich | Inhalte | erscheint auf |
+| --- | --- | --- |
+| News-Beiträge | neue Beiträge (Markdown) | eigener Seite + Pinnwand |
+| Team | alle 19 Personen (Name, Funktion, Gruppe, Foto, Mail) | /ueber-uns/organisation/ |
+| Stelleninserate | neue Inserate (Titel, Beschrieb, Bewerbungslink) | /jobs/ + eigener Seite |
+| Textbausteine | Hinweis zur Platzsituation | /aufnahme/ |
+
+Die Extraktions-Skripte (`werkzeuge/*-extrahieren.py`) dokumentieren,
+wie diese Bereiche aus dem WordPress-Abzug herausgelöst wurden – nach
+demselben Muster lassen sich weitere Seiten pflegbar machen.

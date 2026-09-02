@@ -11,6 +11,17 @@ export default function (eleventyConfig) {
     api.getFilteredByGlob('../quelle/news/*').sort(
       (a, b) => (b.data.datum || '').localeCompare(a.data.datum || '')));
 
+  eleventyConfig.addCollection('team', (api) =>
+    api.getFilteredByGlob('../quelle/team/*').sort(
+      (a, b) => (a.data.reihenfolge || 0) - (b.data.reihenfolge || 0)));
+
+  eleventyConfig.addCollection('stellen', (api) =>
+    api.getFilteredByGlob('../quelle/stellen/*').sort(
+      (a, b) => (a.data.reihenfolge || 0) - (b.data.reihenfolge || 0)));
+
+  eleventyConfig.addCollection('texte', (api) =>
+    api.getFilteredByGlob('../quelle/texte/*'));
+
   // «2026-08-13» → «13. August 2026», wie es die Pinnwand-Kacheln zeigen.
   eleventyConfig.addFilter('datumDeutsch', (iso) => {
     const [j, m, t] = String(iso).slice(0, 10).split('-').map(Number);
