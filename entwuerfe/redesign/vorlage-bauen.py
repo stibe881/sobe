@@ -107,13 +107,16 @@ teile.append("""<title>Fünf Richtungen</title>
   .abwaegung p { font-size: 16px; color: var(--grau); }
   .abwaegung strong { color: var(--tinte); }
 
-  .galerie { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 18px; }
-  .seite { display: flex; flex-direction: column; gap: 8px; border: 0; background: none; padding: 0; text-align: left; cursor: zoom-in; font: inherit; color: inherit; }
-  .seite:focus-visible { outline: 3px solid var(--petrol); outline-offset: 3px; }
-  .fenster { height: 285px; overflow: hidden; border: 1px solid var(--linie); background: #ffffff; }
+  .galerie { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 20px; }
+  .seite { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .paar { display: flex; gap: 10px; }
+  .schau { border: 0; background: none; padding: 0; text-align: left; cursor: zoom-in; font: inherit; color: inherit; flex: 1; min-width: 0; }
+  .schau.handy { flex: none; width: 30%; }
+  .schau:focus-visible { outline: 3px solid var(--petrol); outline-offset: 3px; }
+  .fenster { display: block; height: 285px; overflow: hidden; border: 1px solid var(--linie); background: #ffffff; }
   .fenster img { width: 100%; display: block; }
-  .seite figcaption, .seite .beschriftung { font-size: 14.5px; color: var(--grau); }
-  .seite .beschriftung strong { color: var(--tinte); font-weight: 600; }
+  .seite figcaption { font-size: 14.5px; color: var(--grau); }
+  .seite figcaption strong { color: var(--tinte); font-weight: 600; }
 
   .empfehlung { margin-top: 72px; background: var(--beige); padding: 44px 48px; }
   .empfehlung h2 { font-size: 30px; }
@@ -163,7 +166,7 @@ teile.append(f"""
     <p class="auftrag">Unser Vorschlag zur Diskussion: Die Webseite soll <strong>schlanker</strong> werden und einen <strong>grösseren Mehrwert für Gemeinden, Kanton und Eltern</strong> bieten. Diese Vorlage stellt dafür fünf gestalterische Richtungen nebeneinander – jede vollständig durchgespielt auf denselben acht Seiten, damit sie sich Seite für Seite vergleichen lassen.</p>
     <div class="basis">
       <div><strong>Echtes Material</strong>Alle Entwürfe verwenden das echte Logo, die echten Hausfarben (Petrol, Nachtblau, Gelb) sowie Texte und Fotos der heutigen Webseite.</div>
-      <div><strong>Acht Seiten je Richtung</strong>Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden &amp; Kanton, Aktuell, Beitrag, Über uns – in jeder Richtung identisch belegt.</div>
+      <div><strong>Acht Seiten je Richtung</strong>Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden &amp; Kanton, Aktuell, Beitrag, Über uns – in jeder Richtung identisch belegt, jeweils mit Desktop- und Handy-Ansicht.</div>
       <div><strong>Gemeinsame Grundsätze</strong>Menü mit 4–5 Punkten statt heute 8+, die Platzsituation als gepflegter Redaktionstext, Barrierefreiheit und Suche bleiben Standard.</div>
     </div>
   </div>
@@ -197,11 +200,19 @@ for r in richtungen:
 """)
     for i, datei in enumerate(r['dateien']):
         bild = b64(os.path.join(SHOTS, datei + '.jpg'), 'image/jpeg')
+        handy = b64(os.path.join('shots-mobil', datei + '.jpg'), 'image/jpeg')
         titel = f"{r['nr']} · {r['name']} – {seiten[i]}"
-        teile.append(f"""      <button class="seite" type="button" data-titel="{titel}">
-        <span class="fenster"><img src="{bild}" alt="Entwurf: Seite «{seiten[i]}» der Richtung {r['nr']} ({r['name']})" loading="lazy"></span>
-        <span class="beschriftung"><strong>{seiten[i]}</strong> · zum Vergrössern antippen</span>
-      </button>
+        teile.append(f"""      <figure class="seite">
+        <div class="paar">
+          <button class="schau" type="button" data-titel="{titel} – Desktop">
+            <span class="fenster"><img src="{bild}" alt="Entwurf: Seite «{seiten[i]}» der Richtung {r['nr']} ({r['name']}), Desktop" loading="lazy"></span>
+          </button>
+          <button class="schau handy" type="button" data-titel="{titel} – Mobil" data-schmal="1">
+            <span class="fenster"><img src="{handy}" alt="Entwurf: Seite «{seiten[i]}» der Richtung {r['nr']} ({r['name']}), mobile Ansicht" loading="lazy"></span>
+          </button>
+        </div>
+        <figcaption><strong>{seiten[i]}</strong> · Desktop und Mobil, antippen zum Vergrössern</figcaption>
+      </figure>
 """)
     teile.append("    </div>\n  </div>\n")
 
@@ -236,11 +247,13 @@ teile.append("""
   const lupeBild = document.getElementById('lupe-bild');
   const lupeTitel = document.getElementById('lupe-titel');
   let zuletzt = null;
-  document.querySelectorAll('.seite').forEach((knopf) => {
+  document.querySelectorAll('.schau').forEach((knopf) => {
     knopf.addEventListener('click', () => {
       const bild = knopf.querySelector('img');
       lupeBild.src = bild.src;
       lupeBild.alt = bild.alt;
+      lupeBild.style.maxWidth = knopf.dataset.schmal ? '420px' : '';
+      lupeBild.style.margin = knopf.dataset.schmal ? '0 auto' : '';
       lupeTitel.textContent = knopf.dataset.titel;
       lupe.hidden = false;
       zuletzt = knopf;
