@@ -10,11 +10,11 @@ def b64(path, mime):
 seiten = ['Startseite', 'Angebot', 'Angebot Sehen', 'Aufnahme', 'Gemeinden & Kanton', 'Aktuell', 'Beitrag', 'Über uns']
 richtungen = [
     {
-        'nr': 1, 'name': 'Drei Eingänge', 'stamm': 'Main',
-        'these': 'Die Startseite wird zur Weiche: Eltern, Gemeinden und Kanton sowie Fachpersonen finden in fünf Sekunden ihren Weg.',
-        'motivation': 'Wer die Seite besucht, kommt fast immer als eine von drei Zielgruppen – und jede bekommt ihren eigenen Eingang mit den drei wichtigsten Verweisen. Kein Suchen im Menü, keine Umwege.',
-        'preis': 'Die Startseite erzählt weniger vom Leben im Haus; Stimmung und Bilder entstehen erst eine Ebene tiefer.',
-        'dateien': ['Main', 'Main-Angebote', 'Main-Angebot', 'Main-Aufnahme', 'Main-Behoerden', 'Main-Aktuell', 'Main-Beitrag', 'Main-Ueberuns'],
+        'nr': 1, 'name': 'Duett', 'stamm': 'Duett',
+        'these': 'Geteilter Bildschirm: Links steht das Haus mit grosser Aussage und Navigation fest, rechts fliesst der Inhalt.',
+        'motivation': 'Wie eine moderne digitale Broschüre: Die petrolfarbene Halbseite gibt jeder Seite Ruhe und Wiedererkennung, rechts bleibt der Inhalt kompakt und geführt. Sehr aufgeräumt, sehr eigenständig.',
+        'preis': 'Die linke Hälfte bindet Platz; auf dem Handy wird sie zum Kopfbereich über dem Inhalt.',
+        'dateien': ['Duett', 'Duett-Angebote', 'Duett-Angebot', 'Duett-Aufnahme', 'Duett-Behoerden', 'Duett-Aktuell', 'Duett-Beitrag', 'Duett-Ueberuns'],
         'favorit': False,
     },
     {
@@ -34,11 +34,11 @@ richtungen = [
         'favorit': False,
     },
     {
-        'nr': 4, 'name': 'Grossformat', 'stamm': 'Grossformat',
-        'these': 'Kompromisslos grosse Typografie, gelbes Laufband, viel Weissraum – die Botschaft wird zum Gestaltungselement.',
-        'motivation': 'Sehr selbstbewusst und sehr heutig: riesige Schlagzeilen, klare Zeilen, ein Laufband mit «Sehen · Verhalten · Sprechen». Kein Schmuck, nur Haltung.',
-        'preis': 'Wenig Bilder – die Richtung lebt von starken Worten. Auf kleinen Bildschirmen muss die Schrift stark schrumpfen.',
-        'dateien': ['Grossformat', 'Grossformat-Angebote', 'Grossformat-Angebot', 'Grossformat-Aufnahme', 'Grossformat-Behoerden', 'Grossformat-Aktuell', 'Grossformat-Beitrag', 'Grossformat-Ueberuns'],
+        'nr': 4, 'name': 'Horizont', 'stamm': 'Horizont',
+        'these': 'Weicher Farbverlauf in den Hausfarben als grosse Bühne, schwebende Karten, viel Rundung.',
+        'motivation': 'Die wärmste, freundlichste der modernen Richtungen: Der Verlauf von Petrol nach Nachtblau trägt die Titel, Inhalte schweben als Karten mit sanften Schatten auf getönten Bändern. Einladend und grosszügig.',
+        'preis': 'Braucht gestalterische Sorgfalt, damit es leicht bleibt und nicht überladen wirkt.',
+        'dateien': ['Horizont', 'Horizont-Angebote', 'Horizont-Angebot', 'Horizont-Aufnahme', 'Horizont-Behoerden', 'Horizont-Aktuell', 'Horizont-Beitrag', 'Horizont-Ueberuns'],
         'favorit': False,
     },
     {
@@ -52,10 +52,10 @@ richtungen = [
 ]
 
 vergleich = [
-    ('1 · Drei Eingänge', 'Startseite als Weiche für drei Zielgruppen', 'Eltern, Behörden und Fachpersonen gleichermassen', 'Weniger Stimmung auf der Startseite', 'gering bis mittel'),
+    ('1 · Duett', 'Geteilter Bildschirm: links das Haus, rechts der Inhalt', 'Eltern und Fachpersonen', 'Linke Hälfte bindet Platz', 'gering'),
     ('2 · Mosaik', 'Baukasten aus abgerundeten Kacheln, App-Gefühl', 'Eltern und Öffentlichkeit', 'Lange Inhalte brauchen Disziplin', 'gering bis mittel'),
     ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Auffallen bei allen Zielgruppen', 'Ungewohnt für eine Institution', 'gering'),
-    ('4 · Grossformat', 'Riesige Typografie, Laufband, viel Weissraum', 'Eilige; klare Botschaften', 'Wenig Bilder, lebt von Worten', 'am geringsten'),
+    ('4 · Horizont', 'Farbverlauf, schwebende Karten, weiche Rundungen', 'Eltern und Öffentlichkeit', 'Muss leicht gehalten werden', 'gering bis mittel'),
     ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Eltern', 'Braucht laufend gute Fotos', 'am höchsten'),
 ]
 
@@ -209,7 +209,7 @@ teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
     <p><strong>Richtung 2 «Mosaik» als Gestaltungssprache.</strong> Sie erfüllt als einzige alle drei Anforderungen des Auftrags zugleich: Sie trägt die Drei-Eingänge-Logik in sich (Eltern, Gemeinden &amp; Kanton und Fachpersonen haben je ihre Kachel und sind in einem Klick am Ziel), sie sieht mit Pillen-Navigation und abgerundeten Kacheln deutlich moderner aus – und sie bleibt pflegeleicht, weil jede Kachel ein Baustein ist, den die Redaktion einzeln bewirtschaften kann. Kacheln stapeln sich auf dem Handy sauber untereinander und lassen sich gut barrierefrei umsetzen.</p>
-    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, für eine soziale Institution aber ein Risiko; Grossformat zeigt zu wenig vom Leben im Haus; Panorama pur stellt für Behörden das Bild vor die Auskunft.</p>
+    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, für eine soziale Institution aber ein Risiko; Duett bindet auf jeder Seite viel Platz an die linke Hälfte; Horizont ist die wärmste Alternative, wenn es weicher sein soll; Panorama pur stellt für Behörden das Bild vor die Auskunft.</p>
     </div>
 
   <section class="schritte">

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .links { width: 512px; flex: none; background: #14514a; color: #ffffff; padding: 44px 48px; display: flex; flex-direction: column; }
+    .links nav { margin-top: auto; display: flex; flex-direction: column; gap: 11px; font-size: 16.5px; color: #bcd2cd; padding-top: 44px; }
+    .aktiv { color: #fbb500; font-weight: 700; }
+    .rechts { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #ffffff; }
+    .knopf { display: inline-block; background: #fbb500; color: #212934; border-radius: 10px; padding: 14px 28px; font-weight: 800; font-size: 17px; }
+    .fussz { margin-top: auto; border-top: 1px solid #e8e6dc; padding: 22px 40px; font-size: 14px; color: #8a8d93; display: flex; gap: 18px; }
+  </style>
+</helmet>
+<div style="width: 1280px; display: flex; background: #ffffff; color: #212934; min-height: 1080px;">
+
+  <div class="links">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto; align-self: flex-start;">
+    <div style="font-size: 46px; font-weight: 700; line-height: 1.12; margin-top: 56px;">Fünf Angebote unter einem Dach.</div>
+    <div style="font-size: 17.5px; color: #cfe0dc; line-height: 1.55; margin-top: 18px;">Dazu Therapie, Internat und Beratung. Welcher Weg passt, klärt sich im Aufnahmegespräch.</div>
+    <div style="margin-top: 28px;"><span class="knopf">Zur Aufnahme</span></div>
+    <nav>
+      <span>Start</span><span class="aktiv">Angebot</span><span>Aufnahme</span><span>Aktuell</span><span>Über uns</span><span>Jobs</span>
+    </nav>
+  </div>
+
+  <div class="rechts">
+    <div style="padding: 44px 40px 8px;">
+      <div style="padding: 20px 0; border-bottom: 1px solid #e8e6dc;">
+        <a style="font-size: 21px;">Sehen</a>
+        <div style="font-size: 15px; color: #565851; margin-top: 5px; line-height: 1.5;">Schule und Beratung für blinde und sehbeeinträchtigte Kinder und Jugendliche.</div>
+      </div>
+      <div style="padding: 20px 0; border-bottom: 1px solid #e8e6dc;">
+        <a style="font-size: 21px;">Sehen Plus</a>
+        <div style="font-size: 15px; color: #565851; margin-top: 5px; line-height: 1.5;">Für Kinder mit Sehbeeinträchtigung und weiteren Behinderungen.</div>
+      </div>
+      <div style="padding: 20px 0; border-bottom: 1px solid #e8e6dc;">
+        <a style="font-size: 21px;">Erwachsene Sehen Plus</a>
+        <div style="font-size: 15px; color: #565851; margin-top: 5px; line-height: 1.5;">Wohnen und Tagesstruktur für Erwachsene.</div>
+      </div>
+      <div style="padding: 20px 0; border-bottom: 1px solid #e8e6dc;">
+        <a style="font-size: 21px;">Verhalten und Sprache</a>
+        <div style="font-size: 15px; color: #565851; margin-top: 5px; line-height: 1.5;">Sonderschule mit Sprachheil- und Verhaltenspädagogik.</div>
+      </div>
+      <div style="padding: 20px 0;">
+        <a style="font-size: 21px;">Verhalten Plus</a>
+        <div style="font-size: 15px; color: #565851; margin-top: 5px; line-height: 1.5;">Spezialisierter Unterricht in kleinsten Gruppen.</div>
+      </div>
+      <div style="font-size: 15.5px; padding-top: 16px; border-top: 1px solid #e8e6dc;">Ergänzend: <a>Therapieangebot</a> · <a>Internat</a></div>
+    </div>
+
+    <img src="malen.jpg" alt="Eine Hand malt mit Pinsel und grüner Farbe" style="width: 100%; height: 240px; object-fit: cover; display: block; margin-top: 28px;">
+
+    <div class="fussz">
+      <span>Landhausstrasse 20 · 6340 Baar</span><span style="margin-left: auto;">Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

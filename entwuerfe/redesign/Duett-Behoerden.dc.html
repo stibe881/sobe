@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .links { width: 512px; flex: none; background: #14514a; color: #ffffff; padding: 44px 48px; display: flex; flex-direction: column; }
+    .links nav { margin-top: auto; display: flex; flex-direction: column; gap: 11px; font-size: 16.5px; color: #bcd2cd; padding-top: 44px; }
+    .aktiv { color: #fbb500; font-weight: 700; }
+    .rechts { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #ffffff; }
+    .knopf { display: inline-block; background: #fbb500; color: #212934; border-radius: 10px; padding: 14px 28px; font-weight: 800; font-size: 17px; }
+    .fussz { margin-top: auto; border-top: 1px solid #e8e6dc; padding: 22px 40px; font-size: 14px; color: #8a8d93; display: flex; gap: 18px; }
+    .dok { display: flex; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #e8e6dc; }
+  </style>
+</helmet>
+<div style="width: 1280px; display: flex; background: #ffffff; color: #212934; min-height: 1080px;">
+
+  <div class="links">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto; align-self: flex-start;">
+    <div style="font-size: 15px; color: #9dbcb5; margin-top: 56px;">Aufnahme</div>
+    <div style="font-size: 44px; font-weight: 700; line-height: 1.12; margin-top: 6px;">Für Gemeinden &amp; Kanton.</div>
+    <div style="font-size: 17.5px; color: #cfe0dc; line-height: 1.55; margin-top: 18px;">Zuweisung, Kostengutsprache, Berichte und Ansprechpersonen – gebündelt, ohne Suchen.</div>
+    <div style="margin-top: 28px;"><span class="knopf">Ansprechpersonen Intake</span></div>
+    <div style="font-size: 17px; font-weight: 700; margin-top: 16px;">041 767 78 33</div>
+    <nav>
+      <span>Start</span><span>Angebot</span><span class="aktiv">Aufnahme</span><span>Aktuell</span><span>Über uns</span><span>Jobs</span>
+    </nav>
+  </div>
+
+  <div class="rechts">
+    <div style="padding: 44px 40px 8px;">
+      <div style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">Unterlagen</div>
+      <div class="dok"><a style="flex: 1; font-size: 16px;">Anmeldeunterlagen</a><span style="color: #8a8d93; font-size: 14px;">PDF</span></div>
+      <div class="dok"><a style="flex: 1; font-size: 16px;">Jahresbericht &amp; Jahresrechnung</a><span style="color: #8a8d93; font-size: 14px;">PDF</span></div>
+      <div class="dok"><a style="flex: 1; font-size: 16px;">Angebotsübersicht &amp; Tarife</a><span style="color: #8a8d93; font-size: 14px;">PDF</span></div>
+      <div class="dok" style="border-bottom: 0;"><a style="flex: 1; font-size: 16px;">Statuten des Vereins SONNENBERG</a><span style="color: #8a8d93; font-size: 14px;">PDF</span></div>
+      <div style="font-size: 14px; color: #8a8d93; margin-top: 6px;">Ältere Jahrgänge stellt Ihnen die Geschäftsstelle gerne zu.</div>
+    </div>
+
+    <div style="padding: 28px 40px 0;">
+      <div style="font-size: 20px; font-weight: 700;">So läuft die Zuweisung</div>
+      <div style="font-size: 15.5px; color: #3b4149; line-height: 1.65; margin-top: 8px;">Die zuweisende Stelle meldet sich direkt beim Intake; die Kostengutsprache läuft über Wohngemeinde und Kanton. Wir begleiten den Ablauf und wissen, was wo nötig ist.</div>
+    </div>
+
+    <div style="margin: 24px 40px 28px; background: #f4f3ec; border-radius: 14px; padding: 26px 30px;">
+      <div style="font-size: 18px; font-weight: 700;">Platzsituation</div>
+      <div style="font-size: 13.5px; color: #8a8d93; margin-top: 3px;">Stand August 2026 · wird von der Redaktion laufend nachgeführt</div>
+      <div style="font-size: 15.5px; line-height: 1.6; margin-top: 10px; color: #3b4149;">Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low Vision-Pädagogik kann sich nach Absprache eventuell noch eine Möglichkeit für das Schuljahr 2026/27 ergeben. Anfragen für das Schuljahr 2027/28 werden ab Anfang September 2026 bearbeitet.</div>
+    </div>
+
+    <div class="fussz">
+      <span>Landhausstrasse 20 · 6340 Baar</span><span style="margin-left: auto;">Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

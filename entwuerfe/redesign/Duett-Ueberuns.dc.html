@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .links { width: 512px; flex: none; background: #14514a; color: #ffffff; padding: 44px 48px; display: flex; flex-direction: column; }
+    .links nav { margin-top: auto; display: flex; flex-direction: column; gap: 11px; font-size: 16.5px; color: #bcd2cd; padding-top: 44px; }
+    .aktiv { color: #fbb500; font-weight: 700; }
+    .rechts { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #ffffff; }
+    .knopf { display: inline-block; background: #fbb500; color: #212934; border-radius: 10px; padding: 14px 28px; font-weight: 800; font-size: 17px; }
+    .fussz { margin-top: auto; border-top: 1px solid #e8e6dc; padding: 22px 40px; font-size: 14px; color: #8a8d93; display: flex; gap: 18px; }
+  </style>
+</helmet>
+<div style="width: 1280px; display: flex; background: #ffffff; color: #212934; min-height: 1080px;">
+
+  <div class="links">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto; align-self: flex-start;">
+    <div style="font-size: 46px; font-weight: 700; line-height: 1.12; margin-top: 56px;">Seit über 100 Jahren da.</div>
+    <div style="font-size: 17.5px; color: #cfe0dc; line-height: 1.55; margin-top: 18px;">Für Kinder und Jugendliche mit besonderen Bedürfnissen – getragen vom Verein SONNENBERG, im Auftrag von Gemeinden und Kanton.</div>
+    <div style="margin-top: 28px;"><span class="knopf">Besuchen Sie uns</span></div>
+    <nav>
+      <span>Start</span><span>Angebot</span><span>Aufnahme</span><span>Aktuell</span><span class="aktiv">Über uns</span><span>Jobs</span>
+    </nav>
+  </div>
+
+  <div class="rechts">
+    <img src="campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar" style="width: 100%; height: 300px; object-fit: cover; display: block;">
+    <div style="padding: 32px 40px 8px;">
+      <div style="font-size: 16px; line-height: 1.68; color: #3b4149;">Der SONNENBERG ist das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung liegen unter einem Dach – an der Seite der Familien.</div>
+      <div style="margin-top: 20px;">
+        <div style="display: flex; gap: 24px; padding: 15px 0; border-top: 1px solid #e8e6dc; align-items: baseline;">
+          <div style="font-size: 16px; font-weight: 700; width: 170px; flex: none;">Auftrag</div>
+          <div style="font-size: 15.5px; color: #565851; line-height: 1.55;">Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens.</div>
+        </div>
+        <div style="display: flex; gap: 24px; padding: 15px 0; border-top: 1px solid #e8e6dc; align-items: baseline;">
+          <div style="font-size: 16px; font-weight: 700; width: 170px; flex: none;">Träger</div>
+          <div style="font-size: 15.5px; color: #565851; line-height: 1.55;">Verein SONNENBERG – <a>Vorstand, Statuten und Jahresberichte</a>.</div>
+        </div>
+        <div style="display: flex; gap: 24px; padding: 15px 0; border-top: 1px solid #e8e6dc; align-items: baseline;">
+          <div style="font-size: 16px; font-weight: 700; width: 170px; flex: none;">Arbeiten bei uns</div>
+          <div style="font-size: 15.5px; color: #565851; line-height: 1.55;"><a>Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</div>
+        </div>
+        <div style="display: flex; gap: 24px; padding: 15px 0; border-top: 1px solid #e8e6dc; border-bottom: 1px solid #e8e6dc; align-items: baseline;">
+          <div style="font-size: 16px; font-weight: 700; width: 170px; flex: none;">Kontakt</div>
+          <div style="font-size: 15.5px; color: #565851; line-height: 1.55;">Landhausstrasse 20, 6340 Baar · <span style="font-weight: 700; color: #212934;">041 767 78 33</span> · <a>info@sonnenberg-baar.ch</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fussz">
+      <span>Landhausstrasse 20 · 6340 Baar</span><span style="margin-left: auto;">Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
