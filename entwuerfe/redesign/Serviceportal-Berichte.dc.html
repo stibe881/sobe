@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: underline; text-underline-offset: 3px; } a:hover { color: #0d3630; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #f4f3ec; color: #212934;">
+
+  <!-- Kompakter dunkler Kopf: die Suche bleibt auf jeder Seite präsent -->
+  <div style="background: #212934; color: #ffffff; padding: 22px 56px 28px;">
+    <div style="display: flex; align-items: center; gap: 40px;">
+      <img src="logo-weiss.png" alt="SONNENBERG" style="height: 40px; width: auto;">
+      <div style="display: flex; gap: 32px; margin-left: auto; font-size: 17px; color: #d3d6db;">
+        <span>Angebot</span><span>Aufnahme</span><span>Über uns</span><span>Jobs</span>
+      </div>
+      <div style="display: flex; width: 300px; background: #ffffff; border-radius: 4px; overflow: hidden;">
+        <div style="flex: 1; padding: 10px 14px; color: #8a8d93; font-size: 15px;">Suchen …</div>
+        <div style="background: #fbb500; display: flex; align-items: center; padding: 0 14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#212934" stroke-width="2.5"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-5-5"></path></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seitentitel -->
+  <div style="padding: 48px 56px 8px;">
+    <div style="font-size: 15px; color: #565851;"><a>Dienste</a> / Zahlen &amp; Berichte</div>
+    <div style="font-size: 38px; font-weight: 600; margin-top: 10px;">Zahlen &amp; Berichte</div>
+    <div style="font-size: 18px; color: #565851; margin-top: 10px; max-width: 720px; line-height: 1.5;">Jahresberichte, Jahresrechnung und Statuten – Transparenz für Kanton, Gemeinden und die Öffentlichkeit.</div>
+  </div>
+
+  <!-- Berichte als Verzeichnis: die gleiche Zeilen-Sprache wie die Dienste auf der Startseite -->
+  <div style="padding: 32px 56px 48px;">
+    <div style="background: #ffffff; padding: 8px 32px;">
+      <div style="display: flex; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e6e4da;">
+        <a style="font-size: 19px; font-weight: 700;">Jahresbericht 2025</a>
+        <span style="margin-left: auto; color: #565851; font-size: 15px;">PDF</span>
+      </div>
+      <div style="display: flex; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e6e4da;">
+        <a style="font-size: 19px; font-weight: 700;">Jahresrechnung 2025</a>
+        <span style="margin-left: auto; color: #565851; font-size: 15px;">PDF</span>
+      </div>
+      <div style="display: flex; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e6e4da;">
+        <a style="font-size: 19px; font-weight: 700;">Jahresbericht 2024 – «Zeit gestalten, Zeit schenken, Zeit geniessen»</a>
+        <span style="margin-left: auto; color: #565851; font-size: 15px;">PDF</span>
+      </div>
+      <div style="display: flex; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e6e4da;">
+        <a style="font-size: 19px; font-weight: 700;">Statuten des Vereins SONNENBERG</a>
+        <span style="margin-left: auto; color: #565851; font-size: 15px;">PDF</span>
+      </div>
+      <div style="display: flex; align-items: baseline; padding: 18px 0;">
+        <a style="font-size: 19px; font-weight: 700;">Leitbild</a>
+        <span style="margin-left: auto; color: #565851; font-size: 15px;">PDF</span>
+      </div>
+    </div>
+    <div style="font-size: 15px; color: #565851; margin-top: 14px;">Ältere Jahrgänge stellt Ihnen die Geschäftsstelle gerne zu: <a>anfrage@sonnenberg-baar.ch</a></div>
+  </div>
+
+  <!-- Verwandte Dienste, damit die Portal-Logik sichtbar bleibt -->
+  <div style="padding: 0 56px 56px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px;">
+    <div style="padding: 20px 0; border-top: 1px solid #d9d7cc;">
+      <a style="font-size: 19px; font-weight: 700;">Anmeldung &amp; Formulare</a>
+      <div style="font-size: 15px; color: #565851; margin-top: 6px;">Alle Unterlagen für Eltern und zuweisende Stellen.</div>
+    </div>
+    <div style="padding: 20px 0; border-top: 1px solid #d9d7cc;">
+      <a style="font-size: 19px; font-weight: 700;">Beratung anfragen</a>
+      <div style="font-size: 15px; color: #565851; margin-top: 6px;">Direkt zur richtigen Ansprechperson.</div>
+    </div>
+  </div>
+
+  <div style="background: #212934; color: #aea8a0; padding: 32px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px;">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33 · info@sonnenberg-baar.ch</div>
+    <div style="display: flex; gap: 24px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

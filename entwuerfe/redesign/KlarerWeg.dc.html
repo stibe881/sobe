@@ -9,7 +9,7 @@
 <helmet>
   <style>
     body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
-    a { color: #14514a; } a:hover { color: #0d3630; }
+    a { color: #14514a; text-decoration: underline; text-underline-offset: 3px; } a:hover { color: #0d3630; }
   </style>
 </helmet>
 <div style="width: 1280px; background: #ffffff; color: #212934;">
@@ -28,37 +28,38 @@
     <div style="font-size: 19px; color: #565851; margin-top: 18px; max-width: 720px; line-height: 1.55;">Der Weg zu einem Platz im SONNENBERG in vier klaren Schritten – für Eltern gleich wie für zuweisende Stellen.</div>
   </div>
 
-  <!-- Der Weg: vier nummerierte Schritte -->
-  <div style="padding: 24px 56px 56px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;">
-    <div style="display: flex; flex-direction: column; gap: 12px; border-top: 4px solid #fbb500; padding-top: 18px;">
-      <div style="width: 44px; height: 44px; border-radius: 50%; background: #14514a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">1</div>
-      <div style="font-size: 20px; font-weight: 700;">Kontakt aufnehmen</div>
-      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Ein Anruf oder eine Mail ans Intake genügt. Wir hören zu und klären die erste Frage: Passt der SONNENBERG?</div>
+  <!-- Der Weg: vier Schritte als Leseliste – Ziffern und Linien statt Kreise und Kacheln -->
+  <div style="padding: 16px 56px 48px;">
+    <div style="display: flex; gap: 36px; padding: 26px 0; border-top: 1px solid #e0dfd6; align-items: baseline;">
+      <div style="flex: none; width: 44px; font-size: 28px; font-weight: 700; color: #14514a;">1</div>
+      <div style="flex: none; width: 280px; font-size: 21px; font-weight: 700;">Kontakt aufnehmen</div>
+      <div style="font-size: 16px; color: #565851; line-height: 1.55;">Ein Anruf oder eine Mail ans Intake genügt. Wir hören zu und klären die erste Frage: Passt der SONNENBERG?</div>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 12px; border-top: 4px solid #e0dfd6; padding-top: 18px;">
-      <div style="width: 44px; height: 44px; border-radius: 50%; background: #14514a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">2</div>
-      <div style="font-size: 20px; font-weight: 700;">Abklärung</div>
-      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Gespräch, Unterlagen, Schnuppern: Gemeinsam mit Eltern und zuweisender Stelle klären wir den Bedarf.</div>
+    <div style="display: flex; gap: 36px; padding: 26px 0; border-top: 1px solid #e0dfd6; align-items: baseline;">
+      <div style="flex: none; width: 44px; font-size: 28px; font-weight: 700; color: #14514a;">2</div>
+      <div style="flex: none; width: 280px; font-size: 21px; font-weight: 700;">Abklärung</div>
+      <div style="font-size: 16px; color: #565851; line-height: 1.55;">Gespräch, Unterlagen, Schnuppern: Gemeinsam mit Eltern und zuweisender Stelle klären wir den Bedarf.</div>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 12px; border-top: 4px solid #e0dfd6; padding-top: 18px;">
-      <div style="width: 44px; height: 44px; border-radius: 50%; background: #14514a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">3</div>
-      <div style="font-size: 20px; font-weight: 700;">Entscheid</div>
-      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Die Kostengutsprache läuft über Wohngemeinde und Kanton – wir begleiten den Ablauf und wissen, was wo nötig ist.</div>
+    <div style="display: flex; gap: 36px; padding: 26px 0; border-top: 1px solid #e0dfd6; align-items: baseline;">
+      <div style="flex: none; width: 44px; font-size: 28px; font-weight: 700; color: #14514a;">3</div>
+      <div style="flex: none; width: 280px; font-size: 21px; font-weight: 700;">Entscheid</div>
+      <div style="font-size: 16px; color: #565851; line-height: 1.55;">Die Kostengutsprache läuft über Wohngemeinde und Kanton – wir begleiten den Ablauf und wissen, was wo nötig ist.</div>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 12px; border-top: 4px solid #e0dfd6; padding-top: 18px;">
-      <div style="width: 44px; height: 44px; border-radius: 50%; background: #14514a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">4</div>
-      <div style="font-size: 20px; font-weight: 700;">Eintritt</div>
-      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Sorgfältig vorbereitet, mit fester Bezugsperson – in Schule, Internat oder Tagesstruktur.</div>
+    <div style="display: flex; gap: 36px; padding: 26px 0; border-top: 1px solid #e0dfd6; align-items: baseline;">
+      <div style="flex: none; width: 44px; font-size: 28px; font-weight: 700; color: #14514a;">4</div>
+      <div style="flex: none; width: 280px; font-size: 21px; font-weight: 700;">Eintritt</div>
+      <div style="font-size: 16px; color: #565851; line-height: 1.55;">Sorgfältig vorbereitet, mit fester Bezugsperson – in Schule, Internat oder Tagesstruktur.</div>
     </div>
   </div>
 
-  <!-- Platzsituation: der Textbaustein aus der Redaktion, prominent -->
-  <div style="margin: 0 56px 56px; background: #f4f3ec; border-left: 6px solid #fbb500; padding: 28px 32px; display: flex; gap: 32px; align-items: center;">
-    <div style="flex: 1;">
-      <div style="font-size: 15px; font-weight: 700; letter-spacing: 2px; color: #565851; text-transform: uppercase;">Aktuelle Platzsituation</div>
-      <div style="font-size: 18px; line-height: 1.5; margin-top: 8px;">Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low Vision-Pädagogik kann sich nach Absprache eventuell noch eine Möglichkeit für das Schuljahr 2026/27 ergeben. Anfragen für das Schuljahr 2027/28 werden ab Anfang September 2026 bearbeitet.</div>
+  <!-- Platzsituation: der Textbaustein aus der Redaktion, als eigener Abschnitt gesetzt statt als Hinweiskasten -->
+  <div style="background: #f4f3ec; padding: 48px 56px 52px;">
+    <div style="max-width: 860px;">
+      <div style="font-size: 26px; font-weight: 700;">Platzsituation</div>
+      <div style="font-size: 15px; color: #565851; margin-top: 4px;">Stand August 2026 · wird von der Redaktion laufend nachgeführt</div>
+      <div style="font-size: 19px; line-height: 1.6; margin-top: 16px;">Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low Vision-Pädagogik kann sich nach Absprache eventuell noch eine Möglichkeit für das Schuljahr 2026/27 ergeben. Anfragen für das Schuljahr 2027/28 werden ab Anfang September 2026 bearbeitet.</div>
+      <div style="margin-top: 18px; font-size: 17px; font-weight: 700;"><a>Intake kontaktieren</a></div>
     </div>
-    <div style="background: #14514a; color: #ffffff; padding: 14px 28px; border-radius: 3px; font-weight: 700; flex: none;">Intake kontaktieren</div>
   </div>
 
   <!-- Für zuweisende Stellen: alles Nötige als Downloads -->
@@ -67,22 +68,22 @@
       <div style="font-size: 26px; font-weight: 700;">Für Gemeinden und Kanton</div>
       <div style="font-size: 16px; color: #aea8a0;">Alles für Zuweisung und Kostengutsprache an einem Ort.</div>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 28px;">
-      <div style="background: #2b3440; padding: 20px; display: flex; gap: 12px; align-items: center;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbb500" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"></path></svg>
-        <div style="font-size: 15px; font-weight: 600;">Anmeldeunterlagen</div>
+    <div style="margin-top: 24px; max-width: 860px;">
+      <div style="display: flex; align-items: baseline; padding: 15px 0; border-top: 1px solid #3a4350;">
+        <a style="color: #ffffff; font-weight: 600; font-size: 17px;">Anmeldeunterlagen</a>
+        <span style="margin-left: auto; color: #8a8d93; font-size: 15px;">PDF</span>
       </div>
-      <div style="background: #2b3440; padding: 20px; display: flex; gap: 12px; align-items: center;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbb500" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"></path></svg>
-        <div style="font-size: 15px; font-weight: 600;">Jahresbericht &amp; Jahresrechnung</div>
+      <div style="display: flex; align-items: baseline; padding: 15px 0; border-top: 1px solid #3a4350;">
+        <a style="color: #ffffff; font-weight: 600; font-size: 17px;">Jahresbericht &amp; Jahresrechnung</a>
+        <span style="margin-left: auto; color: #8a8d93; font-size: 15px;">PDF</span>
       </div>
-      <div style="background: #2b3440; padding: 20px; display: flex; gap: 12px; align-items: center;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbb500" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"></path></svg>
-        <div style="font-size: 15px; font-weight: 600;">Angebotsübersicht &amp; Tarife</div>
+      <div style="display: flex; align-items: baseline; padding: 15px 0; border-top: 1px solid #3a4350;">
+        <a style="color: #ffffff; font-weight: 600; font-size: 17px;">Angebotsübersicht &amp; Tarife</a>
+        <span style="margin-left: auto; color: #8a8d93; font-size: 15px;">PDF</span>
       </div>
-      <div style="background: #2b3440; padding: 20px; display: flex; gap: 12px; align-items: center;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbb500" stroke-width="2"><path d="M22 16v4H2v-4M12 3a4 4 0 110 8 4 4 0 010-8zM4 21c1-4 4-6 8-6s7 2 8 6"></path></svg>
-        <div style="font-size: 15px; font-weight: 600;">Ansprechpersonen Intake</div>
+      <div style="display: flex; align-items: baseline; padding: 15px 0; border-top: 1px solid #3a4350; border-bottom: 1px solid #3a4350;">
+        <a style="color: #ffffff; font-weight: 600; font-size: 17px;">Ansprechpersonen Intake</a>
+        <span style="margin-left: auto; color: #8a8d93; font-size: 15px;">Telefon &amp; E-Mail</span>
       </div>
     </div>
   </div>
