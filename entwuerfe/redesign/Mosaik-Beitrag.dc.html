@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #f2f1ec; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .kopf { display: flex; align-items: center; gap: 36px; background: #ffffff; border-radius: 999px; padding: 14px 30px; margin: 22px 40px 0; box-shadow: 0 2px 12px rgba(33, 41, 52, 0.07); }
+    .kopf nav { display: flex; gap: 28px; margin-left: auto; font-size: 16px; color: #212934; }
+    .raster { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding: 22px 40px 40px; }
+    .kachel { background: #ffffff; border-radius: 22px; padding: 34px; }
+    .fussk { grid-column: span 6; background: #212934; color: #aeb4bd; border-radius: 22px; padding: 26px 34px; display: flex; gap: 24px; align-items: center; font-size: 15px; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #f2f1ec; color: #212934;">
+
+  <div class="kopf">
+    <img src="logo.png" alt="SONNENBERG" style="height: 34px; width: auto;">
+    <nav><span>Start</span><span>Angebot</span><span>Aufnahme</span><span style="font-weight: 700;">Aktuell</span><span>Über uns</span></nav>
+  </div>
+
+  <div class="raster">
+    <div class="kachel" style="grid-column: span 6; padding: 0; overflow: hidden;">
+      <img src="fussball.jpg" alt="Vier junge Fussballer jubeln auf dem Spielfeld" style="width: 100%; height: 380px; object-fit: cover; display: block;">
+    </div>
+
+    <div class="kachel" style="grid-column: span 4; padding: 44px 48px;">
+      <div style="font-size: 14px; color: #8a8d93;"><a>Aktuell</a> · 13. August 2026</div>
+      <div style="font-size: 32px; font-weight: 700; line-height: 1.2; margin-top: 10px;">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</div>
+      <div style="display: flex; flex-direction: column; gap: 16px; font-size: 16.5px; line-height: 1.65; color: #3b4149; margin-top: 20px;">
+        <div>Das von FOOTBALL IS MORE initiierte Turnier verbindet sportlichen Wettkampf mit gesellschaftlicher Teilhabe und Inklusion. Nachwuchstalente sowie Menschen mit Beeinträchtigungen zeigen gemeinsam ihr Können auf dem Platz und setzen damit ein starkes Zeichen für Gleichberechtigung.</div>
+        <div>Vom 7. bis 9. August 2026 nahm der FC Bruschgol – mit drei Spielern des SONNENBERG und fünf weiteren Spieler*innen aus dem Talkessel Schwyz – am European Inclusion Cup in St. Gallen teil. Das Teilnehmerfeld war international besetzt, mit Teams aus Portugal, der Ukraine bis hin nach Dubai.</div>
+        <div>Auf dem Rasen warteten unter anderem Chelsea FC, Benfica Lissabon und Werder Bremen; auch Schweizer Teams wie der FC Winterthur, Lausanne-Sport, YB oder der FC Zürich forderten unser Team heraus. Unsere Spieler*innen zeigten viel Einsatz, Motivation und Freude am Spiel.</div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 16px;">
+      <div class="kachel" style="background: #fbb500;">
+        <div style="font-size: 18px; font-weight: 700; line-height: 1.4;">«Fussball, Begegnung und gelebte Inklusion – dafür steht der FC Bruschgol seit Jahren.»</div>
+      </div>
+      <div class="kachel" style="flex: 1;">
+        <div style="font-size: 17px; font-weight: 700;">Weitere Beiträge</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px; font-size: 15px;">
+          <a>SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a>
+          <a>Feuerwehrübung auf dem SONNENBERG-Areal</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fussk">
+      <img src="logo-weiss.png" alt="SONNENBERG" style="height: 22px; width: auto;">
+      <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+      <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

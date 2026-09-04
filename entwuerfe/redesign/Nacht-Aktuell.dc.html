@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #14181f; }
+    a { color: #fbb500; text-decoration: none; font-weight: 600; }
+    .kopf { display: flex; align-items: center; gap: 40px; padding: 24px 56px; border-bottom: 1px solid #242b36; }
+    .kopf nav { display: flex; gap: 30px; margin-left: auto; font-size: 16px; color: #c6cdd8; }
+    .feld { background: #1d232d; border-radius: 18px; }
+    .fuss { border-top: 1px solid #242b36; padding: 28px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px; color: #8b95a3; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #14181f; color: #eef1f5;">
+
+  <div class="kopf">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto;">
+    <nav><span>Start</span><span>Angebot</span><span>Aufnahme</span><span style="color: #ffffff; font-weight: 700;">Aktuell</span><span>Über uns</span></nav>
+  </div>
+
+  <div style="padding: 64px 56px 40px;">
+    <div style="font-size: 50px; font-weight: 800;">Aktuell</div>
+    <div style="font-size: 19px; color: #9aa4b2; margin-top: 12px; line-height: 1.55;">Einblicke in den Alltag im SONNENBERG.</div>
+  </div>
+
+  <div style="padding: 0 56px 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+    <div class="feld" style="overflow: hidden; display: flex; flex-direction: column;">
+      <img src="fussball.jpg" alt="Vier junge Fussballer jubeln auf dem Spielfeld" style="width: 100%; height: 260px; object-fit: cover;">
+      <div style="padding: 24px 28px 28px;">
+        <div style="font-size: 14px; color: #8b95a3;">13. August 2026</div>
+        <a style="font-size: 19px; line-height: 1.35; display: block; margin-top: 6px; color: #eef1f5;">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a>
+      </div>
+    </div>
+    <div class="feld" style="overflow: hidden; display: flex; flex-direction: column;">
+      <img src="aquarell.jpg" alt="Kinder malen mit Wasserfarben" style="width: 100%; height: 260px; object-fit: cover;">
+      <div style="padding: 24px 28px 28px;">
+        <div style="font-size: 14px; color: #8b95a3;">12. Juni 2026</div>
+        <a style="font-size: 19px; line-height: 1.35; display: block; margin-top: 6px; color: #eef1f5;">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 56px 64px;">
+    <div style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #242b36; align-items: baseline;">
+      <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">1. Juni 2026</div>
+      <a style="font-size: 18px; color: #eef1f5;">Feuerwehrübung auf dem SONNENBERG-Areal</a>
+    </div>
+    <div style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #242b36; align-items: baseline;">
+      <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">Mai 2026</div>
+      <a style="font-size: 18px; color: #eef1f5;">Die Frühlingsausgabe des SONNENBERG-Magazins ist da</a>
+    </div>
+    <div style="display: flex; gap: 24px; padding: 18px 0; align-items: baseline;">
+      <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">April 2026</div>
+      <a style="font-size: 18px; color: #eef1f5;">Orientierung für alle Sinne: neue Signaletik im SONNENBERG</a>
+    </div>
+    <div style="margin-top: 18px; font-size: 15.5px;"><a>Ältere Beiträge</a></div>
+  </div>
+
+  <div class="fuss">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+    <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

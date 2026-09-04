@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #14181f; }
+    a { color: #fbb500; text-decoration: none; font-weight: 600; }
+    .kopf { display: flex; align-items: center; gap: 40px; padding: 24px 56px; border-bottom: 1px solid #242b36; }
+    .kopf nav { display: flex; gap: 30px; margin-left: auto; font-size: 16px; color: #c6cdd8; }
+    .feld { background: #1d232d; border-radius: 18px; }
+    .knopf { display: inline-block; background: #fbb500; color: #14181f; border-radius: 12px; padding: 14px 30px; font-weight: 800; font-size: 17px; }
+    .fuss { border-top: 1px solid #242b36; padding: 28px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px; color: #8b95a3; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #14181f; color: #eef1f5;">
+
+  <div class="kopf">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto;">
+    <nav><span style="color: #ffffff; font-weight: 700;">Start</span><span>Angebot</span><span>Aufnahme</span><span>Aktuell</span><span>Über uns</span></nav>
+  </div>
+
+  <!-- Held: grosse Typografie, Gelb leuchtet auf Dunkel -->
+  <div style="padding: 80px 56px 56px; display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: center;">
+    <div>
+      <div style="font-size: 58px; font-weight: 800; line-height: 1.06;">Wir begleiten, fördern und unterstützen <span style="color: #fbb500;">mit Herz.</span></div>
+      <div style="font-size: 19px; color: #9aa4b2; line-height: 1.55; margin-top: 20px; max-width: 560px;">Das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar – Schule, Internat, Therapie und Beratung unter einem Dach.</div>
+      <div style="display: flex; gap: 24px; align-items: center; margin-top: 30px;">
+        <span class="knopf">Aufnahme &amp; Beratung</span>
+        <div style="font-size: 18px; font-weight: 700; color: #ffffff;">041 767 78 33</div>
+      </div>
+    </div>
+    <img src="aquarell.jpg" alt="Kinder malen mit Wasserfarben" style="width: 100%; height: 380px; object-fit: cover; border-radius: 18px;">
+  </div>
+
+  <!-- Drei Wege als dunkle Karten -->
+  <div style="padding: 8px 56px 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
+    <div class="feld" style="padding: 30px;">
+      <div style="font-size: 21px; font-weight: 700; color: #ffffff;">Für Eltern</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15.5px; margin-top: 14px;">
+        <a>So läuft eine Aufnahme ab</a>
+        <a>Unsere Angebote</a>
+        <a>Beratungsgespräch vereinbaren</a>
+      </div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <div style="font-size: 21px; font-weight: 700; color: #ffffff;">Für Gemeinden &amp; Kanton</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15.5px; margin-top: 14px;">
+        <a>Zuweisung &amp; Platzsituation</a>
+        <a>Jahresberichte &amp; Kennzahlen</a>
+        <a>Ansprechpersonen Intake</a>
+      </div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <div style="font-size: 21px; font-weight: 700; color: #ffffff;">Für Fachpersonen</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15.5px; margin-top: 14px;">
+        <a>Fachstellen Sehen &amp; Autismus</a>
+        <a>Beratung für Regelschulen</a>
+        <a>Lehrmittel &amp; Shop</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aktuell -->
+  <div style="padding: 0 56px 64px;">
+    <div style="display: flex; align-items: baseline; gap: 24px;">
+      <div style="font-size: 30px; font-weight: 800; color: #ffffff;">Aktuell</div>
+      <a style="font-size: 15px;">Alle Beiträge</a>
+    </div>
+    <div style="margin-top: 12px;">
+      <div style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #242b36; align-items: baseline;">
+        <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">13. August 2026</div>
+        <a style="font-size: 18px; color: #eef1f5;">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a>
+      </div>
+      <div style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #242b36; align-items: baseline;">
+        <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">12. Juni 2026</div>
+        <a style="font-size: 18px; color: #eef1f5;">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a>
+      </div>
+      <div style="display: flex; gap: 24px; padding: 18px 0; align-items: baseline;">
+        <div style="color: #8b95a3; font-size: 14.5px; flex: none; width: 140px;">1. Juni 2026</div>
+        <a style="font-size: 18px; color: #eef1f5;">Feuerwehrübung auf dem SONNENBERG-Areal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="fuss">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+    <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

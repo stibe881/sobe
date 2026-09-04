@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #ffffff; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .buehne { position: relative; }
+    .buehne > img { width: 100%; height: 500px; object-fit: cover; display: block; }
+    .schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 24, 31, 0.2) 0%, rgba(20, 24, 31, 0) 40%, rgba(20, 24, 31, 0.68) 100%); }
+    .glas { position: absolute; top: 24px; left: 40px; right: 40px; display: flex; align-items: center; gap: 36px; background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(12px); border-radius: 16px; padding: 14px 28px; }
+    .glas nav { display: flex; gap: 28px; margin-left: auto; font-size: 16px; color: #212934; }
+    .titelauf { position: absolute; left: 56px; right: 56px; bottom: 40px; color: #ffffff; }
+    .knopf { display: inline-block; background: #fbb500; color: #212934; border-radius: 999px; padding: 14px 30px; font-weight: 800; font-size: 17px; }
+    .fuss { background: #212934; color: #aeb4bd; padding: 28px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px; }
+    .karte { background: #f6f5f0; border-radius: 20px; padding: 28px; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #ffffff; color: #212934;">
+
+  <div class="buehne">
+    <img src="campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar">
+    <div class="schleier"></div>
+    <div class="glas">
+      <img src="logo.png" alt="SONNENBERG" style="height: 34px; width: auto;">
+      <nav><span>Start</span><span>Angebot</span><span>Aufnahme</span><span>Aktuell</span><span style="font-weight: 700;">Über uns</span></nav>
+    </div>
+    <div class="titelauf">
+      <div style="font-size: 46px; font-weight: 800;">Über uns</div>
+      <div style="font-size: 18px; margin-top: 8px; color: rgba(255, 255, 255, 0.88); max-width: 760px;">Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da – getragen vom Verein SONNENBERG.</div>
+    </div>
+  </div>
+
+  <div style="padding: 44px 56px 24px;">
+    <div style="font-size: 17.5px; line-height: 1.65; color: #3b4149; max-width: 880px;">Der SONNENBERG ist das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung liegen unter einem Dach – im Auftrag von Gemeinden und Kanton, an der Seite der Familien.</div>
+  </div>
+
+  <div style="padding: 16px 56px 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+    <div class="karte">
+      <div style="font-size: 18px; font-weight: 700;">Auftrag</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.6; margin-top: 8px;">Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens.</div>
+    </div>
+    <div class="karte">
+      <div style="font-size: 18px; font-weight: 700;">Träger</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.6; margin-top: 8px;">Verein SONNENBERG – <a>Vorstand, Statuten und Jahresberichte</a>.</div>
+    </div>
+    <div class="karte">
+      <div style="font-size: 18px; font-weight: 700;">Arbeiten bei uns</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.6; margin-top: 8px;"><a>Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</div>
+    </div>
+  </div>
+
+  <div style="padding: 0 56px 64px; display: flex; align-items: center; gap: 32px;">
+    <div style="font-size: 21px; font-weight: 700;">Kontakt: <span style="font-weight: 800;">041 767 78 33</span> · <a>info@sonnenberg-baar.ch</a> · Landhausstrasse 20, 6340 Baar</div>
+    <span class="knopf" style="margin-left: auto; flex: none;">Besuchen Sie uns</span>
+  </div>
+
+  <div class="fuss">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+    <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

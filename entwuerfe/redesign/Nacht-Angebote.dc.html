@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #14181f; }
+    a { color: #fbb500; text-decoration: none; font-weight: 600; }
+    .kopf { display: flex; align-items: center; gap: 40px; padding: 24px 56px; border-bottom: 1px solid #242b36; }
+    .kopf nav { display: flex; gap: 30px; margin-left: auto; font-size: 16px; color: #c6cdd8; }
+    .feld { background: #1d232d; border-radius: 18px; }
+    .knopf { display: inline-block; background: #fbb500; color: #14181f; border-radius: 12px; padding: 14px 30px; font-weight: 800; font-size: 17px; }
+    .fuss { border-top: 1px solid #242b36; padding: 28px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px; color: #8b95a3; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #14181f; color: #eef1f5;">
+
+  <div class="kopf">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 38px; width: auto;">
+    <nav><span>Start</span><span style="color: #ffffff; font-weight: 700;">Angebot</span><span>Aufnahme</span><span>Aktuell</span><span>Über uns</span></nav>
+  </div>
+
+  <div style="padding: 64px 56px 40px;">
+    <div style="font-size: 50px; font-weight: 800;">Angebot</div>
+    <div style="font-size: 19px; color: #9aa4b2; margin-top: 12px; max-width: 720px; line-height: 1.55;">Fünf Angebote unter einem Dach – dazu Therapie, Internat und Beratung.</div>
+  </div>
+
+  <div style="padding: 0 56px 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+    <div class="feld" style="padding: 30px;">
+      <a style="font-size: 23px; font-weight: 700;">Sehen</a>
+      <div style="font-size: 15.5px; color: #9aa4b2; line-height: 1.55; margin-top: 8px;">Schule und Beratung für blinde und sehbeeinträchtigte Kinder und Jugendliche.</div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <a style="font-size: 23px; font-weight: 700;">Sehen Plus</a>
+      <div style="font-size: 15.5px; color: #9aa4b2; line-height: 1.55; margin-top: 8px;">Für Kinder mit Sehbeeinträchtigung und weiteren Behinderungen.</div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <a style="font-size: 23px; font-weight: 700;">Erwachsene Sehen Plus</a>
+      <div style="font-size: 15.5px; color: #9aa4b2; line-height: 1.55; margin-top: 8px;">Wohnen und Tagesstruktur für Erwachsene.</div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <a style="font-size: 23px; font-weight: 700;">Verhalten und Sprache</a>
+      <div style="font-size: 15.5px; color: #9aa4b2; line-height: 1.55; margin-top: 8px;">Sonderschule mit Sprachheil- und Verhaltenspädagogik.</div>
+    </div>
+    <div class="feld" style="padding: 30px;">
+      <a style="font-size: 23px; font-weight: 700;">Verhalten Plus</a>
+      <div style="font-size: 15.5px; color: #9aa4b2; line-height: 1.55; margin-top: 8px;">Spezialisierter Unterricht in kleinsten Gruppen.</div>
+    </div>
+    <div class="feld" style="padding: 30px; background: #1d232d;">
+      <div style="font-size: 18px; font-weight: 700; color: #ffffff;">Ergänzend</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px; font-size: 15.5px;">
+        <a>Therapieangebot</a>
+        <a>Internat</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 56px 64px; display: flex; align-items: center; gap: 32px;">
+    <div style="font-size: 22px; font-weight: 700; color: #ffffff;">Nicht sicher, welches Angebot passt? Wir klären es gemeinsam.</div>
+    <span class="knopf" style="margin-left: auto; flex: none;">Zur Aufnahme</span>
+  </div>
+
+  <div class="fuss">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+    <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

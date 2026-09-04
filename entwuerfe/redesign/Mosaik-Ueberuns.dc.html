@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; background: #f2f1ec; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .kopf { display: flex; align-items: center; gap: 36px; background: #ffffff; border-radius: 999px; padding: 14px 30px; margin: 22px 40px 0; box-shadow: 0 2px 12px rgba(33, 41, 52, 0.07); }
+    .kopf nav { display: flex; gap: 28px; margin-left: auto; font-size: 16px; color: #212934; }
+    .raster { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding: 22px 40px 40px; }
+    .kachel { background: #ffffff; border-radius: 22px; padding: 34px; }
+    .fussk { grid-column: span 6; background: #212934; color: #aeb4bd; border-radius: 22px; padding: 26px 34px; display: flex; gap: 24px; align-items: center; font-size: 15px; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #f2f1ec; color: #212934;">
+
+  <div class="kopf">
+    <img src="logo.png" alt="SONNENBERG" style="height: 34px; width: auto;">
+    <nav><span>Start</span><span>Angebot</span><span>Aufnahme</span><span>Aktuell</span><span style="font-weight: 700;">Über uns</span></nav>
+  </div>
+
+  <div class="raster">
+    <div class="kachel" style="grid-column: span 3; background: #14514a; color: #ffffff; padding: 44px 48px; display: flex; flex-direction: column; justify-content: center; gap: 14px;">
+      <div style="font-size: 38px; font-weight: 700;">Über uns</div>
+      <div style="font-size: 17px; color: #cfe0dc; line-height: 1.55;">Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da – getragen vom Verein SONNENBERG.</div>
+    </div>
+    <div class="kachel" style="grid-column: span 3; padding: 0; overflow: hidden;">
+      <img src="campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+    </div>
+
+    <div class="kachel" style="grid-column: span 6;">
+      <div style="font-size: 16.5px; line-height: 1.65; color: #3b4149; max-width: 900px;">Der SONNENBERG ist das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung liegen unter einem Dach – im Auftrag von Gemeinden und Kanton, an der Seite der Familien.</div>
+    </div>
+
+    <div class="kachel" style="grid-column: span 2;">
+      <div style="font-size: 19px; font-weight: 700;">Auftrag</div>
+      <div style="font-size: 15.5px; color: #565851; line-height: 1.6; margin-top: 10px;">Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens.</div>
+    </div>
+    <div class="kachel" style="grid-column: span 2;">
+      <div style="font-size: 19px; font-weight: 700;">Träger</div>
+      <div style="font-size: 15.5px; color: #565851; line-height: 1.6; margin-top: 10px;">Verein SONNENBERG – <a>Vorstand, Statuten und Jahresberichte</a>.</div>
+    </div>
+    <div class="kachel" style="grid-column: span 2;">
+      <div style="font-size: 19px; font-weight: 700;">Arbeiten bei uns</div>
+      <div style="font-size: 15.5px; color: #565851; line-height: 1.6; margin-top: 10px;"><a>Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</div>
+    </div>
+
+    <div class="kachel" style="grid-column: span 6; background: #fbb500; display: flex; align-items: center; gap: 40px;">
+      <div style="font-size: 20px; font-weight: 700;">Kontakt</div>
+      <div style="font-size: 16px;">Landhausstrasse 20, 6340 Baar</div>
+      <div style="font-size: 20px; font-weight: 800;">041 767 78 33</div>
+      <a style="font-size: 16px; color: #212934;">info@sonnenberg-baar.ch</a>
+    </div>
+
+    <div class="fussk">
+      <img src="logo-weiss.png" alt="SONNENBERG" style="height: 22px; width: auto;">
+      <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+      <div style="display: flex; gap: 22px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -65,260 +65,260 @@
       "h": 920
     },
     {
-      "file": "KlarerWeg.dc.html",
+      "file": "Mosaik.dc.html",
       "title": "2 · Startseite",
       "x": 0,
       "y": 2010,
       "w": 1280,
-      "h": 2130
+      "h": 990
     },
     {
-      "file": "KlarerWeg-Angebote.dc.html",
+      "file": "Mosaik-Angebote.dc.html",
       "title": "2 · Angebot",
       "x": 1420,
-      "y": 2010,
-      "w": 1280,
-      "h": 1040
-    },
-    {
-      "file": "KlarerWeg-Angebot.dc.html",
-      "title": "2 · Angebot Sehen",
-      "x": 2840,
-      "y": 2010,
-      "w": 1280,
-      "h": 1310
-    },
-    {
-      "file": "KlarerWeg-Aufnahme.dc.html",
-      "title": "2 · Aufnahme",
-      "x": 4260,
-      "y": 2010,
-      "w": 1280,
-      "h": 1280
-    },
-    {
-      "file": "KlarerWeg-Behoerden.dc.html",
-      "title": "2 · Gemeinden & Kanton",
-      "x": 5680,
-      "y": 2010,
-      "w": 1280,
-      "h": 1470
-    },
-    {
-      "file": "KlarerWeg-Aktuell.dc.html",
-      "title": "2 · Aktuell",
-      "x": 7100,
       "y": 2010,
       "w": 1280,
       "h": 860
     },
     {
-      "file": "KlarerWeg-Beitrag.dc.html",
+      "file": "Mosaik-Angebot.dc.html",
+      "title": "2 · Angebot Sehen",
+      "x": 2840,
+      "y": 2010,
+      "w": 1280,
+      "h": 1050
+    },
+    {
+      "file": "Mosaik-Aufnahme.dc.html",
+      "title": "2 · Aufnahme",
+      "x": 4260,
+      "y": 2010,
+      "w": 1280,
+      "h": 1020
+    },
+    {
+      "file": "Mosaik-Behoerden.dc.html",
+      "title": "2 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 2010,
+      "w": 1280,
+      "h": 910
+    },
+    {
+      "file": "Mosaik-Aktuell.dc.html",
+      "title": "2 · Aktuell",
+      "x": 7100,
+      "y": 2010,
+      "w": 1280,
+      "h": 1030
+    },
+    {
+      "file": "Mosaik-Beitrag.dc.html",
       "title": "2 · Beitrag",
       "x": 8520,
       "y": 2010,
       "w": 1280,
-      "h": 1510
+      "h": 1220
     },
     {
-      "file": "KlarerWeg-Ueberuns.dc.html",
+      "file": "Mosaik-Ueberuns.dc.html",
       "title": "2 · Über uns",
       "x": 9940,
       "y": 2010,
       "w": 1280,
-      "h": 1220
+      "h": 1050
     },
     {
-      "file": "Plakat.dc.html",
+      "file": "Nacht.dc.html",
       "title": "3 · Startseite",
       "x": 0,
-      "y": 4560,
+      "y": 3650,
       "w": 1280,
-      "h": 1560
+      "h": 1200
     },
     {
-      "file": "Plakat-Angebote.dc.html",
+      "file": "Nacht-Angebote.dc.html",
       "title": "3 · Angebot",
       "x": 1420,
-      "y": 4560,
-      "w": 1280,
-      "h": 1160
-    },
-    {
-      "file": "Plakat-Angebot.dc.html",
-      "title": "3 · Angebot Sehen",
-      "x": 2840,
-      "y": 4560,
-      "w": 1280,
-      "h": 1410
-    },
-    {
-      "file": "Plakat-Aufnahme.dc.html",
-      "title": "3 · Aufnahme",
-      "x": 4260,
-      "y": 4560,
-      "w": 1280,
-      "h": 1440
-    },
-    {
-      "file": "Plakat-Behoerden.dc.html",
-      "title": "3 · Gemeinden & Kanton",
-      "x": 5680,
-      "y": 4560,
-      "w": 1280,
-      "h": 1220
-    },
-    {
-      "file": "Plakat-Aktuell.dc.html",
-      "title": "3 · Aktuell",
-      "x": 7100,
-      "y": 4560,
-      "w": 1280,
-      "h": 1270
-    },
-    {
-      "file": "Plakat-Beitrag.dc.html",
-      "title": "3 · Beitrag",
-      "x": 8520,
-      "y": 4560,
-      "w": 1280,
-      "h": 1640
-    },
-    {
-      "file": "Plakat-Ueberuns.dc.html",
-      "title": "3 · Über uns",
-      "x": 9940,
-      "y": 4560,
-      "w": 1280,
-      "h": 1380
-    },
-    {
-      "file": "Wegweiser.dc.html",
-      "title": "4 · Startseite",
-      "x": 0,
-      "y": 6620,
+      "y": 3650,
       "w": 1280,
       "h": 970
     },
     {
-      "file": "Wegweiser-Angebote.dc.html",
+      "file": "Nacht-Angebot.dc.html",
+      "title": "3 · Angebot Sehen",
+      "x": 2840,
+      "y": 3650,
+      "w": 1280,
+      "h": 1030
+    },
+    {
+      "file": "Nacht-Aufnahme.dc.html",
+      "title": "3 · Aufnahme",
+      "x": 4260,
+      "y": 3650,
+      "w": 1280,
+      "h": 1020
+    },
+    {
+      "file": "Nacht-Behoerden.dc.html",
+      "title": "3 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 3650,
+      "w": 1280,
+      "h": 1090
+    },
+    {
+      "file": "Nacht-Aktuell.dc.html",
+      "title": "3 · Aktuell",
+      "x": 7100,
+      "y": 3650,
+      "w": 1280,
+      "h": 1060
+    },
+    {
+      "file": "Nacht-Beitrag.dc.html",
+      "title": "3 · Beitrag",
+      "x": 8520,
+      "y": 3650,
+      "w": 1280,
+      "h": 1450
+    },
+    {
+      "file": "Nacht-Ueberuns.dc.html",
+      "title": "3 · Über uns",
+      "x": 9940,
+      "y": 3650,
+      "w": 1280,
+      "h": 870
+    },
+    {
+      "file": "Grossformat.dc.html",
+      "title": "4 · Startseite",
+      "x": 0,
+      "y": 5520,
+      "w": 1280,
+      "h": 1800
+    },
+    {
+      "file": "Grossformat-Angebote.dc.html",
       "title": "4 · Angebot",
       "x": 1420,
-      "y": 6620,
+      "y": 5520,
       "w": 1280,
-      "h": 940
+      "h": 1240
     },
     {
-      "file": "Wegweiser-Angebot.dc.html",
+      "file": "Grossformat-Angebot.dc.html",
       "title": "4 · Angebot Sehen",
       "x": 2840,
-      "y": 6620,
+      "y": 5520,
       "w": 1280,
-      "h": 940
+      "h": 1240
     },
     {
-      "file": "Wegweiser-Aufnahme.dc.html",
+      "file": "Grossformat-Aufnahme.dc.html",
       "title": "4 · Aufnahme",
       "x": 4260,
-      "y": 6620,
+      "y": 5520,
       "w": 1280,
-      "h": 1010
+      "h": 1380
     },
     {
-      "file": "Wegweiser-Behoerden.dc.html",
+      "file": "Grossformat-Behoerden.dc.html",
       "title": "4 · Gemeinden & Kanton",
       "x": 5680,
-      "y": 6620,
+      "y": 5520,
+      "w": 1280,
+      "h": 1180
+    },
+    {
+      "file": "Grossformat-Aktuell.dc.html",
+      "title": "4 · Aktuell",
+      "x": 7100,
+      "y": 5520,
       "w": 1280,
       "h": 1010
     },
     {
-      "file": "Wegweiser-Aktuell.dc.html",
-      "title": "4 · Aktuell",
-      "x": 7100,
-      "y": 6620,
-      "w": 1280,
-      "h": 940
-    },
-    {
-      "file": "Wegweiser-Beitrag.dc.html",
+      "file": "Grossformat-Beitrag.dc.html",
       "title": "4 · Beitrag",
       "x": 8520,
-      "y": 6620,
+      "y": 5520,
+      "w": 1280,
+      "h": 1620
+    },
+    {
+      "file": "Grossformat-Ueberuns.dc.html",
+      "title": "4 · Über uns",
+      "x": 9940,
+      "y": 5520,
+      "w": 1280,
+      "h": 1560
+    },
+    {
+      "file": "Panorama.dc.html",
+      "title": "5 · Startseite",
+      "x": 0,
+      "y": 7740,
+      "w": 1280,
+      "h": 1370
+    },
+    {
+      "file": "Panorama-Angebote.dc.html",
+      "title": "5 · Angebot",
+      "x": 1420,
+      "y": 7740,
+      "w": 1280,
+      "h": 1120
+    },
+    {
+      "file": "Panorama-Angebot.dc.html",
+      "title": "5 · Angebot Sehen",
+      "x": 2840,
+      "y": 7740,
+      "w": 1280,
+      "h": 1070
+    },
+    {
+      "file": "Panorama-Aufnahme.dc.html",
+      "title": "5 · Aufnahme",
+      "x": 4260,
+      "y": 7740,
       "w": 1280,
       "h": 1150
     },
     {
-      "file": "Wegweiser-Ueberuns.dc.html",
-      "title": "4 · Über uns",
-      "x": 9940,
-      "y": 6620,
+      "file": "Panorama-Behoerden.dc.html",
+      "title": "5 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 7740,
       "w": 1280,
-      "h": 940
+      "h": 1210
     },
     {
-      "file": "Magazin.dc.html",
-      "title": "5 · Startseite",
-      "x": 0,
-      "y": 8190,
-      "w": 1280,
-      "h": 1520
-    },
-    {
-      "file": "Magazin-Angebote.dc.html",
-      "title": "5 · Angebot",
-      "x": 1420,
-      "y": 8190,
+      "file": "Panorama-Aktuell.dc.html",
+      "title": "5 · Aktuell",
+      "x": 7100,
+      "y": 7740,
       "w": 1280,
       "h": 1140
     },
     {
-      "file": "Magazin-Angebot.dc.html",
-      "title": "5 · Angebot Sehen",
-      "x": 2840,
-      "y": 8190,
-      "w": 1280,
-      "h": 1520
-    },
-    {
-      "file": "Magazin-Aufnahme.dc.html",
-      "title": "5 · Aufnahme",
-      "x": 4260,
-      "y": 8190,
-      "w": 1280,
-      "h": 1330
-    },
-    {
-      "file": "Magazin-Behoerden.dc.html",
-      "title": "5 · Gemeinden & Kanton",
-      "x": 5680,
-      "y": 8190,
-      "w": 1280,
-      "h": 1170
-    },
-    {
-      "file": "Magazin-Aktuell.dc.html",
-      "title": "5 · Aktuell",
-      "x": 7100,
-      "y": 8190,
-      "w": 1280,
-      "h": 1290
-    },
-    {
-      "file": "Magazin-Beitrag.dc.html",
+      "file": "Panorama-Beitrag.dc.html",
       "title": "5 · Beitrag",
       "x": 8520,
-      "y": 8190,
+      "y": 7740,
       "w": 1280,
-      "h": 1690
+      "h": 1310
     },
     {
-      "file": "Magazin-Ueberuns.dc.html",
+      "file": "Panorama-Ueberuns.dc.html",
       "title": "5 · Über uns",
       "x": 9940,
-      "y": 8190,
+      "y": 7740,
       "w": 1280,
-      "h": 1330
+      "h": 1050
     }
   ],
   "annotations": [
@@ -341,28 +341,28 @@
       "x": 0,
       "y": 1730,
       "w": 420,
-      "text": "2 · Der klare Weg\n\nMotivation: Der häufigste Besuchsgrund – «wie kommt ein Kind zu euch?» – wird zum roten Faden; die Platzsituation aus der Redaktion steht prominent, Behörden erhalten ihre Unterlagen gebündelt.\n\nPreis: Wer nicht wegen einer Aufnahme kommt, muss einen Klick mehr machen.\n\nHinweis: Die Schritt-Texte sind beispielhaft formuliert und wären fachlich zu verifizieren."
+      "text": "2 · Mosaik\n\nMotivation: Baukasten-Layout wie eine moderne App – abgerundete Kacheln bündeln je ein Anliegen, schwebende Pillen-Navigation, weiche Schatten. Wirkt frisch, aufgeräumt und sehr heutig.\n\nPreis: Kacheln verleiten zu Häppchen – lange Inhalte brauchen redaktionelle Disziplin."
     },
     {
       "id": "these-3",
       "x": 0,
-      "y": 4280,
+      "y": 3370,
       "w": 420,
-      "text": "3 · Plakat\n\nMotivation: Der SONNENBERG zeigt Haltung: grosse Farbfelder in den Hausfarben, kräftige Typografie, klare Botschaften – unverwechselbar und mutig, gut erkennbar bis aufs Handy.\n\nPreis: Der laute Auftritt verlangt Disziplin im Inhalt – lange Texte passen schlecht in Farbfelder; die am wenigsten behördliche Richtung."
+      "text": "3 · Nachtmodus\n\nMotivation: Dunkler, kontrastreicher Auftritt mit leuchtendem Gelb – hebt sich von allen Schul-Webseiten ab, modern wie eine Streaming-Plattform; die Fotos leuchten auf dunklem Grund.\n\nPreis: Ungewohnt mutig für eine soziale Institution; die Kontraste sind eingeplant, müssen aber konsequent gepflegt werden."
     },
     {
       "id": "these-4",
       "x": 0,
-      "y": 6340,
+      "y": 5240,
       "w": 420,
-      "text": "4 · Wegweiser\n\nMotivation: Die Seite als Nachschlagewerk: ein ständiges Register links führt zu jeder Auskunft in einem Klick, nichts liegt mehr als eine Ebene tief – ideal für Behörden und wiederkehrende Besucher.\n\nPreis: Wirkt sachlich-verwaltungsnah und zeigt wenig vom Leben im Haus; auf dem Handy wird das Register zum Menü."
+      "text": "4 · Grossformat\n\nMotivation: Kompromisslos grosse Typografie, gelbes Laufband, viel Weissraum – die Botschaft selbst wird zum Gestaltungselement. Sehr selbstbewusst, sehr heutig.\n\nPreis: Wenig Bilder, lebt von starken Worten; auf kleinen Bildschirmen muss die Schrift stark schrumpfen."
     },
     {
       "id": "these-5",
       "x": 0,
-      "y": 7910,
+      "y": 7460,
       "w": 420,
-      "text": "5 · Magazin\n\nMotivation: Die Webseite als Hauszeitschrift: Serifenschrift, Zeitungskopf, Spalten, Bildlegenden – erzählt mit der Sorgfalt des gedruckten SONNENBERG-Magazins und schafft Vertrauen.\n\nPreis: Leiser Auftritt – Handlungen wie Anmelden oder Kontakt treten hinter das Lesen zurück; lebt von gepflegten Texten."
+      "text": "5 · Panorama\n\nMotivation: Jede Seite beginnt mit einem grossen Foto und schwebendem Glas-Kopf (Milchglas-Effekt) – Bildwelt zuerst, modern wie aktuelle Kultur- und Hotelwebseiten; Emotion trägt die Inhalte.\n\nPreis: Braucht laufend gute Fotos; der Text beginnt erst nach dem Bild."
     }
   ],
   "launch": {
