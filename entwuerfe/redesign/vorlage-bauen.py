@@ -15,7 +15,7 @@ richtungen = [
         'motivation': 'Wer die Seite besucht, kommt fast immer als eine von drei Zielgruppen – und jede bekommt ihren eigenen Eingang mit den drei wichtigsten Verweisen. Kein Suchen im Menü, keine Umwege.',
         'preis': 'Die Startseite erzählt weniger vom Leben im Haus; Stimmung und Bilder entstehen erst eine Ebene tiefer.',
         'dateien': ['Main', 'Main-Angebote', 'Main-Angebot', 'Main-Aufnahme', 'Main-Behoerden', 'Main-Aktuell', 'Main-Beitrag', 'Main-Ueberuns'],
-        'favorit': True,
+        'favorit': False,
     },
     {
         'nr': 2, 'name': 'Mosaik', 'stamm': 'Mosaik',
@@ -23,7 +23,7 @@ richtungen = [
         'motivation': 'Jede Kachel bündelt ein Anliegen – die Startseite wird zum aufgeräumten Armaturenbrett. Wirkt frisch, freundlich und sehr heutig, ohne die Hausfarben zu verlassen.',
         'preis': 'Kacheln verleiten zu Häppchen: Lange Inhalte brauchen redaktionelle Disziplin, sonst zerfällt die Seite in Schnipsel.',
         'dateien': ['Mosaik', 'Mosaik-Angebote', 'Mosaik-Angebot', 'Mosaik-Aufnahme', 'Mosaik-Behoerden', 'Mosaik-Aktuell', 'Mosaik-Beitrag', 'Mosaik-Ueberuns'],
-        'favorit': False,
+        'favorit': True,
     },
     {
         'nr': 3, 'name': 'Nachtmodus', 'stamm': 'Nacht',
@@ -208,9 +208,9 @@ for r in richtungen:
 teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
-    <p><strong>Richtung 1 «Drei Eingänge» als Grundgerüst.</strong> Sie bedient alle drei Zielgruppen aus dem Auftrag gleichmässig, bleibt schlank im Unterhalt und lässt sich mit Elementen der anderen Richtungen anreichern – etwa dem prominenten Aufnahme-Faden aus Richtung 2 oder einzelnen grossen Bildmomenten aus Richtung 5.</p>
-    <p>Die Richtungen schliessen sich nicht aus: Entscheidet sich die Geschäftsleitung für eine Mischung, benennen Sie am besten das Grundgerüst und die zwei, drei Elemente, die dazukommen sollen.</p>
-  </div>
+    <p><strong>Richtung 2 «Mosaik» als Gestaltungssprache.</strong> Sie erfüllt als einzige alle drei Anforderungen des Auftrags zugleich: Sie trägt die Drei-Eingänge-Logik in sich (Eltern, Gemeinden &amp; Kanton und Fachpersonen haben je ihre Kachel und sind in einem Klick am Ziel), sie sieht mit Pillen-Navigation und abgerundeten Kacheln deutlich moderner aus – und sie bleibt pflegeleicht, weil jede Kachel ein Baustein ist, den die Redaktion einzeln bewirtschaften kann. Kacheln stapeln sich auf dem Handy sauber untereinander und lassen sich gut barrierefrei umsetzen.</p>
+    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, für eine soziale Institution aber ein Risiko; Grossformat zeigt zu wenig vom Leben im Haus; Panorama pur stellt für Behörden das Bild vor die Auskunft.</p>
+    </div>
 
   <section class="schritte">
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
