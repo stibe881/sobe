@@ -19,6 +19,19 @@ const umbau = () => {
   `;
   document.head.appendChild(stil);
 
+  // Die Kopfnavigation wird zum Burger-Menü – sechs Menüpunkte nebeneinander
+  // passen nie ehrlich in 390 Punkte («Über uns» brach mitten im Wort um).
+  // Die stehende Menüliste im Duett-Kopf bleibt: Sie liest sich wie ein
+  // geöffnetes Menü und bricht nicht.
+  for (const nav of document.querySelectorAll('nav')) {
+    if (getComputedStyle(nav).flexDirection === 'column') continue;
+    for (const kind of [...nav.children]) kind.style.display = 'none';
+    const burger = document.createElement('span');
+    burger.textContent = '☰';
+    burger.style.cssText = 'font-size: 24px; line-height: 1; color: inherit;';
+    nav.appendChild(burger);
+  }
+
   const px = (v) => parseFloat(v) || 0;
   for (const el of document.querySelectorAll('[style]')) {
     const s = el.style;
@@ -58,6 +71,23 @@ const umbau = () => {
       const nurInline = [...el.children].every((k) => ['SPAN', 'A', 'IMG', 'NAV'].includes(k.tagName));
       if (nurInline) el.style.flexWrap = 'wrap';
       else { el.style.flexDirection = 'column'; el.style.alignItems = 'flex-start'; }
+    }
+  }
+  // Letzte Korrektur: ragt danach noch etwas spürbar hinaus (die Mosaik-Kacheln
+  // streifen die Kante nur um ~4 Punkte, das bleibt unsichtbar), wird die
+  // nächste Flex-Zeile darüber gestapelt – z. B. die gequetschte
+  // Beschreibungsspalte neben einem breiten Angebotstitel.
+  for (const el of document.querySelectorAll('body *')) {
+    if (el.getBoundingClientRect().right <= 402) continue;
+    let z = el;
+    while (z && z !== document.body) {
+      const c = getComputedStyle(z);
+      if (c.display === 'flex' && c.flexDirection === 'row') {
+        z.style.flexDirection = 'column';
+        z.style.alignItems = 'flex-start';
+        break;
+      }
+      z = z.parentElement;
     }
   }
 };
