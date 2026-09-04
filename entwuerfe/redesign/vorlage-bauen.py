@@ -160,7 +160,7 @@ teile.append(f"""
 
   <div class="deck">
     <h1>Redesign von sonnenberg-baar.ch: fünf Richtungen zur Wahl</h1>
-    <p class="auftrag">Auftrag der Geschäftsleitung: Die Webseite soll <strong>schlanker</strong> werden und einen <strong>grösseren Mehrwert für Gemeinden, Kanton und Eltern</strong> bieten. Diese Vorlage stellt fünf gestalterische Richtungen nebeneinander – jede vollständig durchgespielt auf denselben acht Seiten, damit sie sich Seite für Seite vergleichen lassen.</p>
+    <p class="auftrag">Unser Vorschlag zur Diskussion: Die Webseite soll <strong>schlanker</strong> werden und einen <strong>grösseren Mehrwert für Gemeinden, Kanton und Eltern</strong> bieten. Diese Vorlage stellt dafür fünf gestalterische Richtungen nebeneinander – jede vollständig durchgespielt auf denselben acht Seiten, damit sie sich Seite für Seite vergleichen lassen.</p>
     <div class="basis">
       <div><strong>Echtes Material</strong>Alle Entwürfe verwenden das echte Logo, die echten Hausfarben (Petrol, Nachtblau, Gelb) sowie Texte und Fotos der heutigen Webseite.</div>
       <div><strong>Acht Seiten je Richtung</strong>Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden &amp; Kanton, Aktuell, Beitrag, Über uns – in jeder Richtung identisch belegt.</div>
@@ -208,7 +208,7 @@ for r in richtungen:
 teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
-    <p><strong>Richtung 2 «Mosaik» als Gestaltungssprache.</strong> Sie erfüllt als einzige alle drei Anforderungen des Auftrags zugleich: Sie trägt die Drei-Eingänge-Logik in sich (Eltern, Gemeinden &amp; Kanton und Fachpersonen haben je ihre Kachel und sind in einem Klick am Ziel), sie sieht mit Pillen-Navigation und abgerundeten Kacheln deutlich moderner aus – und sie bleibt pflegeleicht, weil jede Kachel ein Baustein ist, den die Redaktion einzeln bewirtschaften kann. Kacheln stapeln sich auf dem Handy sauber untereinander und lassen sich gut barrierefrei umsetzen.</p>
+    <p><strong>Richtung 2 «Mosaik» als Gestaltungssprache.</strong> Sie erfüllt als einzige alle drei Ziele dieses Vorschlags zugleich: Sie trägt die Drei-Eingänge-Logik in sich (Eltern, Gemeinden &amp; Kanton und Fachpersonen haben je ihre Kachel und sind in einem Klick am Ziel), sie sieht mit Pillen-Navigation und abgerundeten Kacheln deutlich moderner aus – und sie bleibt pflegeleicht, weil jede Kachel ein Baustein ist, den die Redaktion einzeln bewirtschaften kann. Kacheln stapeln sich auf dem Handy sauber untereinander und lassen sich gut barrierefrei umsetzen.</p>
     <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, für eine soziale Institution aber ein Risiko; Duett bindet auf jeder Seite viel Platz an die linke Hälfte; Horizont ist die wärmste Alternative, wenn es weicher sein soll; Panorama pur stellt für Behörden das Bild vor die Auskunft.</p>
     </div>
 
