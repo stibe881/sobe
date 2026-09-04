@@ -74,7 +74,7 @@ teile.append("""<title>Fünf Richtungen</title>
   body { background: var(--papier); color: var(--tinte); font-family: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; }
   .blatt { max-width: 1060px; margin: 0 auto; padding: 0 40px 80px; }
   h1, h2, h3 { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-weight: 600; text-wrap: balance; margin: 0; }
-  a { color: var(--petrol); text-decoration: underline; text-underline-offset: 3px; }
+  a { color: var(--petrol); text-decoration: none; }
   p { margin: 0; }
 
   .kopf { display: flex; align-items: center; gap: 24px; padding: 34px 0 26px; border-bottom: 1px solid var(--linie); }
