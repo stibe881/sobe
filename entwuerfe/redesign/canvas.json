@@ -1,0 +1,18 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",          "title": "1 · Drei Eingänge",  "x": 0,    "y": 0,    "w": 1280, "h": 1400 },
+    { "file": "KlarerWeg.dc.html",     "title": "2 · Der klare Weg",  "x": 1420, "y": 0,    "w": 1280, "h": 1620 },
+    { "file": "Serviceportal.dc.html", "title": "3 · Service-Portal", "x": 2840, "y": 0,    "w": 1280, "h": 1520 },
+    { "file": "EineSeite.dc.html",     "title": "4 · Eine Seite",     "x": 0,    "y": 2150, "w": 1280, "h": 1720 },
+    { "file": "NahDran.dc.html",       "title": "5 · Nah dran",       "x": 1420, "y": 2150, "w": 1280, "h": 1980 }
+  ],
+  "annotations": [
+    { "id": "einleitung", "x": -560, "y": 0, "w": 470, "text": "Fünf Richtungen für das Redesign von sonnenberg-baar.ch.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), echte Fotos, ein Menü mit 4–5 Punkten statt heute 8+, und auf jeder Startseite ein direkter Weg für Eltern UND für Gemeinden/Kanton.\n\nDie Zettel über den Tafeln nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen – z. B. 1 als Grundgerüst mit dem Behörden-Block aus 2." },
+    { "id": "these-1", "x": 0,    "y": -280, "w": 420, "text": "1 · Drei Eingänge (Favorit)\n\nMotivation: Jede Zielgruppe – Eltern, Gemeinden/Kanton, Fachpersonen – findet in fünf Sekunden ihren Weg; die Startseite wird zur Weiche statt zum Schaufenster.\n\nPreis: Die Startseite erzählt weniger vom Leben im Haus; Stimmung entsteht erst eine Ebene tiefer." },
+    { "id": "these-2", "x": 1420, "y": -280, "w": 420, "text": "2 · Der klare Weg\n\nMotivation: Der häufigste Besuchsgrund – «wie kommt ein Kind zu euch?» – wird zum roten Faden; die Platzsituation aus der Redaktion steht prominent, Behörden erhalten ihre Unterlagen gebündelt.\n\nPreis: Wer nicht wegen einer Aufnahme kommt, muss einen Klick mehr machen.\n\nHinweis: Die vier Schritt-Texte sind beispielhaft formuliert und wären fachlich zu verifizieren." },
+    { "id": "these-3", "x": 2840, "y": -280, "w": 420, "text": "3 · Service-Portal\n\nMotivation: Mehrwert = Antworten ohne Umwege. Die Suche dominiert, sechs Dienst-Kacheln decken 90 % der Anliegen ab; Kanton und Gemeinden finden Berichte und Kennzahlen direkt.\n\nPreis: Nüchternste der fünf Richtungen – lebt davon, dass die Dienste dahinter gepflegt sind." },
+    { "id": "these-4", "x": 0,    "y": 1870, "w": 420, "text": "4 · Eine Seite\n\nMotivation: Radikal schlank – das ganze Wesentliche in einem Scroll, grosse Typografie, minimale Pflege. Am wenigsten Seiten, am wenigsten Unterhalt.\n\nPreis: Tiefe und Suchmaschinen-Struktur liegen eine Ebene tiefer; für ein grosses Haus vielleicht zu knapp." },
+    { "id": "these-5", "x": 1420, "y": 1870, "w": 420, "text": "5 · Nah dran\n\nMotivation: Vertrauen für Eltern durch Nähe – grosse echte Bilder, eine Elternstimme (Platzhalter, Zitat müsste eingeholt werden), Geschichten aus dem Alltag.\n\nPreis: Braucht laufend gute Fotos und gepflegte Geschichten, sonst wirkt sie schnell leer." }
+  ],
+  "launch": { "view": "canvas" }
+}

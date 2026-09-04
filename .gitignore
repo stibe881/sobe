@@ -1,2 +1,4 @@
 # Wird von der Prüfung bei Bedarf frisch installiert (npm install in werkzeuge/)
 werkzeuge/node_modules/
+# Zusammengebaute Tafel ist abgeleitet – Quelle sind die .dc.html-Dateien
+entwuerfe/redesign/redesign-sonnenberg.html

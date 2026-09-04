@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; } a:hover { color: #0d3630; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #f4f3ec; color: #212934;">
+
+  <!-- Dunkler Kopf mit dominanter Suche -->
+  <div style="background: #212934; color: #ffffff; padding: 22px 56px 56px;">
+    <div style="display: flex; align-items: center; gap: 40px;">
+      <div style="font-size: 26px; font-weight: 700; letter-spacing: 2px;">S<span style="color:#fbb500;">O</span>NNENBERG</div>
+      <div style="display: flex; gap: 32px; margin-left: auto; font-size: 17px; color: #d3d6db;">
+        <span>Angebot</span><span>Aufnahme</span><span>Über uns</span><span>Jobs</span>
+      </div>
+    </div>
+    <div style="max-width: 800px; margin: 56px auto 0; display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center;">
+      <div style="font-size: 38px; font-weight: 600; line-height: 1.2;">Womit können wir Ihnen helfen?</div>
+      <div style="display: flex; width: 100%; background: #ffffff; border-radius: 4px; overflow: hidden;">
+        <div style="flex: 1; padding: 18px 22px; color: #8a8d93; font-size: 18px; text-align: left;">z. B. «Anmeldung», «Logopädie», «Jahresbericht» …</div>
+        <div style="background: #fbb500; display: flex; align-items: center; padding: 0 24px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#212934" stroke-width="2.5"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-5-5"></path></svg>
+        </div>
+      </div>
+      <div style="font-size: 15px; color: #aea8a0;">Häufig gesucht: <span style="color:#ffffff;">Aufnahme</span> · <span style="color:#ffffff;">Platzsituation</span> · <span style="color:#ffffff;">Offene Stellen</span> · <span style="color:#ffffff;">Fachstelle Sehen</span></div>
+    </div>
+  </div>
+
+  <!-- Sechs Dienste als Kacheln -->
+  <div style="padding: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"></path><path d="M14 3v6h6"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Anmeldung &amp; Formulare</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Alle Unterlagen für Eltern und zuweisende Stellen, zum Ausfüllen bereit.</div>
+    </div>
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><path d="M4 19V5m0 14h16M8 16v-5m4 5V8m4 8v-3"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Zahlen &amp; Berichte</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Jahresberichte, Jahresrechnung und Statuten – Transparenz für Kanton und Gemeinden.</div>
+    </div>
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Beratung anfragen</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Intake, Fachstelle Sehen, Fachstelle Autismus: direkt zur richtigen Ansprechperson.</div>
+    </div>
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4m8-4v4M3 11h18"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Agenda &amp; Ferien</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Schulferien, Anlässe und Termine des laufenden Schuljahrs auf einen Blick.</div>
+    </div>
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><path d="M12 21c-4 0-8-2-8-6V7l8-4 8 4v8c0 4-4 6-8 6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Wissen für Fachpersonen</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Merkblätter, Lehrmittel und Weiterbildungen aus dem Kompetenzzentrum.</div>
+    </div>
+    <div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14514a" stroke-width="2"><circle cx="9" cy="20" r="1.5"></circle><circle cx="17" cy="20" r="1.5"></circle><path d="M3 4h2l2.5 12h11L21 8H7"></path></svg>
+      <div style="font-size: 20px; font-weight: 700;">Shop</div>
+      <div style="font-size: 15px; color: #565851; line-height: 1.5;">Bilderbücher, Figuren und Lehrmittel rund ums Sehen – per E-Mail bestellt.</div>
+    </div>
+  </div>
+
+  <!-- Wer wir sind: ein kompakter Streifen statt langer Erklärseiten -->
+  <div style="background: #14514a; color: #ffffff; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <div style="padding: 56px; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+      <div style="font-size: 15px; font-weight: 700; letter-spacing: 2px; color: #9dbcb5; text-transform: uppercase;">Das Kompetenzzentrum</div>
+      <div style="font-size: 30px; font-weight: 600; line-height: 1.25;">Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da.</div>
+      <div style="font-size: 17px; color: #d7e2df; line-height: 1.55;">Schule, Internat, Therapie und Beratung für Sehen, Verhalten und Sprechen – mitten in Baar, getragen vom Verein SONNENBERG.</div>
+      <a style="color: #fbb500; font-weight: 700;">Mehr über uns</a>
+    </div>
+    <img src="campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar" style="width: 100%; height: 100%; object-fit: cover;">
+  </div>
+
+  <div style="background: #212934; color: #aea8a0; padding: 32px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px;">
+    <div style="font-weight: 700; color: #ffffff;">SONNENBERG</div>
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33 · info@sonnenberg-baar.ch</div>
+    <div style="display: flex; gap: 24px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
