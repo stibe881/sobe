@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: underline; text-underline-offset: 3px; } a:hover { color: #0d3630; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #f4f3ec; color: #212934;">
+
+  <div style="background: #212934; color: #ffffff; padding: 22px 56px 28px;">
+    <div style="display: flex; align-items: center; gap: 40px;">
+      <img src="logo-weiss.png" alt="SONNENBERG" style="height: 40px; width: auto;">
+      <div style="display: flex; gap: 32px; margin-left: auto; font-size: 17px; color: #d3d6db;">
+        <span>Angebot</span><span>Aufnahme</span><span style="color: #ffffff; font-weight: 700;">Über uns</span><span>Jobs</span>
+      </div>
+      <div style="display: flex; width: 300px; background: #ffffff; border-radius: 4px; overflow: hidden;">
+        <div style="flex: 1; padding: 10px 14px; color: #8a8d93; font-size: 15px;">Suchen …</div>
+        <div style="background: #fbb500; display: flex; align-items: center; padding: 0 14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#212934" stroke-width="2.5"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-5-5"></path></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Der petrolfarbene Streifen der Startseite wird hier zur ganzen Seite -->
+  <div style="background: #14514a; color: #ffffff; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <div style="padding: 56px; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+      <div style="font-size: 17px; font-weight: 600; color: #9dbcb5;">Das Kompetenzzentrum</div>
+      <div style="font-size: 30px; font-weight: 600; line-height: 1.25;">Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da.</div>
+      <div style="font-size: 17px; color: #d7e2df; line-height: 1.55;">Schule, Internat, Therapie und Beratung für Sehen, Verhalten und Sprechen – mitten in Baar, getragen vom Verein SONNENBERG, im Auftrag von Gemeinden und Kanton.</div>
+    </div>
+    <img src="campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar" style="width: 100%; height: 100%; object-fit: cover;">
+  </div>
+
+  <!-- Auskunfts-Zeilen: Träger, Auftrag, Arbeiten -->
+  <div style="padding: 40px 56px 24px;">
+    <div style="background: #ffffff; padding: 8px 32px;">
+      <div style="display: flex; gap: 32px; padding: 18px 0; border-bottom: 1px solid #e6e4da; align-items: baseline;">
+        <div style="font-size: 17px; font-weight: 700; width: 240px; flex: none;">Auftrag</div>
+        <div style="font-size: 16px; color: #565851; line-height: 1.55;">Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens.</div>
+      </div>
+      <div style="display: flex; gap: 32px; padding: 18px 0; border-bottom: 1px solid #e6e4da; align-items: baseline;">
+        <div style="font-size: 17px; font-weight: 700; width: 240px; flex: none;">Träger</div>
+        <div style="font-size: 16px; color: #565851; line-height: 1.55;">Verein SONNENBERG – <a>Vorstand, Statuten und Jahresberichte</a>.</div>
+      </div>
+      <div style="display: flex; gap: 32px; padding: 18px 0; align-items: baseline;">
+        <div style="font-size: 17px; font-weight: 700; width: 240px; flex: none;">Arbeiten bei uns</div>
+        <div style="font-size: 16px; color: #565851; line-height: 1.55;"><a>Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 56px 56px;">
+    <div style="background: #ffffff; padding: 22px 28px; display: flex; align-items: center; gap: 48px;">
+      <div style="font-size: 19px; font-weight: 700;">Kontakt</div>
+      <div style="font-size: 16px; color: #3b4149;">Landhausstrasse 20, 6340 Baar</div>
+      <div style="font-size: 16px; font-weight: 700;">041 767 78 33</div>
+      <a style="font-size: 16px;">info@sonnenberg-baar.ch</a>
+    </div>
+  </div>
+
+  <div style="background: #212934; color: #aea8a0; padding: 32px 56px; display: flex; gap: 24px; align-items: center; font-size: 15px;">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33 · info@sonnenberg-baar.ch</div>
+    <div style="display: flex; gap: 24px; margin-left: auto;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

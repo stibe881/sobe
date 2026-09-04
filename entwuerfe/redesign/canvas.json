@@ -1,32 +1,371 @@
 {
   "artboards": [
-    { "file": "Main.dc.html",                  "title": "1 · Startseite",        "x": 0,    "y": 0,    "w": 1280, "h": 1320 },
-    { "file": "Main-Angebot.dc.html",          "title": "1 · Angebot Sehen",     "x": 1420, "y": 0,    "w": 1280, "h": 1210 },
-    { "file": "Main-Beitrag.dc.html",          "title": "1 · Aktuell-Beitrag",   "x": 2840, "y": 0,    "w": 1280, "h": 1590 },
-
-    { "file": "KlarerWeg.dc.html",             "title": "2 · Startseite",        "x": 0,    "y": 2120, "w": 1280, "h": 2130 },
-    { "file": "KlarerWeg-Angebot.dc.html",     "title": "2 · Angebot Sehen",     "x": 1420, "y": 2120, "w": 1280, "h": 1310 },
-    { "file": "KlarerWeg-Behoerden.dc.html",   "title": "2 · Behördenseite",     "x": 2840, "y": 2120, "w": 1280, "h": 1470 },
-
-    { "file": "Serviceportal.dc.html",         "title": "3 · Startseite",        "x": 0,    "y": 4780, "w": 1280, "h": 1310 },
-    { "file": "Serviceportal-Berichte.dc.html","title": "3 · Zahlen & Berichte", "x": 1420, "y": 4780, "w": 1280, "h": 940 },
-    { "file": "Serviceportal-Suche.dc.html",   "title": "3 · Suchergebnis",      "x": 2840, "y": 4780, "w": 1280, "h": 950 },
-
-    { "file": "EineSeite.dc.html",             "title": "4 · Startseite",        "x": 0,    "y": 6620, "w": 1280, "h": 1660 },
-    { "file": "EineSeite-Sehen.dc.html",       "title": "4 · Sehen",             "x": 1420, "y": 6620, "w": 1280, "h": 1320 },
-    { "file": "EineSeite-Aktuell.dc.html",     "title": "4 · Aktuell",           "x": 2840, "y": 6620, "w": 1280, "h": 1120 },
-
-    { "file": "NahDran.dc.html",               "title": "5 · Startseite",        "x": 0,    "y": 8810, "w": 1280, "h": 1990 },
-    { "file": "NahDran-Beitrag.dc.html",       "title": "5 · Alltagsbeitrag",    "x": 1420, "y": 8810, "w": 1280, "h": 1860 },
-    { "file": "NahDran-Angebot.dc.html",       "title": "5 · Angebot Sehen",     "x": 2840, "y": 8810, "w": 1280, "h": 1610 }
+    {
+      "file": "Main.dc.html",
+      "title": "1 · Startseite",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1320
+    },
+    {
+      "file": "Main-Angebote.dc.html",
+      "title": "1 · Angebot",
+      "x": 1420,
+      "y": 0,
+      "w": 1280,
+      "h": 1060
+    },
+    {
+      "file": "Main-Angebot.dc.html",
+      "title": "1 · Angebot Sehen",
+      "x": 2840,
+      "y": 0,
+      "w": 1280,
+      "h": 1210
+    },
+    {
+      "file": "Main-Aufnahme.dc.html",
+      "title": "1 · Aufnahme",
+      "x": 4260,
+      "y": 0,
+      "w": 1280,
+      "h": 1250
+    },
+    {
+      "file": "Main-Behoerden.dc.html",
+      "title": "1 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 0,
+      "w": 1280,
+      "h": 1160
+    },
+    {
+      "file": "Main-Aktuell.dc.html",
+      "title": "1 · Aktuell",
+      "x": 7100,
+      "y": 0,
+      "w": 1280,
+      "h": 880
+    },
+    {
+      "file": "Main-Beitrag.dc.html",
+      "title": "1 · Beitrag",
+      "x": 8520,
+      "y": 0,
+      "w": 1280,
+      "h": 1590
+    },
+    {
+      "file": "Main-Ueberuns.dc.html",
+      "title": "1 · Über uns",
+      "x": 9940,
+      "y": 0,
+      "w": 1280,
+      "h": 920
+    },
+    {
+      "file": "KlarerWeg.dc.html",
+      "title": "2 · Startseite",
+      "x": 0,
+      "y": 2010,
+      "w": 1280,
+      "h": 2130
+    },
+    {
+      "file": "KlarerWeg-Angebote.dc.html",
+      "title": "2 · Angebot",
+      "x": 1420,
+      "y": 2010,
+      "w": 1280,
+      "h": 1040
+    },
+    {
+      "file": "KlarerWeg-Angebot.dc.html",
+      "title": "2 · Angebot Sehen",
+      "x": 2840,
+      "y": 2010,
+      "w": 1280,
+      "h": 1310
+    },
+    {
+      "file": "KlarerWeg-Aufnahme.dc.html",
+      "title": "2 · Aufnahme",
+      "x": 4260,
+      "y": 2010,
+      "w": 1280,
+      "h": 1280
+    },
+    {
+      "file": "KlarerWeg-Behoerden.dc.html",
+      "title": "2 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 2010,
+      "w": 1280,
+      "h": 1470
+    },
+    {
+      "file": "KlarerWeg-Aktuell.dc.html",
+      "title": "2 · Aktuell",
+      "x": 7100,
+      "y": 2010,
+      "w": 1280,
+      "h": 860
+    },
+    {
+      "file": "KlarerWeg-Beitrag.dc.html",
+      "title": "2 · Beitrag",
+      "x": 8520,
+      "y": 2010,
+      "w": 1280,
+      "h": 1510
+    },
+    {
+      "file": "KlarerWeg-Ueberuns.dc.html",
+      "title": "2 · Über uns",
+      "x": 9940,
+      "y": 2010,
+      "w": 1280,
+      "h": 1220
+    },
+    {
+      "file": "Serviceportal.dc.html",
+      "title": "3 · Startseite",
+      "x": 0,
+      "y": 4560,
+      "w": 1280,
+      "h": 1310
+    },
+    {
+      "file": "Serviceportal-Angebote.dc.html",
+      "title": "3 · Angebot",
+      "x": 1420,
+      "y": 4560,
+      "w": 1280,
+      "h": 1020
+    },
+    {
+      "file": "Serviceportal-Sehen.dc.html",
+      "title": "3 · Angebot Sehen",
+      "x": 2840,
+      "y": 4560,
+      "w": 1280,
+      "h": 980
+    },
+    {
+      "file": "Serviceportal-Aufnahme.dc.html",
+      "title": "3 · Aufnahme",
+      "x": 4260,
+      "y": 4560,
+      "w": 1280,
+      "h": 1040
+    },
+    {
+      "file": "Serviceportal-Behoerden.dc.html",
+      "title": "3 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 4560,
+      "w": 1280,
+      "h": 1110
+    },
+    {
+      "file": "Serviceportal-Aktuell.dc.html",
+      "title": "3 · Aktuell",
+      "x": 7100,
+      "y": 4560,
+      "w": 1280,
+      "h": 770
+    },
+    {
+      "file": "Serviceportal-Beitrag.dc.html",
+      "title": "3 · Beitrag",
+      "x": 8520,
+      "y": 4560,
+      "w": 1280,
+      "h": 1290
+    },
+    {
+      "file": "Serviceportal-Ueberuns.dc.html",
+      "title": "3 · Über uns",
+      "x": 9940,
+      "y": 4560,
+      "w": 1280,
+      "h": 1000
+    },
+    {
+      "file": "EineSeite.dc.html",
+      "title": "4 · Startseite",
+      "x": 0,
+      "y": 6290,
+      "w": 1280,
+      "h": 1660
+    },
+    {
+      "file": "EineSeite-Angebote.dc.html",
+      "title": "4 · Angebot",
+      "x": 1420,
+      "y": 6290,
+      "w": 1280,
+      "h": 1130
+    },
+    {
+      "file": "EineSeite-Sehen.dc.html",
+      "title": "4 · Angebot Sehen",
+      "x": 2840,
+      "y": 6290,
+      "w": 1280,
+      "h": 1320
+    },
+    {
+      "file": "EineSeite-Aufnahme.dc.html",
+      "title": "4 · Aufnahme",
+      "x": 4260,
+      "y": 6290,
+      "w": 1280,
+      "h": 1330
+    },
+    {
+      "file": "EineSeite-Behoerden.dc.html",
+      "title": "4 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 6290,
+      "w": 1280,
+      "h": 1220
+    },
+    {
+      "file": "EineSeite-Aktuell.dc.html",
+      "title": "4 · Aktuell",
+      "x": 7100,
+      "y": 6290,
+      "w": 1280,
+      "h": 1120
+    },
+    {
+      "file": "EineSeite-Beitrag.dc.html",
+      "title": "4 · Beitrag",
+      "x": 8520,
+      "y": 6290,
+      "w": 1280,
+      "h": 1240
+    },
+    {
+      "file": "EineSeite-Ueberuns.dc.html",
+      "title": "4 · Über uns",
+      "x": 9940,
+      "y": 6290,
+      "w": 1280,
+      "h": 1500
+    },
+    {
+      "file": "NahDran.dc.html",
+      "title": "5 · Startseite",
+      "x": 0,
+      "y": 8370,
+      "w": 1280,
+      "h": 1990
+    },
+    {
+      "file": "NahDran-Angebote.dc.html",
+      "title": "5 · Angebot",
+      "x": 1420,
+      "y": 8370,
+      "w": 1280,
+      "h": 1690
+    },
+    {
+      "file": "NahDran-Angebot.dc.html",
+      "title": "5 · Angebot Sehen",
+      "x": 2840,
+      "y": 8370,
+      "w": 1280,
+      "h": 1610
+    },
+    {
+      "file": "NahDran-Aufnahme.dc.html",
+      "title": "5 · Aufnahme",
+      "x": 4260,
+      "y": 8370,
+      "w": 1280,
+      "h": 1790
+    },
+    {
+      "file": "NahDran-Behoerden.dc.html",
+      "title": "5 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 8370,
+      "w": 1280,
+      "h": 1400
+    },
+    {
+      "file": "NahDran-Aktuell.dc.html",
+      "title": "5 · Aktuell",
+      "x": 7100,
+      "y": 8370,
+      "w": 1280,
+      "h": 1130
+    },
+    {
+      "file": "NahDran-Beitrag.dc.html",
+      "title": "5 · Beitrag",
+      "x": 8520,
+      "y": 8370,
+      "w": 1280,
+      "h": 1860
+    },
+    {
+      "file": "NahDran-Ueberuns.dc.html",
+      "title": "5 · Über uns",
+      "x": 9940,
+      "y": 8370,
+      "w": 1280,
+      "h": 1700
+    }
   ],
   "annotations": [
-    { "id": "einleitung", "x": -560, "y": 0, "w": 470, "text": "Fünf Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit drei Seiten: Startseite und zwei Unterseiten, damit das Design im Zusammenhang sichtbar wird.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+, und auf jeder Startseite ein direkter Weg für Eltern UND für Gemeinden/Kanton.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen – z. B. 1 als Grundgerüst mit dem Behörden-Block aus 2." },
-    { "id": "these-1", "x": 0,    "y": -280, "w": 420, "text": "1 · Drei Eingänge (Favorit)\n\nMotivation: Jede Zielgruppe – Eltern, Gemeinden/Kanton, Fachpersonen – findet in fünf Sekunden ihren Weg; die Startseite wird zur Weiche statt zum Schaufenster.\n\nPreis: Die Startseite erzählt weniger vom Leben im Haus; Stimmung entsteht erst eine Ebene tiefer." },
-    { "id": "these-2", "x": 0,    "y": 1840, "w": 420, "text": "2 · Der klare Weg\n\nMotivation: Der häufigste Besuchsgrund – «wie kommt ein Kind zu euch?» – wird zum roten Faden; die Platzsituation aus der Redaktion steht prominent, Behörden erhalten ihre Unterlagen gebündelt auf einer eigenen Seite.\n\nPreis: Wer nicht wegen einer Aufnahme kommt, muss einen Klick mehr machen.\n\nHinweis: Die Schritt-Texte sind beispielhaft formuliert und wären fachlich zu verifizieren." },
-    { "id": "these-3", "x": 0,    "y": 4500, "w": 420, "text": "3 · Service-Portal\n\nMotivation: Mehrwert = Antworten ohne Umwege. Die Suche dominiert und bleibt auf jeder Seite präsent, sechs Dienste decken 90 % der Anliegen ab; Kanton und Gemeinden finden Berichte und Kennzahlen direkt.\n\nPreis: Nüchternste der fünf Richtungen – lebt davon, dass die Dienste dahinter gepflegt sind." },
-    { "id": "these-4", "x": 0,    "y": 6340, "w": 420, "text": "4 · Eine Seite\n\nMotivation: Radikal schlank – das ganze Wesentliche in einem Scroll, grosse Typografie, minimale Pflege. Die Unterseiten übernehmen dieselbe Sprache: Linien-Zeilen, gelbe Kante, viel Weissraum.\n\nPreis: Tiefe und Suchmaschinen-Struktur liegen eine Ebene tiefer; für ein grosses Haus vielleicht zu knapp." },
-    { "id": "these-5", "x": 0,    "y": 8530, "w": 420, "text": "5 · Nah dran\n\nMotivation: Vertrauen für Eltern durch Nähe – grosse echte Bilder, eine Elternstimme (Platzhalter, Zitat müsste eingeholt werden), Geschichten aus dem Alltag; auch Angebotsseiten erzählen statt aufzuzählen.\n\nPreis: Braucht laufend gute Fotos und gepflegte Geschichten, sonst wirkt sie schnell leer." }
+    {
+      "id": "einleitung",
+      "x": -560,
+      "y": 0,
+      "w": 470,
+      "text": "Fünf Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit denselben acht Seiten: Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden & Kanton, Aktuell, Beitrag, Über uns. So lassen sich die Richtungen Seite für Seite direkt vergleichen.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen."
+    },
+    {
+      "id": "these-1",
+      "x": 0,
+      "y": -280,
+      "w": 420,
+      "text": "1 · Drei Eingänge (Favorit)\n\nMotivation: Jede Zielgruppe – Eltern, Gemeinden/Kanton, Fachpersonen – findet in fünf Sekunden ihren Weg; die Startseite wird zur Weiche statt zum Schaufenster.\n\nPreis: Die Startseite erzählt weniger vom Leben im Haus; Stimmung entsteht erst eine Ebene tiefer."
+    },
+    {
+      "id": "these-2",
+      "x": 0,
+      "y": 1730,
+      "w": 420,
+      "text": "2 · Der klare Weg\n\nMotivation: Der häufigste Besuchsgrund – «wie kommt ein Kind zu euch?» – wird zum roten Faden; die Platzsituation aus der Redaktion steht prominent, Behörden erhalten ihre Unterlagen gebündelt.\n\nPreis: Wer nicht wegen einer Aufnahme kommt, muss einen Klick mehr machen.\n\nHinweis: Die Schritt-Texte sind beispielhaft formuliert und wären fachlich zu verifizieren."
+    },
+    {
+      "id": "these-3",
+      "x": 0,
+      "y": 4280,
+      "w": 420,
+      "text": "3 · Service-Portal\n\nMotivation: Mehrwert = Antworten ohne Umwege. Die Suche dominiert und bleibt auf jeder Seite im Kopf, die Inhalte sind Auskunfts-Zeilen wie an einem gut organisierten Schalter.\n\nPreis: Nüchternste der fünf Richtungen – lebt davon, dass die Dienste dahinter gepflegt sind."
+    },
+    {
+      "id": "these-4",
+      "x": 0,
+      "y": 6010,
+      "w": 420,
+      "text": "4 · Eine Seite\n\nMotivation: Radikal schlank – das Wesentliche in einem Scroll, grosse Typografie, minimale Pflege. Die Unterseiten übernehmen dieselbe Sprache: Linien-Zeilen, gelbe Kante, viel Weissraum.\n\nPreis: Tiefe und Suchmaschinen-Struktur liegen eine Ebene tiefer; für ein grosses Haus vielleicht zu knapp."
+    },
+    {
+      "id": "these-5",
+      "x": 0,
+      "y": 8090,
+      "w": 420,
+      "text": "5 · Nah dran\n\nMotivation: Vertrauen für Eltern durch Nähe – grosse echte Bilder, eine Elternstimme (Platzhalter, Zitat müsste eingeholt werden), Geschichten aus dem Alltag; auch Sachseiten behalten Bild und Ton.\n\nPreis: Braucht laufend gute Fotos und gepflegte Geschichten, sonst wirkt sie schnell leer."
+    }
   ],
-  "launch": { "view": "canvas" }
+  "launch": {
+    "view": "canvas"
+  }
 }
