@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    a { color: #14514a; text-decoration: none; font-weight: 600; }
+    .leiste { width: 300px; flex: none; background: #14514a; color: #cfe0dc; padding: 30px 28px 26px; display: flex; flex-direction: column; }
+    .punkt { font-size: 16px; padding: 9px 0; }
+    .aktiv { color: #ffffff; font-weight: 700; background: #0d3630; margin: 0 -28px; padding: 9px 28px; }
+    .inhalt { flex: 1; padding: 44px 56px 40px; min-width: 0; }
+    .pfad { font-size: 13.5px; color: #8a8d93; }
+    .titel { font-size: 31px; font-weight: 700; margin-top: 10px; }
+    .zeile { display: flex; gap: 28px; padding: 13px 0; border-bottom: 1px solid #e3e1d6; font-size: 15.5px; align-items: baseline; }
+    .feldname { width: 200px; flex: none; font-weight: 700; }
+    .untertitel { font-size: 20px; font-weight: 700; margin: 34px 0 6px; }
+    .fusszeile { font-size: 13px; color: #8a8d93; margin-top: 44px; padding-top: 14px; border-top: 1px solid #e3e1d6; display: flex; gap: 18px; }
+    .leisekontakt { margin-top: auto; font-size: 13.5px; color: #9dbcb5; line-height: 1.65; padding-top: 32px; }
+  </style>
+</helmet>
+<div style="width: 1280px; display: flex; background: #ffffff; color: #212934; min-height: 940px;">
+
+  <!-- Das ständige Register: von jeder Seite aus alles in einem Klick -->
+  <div class="leiste">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 34px; width: auto; align-self: flex-start; margin-bottom: 30px;">
+    <div class="punkt aktiv">Startseite</div>
+    <div class="punkt">Angebot</div>
+    <div class="punkt">Aufnahme</div>
+    <div class="punkt">Gemeinden &amp; Kanton</div>
+    <div class="punkt">Aktuell</div>
+    <div class="punkt">Über uns</div>
+    <div class="punkt">Offene Stellen</div>
+    <div class="punkt">Kontakt</div>
+    <div class="leisekontakt">Landhausstrasse 20<br>6340 Baar<br>041 767 78 33<br>info@sonnenberg-baar.ch</div>
+  </div>
+
+  <div class="inhalt">
+    <div class="titel" style="margin-top: 0;">Willkommen im SONNENBERG</div>
+    <div style="font-size: 16px; color: #565851; line-height: 1.6; margin-top: 10px; max-width: 62ch;">Das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Dieses Register führt Sie zu jeder Auskunft in einem Klick – für Eltern, Gemeinden, Kanton und Fachpersonen.</div>
+
+    <div class="untertitel">Die häufigsten Anliegen</div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Aufnahme anfragen</a><span style="color: #565851;">Der Weg zu einem Platz, in vier Schritten erklärt</span></div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Platzsituation</a><span style="color: #565851;">Aktueller Stand aus der Redaktion, laufend nachgeführt</span></div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Anmeldeunterlagen</a><span style="color: #565851;">Alle Formulare für Eltern und zuweisende Stellen (PDF)</span></div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Schulferien und schulfreie Tage</a><span style="color: #565851;">Termine des laufenden Schuljahrs (PDF)</span></div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Jahresbericht &amp; Jahresrechnung</a><span style="color: #565851;">Transparenz für Kanton und Gemeinden (PDF)</span></div>
+    <div class="zeile"><a class="feldname" style="width: auto;">Offene Stellen</a><span style="color: #565851;">Arbeiten in Schule, Internat, Therapie und Verwaltung</span></div>
+
+    <div class="untertitel">Aktuell</div>
+    <div class="zeile"><span class="feldname" style="width: 130px; color: #8a8d93; font-weight: 400;">13.08.2026</span><a>European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a></div>
+    <div class="zeile"><span class="feldname" style="width: 130px; color: #8a8d93; font-weight: 400;">12.06.2026</span><a>SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a></div>
+    <div class="zeile"><span class="feldname" style="width: 130px; color: #8a8d93; font-weight: 400;">01.06.2026</span><a>Feuerwehrübung auf dem SONNENBERG-Areal</a></div>
+
+    <div class="untertitel">Das Haus in einem Satz</div>
+    <div style="font-size: 15.5px; color: #565851; line-height: 1.65; max-width: 62ch;">Seit über 100 Jahren begleiten, fördern und unterstützen wir Kinder und Jugendliche mit besonderen Bedürfnissen – mit Schule, Internat, Therapie und Beratung unter einem Dach, getragen vom Verein SONNENBERG.</div>
+
+    <div class="fusszeile"><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
