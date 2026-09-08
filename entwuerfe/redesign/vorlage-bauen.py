@@ -15,7 +15,6 @@ richtungen = [
         'motivation': 'Wie eine moderne digitale Broschüre: Die petrolfarbene Halbseite gibt jeder Seite Ruhe und Wiedererkennung, rechts bleibt der Inhalt kompakt und geführt. Sehr aufgeräumt, sehr eigenständig.',
         'preis': 'Die linke Hälfte bindet Platz; auf dem Handy wird sie zum Kopfbereich über dem Inhalt.',
         'dateien': ['Duett', 'Duett-Angebote', 'Duett-Angebot', 'Duett-Aufnahme', 'Duett-Behoerden', 'Duett-Aktuell', 'Duett-Beitrag', 'Duett-Ueberuns'],
-        'favorit': False,
     },
     {
         'nr': 2, 'name': 'Mosaik', 'stamm': 'Mosaik',
@@ -23,7 +22,6 @@ richtungen = [
         'motivation': 'Jede Kachel bündelt ein Anliegen – die Startseite wird zum aufgeräumten Armaturenbrett. Wirkt frisch, freundlich und sehr heutig, ohne die Hausfarben zu verlassen.',
         'preis': 'Kacheln verleiten zu Häppchen: Lange Inhalte brauchen redaktionelle Disziplin, sonst zerfällt die Seite in Schnipsel.',
         'dateien': ['Mosaik', 'Mosaik-Angebote', 'Mosaik-Angebot', 'Mosaik-Aufnahme', 'Mosaik-Behoerden', 'Mosaik-Aktuell', 'Mosaik-Beitrag', 'Mosaik-Ueberuns'],
-        'favorit': True,
     },
     {
         'nr': 3, 'name': 'Nachtmodus', 'stamm': 'Nacht',
@@ -31,7 +29,6 @@ richtungen = [
         'motivation': 'Hebt sich von allen Schul- und Institutionswebseiten ab; die Fotos leuchten auf dunklem Grund, das Gelb führt durch die Seite. Ein mutiges, sehr zeitgemässes Zeichen.',
         'preis': 'Ungewohnt für eine soziale Institution. Die Kontraste sind eingeplant, müssen aber konsequent gepflegt werden.',
         'dateien': ['Nacht', 'Nacht-Angebote', 'Nacht-Angebot', 'Nacht-Aufnahme', 'Nacht-Behoerden', 'Nacht-Aktuell', 'Nacht-Beitrag', 'Nacht-Ueberuns'],
-        'favorit': False,
     },
     {
         'nr': 4, 'name': 'Horizont', 'stamm': 'Horizont',
@@ -39,7 +36,6 @@ richtungen = [
         'motivation': 'Die wärmste, freundlichste der modernen Richtungen: Der Verlauf von Petrol nach Nachtblau trägt die Titel, Inhalte schweben als Karten mit sanften Schatten auf getönten Bändern. Einladend und grosszügig.',
         'preis': 'Braucht gestalterische Sorgfalt, damit es leicht bleibt und nicht überladen wirkt.',
         'dateien': ['Horizont', 'Horizont-Angebote', 'Horizont-Angebot', 'Horizont-Aufnahme', 'Horizont-Behoerden', 'Horizont-Aktuell', 'Horizont-Beitrag', 'Horizont-Ueberuns'],
-        'favorit': False,
     },
     {
         'nr': 5, 'name': 'Panorama', 'stamm': 'Panorama',
@@ -47,16 +43,15 @@ richtungen = [
         'motivation': 'Der Milchglas-Kopf schwebt über grossen Fotos, Titel stehen im Bild, Karten sind weich gerundet – modern wie aktuelle Kultur- und Hotelwebseiten. Emotion trägt die Inhalte.',
         'preis': 'Braucht laufend gute Fotos; der Text beginnt erst nach dem Bild.',
         'dateien': ['Panorama', 'Panorama-Angebote', 'Panorama-Angebot', 'Panorama-Aufnahme', 'Panorama-Behoerden', 'Panorama-Aktuell', 'Panorama-Beitrag', 'Panorama-Ueberuns'],
-        'favorit': False,
     },
 ]
 
 vergleich = [
-    ('1 · Duett', 'Geteilter Bildschirm: links das Haus, rechts der Inhalt', 'Eltern und Fachpersonen', 'Linke Hälfte bindet Platz', 'gering'),
-    ('2 · Mosaik', 'Baukasten aus abgerundeten Kacheln, App-Gefühl', 'Eltern und Öffentlichkeit', 'Lange Inhalte brauchen Disziplin', 'gering bis mittel'),
-    ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Auffallen bei allen Zielgruppen', 'Ungewohnt für eine Institution', 'gering'),
-    ('4 · Horizont', 'Farbverlauf, schwebende Karten, weiche Rundungen', 'Eltern und Öffentlichkeit', 'Muss leicht gehalten werden', 'gering bis mittel'),
-    ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Eltern', 'Braucht laufend gute Fotos', 'am höchsten'),
+    ('1 · Duett', 'Geteilter Bildschirm: links das Haus, rechts der Inhalt', 'Linke Hälfte bindet Platz', 'Beim Vergrössern fehlt die gebundene Hälfte', 'gering'),
+    ('2 · Mosaik', 'Baukasten aus abgerundeten Kacheln, App-Gefühl', 'Lange Inhalte brauchen Disziplin', 'Ordnung steckt in Grösse und Lage der Kacheln', 'gering bis mittel'),
+    ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Ungewohnt für eine Institution', 'Dunkler Grund hilft manchen, schadet anderen', 'gering'),
+    ('4 · Horizont', 'Farbverlauf, schwebende Karten, weiche Rundungen', 'Muss leicht gehalten werden', 'Reihenfolge und Kontraste bleiben in jeder Grösse', 'gering bis mittel'),
+    ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Braucht laufend gute Fotos', 'Milchglas kostet Kontrast, Text beginnt spät', 'am höchsten'),
 ]
 
 logo64 = b64(LOGO, 'image/png')
@@ -101,7 +96,6 @@ teile.append("""<title>Fünf Richtungen</title>
   .richtung-kopf { display: flex; gap: 28px; align-items: baseline; }
   .richtung-kopf .nr { font-family: "Source Serif 4", Georgia, serif; font-size: 58px; font-weight: 600; color: var(--petrol); line-height: 1; }
   .richtung-kopf h2 { font-size: 38px; }
-  .favorit { align-self: center; margin-left: auto; background: var(--gelb); color: var(--tinte); font-size: 14px; font-weight: 700; padding: 5px 12px; white-space: nowrap; }
   .these { font-size: 21px; line-height: 1.5; max-width: 58ch; margin-top: 16px; color: var(--tinte); }
   .abwaegung { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 22px; max-width: 900px; }
   .abwaegung p { font-size: 16px; color: var(--grau); }
@@ -175,7 +169,7 @@ teile.append(f"""
     <h2 class="abschnitt-titel">Auf einen Blick</h2>
     <div class="tabelle-rahmen">
       <table>
-        <thead><tr><th>Richtung</th><th>Kernidee</th><th>Grösster Mehrwert für</th><th>Preis</th><th>Pflegeaufwand</th></tr></thead>
+        <thead><tr><th>Richtung</th><th>Kernidee</th><th>Preis</th><th>Bei eingeschränktem Sehen</th><th>Pflegeaufwand</th></tr></thead>
         <tbody>
 """)
 for name, idee, wert, preis, pflege in vergleich:
@@ -187,10 +181,9 @@ teile.append("""        </tbody>
 """)
 
 for r in richtungen:
-    fav = '<span class="favorit">Unser Favorit</span>' if r['favorit'] else ''
     teile.append(f"""
   <div class="richtung">
-    <div class="richtung-kopf"><span class="nr">{r['nr']}</span><h2>{r['name']}</h2>{fav}</div>
+    <div class="richtung-kopf"><span class="nr">{r['nr']}</span><h2>{r['name']}</h2></div>
     <p class="these">{r['these']}</p>
     <div class="abwaegung">
       <p><strong>Warum diese Richtung:</strong> {r['motivation']}</p>
@@ -219,8 +212,10 @@ for r in richtungen:
 teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
-    <p><strong>Richtung 2 «Mosaik» als Gestaltungssprache.</strong> Sie erfüllt als einzige alle drei Ziele dieses Vorschlags zugleich: Sie trägt die Drei-Eingänge-Logik in sich (Eltern, Gemeinden &amp; Kanton und Fachpersonen haben je ihre Kachel und sind in einem Klick am Ziel), sie sieht mit Pillen-Navigation und abgerundeten Kacheln deutlich moderner aus – und sie bleibt pflegeleicht, weil jede Kachel ein Baustein ist, den die Redaktion einzeln bewirtschaften kann. Kacheln stapeln sich auf dem Handy sauber untereinander und lassen sich gut barrierefrei umsetzen.</p>
-    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, für eine soziale Institution aber ein Risiko; Duett bindet auf jeder Seite viel Platz an die linke Hälfte; Horizont ist die wärmste Alternative, wenn es weicher sein soll; Panorama pur stellt für Behörden das Bild vor die Auskunft.</p>
+    <p><strong>Richtung 4 «Horizont» als Gestaltungssprache.</strong> Ausschlaggebend ist ein Punkt, der für dieses Haus schwerer wiegt als für jede andere Institution: Wir sind das Kompetenzzentrum für <strong>Sehen</strong>. Unsere eigene Webseite wird von blinden und sehbeeinträchtigten Menschen benutzt – von Schülerinnen und Schülern, von Eltern, von Erwachsenen aus «Sehen Plus». Eine Gestaltung, die man verstanden haben muss, um sie zu sehen, können wir uns nicht leisten.</p>
+    <p>Horizont ist im Aufbau bewusst gewöhnlich: ein Kopf, eine Bühne, darunter Bänder mit Karten in einer schlichten Reihe. Was man sieht, ist zugleich die Reihenfolge, die eine Vorlesesoftware liest, und die Seite verhält sich bei 200 oder 400 Prozent Vergrösserung – dem wichtigsten Hilfsmittel sehbeeinträchtigter Menschen – genau gleich wie bei 100 Prozent. Die weissen Karten liegen auf getönten Bändern, heben sich also auch dann noch ab, wenn jemand Kontraste schlecht unterscheidet. Modern wirkt sie trotzdem: grosse Rundungen, weiche Schatten, der Farbverlauf in den Hausfarben.</p>
+    <p><strong>Wir haben dafür unsere frühere Empfehlung (Richtung 2 «Mosaik») revidiert.</strong> Wir hatten Mosaik zugutegehalten, es trage die Drei-Eingänge-Logik für Eltern, Gemeinden &amp; Kanton und Fachpersonen in sich. Das stimmt so nicht: Drei Eingänge sind eine <strong>inhaltliche</strong> Entscheidung und lassen sich in jeder der fünf Richtungen gleich gut umsetzen – Horizont zeigt sie auf der Startseite ebenso. Was Mosaik eigen ist, bleibt der Kachel-Baukasten selbst – und dessen Ordnung steckt in Grösse und Lage der Kacheln, also genau in dem, was blinde Nutzerinnen und stark vergrössernde Nutzer nicht mitbekommen. Mosaik bleibt die nächstbeste Wahl und ein legitimer Entscheid, wenn die Geschäftsleitung den App-Charakter höher gewichtet.</p>
+    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, zwingt aber allen einen dunklen Grund auf, der manchen hilft und anderen schadet; Duett bindet auf jeder Seite Platz an die linke Hälfte, der beim Vergrössern fehlt; Panorama pur stellt für Behörden das Bild vor die Auskunft und arbeitet mit Milchglas, das Kontraste kostet.</p>
     </div>
 
   <section class="schritte">
