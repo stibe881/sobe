@@ -54,26 +54,26 @@ vergleich = [
     ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Braucht laufend gute Fotos', 'Milchglas kostet Kontrast, Text beginnt spät', 'am höchsten'),
 ]
 
-# Nummer, Titel, Beschreibung, Aufwand, Zieltermin. Schritt 1a ist optional
-# und verschiebt alles Folgende – der Hinweis dazu steht unter der Liste.
+# Nummer, Titel, Beschreibung, Aufwand, Zieltermin. Ziel ist ein Go-live bis
+# Ende 2026; Schritt 1a und jede Verzoegerung beim Entscheid gehen davon ab.
 schritte = [
     ('1', 'Richtung wählen', 'Die Geschäftsleitung entscheidet sich für eine Richtung oder eine benannte Mischung.',
-     'eine Sitzung', 'Ende September 2026'),
+     'eine Sitzung', 'bis 30. September 2026'),
     ('1a', 'Anpassung der gewählten Variante <span class="wahl">optional</span>',
      'Die gewählte Richtung wird nach den Wünschen der Geschäftsleitung überarbeitet und nochmals vorgelegt.',
-     '1–2 Wochen', 'Mitte Oktober 2026'),
+     'eine Woche', 'bis 9. Oktober 2026'),
     ('2', 'Klickbarer Prototyp', 'Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.',
-     '3–4 Wochen', 'Mitte November 2026'),
+     '3 Wochen', 'bis 23. Oktober 2026'),
     ('3', 'Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden.',
-     '6–8 Wochen', 'Ende Januar 2027'),
-    ('4', 'Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst.',
-     '1–2 Wochen', 'Mitte Februar 2027'),
+     '6 Wochen', 'bis 4. Dezember 2026'),
+    ('4', 'Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst. Läuft parallel zur Umsetzung.',
+     'eine Woche, parallel zu Schritt 3', 'bis 4. Dezember 2026'),
     ('5', 'Barrierefreiheit prüfen', 'Der fertige Auftritt wird auf Barrierefreiheit geprüft; die Befunde werden vor dem Aufschalten behoben.',
-     '2 Wochen', 'Ende Februar 2027'),
-    ('6', 'Go-live', 'Der neue Auftritt wird auf sonnenberg-baar.ch aufgeschaltet.',
-     'ein Tag, danach eine Woche Nachlauf', 'Anfang März 2027'),
-    ('7', 'Webshop integrieren', 'Der Webshop wird an den neuen Auftritt angebunden.',
-     '3–4 Wochen', 'Ende März 2027'),
+     '1–2 Wochen', 'bis 11. Dezember 2026'),
+    ('6', 'Go-live', 'Der neue Auftritt wird auf sonnenberg-baar.ch aufgeschaltet – vor den Festtagen, damit der Nachlauf noch begleitet werden kann.',
+     'ein Tag, danach Nachlauf', '15. Dezember 2026'),
+    ('7', 'Webshop integrieren', 'Der Webshop wird an den neuen Auftritt angebunden – nach dem Go-live, im neuen Jahr.',
+     '3–4 Wochen', 'bis Ende Februar 2027'),
 ]
 schritte_html = ''.join(
     f'    <div class="schritt{" wahlweise" if nr.endswith("a") else ""}">'
@@ -86,7 +86,8 @@ schritte_html = ''.join(
 logo64 = b64(LOGO, 'image/png')
 
 teile = []
-teile.append("""<title>Fünf Richtungen</title>
+teile.append("""<meta charset="utf-8">
+<title>Fünf Richtungen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
   :root {
@@ -254,8 +255,8 @@ teile.append("""
 
   <section class="schritte">
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
-    <p class="fristnotiz" style="margin: -6px 0 22px;">Aufwand und Termine sind Richtwerte. Sie gehen von einem Entscheid bis Ende September 2026 aus; die Arbeiten laufen neben dem Tagesgeschäft.</p>
-""" + schritte_html + """    <p class="fristnotiz">Schritt 1a ist optional: Wird die gewählte Richtung zuerst überarbeitet, verschieben sich die folgenden Termine um rund zwei Wochen.</p>
+    <p class="fristnotiz" style="margin: -6px 0 22px;">Ziel ist ein <strong>Go-live bis Ende 2026</strong>: Die Schritte 1 bis 6 sind auf den 15. Dezember 2026 gelegt, mit den Tagen bis Weihnachten als Reserve. Der Webshop folgt im neuen Jahr. Aufwand und Termine sind Richtwerte und gehen von einem Entscheid bis Ende September 2026 aus.</p>
+""" + schritte_html + """    <p class="fristnotiz">Der Plan ist eng gerechnet: Schritt 4 läuft parallel zur Umsetzung, und Schritt 1a ist nur dann enthalten, wenn die Überarbeitung unmittelbar nach dem Entscheid erfolgt und eine Woche nicht überschreitet. Fällt der Entscheid später als Ende September oder dauert die Überarbeitung länger, verschiebt sich das Go-live ins neue Jahr.</p>
   </section>
 
 </div>
