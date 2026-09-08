@@ -4,7 +4,7 @@
 // so entsteht eine ehrliche Vorschau der mobilen Ansicht.
 import { chromium } from 'playwright';
 
-const alle = ['Duett','Duett-Angebote','Duett-Angebot','Duett-Aufnahme','Duett-Behoerden','Duett-Aktuell','Duett-Beitrag','Duett-Ueberuns','Mosaik','Mosaik-Angebote','Mosaik-Angebot','Mosaik-Aufnahme','Mosaik-Behoerden','Mosaik-Aktuell','Mosaik-Beitrag','Mosaik-Ueberuns','Nacht','Nacht-Angebote','Nacht-Angebot','Nacht-Aufnahme','Nacht-Behoerden','Nacht-Aktuell','Nacht-Beitrag','Nacht-Ueberuns','Horizont','Horizont-Angebote','Horizont-Angebot','Horizont-Aufnahme','Horizont-Behoerden','Horizont-Aktuell','Horizont-Beitrag','Horizont-Ueberuns','Panorama','Panorama-Angebote','Panorama-Angebot','Panorama-Aufnahme','Panorama-Behoerden','Panorama-Aktuell','Panorama-Beitrag','Panorama-Ueberuns'];
+const alle = ['Duett','Duett-Angebote','Duett-Angebot','Duett-Aufnahme','Duett-Behoerden','Duett-Aktuell','Duett-Beitrag','Duett-Ueberuns','Mosaik','Mosaik-Angebote','Mosaik-Angebot','Mosaik-Aufnahme','Mosaik-Behoerden','Mosaik-Aktuell','Mosaik-Beitrag','Mosaik-Ueberuns','Nacht','Nacht-Angebote','Nacht-Angebot','Nacht-Aufnahme','Nacht-Behoerden','Nacht-Aktuell','Nacht-Beitrag','Nacht-Ueberuns','Horizont','Horizont-Angebote','Horizont-Angebot','Horizont-Aufnahme','Horizont-Behoerden','Horizont-Aktuell','Horizont-Beitrag','Horizont-Ueberuns','Panorama','Panorama-Angebote','Panorama-Angebot','Panorama-Aufnahme','Panorama-Behoerden','Panorama-Aktuell','Panorama-Beitrag','Panorama-Ueberuns','Signal','Signal-Angebote','Signal-Angebot','Signal-Aufnahme','Signal-Behoerden','Signal-Aktuell','Signal-Beitrag','Signal-Ueberuns'];
 const files = process.argv.length > 2 ? process.argv.slice(2) : alle;
 const OUT = '/tmp/claude-0/-home-user-Homepilot-Pro-neu/07679825-d258-5935-bd72-4876c5f47f1c/scratchpad/shots-mobil';
 
@@ -134,6 +134,8 @@ for (const f of files) {
     const treffer = [];
     for (const el of document.querySelectorAll('body *')) {
       const r = el.getBoundingClientRect();
+      // Ein <br> am Zeilenende meldet eine Kante ohne Breite – kein Ueberlauf.
+      if (r.width === 0) continue;
       const eltern = el.parentElement;
       let grund = r.right > 398 ? 'Fenster' : '';
       if (!grund && eltern && eltern !== document.body) {

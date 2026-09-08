@@ -319,6 +319,70 @@
       "y": 6800,
       "w": 1280,
       "h": 1050
+    },
+    {
+      "file": "Signal.dc.html",
+      "title": "6 · Startseite",
+      "x": 0,
+      "y": 8590,
+      "w": 1280,
+      "h": 1530
+    },
+    {
+      "file": "Signal-Angebote.dc.html",
+      "title": "6 · Angebot",
+      "x": 1420,
+      "y": 8590,
+      "w": 1280,
+      "h": 1230
+    },
+    {
+      "file": "Signal-Angebot.dc.html",
+      "title": "6 · Angebot Sehen",
+      "x": 2840,
+      "y": 8590,
+      "w": 1280,
+      "h": 1310
+    },
+    {
+      "file": "Signal-Aufnahme.dc.html",
+      "title": "6 · Aufnahme",
+      "x": 4260,
+      "y": 8590,
+      "w": 1280,
+      "h": 1240
+    },
+    {
+      "file": "Signal-Behoerden.dc.html",
+      "title": "6 · Gemeinden & Kanton",
+      "x": 5680,
+      "y": 8590,
+      "w": 1280,
+      "h": 1230
+    },
+    {
+      "file": "Signal-Aktuell.dc.html",
+      "title": "6 · Aktuell",
+      "x": 7100,
+      "y": 8590,
+      "w": 1280,
+      "h": 1220
+    },
+    {
+      "file": "Signal-Beitrag.dc.html",
+      "title": "6 · Beitrag",
+      "x": 8520,
+      "y": 8590,
+      "w": 1280,
+      "h": 1480
+    },
+    {
+      "file": "Signal-Ueberuns.dc.html",
+      "title": "6 · Über uns",
+      "x": 9940,
+      "y": 8590,
+      "w": 1280,
+      "h": 1260
     }
   ],
   "annotations": [
@@ -327,7 +391,7 @@
       "x": -560,
       "y": 0,
       "w": 470,
-      "text": "Fünf Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit denselben acht Seiten: Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden & Kanton, Aktuell, Beitrag, Über uns. So lassen sich die Richtungen Seite für Seite direkt vergleichen.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen."
+      "text": "Sechs Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit denselben acht Seiten: Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden & Kanton, Aktuell, Beitrag, Über uns. So lassen sich die Richtungen Seite für Seite direkt vergleichen.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen."
     },
     {
       "id": "these-1",
@@ -363,6 +427,13 @@
       "y": 6520,
       "w": 420,
       "text": "5 · Panorama\n\nMotivation: Jede Seite beginnt mit einem grossen Foto und schwebendem Glas-Kopf (Milchglas-Effekt) – Bildwelt zuerst, modern wie aktuelle Kultur- und Hotelwebseiten; Emotion trägt die Inhalte.\n\nPreis: Braucht laufend gute Fotos; der Text beginnt erst nach dem Bild."
+    },
+    {
+      "id": "these-6",
+      "x": 0,
+      "y": 8310,
+      "w": 420,
+      "text": "6 · Signal\n\nMotivation: Kantig statt gerundet: durchgehende Farbblöcke in den Hausfarben, sehr grosse Schrift, dicke Linien und umrandete Knöpfe. Keine schwebenden Karten, keine weichen Schatten – die Seite wirkt bestimmt und unverwechselbar.\n\nPreis: Die starke Formensprache verträgt keine Beliebigkeit; Fotos und Texte müssen ihr standhalten."
     }
   ],
   "launch": {

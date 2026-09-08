@@ -9,6 +9,7 @@ const reihen = [
   { n: 3, files: ['Nacht','Nacht-Angebote','Nacht-Angebot','Nacht-Aufnahme','Nacht-Behoerden','Nacht-Aktuell','Nacht-Beitrag','Nacht-Ueberuns'] },
   { n: 4, files: ['Horizont','Horizont-Angebote','Horizont-Angebot','Horizont-Aufnahme','Horizont-Behoerden','Horizont-Aktuell','Horizont-Beitrag','Horizont-Ueberuns'] },
   { n: 5, files: ['Panorama','Panorama-Angebote','Panorama-Angebot','Panorama-Aufnahme','Panorama-Behoerden','Panorama-Aktuell','Panorama-Beitrag','Panorama-Ueberuns'] },
+  { n: 6, files: ['Signal','Signal-Angebote','Signal-Angebot','Signal-Aufnahme','Signal-Behoerden','Signal-Aktuell','Signal-Beitrag','Signal-Ueberuns'] },
 ];
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
@@ -47,9 +48,10 @@ const thesen = [
   "3 · Nachtmodus\n\nMotivation: Dunkler, kontrastreicher Auftritt mit leuchtendem Gelb – hebt sich von allen Schul-Webseiten ab, modern wie eine Streaming-Plattform; die Fotos leuchten auf dunklem Grund.\n\nPreis: Ungewohnt mutig für eine soziale Institution; die Kontraste sind eingeplant, müssen aber konsequent gepflegt werden.",
   "4 · Horizont (unsere Empfehlung)\n\nMotivation: Weicher Farbverlauf in den Hausfarben als grosse abgerundete Bühne, schwebende Karten mit sanften Schatten, getönte Bänder – die wärmste, freundlichste der modernen Richtungen. Im Gerüst bewusst gewöhnlich: Was man sieht, ist auch die Reihenfolge im Quelltext, und die Seite hält starke Vergrösserung aus. Neue Inhalte fügen sich als weitere Karte in ein bestehendes Band.\n\nPreis: Braucht Sorgfalt, damit es leicht bleibt und nicht überladen wirkt.",
   "5 · Panorama\n\nMotivation: Jede Seite beginnt mit einem grossen Foto und schwebendem Glas-Kopf (Milchglas-Effekt) – Bildwelt zuerst, modern wie aktuelle Kultur- und Hotelwebseiten; Emotion trägt die Inhalte.\n\nPreis: Braucht laufend gute Fotos; der Text beginnt erst nach dem Bild.",
+  "6 · Signal\n\nMotivation: Kantig statt gerundet: durchgehende Farbblöcke in den Hausfarben, sehr grosse Schrift, dicke Linien und umrandete Knöpfe. Keine schwebenden Karten, keine weichen Schatten – die Seite wirkt bestimmt und unverwechselbar.\n\nPreis: Die starke Formensprache verträgt keine Beliebigkeit; Fotos und Texte müssen ihr standhalten.",
 ];
 const annotations = [
-  { id: 'einleitung', x: -560, y: 0, w: 470, text: "Fünf Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit denselben acht Seiten: Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden & Kanton, Aktuell, Beitrag, Über uns. So lassen sich die Richtungen Seite für Seite direkt vergleichen.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen." },
+  { id: 'einleitung', x: -560, y: 0, w: 470, text: "Sechs Richtungen für das Redesign von sonnenberg-baar.ch – jede als eigene Reihe mit denselben acht Seiten: Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden & Kanton, Aktuell, Beitrag, Über uns. So lassen sich die Richtungen Seite für Seite direkt vergleichen.\n\nGemeinsame Basis: die echten Sonnenberg-Farben (Petrol, Nachtblau, Gelb), das echte Logo, echte Fotos und Texte, ein Menü mit 4–5 Punkten statt heute 8+.\n\nDie Zettel am Reihenanfang nennen Motivation und Preis jeder Richtung. Die Richtungen lassen sich auch mischen." },
   ...thesen.map((text, i) => ({ id: `these-${i + 1}`, x: 0, y: reihenY[i] - 280, w: 420, text })),
 ];
 

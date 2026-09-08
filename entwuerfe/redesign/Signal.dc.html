@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: "Helvetica Neue", "Segoe UI", Arial, sans-serif; background: #ffffff; }
+    a { color: #14514a; text-decoration: none; font-weight: 700; }
+    .kopf { display: flex; align-items: center; gap: 40px; padding: 24px 56px; border-bottom: 4px solid #212934; }
+    .kopf nav { display: flex; gap: 32px; margin-left: auto; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: #212934; align-items: center; }
+    .aktiv { box-shadow: 0 7px 0 #fbb500; }
+    .block { padding: 52px 56px; }
+    .petrol { background: #14514a; color: #ffffff; }
+    .nacht { background: #212934; color: #ffffff; }
+    .gelb { background: #fbb500; color: #212934; }
+    .sand { background: #f2f0e9; color: #212934; }
+    .marke { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
+    .titel { font-size: 62px; font-weight: 800; line-height: 1.03; letter-spacing: -0.02em; }
+    .lead { font-size: 19px; line-height: 1.5; margin-top: 16px; }
+    .rahmenknopf { display: inline-block; border: 3px solid currentColor; padding: 12px 24px; font-weight: 800; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .zeile { display: flex; gap: 28px; padding: 17px 0; border-top: 2px solid #212934; align-items: baseline; }
+    .nr { font-family: inherit; font-size: 34px; font-weight: 800; line-height: 1; color: #14514a; flex: none; width: 62px; }
+    .spalte h3 { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 14px; }
+    .fliess { font-size: 16px; line-height: 1.65; color: #3d423f; }
+  </style>
+</helmet>
+<div style="width: 1280px; background: #ffffff; color: #212934;">
+
+  <div class="kopf">
+    <img src="logo.png" alt="SONNENBERG" style="height: 34px; width: auto;">
+    <nav><span class="aktiv">Start</span><span>Angebot</span><span>Aufnahme</span><span>Aktuell</span><span>Über uns</span></nav>
+  </div>
+
+  <div class="block petrol" style="padding: 64px 56px 56px;">
+    <div class="marke" style="color: #8fb8b0;">Kompetenzzentrum Sehen · Verhalten · Sprechen</div>
+    <div class="titel" style="margin-top: 18px; max-width: 980px;">Wir begleiten,<br>fördern und unterstützen<br>mit Herz.</div>
+    <div style="height: 8px; width: 180px; background: #fbb500; margin-top: 26px;"></div>
+    <div class="lead" style="color: #cfe0dc; max-width: 620px;">Schule, Internat, Therapie und Beratung unter einem Dach – in Baar.</div>
+    <div style="display: flex; gap: 28px; align-items: center; margin-top: 30px;">
+      <span class="rahmenknopf">Aufnahme &amp; Beratung</span>
+      <div style="font-size: 20px; font-weight: 800;">041 767 78 33</div>
+    </div>
+  </div>
+
+  <img src="aquarell.jpg" alt="Kinder malen mit Wasserfarben" style="width: 100%; height: 280px; object-fit: cover; display: block;">
+
+  <div class="block">
+    <div class="marke" style="color: #14514a;">Was suchen Sie?</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 26px;">
+      <div class="spalte" style="padding-right: 34px; border-top: 4px solid #212934; padding-top: 18px;">
+        <h3>Für Eltern</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+          <a>So läuft eine Aufnahme ab</a><a>Unsere Angebote</a><a>Beratungsgespräch vereinbaren</a>
+        </div>
+      </div>
+      <div class="spalte" style="padding: 18px 34px 0; border-top: 4px solid #212934; border-left: 2px solid #d8d5c9;">
+        <h3>Für Gemeinden &amp; Kanton</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+          <a>Zuweisung &amp; Platzsituation</a><a>Jahresberichte &amp; Kennzahlen</a><a>Ansprechpersonen Intake</a>
+        </div>
+      </div>
+      <div class="spalte" style="padding: 18px 0 0 34px; border-top: 4px solid #212934; border-left: 2px solid #d8d5c9;">
+        <h3>Für Fachpersonen</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+          <a>Fachstellen Sehen &amp; Autismus</a><a>Beratung für Regelschulen</a><a>Lehrmittel &amp; Shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block gelb" style="padding: 44px 56px;">
+    <div style="display: flex; align-items: baseline; gap: 24px;">
+      <div class="marke">Aktuell</div>
+      <a style="margin-left: auto; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: #212934;">Alle Beiträge</a>
+    </div>
+    <div style="margin-top: 14px;">
+      <div class="zeile"><div style="flex: none; width: 150px; font-size: 14px; font-weight: 700;">13. August 2026</div><div style="font-size: 19px; font-weight: 700; line-height: 1.35;">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</div></div>
+      <div class="zeile"><div style="flex: none; width: 150px; font-size: 14px; font-weight: 700;">12. Juni 2026</div><div style="font-size: 19px; font-weight: 700; line-height: 1.35;">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</div></div>
+      <div class="zeile" style="border-bottom: 2px solid #212934;"><div style="flex: none; width: 150px; font-size: 14px; font-weight: 700;">1. Juni 2026</div><div style="font-size: 19px; font-weight: 700; line-height: 1.35;">Feuerwehrübung auf dem SONNENBERG-Areal</div></div>
+    </div>
+  </div>
+
+  <div class="block nacht" style="padding: 30px 56px; display: flex; gap: 28px; align-items: center; font-size: 14px; letter-spacing: 0.04em;">
+    <img src="logo-weiss.png" alt="SONNENBERG" style="height: 24px; width: auto;">
+    <div>Landhausstrasse 20 · 6340 Baar · 041 767 78 33</div>
+    <div style="display: flex; gap: 24px; margin-left: auto; text-transform: uppercase; font-size: 12px; letter-spacing: 0.14em; font-weight: 700;"><span>Jobs</span><span>Impressum</span><span>Datenschutz</span><span>Barrierefreiheit</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

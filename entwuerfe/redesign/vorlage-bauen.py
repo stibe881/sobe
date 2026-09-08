@@ -44,6 +44,13 @@ richtungen = [
         'preis': 'Braucht laufend gute Fotos; der Text beginnt erst nach dem Bild.',
         'dateien': ['Panorama', 'Panorama-Angebote', 'Panorama-Angebot', 'Panorama-Aufnahme', 'Panorama-Behoerden', 'Panorama-Aktuell', 'Panorama-Beitrag', 'Panorama-Ueberuns'],
     },
+    {
+        'nr': 6, 'name': 'Signal', 'stamm': 'Signal',
+        'these': 'Kantig statt gerundet: durchgehende Farbblöcke, sehr grosse Schrift, dicke Linien – keine schwebenden Karten.',
+        'motivation': 'Die Gegenposition zu allen übrigen Richtungen. Statt weicher Karten auf hellem Grund laufen ganze Farbflächen in den Hausfarben über die volle Breite, Titel werden gross und schmallaufend gesetzt, Knöpfe sind umrandet statt gefüllt. Ein bestimmter, unverwechselbarer Auftritt, der sich von Schul- und Institutionswebseiten deutlich absetzt.',
+        'preis': 'Die starke Formensprache verträgt keine Beliebigkeit: Fotos und Texte müssen ihr standhalten, und jede neue Seite muss in dieselbe Strenge passen.',
+        'dateien': ['Signal', 'Signal-Angebote', 'Signal-Angebot', 'Signal-Aufnahme', 'Signal-Behoerden', 'Signal-Aktuell', 'Signal-Beitrag', 'Signal-Ueberuns'],
+    },
 ]
 
 vergleich = [
@@ -52,6 +59,7 @@ vergleich = [
     ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Ungewohnt für eine Institution', 'Legt alle Seiten auf einen dunklen Grund fest', 'gering'),
     ('4 · Horizont', 'Farbverlauf, schwebende Karten, weiche Rundungen', 'Muss leicht gehalten werden', 'Reihenfolge und Kontraste bleiben in jeder Grösse', 'gering bis mittel'),
     ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Braucht laufend gute Fotos', 'Milchglas kostet Kontrast, Text beginnt spät', 'am höchsten'),
+    ('6 · Signal', 'Farbblöcke, kantige Kanten, sehr grosse Schrift', 'Verträgt keine Beliebigkeit', 'Klare Reihenfolge, sehr hohe Kontraste', 'mittel'),
 ]
 
 # Nummer, Titel, Beschreibung, Aufwand, Zieltermin. Ziel ist ein Go-live bis
@@ -64,8 +72,8 @@ schritte = [
      'eine Woche', 'bis 9. Oktober 2026'),
     ('2', 'Klickbarer Prototyp', 'Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.',
      '3 Wochen', 'bis 23. Oktober 2026'),
-    ('3', 'Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden.',
-     '6 Wochen', 'bis 4. Dezember 2026'),
+    ('3', 'Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite und das Redaktions-Backend, mit dem Beiträge und News selbst erfasst, bearbeitet und aufgeschaltet werden.',
+     '6 Wochen, Seite und Backend parallel', 'bis 4. Dezember 2026'),
     ('4', 'Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst. Läuft parallel zur Umsetzung.',
      'eine Woche, parallel zu Schritt 3', 'bis 4. Dezember 2026'),
     ('5', 'Barrierefreiheit prüfen', 'Der fertige Auftritt wird auf Barrierefreiheit geprüft; die Befunde werden vor dem Aufschalten behoben.',
@@ -87,7 +95,7 @@ logo64 = b64(LOGO, 'image/png')
 
 teile = []
 teile.append("""<meta charset="utf-8">
-<title>Fünf Richtungen</title>
+<title>Sechs Richtungen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
   :root {
@@ -192,8 +200,8 @@ teile.append(f"""
   </div>
 
   <div class="deck">
-    <h1>Redesign von sonnenberg-baar.ch: fünf Richtungen zur Wahl</h1>
-    <p class="auftrag">Unser Vorschlag zur Diskussion: Die Webseite soll <strong>schlanker</strong> werden und einen <strong>grösseren Mehrwert für Gemeinden, Kanton und Eltern</strong> bieten. Diese Vorlage stellt dafür fünf gestalterische Richtungen nebeneinander – jede vollständig durchgespielt auf denselben acht Seiten, damit sie sich Seite für Seite vergleichen lassen.</p>
+    <h1>Redesign von sonnenberg-baar.ch: sechs Richtungen zur Wahl</h1>
+    <p class="auftrag">Unser Vorschlag zur Diskussion: Die Webseite soll <strong>schlanker</strong> werden und einen <strong>grösseren Mehrwert für Gemeinden, Kanton und Eltern</strong> bieten. Diese Vorlage stellt dafür sechs gestalterische Richtungen nebeneinander – jede vollständig durchgespielt auf denselben acht Seiten, damit sie sich Seite für Seite vergleichen lassen.</p>
     <div class="basis">
       <div><strong>Echtes Material</strong>Alle Entwürfe verwenden das echte Logo, die echten Hausfarben (Petrol, Nachtblau, Gelb) sowie Texte und Fotos der heutigen Webseite.</div>
       <div><strong>Acht Seiten je Richtung</strong>Startseite, Angebot, Angebot Sehen, Aufnahme, Gemeinden &amp; Kanton, Aktuell, Beitrag, Über uns – in jeder Richtung identisch belegt, jeweils mit Desktop- und Handy-Ansicht.</div>
@@ -249,14 +257,14 @@ teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
     <p><strong>Richtung 4 «Horizont» als Gestaltungssprache.</strong> Sie verbindet einen modernen Auftritt mit einem Aufbau, der auch unter schwierigen Bedingungen trägt. Horizont ist im Gerüst bewusst gewöhnlich: ein Kopf, eine Bühne, darunter Bänder mit Karten in einer schlichten Reihe. Was man sieht, ist zugleich die Reihenfolge im Quelltext – also das, was eine Vorlesesoftware wiedergibt. Bei starker Vergrösserung verhält sich die Seite gleich wie in normaler Ansicht, und die weissen Karten liegen auf getönten Bändern, heben sich also auch bei schwacher Kontrastwahrnehmung noch ab.</p>
-    <p>Modern wirkt sie deswegen nicht weniger: grosse Rundungen, weiche Schatten, der Farbverlauf in den Hausfarben, viel Luft. Sie ist zugleich die wärmste der fünf Richtungen – passend für ein Haus, das Familien begleitet. Und sie ist pflegeleicht: Neue Inhalte fügen sich als weitere Karte in ein bestehendes Band, ohne dass jemand ein Layout austarieren muss.</p>
-    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, legt aber alle Seiten auf einen dunklen Grund fest; Duett bindet auf jeder Seite Platz an die linke Hälfte, der dem Inhalt fehlt; Panorama pur stellt für Behörden das Bild vor die Auskunft und arbeitet mit Milchglas, das Kontraste kostet.</p>
+    <p>Modern wirkt sie deswegen nicht weniger: grosse Rundungen, weiche Schatten, der Farbverlauf in den Hausfarben, viel Luft. Sie ist zugleich die wärmste der sechs Richtungen – passend für ein Haus, das Familien begleitet. Und sie ist pflegeleicht: Neue Inhalte fügen sich als weitere Karte in ein bestehendes Band, ohne dass jemand ein Layout austarieren muss.</p>
+    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, legt aber alle Seiten auf einen dunklen Grund fest; Duett bindet auf jeder Seite Platz an die linke Hälfte, der dem Inhalt fehlt; Panorama pur stellt für Behörden das Bild vor die Auskunft und arbeitet mit Milchglas, das Kontraste kostet; Signal ist die mutigste Gegenposition und die stärkste Wahl, wenn der Auftritt vor allem auffallen soll.</p>
     </div>
 
   <section class="schritte">
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
     <p class="fristnotiz" style="margin: -6px 0 22px;">Ziel ist ein <strong>Go-live bis Ende 2026</strong>: Die Schritte 1 bis 6 sind auf den 15. Dezember 2026 gelegt, mit den Tagen bis Weihnachten als Reserve. Der Webshop folgt im neuen Jahr. Aufwand und Termine sind Richtwerte und gehen von einem Entscheid bis Ende September 2026 aus.</p>
-""" + schritte_html + """    <p class="fristnotiz">Der Plan ist eng gerechnet: Schritt 4 läuft parallel zur Umsetzung, und Schritt 1a ist nur dann enthalten, wenn die Überarbeitung unmittelbar nach dem Entscheid erfolgt und eine Woche nicht überschreitet. Fällt der Entscheid später als Ende September oder dauert die Überarbeitung länger, verschiebt sich das Go-live ins neue Jahr.</p>
+""" + schritte_html + """    <p class="fristnotiz">Der Plan ist eng gerechnet: Schritt 4 läuft parallel zur Umsetzung, und das Redaktions-Backend entsteht neben der Seite, und Schritt 1a ist nur dann enthalten, wenn die Überarbeitung unmittelbar nach dem Entscheid erfolgt und eine Woche nicht überschreitet. Fällt der Entscheid später als Ende September oder dauert die Überarbeitung länger, verschiebt sich das Go-live ins neue Jahr.</p>
   </section>
 
 </div>
