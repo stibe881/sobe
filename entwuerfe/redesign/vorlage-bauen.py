@@ -139,8 +139,6 @@ teile.append("""<title>Fünf Richtungen</title>
   .schritt .stitel { font-weight: 700; width: 300px; flex: none; }
   .schritt .stext { color: var(--grau); font-size: 16px; }
 
-  .fussnoten { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--linie); font-size: 14.5px; color: var(--grau); max-width: 78ch; }
-  .fussnoten p + p { margin-top: 8px; }
 
   #lupe { position: fixed; inset: 0; background: rgba(33, 41, 52, 0.88); z-index: 10; overflow-y: auto; padding: 40px 20px; cursor: zoom-out; }
   #lupe[hidden] { display: none !important; }
@@ -167,7 +165,7 @@ teile.append("""<title>Fünf Richtungen</title>
 teile.append(f"""
   <div class="kopf">
     <img src="{logo64}" alt="SONNENBERG">
-    <div class="art">Vorlage zuhanden der Geschäftsleitung<br>4. September 2026 · Arbeitsstand</div>
+    <div class="art">Vorlage zuhanden der Geschäftsleitung<br>7. September 2026 · Arbeitsstand</div>
   </div>
 
   <div class="deck">
@@ -236,10 +234,6 @@ teile.append("""
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
 """ + schritte_html + """  </section>
 
-  <div class="fussnoten">
-    <p>Hinweise zum Arbeitsstand: Das Elternzitat in Richtung 5 ist ein gekennzeichneter Platzhalter und müsste eingeholt werden. Die vier Aufnahme-Schritte sind beispielhaft formuliert und wären fachlich zu verifizieren. Alle übrigen Texte und Fotos stammen von der heutigen Webseite sonnenberg-baar.ch.</p>
-    <p>Die Entwürfe liegen zusätzlich als interaktive Arbeitstafel vor, auf der jede Seite in voller Grösse betrachtet werden kann.</p>
-  </div>
 </div>
 
 <div id="lupe" hidden>
