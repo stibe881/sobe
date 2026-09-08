@@ -13,7 +13,7 @@ const umbau = () => {
   stil.textContent = `
     * { box-sizing: border-box !important; }
     x-dc > div { width: 390px !important; min-height: 0 !important; }
-    [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns"] { grid-template-columns: minmax(0, 1fr) !important; }
     [style*="grid-column"] { grid-column: auto !important; }
     img { max-width: 100% !important; }
   `;
@@ -50,7 +50,10 @@ const umbau = () => {
   // Auch Masse aus Klassen (z. B. die Duett-Halbseite, Kachel-Polster) einfangen:
   for (const el of document.querySelectorAll('body *')) {
     const c = getComputedStyle(el);
-    if (c.display === 'grid') el.style.gridTemplateColumns = '1fr';
+    // minmax(0, 1fr) statt 1fr: eine 1fr-Spalte weicht der Mindestbreite
+    // ihres breitesten Inhalts aus und schob die Mosaik-Kacheln über den
+    // rechten Rand hinaus; mit 0 als Untergrenze bleibt sie bei 390 Punkten.
+    if (c.display === 'grid') el.style.gridTemplateColumns = 'minmax(0, 1fr)';
     if (c.gridColumnStart.includes('span') || c.gridColumnEnd.includes('span')) el.style.gridColumn = 'auto';
     if (parseFloat(c.width) > 396 && c.position !== 'absolute') {
       el.style.maxWidth = '100%';
