@@ -189,6 +189,32 @@ teile.append("""<meta charset="utf-8">
     .schritt { flex-direction: column; gap: 6px; }
     .schritt .snr { font-size: 22px; }
   }
+  /* Druckfassung: Jede Richtung beginnt auf einer neuen Seite, die Bilder
+     werden ganz gezeigt – im PDF lässt sich nichts antippen. */
+  @media print {
+    @page { size: A4; margin: 14mm 11mm; }
+    body { background: #ffffff; font-size: 10.5pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .blatt { max-width: none; padding: 0; }
+    #lupe { display: none !important; }
+    .schau { cursor: default; }
+    .richtung, .empfehlung, .schritte { break-before: page; page-break-before: always; }
+    .richtung { border-top: 0; margin-top: 0; padding-top: 0; }
+    .empfehlung { margin-top: 0; padding: 30px 32px; }
+    .seite, .schritt, .abwaegung, .basis > div { break-inside: avoid; page-break-inside: avoid; }
+    .galerie { grid-template-columns: repeat(3, 1fr); gap: 12px 10px; margin-top: 20px; }
+    .paar { align-items: flex-start; gap: 6px; }
+    .fenster { height: 50mm; }
+    .nurbildschirm { display: none; }
+    .seite figcaption { font-size: 8.5pt; }
+    .deck { padding: 24px 0 30px; }
+    .deck h1 { font-size: 28pt; }
+    .richtung-kopf .nr { font-size: 30pt; }
+    .richtung-kopf h2 { font-size: 22pt; }
+    .abschnitt-titel { font-size: 17pt; }
+    .these { font-size: 13pt; }
+    table { min-width: 0; font-size: 9pt; }
+    section { padding-top: 30px; }
+  }
 </style>
 <div class="blatt">
 """)
@@ -248,7 +274,7 @@ for r in richtungen:
             <span class="fenster"><img src="{handy}" alt="Entwurf: Seite «{seiten[i]}» der Richtung {r['nr']} ({r['name']}), mobile Ansicht" loading="lazy"></span>
           </button>
         </div>
-        <figcaption><strong>{seiten[i]}</strong> · Desktop und Mobil, antippen zum Vergrössern</figcaption>
+        <figcaption><strong>{seiten[i]}</strong> · Desktop und Mobil<span class="nurbildschirm">, antippen zum Vergrössern</span></figcaption>
       </figure>
 """)
     teile.append("    </div>\n  </div>\n")
