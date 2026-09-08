@@ -47,12 +47,27 @@ richtungen = [
 ]
 
 vergleich = [
-    ('1 · Duett', 'Geteilter Bildschirm: links das Haus, rechts der Inhalt', 'Linke Hälfte bindet Platz', 'Beim Vergrössern fehlt die gebundene Hälfte', 'gering'),
-    ('2 · Mosaik', 'Baukasten aus abgerundeten Kacheln, App-Gefühl', 'Lange Inhalte brauchen Disziplin', 'Ordnung steckt in Grösse und Lage der Kacheln', 'gering bis mittel'),
-    ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Ungewohnt für eine Institution', 'Dunkler Grund hilft manchen, schadet anderen', 'gering'),
+    ('1 · Duett', 'Geteilter Bildschirm: links das Haus, rechts der Inhalt', 'Linke Hälfte bindet Platz', 'Gebundene Hälfte fehlt dem Inhalt', 'gering'),
+    ('2 · Mosaik', 'Baukasten aus abgerundeten Kacheln, App-Gefühl', 'Lange Inhalte brauchen Disziplin', 'Ordnung geht verloren, sobald Kacheln stapeln', 'gering bis mittel'),
+    ('3 · Nachtmodus', 'Dunkler Auftritt mit leuchtendem Gelb', 'Ungewohnt für eine Institution', 'Legt alle Seiten auf einen dunklen Grund fest', 'gering'),
     ('4 · Horizont', 'Farbverlauf, schwebende Karten, weiche Rundungen', 'Muss leicht gehalten werden', 'Reihenfolge und Kontraste bleiben in jeder Grösse', 'gering bis mittel'),
     ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Braucht laufend gute Fotos', 'Milchglas kostet Kontrast, Text beginnt spät', 'am höchsten'),
 ]
+
+schritte = [
+    ('Richtung wählen', 'Die Geschäftsleitung entscheidet sich für eine Richtung oder eine benannte Mischung.'),
+    ('Klickbarer Prototyp', 'Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.'),
+    ('Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden.'),
+    ('Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst.'),
+    ('Barrierefreiheit prüfen', 'Der fertige Auftritt wird auf Barrierefreiheit geprüft; die Befunde werden vor dem Aufschalten behoben.'),
+    ('Go-live', 'Der neue Auftritt wird auf sonnenberg-baar.ch aufgeschaltet.'),
+    ('Webshop integrieren', 'Der Webshop wird an den neuen Auftritt angebunden.'),
+]
+schritte_html = ''.join(
+    f'    <div class="schritt"><span class="snr">{i}</span><span class="stitel">{titel}</span>'
+    f'<span class="stext">{text}</span></div>\n'
+    for i, (titel, text) in enumerate(schritte, start=1)
+)
 
 logo64 = b64(LOGO, 'image/png')
 
@@ -169,7 +184,7 @@ teile.append(f"""
     <h2 class="abschnitt-titel">Auf einen Blick</h2>
     <div class="tabelle-rahmen">
       <table>
-        <thead><tr><th>Richtung</th><th>Kernidee</th><th>Preis</th><th>Bei eingeschränktem Sehen</th><th>Pflegeaufwand</th></tr></thead>
+        <thead><tr><th>Richtung</th><th>Kernidee</th><th>Preis</th><th>Robustheit des Aufbaus</th><th>Pflegeaufwand</th></tr></thead>
         <tbody>
 """)
 for name, idee, wert, preis, pflege in vergleich:
@@ -212,18 +227,14 @@ for r in richtungen:
 teile.append("""
   <div class="empfehlung">
     <h2>Unsere Empfehlung</h2>
-    <p><strong>Richtung 4 «Horizont» als Gestaltungssprache.</strong> Ausschlaggebend ist ein Punkt, der für dieses Haus schwerer wiegt als für jede andere Institution: Wir sind das Kompetenzzentrum für <strong>Sehen</strong>. Unsere eigene Webseite wird von blinden und sehbeeinträchtigten Menschen benutzt – von Schülerinnen und Schülern, von Eltern, von Erwachsenen aus «Sehen Plus». Eine Gestaltung, die man verstanden haben muss, um sie zu sehen, können wir uns nicht leisten.</p>
-    <p>Horizont ist im Aufbau bewusst gewöhnlich: ein Kopf, eine Bühne, darunter Bänder mit Karten in einer schlichten Reihe. Was man sieht, ist zugleich die Reihenfolge, die eine Vorlesesoftware liest, und die Seite verhält sich bei 200 oder 400 Prozent Vergrösserung – dem wichtigsten Hilfsmittel sehbeeinträchtigter Menschen – genau gleich wie bei 100 Prozent. Die weissen Karten liegen auf getönten Bändern, heben sich also auch dann noch ab, wenn jemand Kontraste schlecht unterscheidet. Modern wirkt sie trotzdem: grosse Rundungen, weiche Schatten, der Farbverlauf in den Hausfarben.</p>
-    <p><strong>Wir haben dafür unsere frühere Empfehlung (Richtung 2 «Mosaik») revidiert.</strong> Wir hatten Mosaik zugutegehalten, es trage die Drei-Eingänge-Logik für Eltern, Gemeinden &amp; Kanton und Fachpersonen in sich. Das stimmt so nicht: Drei Eingänge sind eine <strong>inhaltliche</strong> Entscheidung und lassen sich in jeder der fünf Richtungen gleich gut umsetzen – Horizont zeigt sie auf der Startseite ebenso. Was Mosaik eigen ist, bleibt der Kachel-Baukasten selbst – und dessen Ordnung steckt in Grösse und Lage der Kacheln, also genau in dem, was blinde Nutzerinnen und stark vergrössernde Nutzer nicht mitbekommen. Mosaik bleibt die nächstbeste Wahl und ein legitimer Entscheid, wenn die Geschäftsleitung den App-Charakter höher gewichtet.</p>
-    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, zwingt aber allen einen dunklen Grund auf, der manchen hilft und anderen schadet; Duett bindet auf jeder Seite Platz an die linke Hälfte, der beim Vergrössern fehlt; Panorama pur stellt für Behörden das Bild vor die Auskunft und arbeitet mit Milchglas, das Kontraste kostet.</p>
+    <p><strong>Richtung 4 «Horizont» als Gestaltungssprache.</strong> Sie verbindet einen modernen Auftritt mit einem Aufbau, der auch unter schwierigen Bedingungen trägt. Horizont ist im Gerüst bewusst gewöhnlich: ein Kopf, eine Bühne, darunter Bänder mit Karten in einer schlichten Reihe. Was man sieht, ist zugleich die Reihenfolge im Quelltext – also das, was eine Vorlesesoftware wiedergibt. Bei starker Vergrösserung verhält sich die Seite gleich wie in normaler Ansicht, und die weissen Karten liegen auf getönten Bändern, heben sich also auch bei schwacher Kontrastwahrnehmung noch ab.</p>
+    <p>Modern wirkt sie deswegen nicht weniger: grosse Rundungen, weiche Schatten, der Farbverlauf in den Hausfarben, viel Luft. Sie ist zugleich die wärmste der fünf Richtungen – passend für ein Haus, das Familien begleitet. Und sie ist pflegeleicht: Neue Inhalte fügen sich als weitere Karte in ein bestehendes Band, ohne dass jemand ein Layout austarieren muss.</p>
+    <p>Zwei gezielte Anleihen empfehlen wir dazu: der <strong>Panorama-Bildauftakt</strong> für die emotionalen Seiten («Über uns», Aktuell-Beiträge) und die konsequente <strong>Behörden-Bündelung</strong>, wie sie in allen Richtungen angelegt ist. Nachtmodus ist der auffälligste Vorschlag, legt aber alle Seiten auf einen dunklen Grund fest; Duett bindet auf jeder Seite Platz an die linke Hälfte, der dem Inhalt fehlt; Panorama pur stellt für Behörden das Bild vor die Auskunft und arbeitet mit Milchglas, das Kontraste kostet.</p>
     </div>
 
   <section class="schritte">
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
-    <div class="schritt"><span class="snr">1</span><span class="stitel">Richtung wählen</span><span class="stext">Die Geschäftsleitung entscheidet sich für eine Richtung oder eine benannte Mischung.</span></div>
-    <div class="schritt"><span class="snr">2</span><span class="stitel">Klickbarer Prototyp</span><span class="stext">Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.</span></div>
-    <div class="schritt"><span class="snr">3</span><span class="stitel">Umsetzung</span><span class="stext">Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden, geprüfte Barrierefreiheit.</span></div>
-  </section>
+""" + schritte_html + """  </section>
 
   <div class="fussnoten">
     <p>Hinweise zum Arbeitsstand: Das Elternzitat in Richtung 5 ist ein gekennzeichneter Platzhalter und müsste eingeholt werden. Die vier Aufnahme-Schritte sind beispielhaft formuliert und wären fachlich zu verifizieren. Alle übrigen Texte und Fotos stammen von der heutigen Webseite sonnenberg-baar.ch.</p>

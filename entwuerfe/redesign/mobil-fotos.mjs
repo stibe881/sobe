@@ -76,6 +76,32 @@ const umbau = () => {
       else { el.style.flexDirection = 'column'; el.style.alignItems = 'flex-start'; }
     }
   }
+  // Nichts darf über die Innenkante seines Elternteils hinausragen. Geprüft
+  // wurde vorher nur gegen die Fensterbreite – die Linkzeile in der dunklen
+  // Fusskachel blieb darunter und stand trotzdem aus der Kachel heraus.
+  for (let runde = 0; runde < 4; runde++) {
+    let geaendert = false;
+    for (const el of document.querySelectorAll('body *')) {
+      const eltern = el.parentElement;
+      if (!eltern || eltern === document.body) continue;
+      const c = getComputedStyle(el);
+      if (c.position === 'absolute' || c.position === 'fixed') continue;
+      const ec = getComputedStyle(eltern);
+      const er = eltern.getBoundingClientRect();
+      const innenkante = er.right - parseFloat(ec.borderRightWidth) - parseFloat(ec.paddingRight);
+      if (el.getBoundingClientRect().right <= innenkante + 0.5) continue;
+      el.style.maxWidth = '100%';
+      if (c.display === 'flex' && c.flexDirection === 'row') el.style.flexWrap = 'wrap';
+      if (c.marginLeft === 'auto') el.style.marginLeft = '0';
+      // Nicht nur das herausragende Stück begrenzen: Steht es in einer
+      // Flex-Zeile, muss diese umbrechen dürfen – sonst schiebt die Zeile
+      // es weiter hinaus (der Knopf «Aufnahme & Beratung» neben seinem Text).
+      if (ec.display === 'flex' && ec.flexDirection === 'row') eltern.style.flexWrap = 'wrap';
+      geaendert = true;
+    }
+    if (!geaendert) break;
+  }
+
   // Letzte Korrektur: ragt danach noch etwas spürbar hinaus (die Mosaik-Kacheln
   // streifen die Kante nur um ~4 Punkte, das bleibt unsichtbar), wird die
   // nächste Flex-Zeile darüber gestapelt – z. B. die gequetschte
@@ -102,11 +128,21 @@ for (const f of files) {
   await p.waitForTimeout(300);
   await p.evaluate(umbau);
   await p.waitForTimeout(200);
+  // Geprüft wird beides: aus dem Fenster und aus dem eigenen Elternteil
+  // heraus – Letzteres liess die Fusszeilen-Links aus der Kachel ragen.
   const breit = await p.evaluate(() => {
     const treffer = [];
     for (const el of document.querySelectorAll('body *')) {
       const r = el.getBoundingClientRect();
-      if (r.right > 398) treffer.push(el.tagName + '/' + (el.className || '') + ' ' + (el.getAttribute('style') || '').slice(0, 80) + ' b=' + Math.round(r.width));
+      const eltern = el.parentElement;
+      let grund = r.right > 398 ? 'Fenster' : '';
+      if (!grund && eltern && eltern !== document.body) {
+        const ec = getComputedStyle(eltern);
+        const er = eltern.getBoundingClientRect();
+        const innenkante = er.right - parseFloat(ec.borderRightWidth) - parseFloat(ec.paddingRight);
+        if (r.right > innenkante + 1) grund = 'Kachel';
+      }
+      if (grund) treffer.push(grund + ': ' + el.tagName + '/' + (el.className || '') + ' ' + (el.getAttribute('style') || '').slice(0, 70) + ' b=' + Math.round(r.width));
     }
     return treffer.slice(0, 6);
   });
