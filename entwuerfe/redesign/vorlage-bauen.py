@@ -54,19 +54,33 @@ vergleich = [
     ('5 · Panorama', 'Foto-Auftakt mit schwebendem Glas-Kopf', 'Braucht laufend gute Fotos', 'Milchglas kostet Kontrast, Text beginnt spät', 'am höchsten'),
 ]
 
+# Nummer, Titel, Beschreibung, Aufwand, Zieltermin. Schritt 1a ist optional
+# und verschiebt alles Folgende – der Hinweis dazu steht unter der Liste.
 schritte = [
-    ('Richtung wählen', 'Die Geschäftsleitung entscheidet sich für eine Richtung oder eine benannte Mischung.'),
-    ('Klickbarer Prototyp', 'Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.'),
-    ('Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden.'),
-    ('Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst.'),
-    ('Barrierefreiheit prüfen', 'Der fertige Auftritt wird auf Barrierefreiheit geprüft; die Befunde werden vor dem Aufschalten behoben.'),
-    ('Go-live', 'Der neue Auftritt wird auf sonnenberg-baar.ch aufgeschaltet.'),
-    ('Webshop integrieren', 'Der Webshop wird an den neuen Auftritt angebunden.'),
+    ('1', 'Richtung wählen', 'Die Geschäftsleitung entscheidet sich für eine Richtung oder eine benannte Mischung.',
+     'eine Sitzung', 'Ende September 2026'),
+    ('1a', 'Anpassung der gewählten Variante <span class="wahl">optional</span>',
+     'Die gewählte Richtung wird nach den Wünschen der Geschäftsleitung überarbeitet und nochmals vorgelegt.',
+     '1–2 Wochen', 'Mitte Oktober 2026'),
+    ('2', 'Klickbarer Prototyp', 'Die gewählte Richtung wird als klickbarer Prototyp mit den echten Inhalten ausgearbeitet und intern getestet.',
+     '3–4 Wochen', 'Mitte November 2026'),
+    ('3', 'Umsetzung', 'Aufbau auf der bestehenden Technik: schnelle statische Seite, eigenes Redaktionssystem für die Mitarbeitenden.',
+     '6–8 Wochen', 'Ende Januar 2027'),
+    ('4', 'Spenden-Seite integrieren', 'Die Spenden-Seite wird in den neuen Auftritt übernommen und in die gewählte Gestaltung eingepasst.',
+     '1–2 Wochen', 'Mitte Februar 2027'),
+    ('5', 'Barrierefreiheit prüfen', 'Der fertige Auftritt wird auf Barrierefreiheit geprüft; die Befunde werden vor dem Aufschalten behoben.',
+     '2 Wochen', 'Ende Februar 2027'),
+    ('6', 'Go-live', 'Der neue Auftritt wird auf sonnenberg-baar.ch aufgeschaltet.',
+     'ein Tag, danach eine Woche Nachlauf', 'Anfang März 2027'),
+    ('7', 'Webshop integrieren', 'Der Webshop wird an den neuen Auftritt angebunden.',
+     '3–4 Wochen', 'Ende März 2027'),
 ]
 schritte_html = ''.join(
-    f'    <div class="schritt"><span class="snr">{i}</span><span class="stitel">{titel}</span>'
-    f'<span class="stext">{text}</span></div>\n'
-    for i, (titel, text) in enumerate(schritte, start=1)
+    f'    <div class="schritt{" wahlweise" if nr.endswith("a") else ""}">'
+    f'<span class="snr">{nr}</span><span class="stitel">{titel}</span>'
+    f'<span class="stext">{text}</span>'
+    f'<span class="frist"><strong>{frist}</strong>Aufwand: {aufwand}</span></div>\n'
+    for nr, titel, text, aufwand, frist in schritte
 )
 
 logo64 = b64(LOGO, 'image/png')
@@ -136,8 +150,13 @@ teile.append("""<title>Fünf Richtungen</title>
   .schritt { display: flex; gap: 28px; padding: 20px 0; border-bottom: 1px solid var(--linie); align-items: baseline; }
   .schritt:first-of-type { border-top: 1px solid var(--linie); }
   .schritt .snr { font-family: "Source Serif 4", Georgia, serif; font-size: 26px; font-weight: 600; color: var(--petrol); width: 36px; flex: none; }
-  .schritt .stitel { font-weight: 700; width: 300px; flex: none; }
-  .schritt .stext { color: var(--grau); font-size: 16px; }
+  .schritt .stitel { font-weight: 700; width: 250px; flex: none; }
+  .schritt .stext { color: var(--grau); font-size: 16px; flex: 1; }
+  .schritt .frist { width: 210px; flex: none; text-align: right; font-size: 14.5px; color: var(--grau); }
+  .schritt .frist strong { display: block; color: var(--tinte); font-size: 16px; font-weight: 600; }
+  .schritt.wahlweise .snr, .schritt.wahlweise .stitel { color: var(--grau); }
+  .wahl { font-weight: 400; font-size: 14px; color: var(--grau); }
+  .fristnotiz { margin-top: 18px; font-size: 15px; color: var(--grau); max-width: 78ch; }
 
 
   #lupe { position: fixed; inset: 0; background: rgba(33, 41, 52, 0.88); z-index: 10; overflow-y: auto; padding: 40px 20px; cursor: zoom-out; }
@@ -156,7 +175,10 @@ teile.append("""<title>Fünf Richtungen</title>
     .richtung-kopf h2 { font-size: 28px; }
     .richtung-kopf .nr { font-size: 40px; }
     .schritt .stitel { width: auto; }
-    .schritt { flex-wrap: wrap; }
+    .schritt .frist { width: auto; text-align: left; }
+    /* Nebeneinander quetschen sich vier Spalten; schmal wird gestapelt. */
+    .schritt { flex-direction: column; gap: 6px; }
+    .schritt .snr { font-size: 22px; }
   }
 </style>
 <div class="blatt">
@@ -232,7 +254,9 @@ teile.append("""
 
   <section class="schritte">
     <h2 class="abschnitt-titel">Die nächsten Schritte</h2>
-""" + schritte_html + """  </section>
+    <p class="fristnotiz" style="margin: -6px 0 22px;">Aufwand und Termine sind Richtwerte. Sie gehen von einem Entscheid bis Ende September 2026 aus; die Arbeiten laufen neben dem Tagesgeschäft.</p>
+""" + schritte_html + """    <p class="fristnotiz">Schritt 1a ist optional: Wird die gewählte Richtung zuerst überarbeitet, verschieben sich die folgenden Termine um rund zwei Wochen.</p>
+  </section>
 
 </div>
 
