@@ -10,7 +10,7 @@ Hetzner Webhosting L
 │   ├── statisch/       die gebaute Webseite
 │   ├── redaktion/      der Redaktionsserver (Node.js)
 │   └── werkzeuge/      Eleventy-Konfiguration
-└── ~/public_html/  ←   erhält bei jedem Veröffentlichen den Inhalt von statisch/
+└── ~/public_html/sobe-webseite/  ←  erhält beim Veröffentlichen den Inhalt von statisch/
 ```
 
 Die **öffentliche Seite** braucht kein Node: Der Apache liefert fertige
@@ -36,8 +36,9 @@ Erster Bau und erste Auslieferung von Hand:
 
 ```bash
 npm run bauen
-cp werkzeuge/hetzner.htaccess ~/public_html/.htaccess
-rsync -rl --delete ~/projekt/statisch/ ~/public_html/
+mkdir -p ~/public_html/sobe-webseite
+cp werkzeuge/hetzner.htaccess ~/public_html/sobe-webseite/.htaccess
+cp -r ~/projekt/statisch/. ~/public_html/sobe-webseite/
 ```
 
 Damit ist die Seite online.
@@ -46,25 +47,47 @@ Damit ist die Seite online.
 > etwa `neu.sonnenberg-baar.ch`, mit eigenem Verzeichnis, und liefern Sie
 > dorthin aus. Die heutige Seite bleibt unberührt, bis Sie umschalten.
 
-## 2. Redaktionsserver starten
+## 2. Node.js in konsoleH einrichten
 
-```bash
-cd ~/projekt
-OEFFENTLICH=/usr/home/benutzer/public_html PORT=3000 node redaktion/server.mjs
-```
+**Wichtig zuerst:** Das Panel warnt, dass mit dem Aktivieren von Node.js
+*alle anderen Webanwendungen unter dieser Domain deaktiviert werden*. Die
+Node-Anwendung bekommt dann sämtliche Anfragen dieser Domain – der Apache
+liefert dort keine Dateien mehr aus.
+
+Deshalb: **Node.js nur auf einer eigenen Subdomain aktivieren**, etwa
+`redaktion.sonnenberg-baar.ch`. Die Domain, unter der die Webseite liegt,
+bleibt unangetastet und wird weiterhin vom Apache ausgeliefert – schnell,
+und unabhängig davon, ob die Redaktion gerade läuft.
+
+Werte für die Maske (Ihr Zuhause ist `/usr/home/e3z3sy`, der Klon liegt in
+`projekt`):
+
+| Feld | Wert |
+| --- | --- |
+| Skript-Pfad | `app.js` |
+| Arbeitsverzeichnis | `projekt` |
+| Name der Log-Datei | `redaktion.log` |
+| Arbeitsspeicher-Beschränkung | leer lassen |
+| Version | `24` |
+| Skript-Parameter | keine |
+
+Bei den **Umgebungsvariablen** eintragen:
+
+| Schlüssel | Wert |
+| --- | --- |
+| `OEFFENTLICH` | `/usr/home/e3z3sy/public_html/sobe-webseite` |
 
 `OEFFENTLICH` sagt dem Server, wohin er nach dem Bauen ausliefern soll. Fehlt
 die Angabe, baut er nur – aufgeschaltet wird dann nichts.
 
-In konsoleH die Node-Anwendung eintragen, damit sie dauerhaft läuft und unter
-einer eigenen Adresse erreichbar ist, etwa `redaktion.sonnenberg-baar.ch`:
+Den Port setzt Hetzner selbst; der Server übernimmt ihn aus `PORT`.
 
-| Feld | Wert |
-| --- | --- |
-| Arbeitsverzeichnis | `/usr/home/benutzer/projekt` |
-| Startbefehl | `node redaktion/server.mjs` |
-| Port | der in konsoleH zugewiesene |
-| Umgebung | `OEFFENTLICH=/usr/home/benutzer/public_html` |
+Zum Ausprobieren auf der Kommandozeile geht es auch ohne Panel:
+
+```bash
+cd ~/projekt
+OEFFENTLICH=~/public_html/sobe-webseite PORT=3000 node app.js
+```
 
 > Geht das Dauerbetreiben auf Ihrem Paket nicht, läuft die Redaktion genauso
 > auf einem Arbeitsplatzrechner: dort `npm run redaktion`, redigieren, und
@@ -108,8 +131,10 @@ zurückholen. Ein Cronjob kann das auch nachts erledigen.
   unverändert online – ein misslungener Bau schaltet nichts auf.
 - **Anmeldung klemmt.** Nach fünf Fehlversuchen ist eine Viertelstunde Ruhe.
   Passwort vergessen: `node redaktion/passwort.mjs` setzt ein neues.
-- **Die Seite sieht unformatiert aus.** Die `.htaccess` fehlt in
-  `public_html`: `cp werkzeuge/hetzner.htaccess ~/public_html/.htaccess`.
+- **Die Seite sieht unformatiert aus.** Die `.htaccess` fehlt:
+  `cp werkzeuge/hetzner.htaccess ~/public_html/sobe-webseite/.htaccess`.
+  Dateien, die mit einem Punkt beginnen, rührt das Veröffentlichen nicht an –
+  eine von Hand abgelegte `.htaccess` bleibt also erhalten.
 - **Nach einem `git pull` fehlt etwas.** `npm install` erneut ausführen.
 
 ## Barrierefreiheit

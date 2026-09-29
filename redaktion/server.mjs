@@ -7,7 +7,7 @@
 //
 // Aufruf:  node redaktion/server.mjs        (Port 3000, oder PORT=…)
 import { createServer } from 'node:http';
-import { readFile, writeFile, readdir, unlink, mkdir, stat } from 'node:fs/promises';
+import { readFile, writeFile, readdir, unlink, mkdir, stat, copyFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
@@ -69,6 +69,38 @@ async function koerper(req) {
   }
   if (!stuecke.length) return {};
   return JSON.parse(Buffer.concat(stuecke).toString('utf8'));
+}
+
+// Gleicht zwei Ordner ab, ohne fremde Werkzeuge: kopiert Neues und
+// Geändertes, entfernt, was in der Quelle nicht mehr vorkommt. Kein rsync –
+// auf geteiltem Webhosting ist nicht gesagt, dass es vorhanden ist.
+async function abgleichen(quelle, ziel) {
+  await mkdir(ziel, { recursive: true });
+  const hier = await readdir(quelle, { withFileTypes: true });
+  const gewollt = new Set(hier.map((e) => e.name));
+
+  for (const eintrag of hier) {
+    const von = path.join(quelle, eintrag.name);
+    const nach = path.join(ziel, eintrag.name);
+    if (eintrag.isDirectory()) {
+      await abgleichen(von, nach);
+      continue;
+    }
+    let gleich = false;
+    try {
+      const [a, b] = await Promise.all([stat(von), stat(nach)]);
+      gleich = a.size === b.size && a.mtimeMs <= b.mtimeMs;
+    } catch { /* Ziel fehlt noch */ }
+    if (!gleich) await copyFile(von, nach);
+  }
+
+  for (const eintrag of await readdir(ziel, { withFileTypes: true })) {
+    if (gewollt.has(eintrag.name)) continue;
+    // Was die Redaktion nicht hingelegt hat, bleibt unangetastet: eine
+    // .htaccess von Hand soll ein Veröffentlichen nicht wegräumen.
+    if (eintrag.name.startsWith('.')) continue;
+    await rm(path.join(ziel, eintrag.name), { recursive: true, force: true });
+  }
 }
 
 function laufen(befehl, argumente, ordner) {
@@ -201,7 +233,7 @@ const server = createServer(async (req, res) => {
         schritte.push('Suche erneuert');
         const ziel = process.env.OEFFENTLICH;
         if (ziel) {
-          await laufen('rsync', ['-rl', '--delete', `${path.join(WURZEL, 'statisch')}/`, `${ziel}/`], WURZEL);
+          await abgleichen(path.join(WURZEL, 'statisch'), ziel);
           schritte.push('aufgeschaltet');
         } else {
           schritte.push('nicht aufgeschaltet (OEFFENTLICH nicht gesetzt)');
