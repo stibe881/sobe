@@ -57,5 +57,56 @@
       "titel": "Barrierefreiheit",
       "pfad": "/barrierefreiheit/"
     }
-  ]
+  ],
+  "spenden": {
+    "zahlungsziel": "",
+    "betraegeEinmalig": [
+      30,
+      50,
+      100,
+      250
+    ],
+    "betraegeMonatlich": [
+      10,
+      20,
+      40,
+      80
+    ],
+    "zwecke": [
+      {
+        "kennung": "allgemein",
+        "titel": "Wo es am nötigsten ist",
+        "text": "Wir setzen Ihre Spende dort ein, wo sie am meisten bewirkt."
+      },
+      {
+        "kennung": "projekt",
+        "titel": "[Bitte ergänzen: Projekt]",
+        "text": "[Bitte ergänzen: Wofür genau. Nur aufführen, wenn es das Projekt wirklich gibt.]"
+      }
+    ],
+    "zahlungsarten": [
+      {
+        "kennung": "twint",
+        "titel": "TWINT"
+      },
+      {
+        "kennung": "karte",
+        "titel": "Kreditkarte"
+      },
+      {
+        "kennung": "postfinance",
+        "titel": "PostFinance"
+      },
+      {
+        "kennung": "ueberweisung",
+        "titel": "Überweisung",
+        "hinweis": "Ohne Gebühren für uns – Sie tragen die Angaben in Ihr E-Banking ein."
+      }
+    ],
+    "konto": {
+      "inhaber": "[Bitte ergänzen: Kontoinhaber]",
+      "iban": "[Bitte ergänzen: IBAN]",
+      "bank": "[Bitte ergänzen: Bank und Ort]"
+    }
+  }
 }

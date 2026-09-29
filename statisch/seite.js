@@ -273,6 +273,101 @@
     if ('speechSynthesis' in window) speechSynthesis.cancel();
   });
 
+  // ------------------------------------------------------- 3b. Spendenformular
+  (function () {
+    var form = document.getElementById('spendenform');
+    if (!form) return;
+
+    var gruppen = {
+      einmalig: document.getElementById('betraege-einmalig'),
+      monatlich: document.getElementById('betraege-monatlich'),
+    };
+    var freibetrag = document.getElementById('freibetrag');
+    var eigener = document.getElementById('f-eigenerbetrag');
+    var konto = document.getElementById('kontoangaben');
+    var summe = document.getElementById('spendensumme');
+    var mailknopf = document.getElementById('spendenmail');
+
+    function gewaehlt(name) {
+      var el = form.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
+    function intervall() { return gewaehlt('intervall') || 'einmalig'; }
+
+    function gruppeWechseln() {
+      var welche = intervall();
+      Object.keys(gruppen).forEach(function (k) {
+        var g = gruppen[k];
+        if (!g) return;
+        var an = k === welche;
+        g.hidden = !an;
+        // Abgeschaltete Felder wandern aus der Tabulatorreihe und werden
+        // nicht mitgeschickt. Blosses Verstecken täte beides nicht.
+        Array.prototype.forEach.call(g.querySelectorAll('input'), function (i) { i.disabled = !an; });
+      });
+      var aktiv = gruppen[welche];
+      if (aktiv && !aktiv.querySelector('input:checked')) {
+        var vorwahl = aktiv.querySelectorAll('input:not([value="frei"])')[1]
+          || aktiv.querySelector('input');
+        if (vorwahl) vorwahl.checked = true;
+      }
+    }
+
+    function betrag() {
+      var b = gewaehlt('betrag');
+      if (b === 'frei') return eigener && eigener.value ? Number(eigener.value) : 0;
+      return Number(b) || 0;
+    }
+
+    function auffrischen() {
+      var frei = gewaehlt('betrag') === 'frei';
+      if (freibetrag) freibetrag.hidden = !frei;
+      if (frei && eigener && document.activeElement !== eigener) eigener.focus();
+      if (konto) konto.hidden = gewaehlt('zahlungsart') !== 'ueberweisung';
+
+      var wert = betrag();
+      if (summe) {
+        summe.innerHTML = '';
+        summe.appendChild(document.createTextNode('Ihre Spende: '));
+        var stark = document.createElement('strong');
+        stark.textContent = wert ? 'CHF ' + wert : 'Betrag wählen';
+        summe.appendChild(stark);
+        summe.appendChild(document.createTextNode(
+          wert ? (intervall() === 'monatlich' ? ' monatlich' : ' einmalig') : ''));
+      }
+
+      // Solange kein Zahlungsdienstleister eingerichtet ist, trägt die Mail
+      // alles Gewählte schon ein – sonst müsste es jemand zweimal tippen.
+      if (mailknopf) {
+        var zeilen = [
+          'Betrag: CHF ' + (wert || '—') + ' (' + intervall() + ')',
+          'Zweck: ' + (gewaehlt('zweck') || '—'),
+          'Zahlungsart: ' + (gewaehlt('zahlungsart') || '—'),
+          '',
+          'Name: ' + [form.vorname.value, form.name.value].join(' ').trim(),
+          'Adresse: ' + [form.strasse.value, [form.plz.value, form.ort.value].join(' ').trim()]
+            .filter(Boolean).join(', '),
+          'E-Mail: ' + form.mail.value,
+          'Spendenbescheinigung: ' + (form.bescheinigung.checked ? 'ja' : 'nein'),
+          'Nennung: ' + (form.anonym.checked ? 'nicht öffentlich' : 'einverstanden'),
+        ];
+        var ziel = mailknopf.getAttribute('href').split('?')[0];
+        mailknopf.setAttribute('href', ziel
+          + '?subject=' + encodeURIComponent('Spende')
+          + '&body=' + encodeURIComponent(zeilen.join('\n')));
+      }
+    }
+
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'intervall') gruppeWechseln();
+      auffrischen();
+    });
+    form.addEventListener('input', auffrischen);
+    gruppeWechseln();
+    auffrischen();
+  })();
+
   // ------------------------------------------------------------- 4. Suche
   var ergebnis = document.getElementById('suchergebnis');
   var lage = document.getElementById('suchlage');

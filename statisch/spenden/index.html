@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spenden · SONNENBERG</title>
-<meta name="description" content="Wie Sie den SONNENBERG unterstützen können.">
+<meta name="description" content="In drei Schritten spenden – einmalig oder monatlich.">
 <link rel="stylesheet" href="/stil.css">
 <script>
 /* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
@@ -79,37 +79,186 @@ try {
     <div class="kachel petrol s6">
         <p class="marke">Unterstützen</p>
         <h1 class="held" style="margin-top: 8px;">Spenden</h1>
-        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Wie Sie den SONNENBERG unterstützen können.</p>
+        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Betrag wählen, Angaben eintragen, fertig. Einmalig oder monatlich.</p>
         
       </div>
-    <div class="kachel s6"><p class="hinweis" style="margin: 0;">Diese Seite ist ein Gerüst. Alle mit [ ] markierten Stellen müssen von der Redaktion mit den tatsächlichen Angaben gefüllt werden. Spendenkonto, Verwendungszweck und Steuerabzug sind bewusst leer gelassen und nicht erfunden – falsche Zahlen auf einer Spendenseite wären schlimmer als gar keine.</p></div>
-    <div class="kachel s3">
+    <div class="kachel s4 spendenkachel">
+      <form id="spendenform" class="spende" method="post">
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">1</span> Ihr Beitrag</legend>
+
+          <div class="umschalter" role="radiogroup" aria-label="Wie oft">
+            <label><input type="radio" name="intervall" value="einmalig" checked><span>Einmalig</span></label>
+            <label><input type="radio" name="intervall" value="monatlich"><span>Monatlich</span></label>
+          </div>
+
+          <div class="betraege" id="betraege-einmalig">
+            
+            <label class="betrag">
+              <input type="radio" name="betrag" value="30" data-art="einmalig">
+              <span class="betragzahl">30</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="50" data-art="einmalig" checked>
+              <span class="betragzahl">50</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="100" data-art="einmalig">
+              <span class="betragzahl">100</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="250" data-art="einmalig">
+              <span class="betragzahl">250</span>
+            </label>
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="einmalig">
+              <span class="betragzahl">Anderer</span>
+            </label>
+          </div>
+          <div class="betraege" id="betraege-monatlich" hidden>
+            
+            <label class="betrag">
+              <input type="radio" name="betrag" value="10" data-art="monatlich" disabled>
+              <span class="betragzahl">10</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="20" data-art="monatlich" disabled>
+              <span class="betragzahl">20</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="40" data-art="monatlich" disabled>
+              <span class="betragzahl">40</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="80" data-art="monatlich" disabled>
+              <span class="betragzahl">80</span>
+            </label>
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="monatlich" disabled>
+              <span class="betragzahl">Anderer</span>
+            </label>
+          </div>
+
+          <!-- Ohne «hidden» im Markup: Fällt das Skript aus, sind Feld und
+               Kontoangaben sichtbar statt für immer verborgen. Das Skript
+               blendet sie beim Laden aus und bei Bedarf wieder ein. -->
+          <p class="feld freibetrag" id="freibetrag">
+            <label for="f-eigenerbetrag">Eigener Betrag in Franken</label>
+            <input id="f-eigenerbetrag" name="eigenerbetrag" type="number" min="1" step="1" inputmode="numeric">
+          </p>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">2</span> Wofür</legend>
+          <div class="wahlreihe">
+          <label class="wahlkarte">
+            <input type="radio" name="zweck" value="allgemein" checked>
+            <span class="wahltext"><span class="wahlname">Wo es am nötigsten ist</span>
+              <span class="wahlhilfe">Wir setzen Ihre Spende dort ein, wo sie am meisten bewirkt.</span></span>
+          </label>
+          <label class="wahlkarte">
+            <input type="radio" name="zweck" value="projekt">
+            <span class="wahltext"><span class="wahlname">[Bitte ergänzen: Projekt]</span>
+              <span class="wahlhilfe">[Bitte ergänzen: Wofür genau. Nur aufführen, wenn es das Projekt wirklich gibt.]</span></span>
+          </label></div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">3</span> Zahlungsart</legend>
+          <div class="wahlreihe">
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="twint" checked>
+            <span class="wahltext"><span class="wahlname">TWINT</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="karte">
+            <span class="wahltext"><span class="wahlname">Kreditkarte</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="postfinance">
+            <span class="wahltext"><span class="wahlname">PostFinance</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="ueberweisung">
+            <span class="wahltext"><span class="wahlname">Überweisung</span>
+              <span class="wahlhilfe">Ohne Gebühren für uns – Sie tragen die Angaben in Ihr E-Banking ein.</span></span>
+          </label></div>
+
+          <div class="kontoangaben" id="kontoangaben">
+            <p class="marke">Unser Spendenkonto</p>
+            <p><strong>[Bitte ergänzen: Kontoinhaber]</strong></p>
+            <p class="iban">[Bitte ergänzen: IBAN]</p>
+            <p class="fliess">[Bitte ergänzen: Bank und Ort]</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">4</span> Ihre Angaben</legend>
+          <p class="fliess kleinerhinweis">Für die Spendenbescheinigung. Wenn Sie keine brauchen, genügt die E-Mail-Adresse.</p>
+          <div class="felder">
+            
+            <p class="feld">
+              <label for="f-vorname">Vorname</label>
+              <input id="f-vorname" name="vorname" type="text" autocomplete="given-name">
+            </p>
+            
+            <p class="feld">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="family-name">
+            </p>
+            
+            <p class="feld breit">
+              <label for="f-strasse">Strasse und Nummer</label>
+              <input id="f-strasse" name="strasse" type="text" autocomplete="street-address">
+            </p>
+            
+            <p class="feld">
+              <label for="f-plz">PLZ</label>
+              <input id="f-plz" name="plz" type="text" autocomplete="postal-code">
+            </p>
+            
+            <p class="feld">
+              <label for="f-ort">Ort</label>
+              <input id="f-ort" name="ort" type="text" autocomplete="address-level2">
+            </p>
+            
+            <p class="feld breit">
+              <label for="f-mail">E-Mail <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="f-mail" name="mail" type="email" autocomplete="email" required>
+            </p>
+          </div>
+          <p class="haken">
+            <label><input type="checkbox" name="bescheinigung" value="ja"> Ich möchte eine Spendenbescheinigung</label>
+          </p>
+          <p class="haken">
+            <label><input type="checkbox" name="anonym" value="ja"> Meine Spende soll nicht öffentlich genannt werden</label>
+          </p>
+        </fieldset>
+
+        <div class="abschluss">
+          <p class="summe" id="spendensumme" role="status" aria-live="polite">Ihre Spende: <strong>CHF 50</strong> einmalig</p>
+          <p class="hinweis" id="nochkeinweg">Die Online-Zahlung ist noch nicht eingerichtet – es fehlt der Vertrag mit einem Zahlungsdienstleister. Bis dahin führt der Weg über eine Überweisung oder über <a href="mailto:info@sonnenberg-baar.ch">info@sonnenberg-baar.ch</a>.</p>
+             <a class="knopf spende" id="spendenmail" href="mailto:info@sonnenberg-baar.ch">Spende per E-Mail anmelden</a>
+        </div>
+      </form>
+    </div>
+    <div class="kachel s2">
         <h2>Wofür Ihre Spende eingesetzt wird</h2>
         
-        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Wofür werden Spenden verwendet? Zwei bis drei Sätze, möglichst konkret – was wird damit möglich, das sonst nicht möglich wäre.]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Gibt es einzelne Projekte, für die gezielt gespendet werden kann?]</p>
+        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Wofür werden Spenden verwendet? Zwei bis drei Sätze, möglichst konkret – was wird damit möglich, das sonst nicht möglich wäre.]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Ob und in welchen Kantonen Spenden an den SONNENBERG von den Steuern abgezogen werden können. Diese Angabe erst aufschalten, wenn sie geprüft ist.]</p>
       </div>
-    <div class="kachel s3">
-        <h2>Spendenkonto</h2>
-        <p class="marke" style="margin-top: 6px; font-size: 12.5px;">Von der Redaktion zu füllen</p>
-        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Kontoinhaber]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: IBAN]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Bank und Ort]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Falls es einen QR-Einzahlungsschein oder eine Spendenmöglichkeit über TWINT gibt, hier verlinken.]</p>
-      </div>
-    <div class="kachel s3">
-        <h2>Steuern</h2>
-        
-        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Ob und in welchen Kantonen Spenden an den SONNENBERG von den Steuern abgezogen werden können, und ob eine Spendenbescheinigung ausgestellt wird. Diese Angabe erst aufschalten, wenn sie geprüft ist.]</p>
-      </div>
-    <div class="kachel s3">
-        <h2>Andere Wege zu helfen</h2>
-        
-        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Was trifft zu? Zum Beispiel Legate und Erbschaften, Patenschaften, Sachspenden, freiwillige Mitarbeit, Unterstützung durch Firmen. Nur aufführen, was tatsächlich besteht.]</p>
-      </div>
-    <div class="kachel s6 petrol">
+    <div class="kachel s2 petrol">
         <h2>Fragen zu einer Spende</h2>
-        <p style="margin-top: 8px;">Wir geben gerne Auskunft – auch zu grösseren Zuwendungen und zu Legaten.</p>
+        <p style="margin-top: 8px;">Auch zu grösseren Zuwendungen und zu Legaten geben wir gerne Auskunft.</p>
         <p class="tel" style="margin-top: 10px;"><a href="tel:+41417677833">041 767 78 33</a></p>
         <p style="margin-top: 4px;"><a href="mailto:info@sonnenberg-baar.ch">info@sonnenberg-baar.ch</a></p>
         <p style="margin-top: 8px;">Landhausstrasse 20 · 6340 Baar</p>
       </div>
+    <div class="kachel s6"><p class="hinweis" style="margin: 0;">Hinweis an die Redaktion: Die mit [ ] markierten Stellen stehen in inhalt/einstellungen.json unter «spenden» und in dieser Seite. Spendenkonto, Verwendungszweck und Steuerabzug sind bewusst leer – falsche Angaben auf einer Spendenseite wären schlimmer als gar keine. Die Online-Zahlung wird scharfgeschaltet, sobald unter «zahlungsziel» die Adresse des Zahlungsdienstleisters steht.</p></div>
     <div class="kachel nacht fussk">
       <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
       <div>Landhausstrasse 20 · 6340 Baar · <a class="hell" href="tel:+41417677833">041 767 78 33</a></div>

@@ -11,6 +11,12 @@
   --flaeche: #ffffff;
 }
 * { box-sizing: border-box; }
+/* Das hidden-Attribut kommt vom Browser als «[hidden] { display: none }» –
+   eine Regel ohne Klasse. Jede eigene Regel mit Klasse ist spezifischer und
+   gewinnt: «.betraege { display: flex }» liess die versteckte Betragsreihe
+   weiter stehen, und beide Reihen standen untereinander. Das gilt für jedes
+   versteckte Element mit eigenem display, darum hier ein für alle Mal. */
+[hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 body { margin: 0; background: var(--grund); color: var(--text);
   /* Übernommene Inseratstexte enthalten lange Wörter und Adressen; ohne
@@ -323,4 +329,94 @@ html.dunkel .logo .fuerdunkel { display: block; }
 @media (max-width: 68em) {
   .nurschmal { display: inline-block; }
   .menue .knopf.spende { text-align: center; justify-content: center; margin: 8px 4px 4px; }
+}
+
+/* ===================================================================== */
+/* Spendenformular                                                       */
+/* ===================================================================== */
+
+.spendenkachel { padding: 0; background: none; }
+.spende { display: flex; flex-direction: column; gap: 14px; }
+
+.schrittfeld { border: 0; margin: 0; padding: 26px 30px 28px; background: var(--flaeche);
+  border-radius: var(--rund); }
+.schrittfeld legend { display: flex; align-items: center; gap: 12px; padding: 0;
+  font-size: 1.375rem; font-weight: 800; }
+.schrittzahl { display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 999px; background: var(--petrol);
+  color: var(--weiss); font-size: 1rem; font-weight: 800; flex: none; }
+
+/* Einmalig / Monatlich. Zwei Radios, die wie ein Schieber aussehen – die
+   Bedienung bleibt aber ein echtes Radio-Paar, damit Pfeiltasten und
+   Bildschirmleser das Übliche tun. */
+.umschalter { display: inline-flex; background: var(--grund); border-radius: 999px;
+  padding: 4px; margin-top: 18px; gap: 4px; }
+.umschalter label { position: relative; }
+.umschalter input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.umschalter span { display: block; padding: 9px 22px; border-radius: 999px; font-weight: 700; }
+.umschalter input:checked + span { background: var(--petrol); color: var(--weiss); }
+.umschalter input:focus-visible + span { outline: 3px solid var(--tinte); outline-offset: 2px; }
+
+.betraege { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.betrag { position: relative; flex: 1 1 96px; }
+.betrag input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.betragzahl { display: flex; align-items: center; justify-content: center; gap: 4px;
+  min-height: 62px; border: 2px solid var(--linie); border-radius: 16px;
+  font-size: 1.375rem; font-weight: 800; background: var(--flaeche); }
+.betrag:not(.frei) .betragzahl::before { content: "CHF"; font-size: 0.8125rem; font-weight: 700; color: var(--grau); }
+.betrag.frei .betragzahl { font-size: 1rem; }
+.betrag input:checked + .betragzahl { border-color: var(--petrol); background: var(--petrol); color: var(--weiss); }
+.betrag input:checked + .betragzahl::before { color: #bcd2cd; }
+.betrag input:focus-visible + .betragzahl { outline: 3px solid var(--tinte); outline-offset: 3px; }
+
+.wahlreihe { display: grid; gap: 10px; margin-top: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+.wahlkarte { position: relative; display: block; }
+.wahlkarte input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.wahltext { display: flex; flex-direction: column; gap: 3px; height: 100%;
+  border: 2px solid var(--linie); border-radius: 16px; padding: 14px 16px; }
+.wahlname { font-weight: 700; }
+.wahlhilfe { font-size: 0.875rem; color: var(--grau); line-height: 1.4; }
+.wahlkarte input:checked + .wahltext { border-color: var(--petrol); background: rgba(20, 81, 74, 0.06); }
+html.dunkel .wahlkarte input:checked + .wahltext { background: rgba(99, 200, 182, 0.12); }
+.wahlkarte input:checked + .wahltext .wahlhilfe { color: var(--text); }
+.wahlkarte input:focus-visible + .wahltext { outline: 3px solid var(--tinte); outline-offset: 3px; }
+
+.felder { display: grid; gap: 14px; margin-top: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.feld { display: flex; flex-direction: column; gap: 5px; margin: 0; }
+.feld.breit { grid-column: 1 / -1; }
+.feld label { font-size: 0.9375rem; font-weight: 700; }
+.feld input { font: inherit; border: 2px solid var(--linie); border-radius: 12px;
+  padding: 11px 14px; background: var(--flaeche); color: var(--text); min-width: 0; }
+.feld input:focus-visible { outline: 3px solid var(--tinte); outline-offset: 1px; border-color: var(--tinte); }
+.pflicht { color: #a3341f; }
+html.dunkel .pflicht { color: #ff9b83; }
+.freibetrag { margin-top: 16px; max-width: 260px; }
+.kleinerhinweis { font-size: 0.9375rem; margin-top: 10px; }
+
+.haken { margin-top: 12px; }
+.haken label { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9375rem; cursor: pointer; }
+.haken input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--petrol); }
+
+.kontoangaben { margin-top: 16px; border: 2px dashed var(--linie); border-radius: 16px; padding: 16px 18px; }
+.kontoangaben p { margin-top: 4px; }
+.iban { font-size: 1.125rem; font-weight: 800; letter-spacing: 0.02em; }
+
+.abschluss { background: var(--nacht); color: #dde2e8; border-radius: var(--rund);
+  padding: 22px 30px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.abschluss .summe { margin-right: auto; font-size: 1.0625rem; }
+.abschluss .summe strong { color: var(--gelb); font-size: 1.25rem; }
+.abschluss .knopf.spende { background: var(--gelb); color: var(--nacht); font-size: 1.0625rem; padding: 15px 30px; }
+.abschluss .hinweis { flex-basis: 100%; margin: 0; }
+
+/* Das Formular ist viel höher als die Kacheln daneben. Ohne Zutun füllt die
+   erste Rasterzeile seine Höhe, die Infokachel wird mitgedehnt und steht
+   halb leer da, während die Kontaktkachel darunter nach links rutscht.
+   Zwei Zeilen für das Formular, und die Kacheln daneben behalten ihre
+   eigene Höhe. Nur auf dem breiten Raster – darunter steht ohnehin alles
+   untereinander. */
+@media (min-width: 62.5em) {
+  .spendenkachel { grid-row: span 2; }
+  .spendenkachel ~ .kachel:not(.fussk) { align-self: start; }
 }

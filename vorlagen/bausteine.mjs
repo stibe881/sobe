@@ -146,6 +146,138 @@ const arten = {
       </div>`,
 
   hinweis: (b) => `<div class="kachel ${spalte(b)}"><p class="hinweis" style="margin: 0;">${schuetzen(b.text)}</p></div>`,
+
+  // Das Spendenformular. Drei Schritte auf einer Seite, der Betrag zuoberst:
+  // Wer spenden will, hat den Entschluss schon gefasst und soll nicht erst
+  // durch Formularseiten wandern.
+  //
+  // Es ist ein echtes <form>. Ohne JavaScript bleibt jedes Feld bedienbar,
+  // nur die laufende Zusammenfassung fehlt. Die Vorlage, an der sich diese
+  // Seite orientiert, schreibt von sich selbst, sie sei «leider nicht
+  // barrierefrei» – für ein Kompetenzzentrum für Sehen wäre das der falsche
+  // Massstab. Darum: echte Beschriftungen, Gruppen mit <fieldset>/<legend>,
+  // alles mit der Tastatur erreichbar.
+  spende: (b, { einstellungen }) => {
+    const s = einstellungen.spenden;
+    const eingerichtet = Boolean(s.zahlungsziel);
+
+    // Beide Betragsgruppen tragen denselben Feldnamen – für den Browser sind
+    // sie damit EINE Gruppe. Stünde in beiden ein «checked», gewänne das
+    // zweite und die sichtbare Gruppe stünde leer da. Darum ist die
+    // monatliche Gruppe im Markup abgeschaltet; das Skript tauscht.
+    // Ohne Skript bleibt so die einmalige Gruppe bedienbar.
+    const betragsfeld = (wert, art, i) => `
+            <label class="betrag">
+              <input type="radio" name="betrag" value="${wert}" data-art="${art}"${
+                art === 'monatlich' ? ' disabled' : i === 1 ? ' checked' : ''}>
+              <span class="betragzahl">${wert}</span>
+            </label>`;
+
+    const zweck = (z, i) => `
+          <label class="wahlkarte">
+            <input type="radio" name="zweck" value="${schuetzen(z.kennung)}"${i === 0 ? ' checked' : ''}>
+            <span class="wahltext"><span class="wahlname">${schuetzen(z.titel)}</span>
+              <span class="wahlhilfe">${schuetzen(z.text || '')}</span></span>
+          </label>`;
+
+    const art = (z, i) => `
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="${schuetzen(z.kennung)}"${i === 0 ? ' checked' : ''}>
+            <span class="wahltext"><span class="wahlname">${schuetzen(z.titel)}</span>
+              ${z.hinweis ? `<span class="wahlhilfe">${schuetzen(z.hinweis)}</span>` : ''}</span>
+          </label>`;
+
+    const feld = (name, beschriftung, typ = 'text', breit = false, pflicht = false) => `
+            <p class="feld${breit ? ' breit' : ''}">
+              <label for="f-${name}">${schuetzen(beschriftung)}${pflicht ? ' <span class="pflicht" aria-hidden="true">*</span>' : ''}</label>
+              <input id="f-${name}" name="${name}" type="${typ}" autocomplete="${
+                { vorname: 'given-name', name: 'family-name', strasse: 'street-address',
+                  plz: 'postal-code', ort: 'address-level2', mail: 'email' }[name] || 'off'
+              }"${pflicht ? ' required' : ''}>
+            </p>`;
+
+    return `<div class="kachel ${spalte(b)} spendenkachel">
+      <form id="spendenform" class="spende" method="${eingerichtet ? 'get' : 'post'}"${
+        eingerichtet ? ` action="${schuetzen(s.zahlungsziel)}"` : ''}>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">1</span> Ihr Beitrag</legend>
+
+          <div class="umschalter" role="radiogroup" aria-label="Wie oft">
+            <label><input type="radio" name="intervall" value="einmalig" checked><span>Einmalig</span></label>
+            <label><input type="radio" name="intervall" value="monatlich"><span>Monatlich</span></label>
+          </div>
+
+          <div class="betraege" id="betraege-einmalig">
+            ${s.betraegeEinmalig.map((w, i) => betragsfeld(w, 'einmalig', i)).join('')}
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="einmalig">
+              <span class="betragzahl">Anderer</span>
+            </label>
+          </div>
+          <div class="betraege" id="betraege-monatlich" hidden>
+            ${s.betraegeMonatlich.map((w, i) => betragsfeld(w, 'monatlich', i)).join('')}
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="monatlich" disabled>
+              <span class="betragzahl">Anderer</span>
+            </label>
+          </div>
+
+          <!-- Ohne «hidden» im Markup: Fällt das Skript aus, sind Feld und
+               Kontoangaben sichtbar statt für immer verborgen. Das Skript
+               blendet sie beim Laden aus und bei Bedarf wieder ein. -->
+          <p class="feld freibetrag" id="freibetrag">
+            <label for="f-eigenerbetrag">Eigener Betrag in Franken</label>
+            <input id="f-eigenerbetrag" name="eigenerbetrag" type="number" min="1" step="1" inputmode="numeric">
+          </p>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">2</span> Wofür</legend>
+          <div class="wahlreihe">${s.zwecke.map(zweck).join('')}</div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">3</span> Zahlungsart</legend>
+          <div class="wahlreihe">${s.zahlungsarten.map(art).join('')}</div>
+
+          <div class="kontoangaben" id="kontoangaben">
+            <p class="marke">Unser Spendenkonto</p>
+            <p><strong>${schuetzen(s.konto.inhaber)}</strong></p>
+            <p class="iban">${schuetzen(s.konto.iban)}</p>
+            <p class="fliess">${schuetzen(s.konto.bank)}</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">4</span> Ihre Angaben</legend>
+          <p class="fliess kleinerhinweis">Für die Spendenbescheinigung. Wenn Sie keine brauchen, genügt die E-Mail-Adresse.</p>
+          <div class="felder">
+            ${feld('vorname', 'Vorname')}
+            ${feld('name', 'Name')}
+            ${feld('strasse', 'Strasse und Nummer', 'text', true)}
+            ${feld('plz', 'PLZ')}
+            ${feld('ort', 'Ort')}
+            ${feld('mail', 'E-Mail', 'email', true, true)}
+          </div>
+          <p class="haken">
+            <label><input type="checkbox" name="bescheinigung" value="ja"> Ich möchte eine Spendenbescheinigung</label>
+          </p>
+          <p class="haken">
+            <label><input type="checkbox" name="anonym" value="ja"> Meine Spende soll nicht öffentlich genannt werden</label>
+          </p>
+        </fieldset>
+
+        <div class="abschluss">
+          <p class="summe" id="spendensumme" role="status" aria-live="polite">Ihre Spende: <strong>CHF 50</strong> einmalig</p>
+          ${eingerichtet
+            ? '<button class="knopf spende" type="submit">Weiter zur Zahlung</button>'
+            : `<p class="hinweis" id="nochkeinweg">Die Online-Zahlung ist noch nicht eingerichtet – es fehlt der Vertrag mit einem Zahlungsdienstleister. Bis dahin führt der Weg über eine Überweisung oder über <a href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(einstellungen.mail)}</a>.</p>
+             <a class="knopf spende" id="spendenmail" href="mailto:${schuetzen(einstellungen.mail)}">Spende per E-Mail anmelden</a>`}
+        </div>
+      </form>
+    </div>`;
+  },
 };
 
 export function baustein(b, hilfe) {
