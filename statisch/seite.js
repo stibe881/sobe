@@ -379,6 +379,207 @@
     auffrischen();
   })();
 
+  // ------------------------------------------------------- 3c. Warenkorb
+  //
+  // Der Warenkorb lebt im Browser. Der Server rechnet beim Bestellen neu:
+  // Was hier steht, ist ein Wunsch, keine Rechnung.
+  (function () {
+    var KORB = 'sobe.warenkorb';
+    var katalog = null;
+
+    function korbLesen() {
+      try { return JSON.parse(localStorage.getItem(KORB) || '[]'); } catch (e) { return []; }
+    }
+    function korbSchreiben(korb) {
+      try { localStorage.setItem(KORB, JSON.stringify(korb)); } catch (e) { /* privates Fenster */ }
+      zahlAuffrischen();
+    }
+    function zahlAuffrischen() {
+      var zeichen = document.getElementById('korbzahl');
+      if (!zeichen) return;
+      var stueck = korbLesen().reduce(function (s, p) { return s + p.anzahl; }, 0);
+      zeichen.textContent = stueck;
+      zeichen.hidden = stueck === 0;
+    }
+    zahlAuffrischen();
+
+    function katalogHolen() {
+      if (katalog) return Promise.resolve(katalog);
+      return fetch(WURZEL + 'produkte.json').then(function (a) { return a.json(); })
+        .then(function (k) { katalog = k; return k; });
+    }
+    function geld(betrag, waehrung) {
+      try {
+        return new Intl.NumberFormat(SOBE.gebietsschema || 'de-CH',
+          { style: 'currency', currency: waehrung, minimumFractionDigits: 2 }).format(betrag);
+      } catch (e) { return waehrung + ' ' + betrag.toFixed(2); }
+    }
+
+    // ---------------------------------------------------- In den Warenkorb
+    var legen = document.querySelector('.inwarenkorb');
+    if (legen) {
+      legen.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (legen.dataset.aus === 'ja') return;
+        var kennung = legen.dataset.kennung;
+        var variante = legen.variante ? legen.variante.value : '';
+        var anzahl = Math.max(1, parseInt(legen.anzahl.value, 10) || 1);
+        var korb = korbLesen();
+        var da = korb.filter(function (p) { return p.kennung === kennung && p.variante === variante; })[0];
+        if (da) da.anzahl += anzahl; else korb.push({ kennung: kennung, variante: variante, anzahl: anzahl });
+        korbSchreiben(korb);
+        var wink = document.getElementById('gelegt');
+        if (wink) { wink.textContent = T('Ist im Warenkorb.'); wink.hidden = false; }
+      });
+    }
+
+    // ------------------------------------------------------------ Die Kasse
+    var kasse = document.getElementById('kasse');
+    if (!kasse) return;
+
+    var liste = document.getElementById('korbliste');
+    var leer = document.getElementById('korbleer');
+    var summenkasten = document.getElementById('korbsumme');
+    var abschnitte = ['kasse-rest', 'kasse-zahlung', 'kasse-angaben', 'kasse-abschluss']
+      .map(function (id) { return document.getElementById(id); });
+
+    function rechnen(korb, k) {
+      var waren = 0;
+      korb.forEach(function (p) {
+        var w = k.waren.filter(function (x) { return x.kennung === p.kennung; })[0];
+        if (w) waren += w.preis * p.anzahl;
+      });
+      var abholung = kasse.versandart && kasse.versandart.value === 'abholung';
+      var versand = (abholung || !waren || (k.versandfreiAb && waren >= k.versandfreiAb)) ? 0 : k.versandkosten;
+      return { waren: waren, versand: versand, gesamt: waren + versand };
+    }
+
+    function zeichnen() {
+      katalogHolen().then(function (k) {
+        var korb = korbLesen().filter(function (p) {
+          return k.waren.some(function (w) { return w.kennung === p.kennung; });
+        });
+        leeren(liste);
+        var hatWare = korb.length > 0;
+        leer.hidden = hatWare;
+        summenkasten.hidden = !hatWare;
+        abschnitte.forEach(function (a) { if (a) a.hidden = !hatWare; });
+        if (!hatWare) return;
+
+        korb.forEach(function (p, i) {
+          var w = k.waren.filter(function (x) { return x.kennung === p.kennung; })[0];
+          var zeile = document.createElement('div');
+          zeile.className = 'korbzeile';
+
+          var bild = document.createElement(w.bild ? 'img' : 'span');
+          if (w.bild) { bild.src = w.bild.charAt(0) === '/' ? w.bild : '/bilder/' + w.bild; bild.alt = ''; }
+          bild.className = 'korbbild';
+          zeile.appendChild(bild);
+
+          var text = document.createElement('div');
+          text.className = 'korbtext';
+          var name = document.createElement('a');
+          name.href = w.pfad; name.className = 'korbname'; name.textContent = w.titel;
+          text.appendChild(name);
+          if (p.variante) text.appendChild(Object.assign(document.createElement('span'),
+            { className: 'korbvariante', textContent: p.variante }));
+          text.appendChild(Object.assign(document.createElement('span'),
+            { className: 'korbstueck', textContent: geld(w.preis, k.waehrung) }));
+          zeile.appendChild(text);
+
+          var menge = document.createElement('input');
+          menge.type = 'number'; menge.min = '1'; menge.step = '1'; menge.value = p.anzahl;
+          menge.className = 'korbmenge';
+          menge.setAttribute('aria-label', T('Anzahl') + ': ' + w.titel);
+          if (w.lager > 0) menge.max = String(w.lager);
+          menge.addEventListener('change', function () {
+            var neuAnzahl = Math.max(1, parseInt(menge.value, 10) || 1);
+            if (w.lager > 0 && neuAnzahl > w.lager) neuAnzahl = w.lager;
+            menge.value = neuAnzahl;
+            var alle = korbLesen();
+            var treffer = alle.filter(function (x) {
+              return x.kennung === p.kennung && x.variante === p.variante; })[0];
+            if (treffer) treffer.anzahl = neuAnzahl;
+            korbSchreiben(alle);
+            zeichnen();
+          });
+          zeile.appendChild(menge);
+
+          var weg = document.createElement('button');
+          weg.type = 'button'; weg.className = 'korbweg'; weg.textContent = T('Entfernen');
+          weg.addEventListener('click', function () {
+            korbSchreiben(korbLesen().filter(function (x) {
+              return !(x.kennung === p.kennung && x.variante === p.variante); }));
+            zeichnen();
+          });
+          zeile.appendChild(weg);
+          liste.appendChild(zeile);
+        });
+
+        var s = rechnen(korb, k);
+        document.getElementById('summe-waren').textContent = geld(s.waren, k.waehrung);
+        document.getElementById('summe-versand').textContent = s.versand ? geld(s.versand, k.waehrung) : '–';
+        document.getElementById('summe-gesamt').textContent = geld(s.gesamt, k.waehrung);
+        var lage = document.getElementById('kassenlage');
+        if (lage) lage.textContent = T('Gesamt') + ': ' + geld(s.gesamt, k.waehrung);
+      }).catch(function () {
+        leer.textContent = T('Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.');
+        leer.hidden = false;
+      });
+    }
+
+    function leeren(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+    kasse.addEventListener('change', function (e) {
+      if (e.target.name === 'versandart') zeichnen();
+    });
+
+    kasse.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!kasse.reportValidity()) return;
+      var knopf = kasse.querySelector('button[type="submit"]');
+      knopf.disabled = true;
+      var lage = document.getElementById('kassenlage');
+      if (lage) lage.textContent = T('Wird abgeschickt …');
+      var bestellung = {
+        sprache: SOBE.sprache || 'de',
+        positionen: korbLesen(),
+        versandart: kasse.versandart ? kasse.versandart.value : 'versand',
+        zahlung: kasse.zahlung ? kasse.zahlung.value : '',
+        kunde: {
+          vorname: kasse.vorname.value, name: kasse.name.value, strasse: kasse.strasse.value,
+          plz: kasse.plz.value, ort: kasse.ort.value, mail: kasse.mail.value,
+          telefon: kasse.telefon.value, bemerkung: kasse.bemerkung.value,
+        },
+      };
+      try {
+        var antwort = await fetch('/api/bestellung', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(bestellung),
+        });
+        var ergebnis = await antwort.json();
+        if (!antwort.ok) throw new Error(ergebnis.fehler || String(antwort.status));
+        // Erst jetzt leeren: Geht das Abschicken schief, ist der Korb noch da.
+        korbSchreiben([]);
+        var kasten = document.getElementById('bestaetigung');
+        kasten.hidden = false;
+        kasten.innerHTML = '';
+        kasten.appendChild(Object.assign(document.createElement('h2'),
+          { textContent: T('Vielen Dank für Ihre Bestellung.') }));
+        kasten.appendChild(Object.assign(document.createElement('p'),
+          { className: 'produktpreis',
+            textContent: T('Ihre Bestellnummer') + ': ' + ergebnis.nummer }));
+        kasse.hidden = true;
+        kasten.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      } catch (f) {
+        if (lage) lage.textContent = T('Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.');
+        knopf.disabled = false;
+      }
+    });
+
+    zeichnen();
+  })();
+
   // ------------------------------------------------------------- 4. Suche
   var ergebnis = document.getElementById('suchergebnis');
   var lage = document.getElementById('suchlage');

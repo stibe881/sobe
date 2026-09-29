@@ -7,7 +7,7 @@
      Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
      ohnehin schon ein richtiger Verweis. -->
 <meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
-<title>Angebot · SONNENBERG</title>
+<title>Range · SONNENBERG</title>
 <meta name="description" content="Fünf Angebote unter einem Dach – dazu Therapie, Internat und Beratung.">
 <link rel="alternate" hreflang="de" href="/angebot/">
 <link rel="alternate" hreflang="fr" href="/fr/angebot/">
@@ -34,6 +34,16 @@ try {
     <a class="logo" href="/en/" aria-label="SONNENBERG, to the home page"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="/en/warenkorb/" aria-label="Basket">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
       <a class="werkzeug suchknopf-kopf" href="/en/suche/" aria-label="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
           <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -76,11 +86,12 @@ try {
 
     <nav id="menue" class="menue" aria-label="Main navigation">
       <a href="/en/">Start</a>
-      <a href="/en/angebot/" aria-current="page">Angebot</a>
+      <a href="/en/angebot/" aria-current="page">Range</a>
       <a href="/en/aufnahme/">Aufnahme</a>
       <a href="/en/aktuell/">News</a>
       <a href="/en/ueber-uns/">Über uns</a>
       <a href="/en/jobs/">Jobs</a>
+      <a href="/en/shop/">Shop</a>
       <form class="suchform" role="search" action="/en/suche/" method="get">
         <label class="nurlesen" for="suchfeld">Search the whole website</label>
         <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Search" autocomplete="off">
@@ -104,7 +115,7 @@ try {
   <div class="raster">
     <div class="kachel petrol s6">
         
-        <h1 class="held">Angebot</h1>
+        <h1 class="held">Range</h1>
         <p class="fliess" style="margin-top: 12px; font-size: 18px;">Fünf Angebote unter einem Dach – dazu Therapie, Internat und Beratung.</p>
         
       </div>
@@ -154,7 +165,7 @@ try {
   </div>
 </main>
 
-<script>window.SOBE = {"wurzel":"/en/","sprache":"en","gebietsschema":"en-GB","texte":{"Vorlese-Modus":"Read aloud","Vorlesen":"Read aloud","Pause":"Pause","Beenden":"Stop","Bereit. Auf «Vorlesen» drücken.":"Ready. Press “Read aloud”.","Liest vor …":"Reading …","Fertig gelesen.":"Finished reading.","Auf dieser Seite ist nichts zu lesen.":"There is nothing to read on this page.","Dieser Browser kann nicht vorlesen.":"This browser cannot read aloud.","Bitte geben Sie einen Suchbegriff ein.":"Please enter a search term.","Wird gesucht …":"Searching …","Keine Treffer für":"No results for","Treffer":"results","Stelle":"vacancy","Stellen":"vacancies","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Try a shorter term, or look in the menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"The index could not be loaded. Please reload the page."}};</script>
+<script>window.SOBE = {"wurzel":"/en/","sprache":"en","gebietsschema":"en-GB","texte":{"Vorlese-Modus":"Read aloud","Vorlesen":"Read aloud","Pause":"Pause","Beenden":"Stop","Bereit. Auf «Vorlesen» drücken.":"Ready. Press “Read aloud”.","Liest vor …":"Reading …","Fertig gelesen.":"Finished reading.","Auf dieser Seite ist nichts zu lesen.":"There is nothing to read on this page.","Dieser Browser kann nicht vorlesen.":"This browser cannot read aloud.","Bitte geben Sie einen Suchbegriff ein.":"Please enter a search term.","Wird gesucht …":"Searching …","Keine Treffer für":"No results for","Treffer":"results","Stelle":"vacancy","Stellen":"vacancies","Zwischensumme":"Subtotal","Versand":"Postage","Gesamt":"Total","Abholung":"Collection","Entfernen":"Remove","Anzahl":"Quantity","Ihr Warenkorb ist leer.":"Your basket is empty.","Ist im Warenkorb.":"Added to your basket.","Wird abgeschickt …":"Sending …","Vielen Dank für Ihre Bestellung.":"Thank you for your order.","Ihre Bestellnummer":"Your order number","Stück":"item","Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.":"Nothing is paid online. We confirm your order by e-mail, by hand.","Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.":"The order could not be sent. Please try again later.","Bitte füllen Sie die mit * bezeichneten Felder aus.":"Please fill in the fields marked with *.","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Try a shorter term, or look in the menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"The index could not be loaded. Please reload the page."}};</script>
 <script src="/seite.js" defer></script>
 </body>
 </html>

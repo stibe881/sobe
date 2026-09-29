@@ -34,6 +34,16 @@ try {
     <a class="logo" href="/it/" aria-label="SONNENBERG, alla pagina iniziale"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="/it/warenkorb/" aria-label="Carrello">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
       <a class="werkzeug suchknopf-kopf" href="/it/suche/" aria-label="Cerca">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
           <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -76,11 +86,12 @@ try {
 
     <nav id="menue" class="menue" aria-label="Navigazione principale">
       <a href="/it/">Start</a>
-      <a href="/it/angebot/">Angebot</a>
+      <a href="/it/angebot/">Assortimento</a>
       <a href="/it/aufnahme/">Aufnahme</a>
       <a href="/it/aktuell/">Attualità</a>
       <a href="/it/ueber-uns/">Über uns</a>
       <a href="/it/jobs/" aria-current="page">Jobs</a>
+      <a href="/it/shop/">Negozio</a>
       <form class="suchform" role="search" action="/it/suche/" method="get">
         <label class="nurlesen" for="suchfeld">Cerca in tutto il sito</label>
         <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Cerca" autocomplete="off">
@@ -204,7 +215,7 @@ try {
   </div>
 </main>
 
-<script>window.SOBE = {"wurzel":"/it/","sprache":"it","gebietsschema":"it-CH","texte":{"Vorlese-Modus":"Lettura ad alta voce","Vorlesen":"Leggi ad alta voce","Pause":"Pausa","Beenden":"Termina","Bereit. Auf «Vorlesen» drücken.":"Pronto. Prema «Leggi ad alta voce».","Liest vor …":"Lettura in corso …","Fertig gelesen.":"Lettura terminata.","Auf dieser Seite ist nichts zu lesen.":"In questa pagina non c'è nulla da leggere.","Dieser Browser kann nicht vorlesen.":"Questo browser non può leggere ad alta voce.","Bitte geben Sie einen Suchbegriff ein.":"Inserisca un termine di ricerca.","Wird gesucht …":"Ricerca in corso …","Keine Treffer für":"Nessun risultato per","Treffer":"risultati","Stelle":"posto","Stellen":"posti","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Provi un termine più breve oppure consulti il menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Non è stato possibile caricare l'indice. Ricarichi la pagina."}};</script>
+<script>window.SOBE = {"wurzel":"/it/","sprache":"it","gebietsschema":"it-CH","texte":{"Vorlese-Modus":"Lettura ad alta voce","Vorlesen":"Leggi ad alta voce","Pause":"Pausa","Beenden":"Termina","Bereit. Auf «Vorlesen» drücken.":"Pronto. Prema «Leggi ad alta voce».","Liest vor …":"Lettura in corso …","Fertig gelesen.":"Lettura terminata.","Auf dieser Seite ist nichts zu lesen.":"In questa pagina non c'è nulla da leggere.","Dieser Browser kann nicht vorlesen.":"Questo browser non può leggere ad alta voce.","Bitte geben Sie einen Suchbegriff ein.":"Inserisca un termine di ricerca.","Wird gesucht …":"Ricerca in corso …","Keine Treffer für":"Nessun risultato per","Treffer":"risultati","Stelle":"posto","Stellen":"posti","Zwischensumme":"Subtotale","Versand":"Spese di spedizione","Gesamt":"Totale","Abholung":"Ritiro sul posto","Entfernen":"Rimuovere","Anzahl":"Quantità","Ihr Warenkorb ist leer.":"Il suo carrello è vuoto.","Ist im Warenkorb.":"Aggiunto al carrello.","Wird abgeschickt …":"Invio in corso …","Vielen Dank für Ihre Bestellung.":"Grazie per il suo ordine.","Ihre Bestellnummer":"Il suo numero d'ordine","Stück":"pezzo","Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.":"Non si paga nulla online. Confermiamo il suo ordine a mano per e-mail.","Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.":"Non è stato possibile inviare l'ordine. Riprovi più tardi.","Bitte füllen Sie die mit * bezeichneten Felder aus.":"Compili i campi contrassegnati con *.","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Provi un termine più breve oppure consulti il menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Non è stato possibile caricare l'indice. Ricarichi la pagina."}};</script>
 <script src="/seite.js" defer></script>
 </body>
 </html>

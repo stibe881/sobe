@@ -34,6 +34,16 @@ try {
     <a class="logo" href="/" aria-label="SONNENBERG, zur Startseite"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="/warenkorb/" aria-label="Warenkorb">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
       <a class="werkzeug suchknopf-kopf" href="/suche/" aria-label="Suchen">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
           <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -81,6 +91,7 @@ try {
       <a href="/aktuell/" aria-current="page">Aktuell</a>
       <a href="/ueber-uns/">Über uns</a>
       <a href="/jobs/">Jobs</a>
+      <a href="/shop/">Shop</a>
       <form class="suchform" role="search" action="/suche/" method="get">
         <label class="nurlesen" for="suchfeld">Auf der ganzen Webseite suchen</label>
         <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Suchen" autocomplete="off">
@@ -127,7 +138,7 @@ try {
   </div>
 </main>
 
-<script>window.SOBE = {"wurzel":"/","sprache":"de","gebietsschema":"de-CH","texte":{"Vorlese-Modus":"Vorlese-Modus","Vorlesen":"Vorlesen","Pause":"Pause","Beenden":"Beenden","Bereit. Auf «Vorlesen» drücken.":"Bereit. Auf «Vorlesen» drücken.","Liest vor …":"Liest vor …","Fertig gelesen.":"Fertig gelesen.","Auf dieser Seite ist nichts zu lesen.":"Auf dieser Seite ist nichts zu lesen.","Dieser Browser kann nicht vorlesen.":"Dieser Browser kann nicht vorlesen.","Bitte geben Sie einen Suchbegriff ein.":"Bitte geben Sie einen Suchbegriff ein.","Wird gesucht …":"Wird gesucht …","Keine Treffer für":"Keine Treffer für","Treffer":"Treffer","Stelle":"Stelle","Stellen":"Stellen","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden."}};</script>
+<script>window.SOBE = {"wurzel":"/","sprache":"de","gebietsschema":"de-CH","texte":{"Vorlese-Modus":"Vorlese-Modus","Vorlesen":"Vorlesen","Pause":"Pause","Beenden":"Beenden","Bereit. Auf «Vorlesen» drücken.":"Bereit. Auf «Vorlesen» drücken.","Liest vor …":"Liest vor …","Fertig gelesen.":"Fertig gelesen.","Auf dieser Seite ist nichts zu lesen.":"Auf dieser Seite ist nichts zu lesen.","Dieser Browser kann nicht vorlesen.":"Dieser Browser kann nicht vorlesen.","Bitte geben Sie einen Suchbegriff ein.":"Bitte geben Sie einen Suchbegriff ein.","Wird gesucht …":"Wird gesucht …","Keine Treffer für":"Keine Treffer für","Treffer":"Treffer","Stelle":"Stelle","Stellen":"Stellen","Zwischensumme":"Zwischensumme","Versand":"Versand","Gesamt":"Gesamt","Abholung":"Abholung","Entfernen":"Entfernen","Anzahl":"Anzahl","Ihr Warenkorb ist leer.":"Ihr Warenkorb ist leer.","Ist im Warenkorb.":"Ist im Warenkorb.","Wird abgeschickt …":"Wird abgeschickt …","Vielen Dank für Ihre Bestellung.":"Vielen Dank für Ihre Bestellung.","Ihre Bestellnummer":"Ihre Bestellnummer","Stück":"Stück","Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.":"Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.","Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.":"Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.","Bitte füllen Sie die mit * bezeichneten Felder aus.":"Bitte füllen Sie die mit * bezeichneten Felder aus.","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden."}};</script>
 <script src="/seite.js" defer></script>
 </body>
 </html>

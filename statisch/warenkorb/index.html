@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
+<title>Warenkorb · SONNENBERG</title>
+<meta name="description" content="Ihre Bestellung">
+<link rel="alternate" hreflang="de" href="/warenkorb/">
+<link rel="alternate" hreflang="fr" href="/fr/warenkorb/">
+<link rel="alternate" hreflang="it" href="/it/warenkorb/">
+<link rel="alternate" hreflang="en" href="/en/warenkorb/">
+<link rel="alternate" hreflang="x-default" href="/warenkorb/">
+<link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
+</head>
+<body>
+<a class="springen" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf">
+  <div class="kopfband">
+    <a class="logo" href="/" aria-label="SONNENBERG, zur Startseite"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="/warenkorb/" aria-label="Warenkorb">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
+      <a class="werkzeug suchknopf-kopf" href="/suche/" aria-label="Suchen">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Sprache: Deutsch"><span aria-hidden="true">DE</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Sprache</p>
+          <a lang="de" hreflang="de" href="/warenkorb/" aria-current="true">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/warenkorb/">Français</a>
+          <a lang="it" hreflang="it" href="/it/warenkorb/">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/warenkorb/">English</a>
+        </div>
+      </details>
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Barrierefreiheit">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Barrierefreiheit</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Vorlese-Modus</span><span class="schalterhilfe">Liest den Seiteninhalt laut vor.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Grössere Schrift</span><span class="schalterhilfe">Vergrössert alle Texte um einen Viertel.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Dunkler Modus</span><span class="schalterhilfe">Heller Text auf dunklem Grund.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Die Einstellungen bleiben auf diesem Gerät gespeichert.</p>
+      </div>
+    </div>
+
+    <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menü">☰</button>
+
+    <nav id="menue" class="menue" aria-label="Hauptnavigation">
+      <a href="/">Start</a>
+      <a href="/angebot/">Angebot</a>
+      <a href="/aufnahme/">Aufnahme</a>
+      <a href="/aktuell/">Aktuell</a>
+      <a href="/ueber-uns/">Über uns</a>
+      <a href="/jobs/">Jobs</a>
+      <a href="/shop/">Shop</a>
+      <form class="suchform" role="search" action="/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Auf der ganzen Webseite suchen</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Suchen" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Suchen">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <a class="knopf gelb nurschmal" href="/aufnahme/">Beratung</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/spenden/">Spenden</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <div class="raster">
+    <div class="kachel petrol s6">
+        <p class="marke"><a href="/shop/">Shop</a></p>
+        <h1 class="held" style="margin-top: 8px;">Warenkorb</h1>
+        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Bestellen in vier Schritten – ohne Konto.</p>
+        
+      </div>
+    <div class="kachel s6 korbkachel">
+        <form id="kasse" class="spende">
+          <fieldset class="schrittfeld">
+            <legend><span class="schrittzahl">1</span> Ihre Bestellung</legend>
+            <div id="korbliste"></div>
+            <p id="korbleer" class="fliess" style="margin-top: 12px;">Ihr Warenkorb ist leer.
+              <a href="/shop/">Zum Shop</a></p>
+            <table class="korbsumme" id="korbsumme" hidden>
+              <tbody>
+                <tr><th scope="row">Zwischensumme</th><td id="summe-waren"></td></tr>
+                <tr><th scope="row">Versand</th><td id="summe-versand"></td></tr>
+                <tr class="gesamt"><th scope="row">Gesamt</th><td id="summe-gesamt"></td></tr>
+              </tbody>
+            </table>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-rest" hidden>
+            <legend><span class="schrittzahl">2</span> Lieferung</legend>
+            <div class="wahlreihe">
+              <label class="wahlkarte schmal">
+                <input type="radio" name="versandart" value="versand" checked>
+                <span class="wahltext"><span class="wahlname">Versand</span>
+                  <span class="wahlhilfe">Pauschale CHF 9.00, ab CHF 150.00 versandkostenfrei</span></span>
+              </label>
+              <label class="wahlkarte schmal">
+                <input type="radio" name="versandart" value="abholung">
+                <span class="wahltext"><span class="wahlname">Abholung</span>
+                  <span class="wahlhilfe">Landhausstrasse 20, 6340 Baar – nach Absprache</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-zahlung" hidden>
+            <legend><span class="schrittzahl">3</span> Zahlung</legend>
+            <div class="wahlreihe">
+            <label class="wahlkarte schmal">
+              <input type="radio" name="zahlung" value="rechnung" checked>
+              <span class="wahltext"><span class="wahlname">Rechnung</span>
+                <span class="wahlhilfe">Die Rechnung liegt der Sendung bei, zahlbar in 30 Tagen.</span></span>
+            </label>
+            <label class="wahlkarte schmal">
+              <input type="radio" name="zahlung" value="abholung">
+              <span class="wahltext"><span class="wahlname">Bei Abholung bezahlen</span>
+                <span class="wahlhilfe">Nur zusammen mit Abholung.</span></span>
+            </label></div>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-angaben" hidden>
+            <legend><span class="schrittzahl">4</span> Ihre Angaben</legend>
+            <div class="felder">
+              
+            <p class="feld">
+              <label for="k-vorname">Vorname <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-vorname" name="vorname" type="text" autocomplete="given-name" required>
+            </p>
+              
+            <p class="feld">
+              <label for="k-name">Name <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-name" name="name" type="text" autocomplete="family-name" required>
+            </p>
+              
+            <p class="feld breit">
+              <label for="k-strasse">Strasse und Nummer <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-strasse" name="strasse" type="text" autocomplete="street-address" required>
+            </p>
+              
+            <p class="feld">
+              <label for="k-plz">PLZ <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-plz" name="plz" type="text" autocomplete="postal-code" required>
+            </p>
+              
+            <p class="feld">
+              <label for="k-ort">Ort <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-ort" name="ort" type="text" autocomplete="address-level2" required>
+            </p>
+              
+            <p class="feld">
+              <label for="k-mail">E-Mail <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="k-mail" name="mail" type="email" autocomplete="email" required>
+            </p>
+              
+            <p class="feld">
+              <label for="k-telefon">Telefon</label>
+              <input id="k-telefon" name="telefon" type="text" autocomplete="tel">
+            </p>
+            </div>
+            <p class="feld">
+              <label for="k-bemerkung">Bemerkung</label>
+              <textarea id="k-bemerkung" name="bemerkung" rows="3"></textarea>
+            </p>
+          </fieldset>
+
+          <div class="abschluss" id="kasse-abschluss" hidden>
+            <p class="summe" id="kassenlage" role="status" aria-live="polite"></p>
+            <button class="knopf spende" type="submit">Bestellung abschicken</button>
+            <p class="hinweis" style="flex-basis: 100%; margin: 0;">Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail. info@sonnenberg-baar.ch</p>
+          </div>
+        </form>
+        <div id="bestaetigung" hidden></div>
+      </div>
+    <div class="kachel nacht fussk">
+      <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
+      <p class="fussort"><span class="anschrift"><span class="zusammen">Landhausstrasse 20</span><span class="punkt" aria-hidden="true">·</span><span class="zusammen">6340 Baar</span></span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:+41417677833">041 767 78 33</a></p>
+      <nav class="rechts" aria-label="Rechtliche Hinweise"><a href="/jobs/">Jobs</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="/barrierefreiheit/">Barrierefreiheit</a></nav>
+    </div>
+  </div>
+</main>
+
+<script>window.SOBE = {"wurzel":"/","sprache":"de","gebietsschema":"de-CH","texte":{"Vorlese-Modus":"Vorlese-Modus","Vorlesen":"Vorlesen","Pause":"Pause","Beenden":"Beenden","Bereit. Auf «Vorlesen» drücken.":"Bereit. Auf «Vorlesen» drücken.","Liest vor …":"Liest vor …","Fertig gelesen.":"Fertig gelesen.","Auf dieser Seite ist nichts zu lesen.":"Auf dieser Seite ist nichts zu lesen.","Dieser Browser kann nicht vorlesen.":"Dieser Browser kann nicht vorlesen.","Bitte geben Sie einen Suchbegriff ein.":"Bitte geben Sie einen Suchbegriff ein.","Wird gesucht …":"Wird gesucht …","Keine Treffer für":"Keine Treffer für","Treffer":"Treffer","Stelle":"Stelle","Stellen":"Stellen","Zwischensumme":"Zwischensumme","Versand":"Versand","Gesamt":"Gesamt","Abholung":"Abholung","Entfernen":"Entfernen","Anzahl":"Anzahl","Ihr Warenkorb ist leer.":"Ihr Warenkorb ist leer.","Ist im Warenkorb.":"Ist im Warenkorb.","Wird abgeschickt …":"Wird abgeschickt …","Vielen Dank für Ihre Bestellung.":"Vielen Dank für Ihre Bestellung.","Ihre Bestellnummer":"Ihre Bestellnummer","Stück":"Stück","Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.":"Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.","Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.":"Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.","Bitte füllen Sie die mit * bezeichneten Felder aus.":"Bitte füllen Sie die mit * bezeichneten Felder aus.","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden."}};</script>
+<script src="/seite.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "waehrung": "CHF",
+  "versandkosten": 9,
+  "versandfreiAb": 150,
+  "abholung": true,
+  "abholort": "Landhausstrasse 20, 6340 Baar – nach Absprache",
+  "nummernkreis": "SB",
+  "zahlungsarten": [
+    { "kennung": "rechnung", "titel": "Rechnung", "hinweis": "Die Rechnung liegt der Sendung bei, zahlbar in 30 Tagen." },
+    { "kennung": "abholung", "titel": "Bei Abholung bezahlen", "hinweis": "Nur zusammen mit Abholung." }
+  ],
+  "hinweis": "[Bitte ergänzen: Lieferfrist, Rückgaberecht und wer bei Fragen zuständig ist.]"
+}

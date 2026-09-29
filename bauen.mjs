@@ -74,6 +74,16 @@ try {
     <a class="logo" href="${schuetzen(sprache.wurzel)}" aria-label="${schuetzen(einstellungen.name + ', ' + t('zur Startseite'))}"><img class="fuerhell" src="/bilder/logo.png" alt="${schuetzen(einstellungen.name)}"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="${schuetzen(pfadFuer('/warenkorb/', sprache))}" aria-label="${schuetzen(t('Warenkorb'))}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
       <a class="werkzeug suchknopf-kopf" href="${schuetzen(pfadFuer('/suche/', sprache))}" aria-label="${schuetzen(t('Suchen'))}">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
           <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -153,6 +163,12 @@ ${inhalt}
     'Auf dieser Seite ist nichts zu lesen.', 'Dieser Browser kann nicht vorlesen.',
     'Bitte geben Sie einen Suchbegriff ein.', 'Wird gesucht …',
     'Keine Treffer für', 'Treffer', 'Stelle', 'Stellen',
+    'Zwischensumme', 'Versand', 'Gesamt', 'Abholung', 'Entfernen', 'Anzahl',
+    'Ihr Warenkorb ist leer.', 'Ist im Warenkorb.', 'Wird abgeschickt …',
+    'Vielen Dank für Ihre Bestellung.', 'Ihre Bestellnummer', 'Stück',
+    'Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.',
+    'Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.',
+    'Bitte füllen Sie die mit * bezeichneten Felder aus.',
     'Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.',
     'Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.',
   ].map((s) => [s, t(s)])),
@@ -181,12 +197,15 @@ export async function bauen() {
   const einstellungen = await lesen('inhalt/einstellungen.json');
   const seitenDe = await lesen('inhalt/seiten.json');
   const sprachen = await sprachenLesen(WURZEL);
+  const shop = await lesen('inhalt/shop.json');
 
   const beitraegeDe = (await sammlungLesen(WURZEL, 'news'))
     .sort((a, b) => String(b.datum || '').localeCompare(String(a.datum || '')));
   const stellenDe = (await sammlungLesen(WURZEL, 'stellen'))
     .sort((a, b) => a.reihenfolge - b.reihenfolge);
   const teamDe = (await sammlungLesen(WURZEL, 'team'))
+    .sort((a, b) => a.reihenfolge - b.reihenfolge);
+  const produkteDe = (await sammlungLesen(WURZEL, 'produkte'))
     .sort((a, b) => a.reihenfolge - b.reihenfolge);
 
   // Nur die erzeugten Teile räumen – der Bestand bleibt liegen.
@@ -212,7 +231,14 @@ export async function bauen() {
     const stellen = stellenDe.map((x) => ({ ...x, titel: t(x.titel),
       pensum: t(x.pensum || ''), eintritt: t(x.eintritt || ''), bereich: t(x.bereich || '') }));
     const team = teamDe.map((x) => ({ ...x, funktion: t(x.funktion || '') }));
-    const hilfe = { einstellungen, beitraege, stellen, team, t, sprache };
+    const produkte = produkteDe.map((x) => ({ ...x, titel: t(x.titel),
+      kurz: t(x.kurz || ''), kategorie: t(x.kategorie || ''), bildAlt: t(x.bildAlt || ''),
+      varianten: (x.varianten || []).map((v) => t(v)) }));
+    // Preise in der Landessprache: «CHF 25.00» gegenüber «25,00 CHF».
+    const geldform = new Intl.NumberFormat(sprache.gebietsschema, {
+      style: 'currency', currency: shop.waehrung, minimumFractionDigits: 2 });
+    const geld = (betrag) => geldform.format(Number(betrag) || 0);
+    const hilfe = { einstellungen, beitraege, stellen, team, produkte, shop, geld, t, sprache };
     const rahmen = { einstellungen, sprache, sprachen, t };
     const verzeichnis = [];
 
@@ -274,6 +300,55 @@ export async function bauen() {
       verzeichnis.push({ t: titel, p: pfadFuer(`/jobs/${s.kennung}/`, sprache), a: t('Offene Stelle'),
         x: nurText([t(s.pensum || ''), t(s.eintritt || ''), t(s.bereich || ''), rumpf].filter(Boolean).join(' ')) });
     }
+
+    // ----------------------------------------------------------------- Shop
+    const sichtbareWaren = produkte.filter((w) => !w.entwurf);
+    await schreiben('/shop/', huelle({ ...rahmen, titel: t('Shop'),
+      beschreibung: t('Bücher, Hilfsmittel und Erzeugnisse aus dem SONNENBERG.'),
+      pfad: '/shop/',
+      inhalt: [
+        { art: 'held', spalten: 6, marke: t('Shop'), titel: t('Shop'),
+          text: t('Bücher, Hilfsmittel und Erzeugnisse aus dem SONNENBERG.') },
+        { art: 'produkte', spalten: 6, titel: t('Angebot') },
+      ].map((b) => '    ' + baustein(b, hilfe)).join('\n') }));
+    verzeichnis.push({ t: t('Shop'), p: pfadFuer('/shop/', sprache), a: t('Seite'),
+      x: sichtbareWaren.map((w) => w.titel + ' ' + (w.kurz || '')).join(' ') });
+
+    for (const w of produkteDe) {
+      const ware = produkte.find((x) => x.kennung === w.kennung);
+      const rumpf = t(w.markdown ? markdownZuHtml(w.rumpf) : wordpressAufraeumen(w.rumpf));
+      const teile = [];
+      if (ware.bild) teile.push({ art: 'bild', spalten: 2, quelle: ware.bild, alt: ware.bildAlt || '' });
+      teile.push({ art: 'produkt', spalten: 4, produkt: ware, html: rumpf });
+      const weitere = sichtbareWaren.filter((x) => x.kennung !== ware.kennung).slice(0, 4);
+      if (weitere.length) {
+        teile.push({ art: 'kachel', spalten: 6, titel: t('Weitere Produkte'),
+          links: weitere.map((x) => ({ titel: x.titel, pfad: pfadFuer(`/shop/${x.kennung}/`, sprache) })) });
+      }
+      await schreiben(`/shop/${w.kennung}/`, huelle({ ...rahmen, titel: ware.titel,
+        beschreibung: ware.kurz || ware.titel, pfad: '/shop/',
+        inhalt: teile.map((b) => '    ' + baustein(b, hilfe)).join('\n') }));
+      if (!ware.entwurf) {
+        verzeichnis.push({ t: ware.titel, p: pfadFuer(`/shop/${w.kennung}/`, sprache),
+          a: t('Produkt'), x: nurText([ware.kurz, ware.kategorie, rumpf].filter(Boolean).join(' ')) });
+      }
+    }
+
+    await schreiben('/warenkorb/', huelle({ ...rahmen, titel: t('Warenkorb'),
+      beschreibung: t('Ihre Bestellung'), pfad: '/warenkorb/',
+      inhalt: [
+        { art: 'held', spalten: 6, marke: t('Shop'), markeZiel: pfadFuer('/shop/', sprache),
+          titel: t('Warenkorb'), text: t('Bestellen in vier Schritten – ohne Konto.') },
+        { art: 'warenkorb', spalten: 6 },
+      ].map((b) => '    ' + baustein(b, hilfe)).join('\n') }));
+
+    // Der Warenkorb lebt im Browser und muss Namen und Preise kennen, ohne
+    // den Server zu fragen – darum liegt der Katalog als Datei daneben.
+    await writeFile(path.join(aus, 'produkte.json'), JSON.stringify({
+      waehrung: shop.waehrung, versandkosten: shop.versandkosten, versandfreiAb: shop.versandfreiAb,
+      waren: sichtbareWaren.map((w) => ({ kennung: w.kennung, titel: w.titel, preis: w.preis,
+        bild: w.bild || '', lager: w.lager, pfad: pfadFuer(`/shop/${w.kennung}/`, sprache) })),
+    }), 'utf8');
 
     // ---------------------------------------------------------------- Suche
     const suchseite = `    <div class="kachel petrol s6">

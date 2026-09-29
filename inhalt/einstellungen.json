@@ -30,6 +30,10 @@
     {
       "titel": "Jobs",
       "pfad": "/jobs/"
+    },
+    {
+      "titel": "Shop",
+      "pfad": "/shop/"
     }
   ],
   "menueKnopf": {

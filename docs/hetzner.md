@@ -152,6 +152,9 @@ Links stehen die Bereiche:
 | Textbausteine | einzelne Texte auf festen Seiten | `quelle/texte/` |
 | Seiten | die festen Seiten und ihre Bausteine | `inhalt/seiten.json` |
 | Bilder | Bildbestand ansehen, hochladen, löschen | `bilder/`, `statisch/wp-content/uploads/` |
+| Produkte | Artikel im Shop | `quelle/produkte/` |
+| Bestellungen | eingegangene Bestellungen, Stand setzen | `bestellungen/` |
+| Shop | Versand, Abholung, Zahlungsarten | `inhalt/shop.json` |
 | Sprachen | offene Übersetzungen nachführen und nachbessern | `inhalt/uebersetzungen/` |
 | Menü & Fusszeile | Menüpunkte, Knöpfe, Zeile im Fuss | `inhalt/einstellungen.json` |
 | Spenden | Beträge, Zwecke, Zahlungsarten, Konto | `inhalt/einstellungen.json` |

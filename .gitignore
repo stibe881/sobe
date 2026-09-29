@@ -6,3 +6,6 @@ entwuerfe/redesign/redesign-sonnenberg.html
 # Zugangsdaten der Redaktion gehören nie ins Repository
 redaktion/zugang.json
 node_modules/
+
+# Bestellungen enthalten Namen und Adressen von Kundinnen und Kunden.
+bestellungen/

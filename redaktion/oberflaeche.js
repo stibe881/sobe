@@ -456,6 +456,39 @@ var SAMMLUNGEN = {
     ansehen: function () { return '/ueber-uns/'; },
     vorschau: 'team',
   },
+  produkte: {
+    name: 'Produkte',
+    ordner: 'quelle/produkte',
+    wo: 'Erscheinen im <a href="/shop/" target="_blank" rel="noopener">Shop</a> und je als '
+      + 'eigene Seite. Solange «Entwurf» angekreuzt ist, sieht sie niemand. Lager leer '
+      + 'lassen heisst: unbegrenzt. Lager 0 heisst: zurzeit nicht lieferbar.',
+    neuText: 'Neues Produkt',
+    felder: [
+      { id: 'titel', art: 'text', name: 'Name', pflicht: true },
+      { id: 'kurz', art: 'text', name: 'Kurzbeschreibung',
+        hinweis: 'Ein Satz, der in der Übersicht unter dem Namen steht' },
+      { id: 'preis', art: 'zahl', name: 'Preis', pflicht: true, hinweis: 'in Franken, z. B. 24.50' },
+      { id: 'kategorie', art: 'text', name: 'Kategorie', hinweis: 'Gruppiert den Filter im Shop' },
+      { id: 'varianten', art: 'text', name: 'Ausführungen',
+        hinweis: 'Durch Komma getrennt, z. B. «klein, mittel, gross». Leer lassen, wenn es nur eine gibt' },
+      { id: 'lager', art: 'zahl', name: 'Lagerbestand', hinweis: 'Leer = unbegrenzt, 0 = nicht lieferbar' },
+      { id: 'bild', art: 'bild', name: 'Produktbild' },
+      { id: 'bildAlt', art: 'text', name: 'Was ist auf dem Bild zu sehen?' },
+      { id: 'reihenfolge', art: 'zahl', name: 'Reihenfolge', standard: 100 },
+      { id: 'entwurf', art: 'haken', name: 'Entwurf – noch nicht im Shop zeigen' },
+      { id: 'body', art: 'lauftext', name: 'Beschreibung', pflicht: true, werkzeuge: true, bilder: true },
+    ],
+    anzeige: function (d) { return d.titel || '(ohne Namen)'; },
+    listenMeta: function (d) {
+      return [d.preis != null ? 'CHF ' + Number(d.preis).toFixed(2) : '',
+        d.lager === 0 ? 'nicht lieferbar' : d.lager > 0 ? d.lager + ' an Lager' : ''].filter(Boolean).join(' · ');
+    },
+    etiketten: function (d) {
+      return [].concat(d.kategorie ? [d.kategorie] : [], d.entwurf ? ['Entwurf'] : []);
+    },
+    ansehen: function (datei) { return '/shop/' + datei.name.replace(/\.(md|html)$/, '') + '/'; },
+    vorschau: 'produkt',
+  },
   texte: {
     name: 'Textbausteine',
     ordner: 'quelle/texte',
@@ -633,7 +666,18 @@ function eintragWerte(sammlungId) {
       return;
     }
     if (feld.art === 'haken') { if (el && el.checked) daten[feld.id] = true; return; }
-    if (feld.art === 'zahl') { daten[feld.id] = el ? (parseInt(el.value, 10) || 0) : 0; return; }
+    if (feld.art === 'zahl') {
+      // Leeres Zahlenfeld heisst «nicht gesetzt», nicht «null». Beim Lager
+      // ist das der Unterschied zwischen «unbegrenzt» und «ausverkauft».
+      var roh = el ? el.value.trim() : '';
+      if (roh !== '') daten[feld.id] = Number(roh);
+      return;
+    }
+    if (feld.id === 'varianten') {
+      var teile = (el ? el.value : '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      if (teile.length) daten[feld.id] = teile;
+      return;
+    }
     var w = el ? el.value.trim() : '';
     if (w) daten[feld.id] = w;
   });
@@ -659,6 +703,7 @@ function eintragEditor(sammlungId, datei) {
   b.felder.forEach(function (feld) {
     var wert = feld.art === 'lauftext' ? (datei ? datei.body : '')
       : (datei ? datei.daten[feld.id] : undefined);
+    if (feld.id === 'varianten' && Array.isArray(wert)) wert = wert.join(', ');
     form.appendChild(eintragFeld(feld, wert, sammlungId));
   });
 
@@ -696,6 +741,16 @@ function eintragEditor(sammlungId, datei) {
         + '<div class="v-titel" style="font-size:19px;margin-top:8px">' + (htmlSichern(w.daten.name) || fehlt('Name')) + '</div>'
         + '<p class="v-datum">' + (htmlSichern(w.daten.funktion) || fehlt('Funktion')) + '</p>'
         + (w.daten.email ? '<p class="v-datum">' + htmlSichern(w.daten.email) + '</p>' : '');
+    } else if (b.vorschau === 'produkt') {
+      beschriftung.textContent = 'So wird die Produktseite aussehen';
+      vorschauKasten.innerHTML =
+        (w.daten.bild ? '<img src="' + htmlSichern(bildPfad(w.daten.bild)) + '" alt="" style="max-width:100%;border-radius:8px;margin-bottom:10px">' : '')
+        + (w.daten.kategorie ? '<p class="still">' + htmlSichern(w.daten.kategorie) + '</p>' : '')
+        + '<div class="v-titel">' + (htmlSichern(w.daten.titel) || fehlt('Name')) + '</div>'
+        + (w.daten.kurz ? '<p class="v-datum">' + htmlSichern(w.daten.kurz) + '</p>' : '')
+        + '<p style="font-size:22px;font-weight:800;margin-top:8px">'
+        + (w.daten.preis != null && w.daten.preis !== '' ? 'CHF ' + Number(w.daten.preis).toFixed(2) : fehlt('Preis')) + '</p>'
+        + '<div class="v-body">' + (mdVorschau(w.body) || fehlt('Beschreibung')) + '</div>';
     } else {
       beschriftung.textContent = 'So wird der Text aussehen';
       vorschauKasten.innerHTML = '<div class="v-body">' + (mdVorschau(w.body) || fehlt('Text')) + '</div>';
@@ -997,10 +1052,11 @@ function seiteEditor(akte, index) {
    nur mit anderem Ausschnitt. Darum ein gemeinsamer Bauer: Plan hinein,
    Formular heraus, beim Speichern werden nur die gezeigten Schlüssel
    überschrieben – die übrigen bleiben unangetastet. */
-async function einstellungsmaske(titel, wo, plan) {
+async function einstellungsmaske(titel, wo, plan, datei) {
+  datei = datei || 'inhalt/einstellungen.json';
   var arbeit = leeren($('#arbeit'));
   arbeit.appendChild(neu('p', { klasse: 'wo', html: wo }));
-  var akte = await jsonLesen('inhalt/einstellungen.json');
+  var akte = await jsonLesen(datei);
   var form = formularBauen(plan, akte.daten);
   var karte = neu('div', { klasse: 'karte' }, [form.el]);
   arbeit.appendChild(karte);
@@ -1079,6 +1135,153 @@ function spendenZeigen() {
       ] },
     ] },
   ]);
+}
+
+function shopZeigen() {
+  return einstellungsmaske('Shop', 'Steuert den <a href="/shop/" target="_blank" '
+    + 'rel="noopener">Shop</a>: Versandkosten, Abholung, Zahlungsarten.', [
+    { id: 'waehrung', art: 'text', name: 'Währung', hinweis: 'z. B. CHF' },
+    { id: 'versandkosten', art: 'zahl', name: 'Versandpauschale' },
+    { id: 'versandfreiAb', art: 'zahl', name: 'Versandkostenfrei ab',
+      hinweis: 'Bestellwert, ab dem der Versand entfällt. 0 = nie' },
+    { id: 'abholung', art: 'haken', name: 'Abholung möglich' },
+    { id: 'abholort', art: 'text', name: 'Wo abgeholt wird' },
+    { id: 'nummernkreis', art: 'text', name: 'Anfang der Bestellnummer', hinweis: 'z. B. SB' },
+    { id: 'zahlungsarten', art: 'liste', name: 'Zahlungsarten', zufuegen: 'Zahlungsart hinzufügen', unter: [
+      { id: 'kennung', art: 'text', name: 'Kennung', hinweis: 'ohne Leerzeichen' },
+      { id: 'titel', art: 'text', name: 'Titel' },
+      { id: 'hinweis', art: 'text', name: 'Hinweis' },
+    ] },
+    { id: 'hinweis', art: 'mehrzeilig', name: 'Hinweis auf der Produktseite',
+      hinweis: 'Lieferfrist, Rückgaberecht, Ansprechperson' },
+  ], 'inhalt/shop.json');
+}
+
+/* =========================================================== Bestellungen
+   Die Bestellungen liegen als Dateien unter bestellungen/ und gehören nie
+   ins Repository – sie tragen Namen und Adressen. */
+var ZUSTAENDE = [
+  { wert: 'neu', text: 'Neu' },
+  { wert: 'bezahlt', text: 'Bezahlt' },
+  { wert: 'versandt', text: 'Versandt' },
+  { wert: 'abgeholt', text: 'Abgeholt' },
+  { wert: 'storniert', text: 'Storniert' },
+];
+
+function franken(betrag) { return 'CHF ' + (Number(betrag) || 0).toFixed(2); }
+
+async function bestellungenZeigen() {
+  var arbeit = leeren($('#arbeit'));
+  arbeit.appendChild(neu('p', { klasse: 'wo', text:
+    'Eingegangene Bestellungen. Sie liegen auf dem Server unter bestellungen/ '
+    + 'und werden nicht ins Repository übernommen.' }));
+
+  var eintraege = [];
+  try { eintraege = await api('bestellungen'); } catch (e) { eintraege = []; }
+  var dateien = eintraege.filter(function (e) { return e.type === 'file' && /\.json$/.test(e.name); });
+
+  var karte = neu('div', { klasse: 'karte' });
+  var liste = neu('ul', { klasse: 'liste' });
+  karte.appendChild(liste);
+  arbeit.appendChild(karte);
+
+  if (!dateien.length) {
+    liste.appendChild(neu('li', {}, [neu('span', { klasse: 'still', text: 'Noch keine Bestellung eingegangen.' })]));
+    return;
+  }
+
+  var geladen = await Promise.all(dateien.map(async function (e) {
+    var a = await api(e.path);
+    return { pfad: e.path, sha: a.sha, daten: JSON.parse(b64lesen(a.content)) };
+  }));
+  geladen.sort(function (x, y) {
+    return String(y.daten.eingegangen).localeCompare(String(x.daten.eingegangen));
+  });
+
+  geladen.forEach(function (b) {
+    var d = b.daten;
+    var titel = neu('div', { klasse: 'titel' }, [
+      neu('strong', { text: d.nummer + ' · ' + franken(d.gesamt) }),
+      neu('span', { klasse: 'still', text: d.kunde.vorname + ' ' + d.kunde.name
+        + ' · ' + new Date(d.eingegangen).toLocaleString('de-CH')
+        + ' · ' + d.positionen.length + ' Position(en)' }),
+    ]);
+    var etikett = neu('span', { klasse: 'etikett', text:
+      (ZUSTAENDE.filter(function (z) { return z.wert === d.zustand; })[0] || {}).text || d.zustand });
+    titel.querySelector('.still').appendChild(document.createTextNode(' '));
+    titel.querySelector('.still').appendChild(etikett);
+    liste.appendChild(neu('li', {}, [titel,
+      neu('button', { text: 'Ansehen', onclick: function () { bestellungOeffnen(b); } }),
+    ]));
+  });
+}
+
+function bestellungOeffnen(b) {
+  var d = b.daten;
+  var arbeit = leeren($('#arbeit'));
+  $('#bereich-titel').textContent = 'Bestellung ' + d.nummer;
+
+  var waren = neu('div', { klasse: 'karte' }, [neu('h2', { text: 'Bestellung' })]);
+  var tabelle = neu('ul', { klasse: 'liste' });
+  d.positionen.forEach(function (p) {
+    tabelle.appendChild(neu('li', {}, [
+      neu('div', { klasse: 'titel' }, [
+        neu('strong', { text: p.anzahl + ' × ' + p.titel + (p.variante ? ' (' + p.variante + ')' : '') }),
+        neu('span', { klasse: 'still', text: franken(p.preis) + ' je Stück' }),
+      ]),
+      neu('span', { text: franken(p.summe) }),
+    ]));
+  });
+  waren.appendChild(tabelle);
+  waren.appendChild(neu('p', { klasse: 'still', text:
+    'Waren ' + franken(d.warensumme) + ' · Versand ' + franken(d.versand) }));
+  waren.appendChild(neu('p', { text: 'Gesamt ' + franken(d.gesamt), style: 'font-weight:800;font-size:19px' }));
+  arbeit.appendChild(waren);
+
+  var k = d.kunde;
+  arbeit.appendChild(neu('div', { klasse: 'karte' }, [
+    neu('h2', { text: 'Kundin oder Kunde' }),
+    neu('p', { text: k.vorname + ' ' + k.name }),
+    neu('p', { text: k.strasse }),
+    neu('p', { text: k.plz + ' ' + k.ort }),
+    neu('p', {}, [neu('a', { href: 'mailto:' + k.mail, text: k.mail })]),
+    k.telefon ? neu('p', { text: k.telefon }) : null,
+    neu('p', { klasse: 'still', text: 'Lieferung: ' + d.versandart + ' · Zahlung: ' + d.zahlung
+      + ' · Sprache: ' + d.sprache }),
+    k.bemerkung ? neu('p', { klasse: 'still', text: 'Bemerkung: ' + k.bemerkung }) : null,
+  ]));
+
+  var wahl = neu('select');
+  ZUSTAENDE.forEach(function (z) {
+    var o = neu('option', { value: z.wert, text: z.text });
+    if (z.wert === d.zustand) o.selected = true;
+    wahl.appendChild(o);
+  });
+  arbeit.appendChild(neu('div', { klasse: 'karte' }, [
+    neu('h2', { text: 'Stand' }),
+    neu('div', { klasse: 'zeile' }, [wahl,
+      neu('button', { klasse: 'primaer', text: 'Speichern', onclick: async function () {
+        d.zustand = wahl.value;
+        d.geaendert = new Date().toISOString();
+        meldung('Wird gespeichert …');
+        try {
+          await api(b.pfad, { method: 'PUT', body: JSON.stringify({
+            message: 'Redaktion: Bestellung ' + d.nummer,
+            content: b64codieren(JSON.stringify(d, null, 2) + '\n'), sha: b.sha }) });
+        } catch (f) { meldung('Speichern fehlgeschlagen: ' + f.message, 'fehler'); return; }
+        await bereichOeffnen('bestellungen');
+        meldung('Gespeichert.', 'ok');
+      } }),
+      neu('button', { klasse: 'gefahr', text: 'Löschen', onclick: async function () {
+        if (!confirm('Bestellung ' + d.nummer + ' endgültig löschen?')) return;
+        try { await api(b.pfad, { method: 'DELETE', body: JSON.stringify({ message: 'Redaktion: Bestellung gelöscht' }) }); }
+        catch (f) { meldung('Löschen fehlgeschlagen: ' + f.message, 'fehler'); return; }
+        await bereichOeffnen('bestellungen');
+        meldung('Gelöscht.', 'ok');
+      } }),
+      neu('button', { text: 'Zurück', onclick: function () { bereichOeffnen('bestellungen'); } }),
+    ]),
+  ]));
 }
 
 /* ================================================================ Medien */
@@ -1292,6 +1495,7 @@ async function uebersichtZeigen() {
 
   var kacheln = [
     { id: 'news', was: 'Beiträge', ordner: 'quelle/news' },
+    { id: 'produkte', was: 'Produkte', ordner: 'quelle/produkte' },
     { id: 'stellen', was: 'Offene Stellen', ordner: 'quelle/stellen' },
     { id: 'team', was: 'Personen im Team', ordner: 'quelle/team' },
   ];
@@ -1306,6 +1510,26 @@ async function uebersichtZeigen() {
       kachel.querySelector('.zahl').textContent = e.filter(function (x) { return x.type === 'file'; }).length;
     }).catch(function () { kachel.querySelector('.zahl').textContent = '0'; });
   });
+
+  // Bestellungen zuerst: Es gibt keine Bestätigungsmail an die Kundschaft –
+  // jemand muss hier hineinschauen. Darum stehen neue Bestellungen auf der
+  // Übersicht und nicht erst zwei Klicks tiefer.
+  var bestellkachel = neu('div', { klasse: 'zahlkachel' }, [
+    neu('div', { klasse: 'zahl', text: '…' }),
+    neu('div', { klasse: 'was', text: 'Neue Bestellungen' }),
+    neu('button', { klasse: 'klein', text: 'Öffnen', onclick: function () { bereichOeffnen('bestellungen'); } }),
+  ]);
+  gitter.insertBefore(bestellkachel, gitter.firstChild);
+  api('bestellungen').then(async function (e) {
+    var dateien = e.filter(function (x) { return x.type === 'file' && /\.json$/.test(x.name); });
+    var neue = 0;
+    for (var i = 0; i < dateien.length; i++) {
+      var a = await api(dateien[i].path);
+      if (JSON.parse(b64lesen(a.content)).zustand === 'neu') neue++;
+    }
+    bestellkachel.querySelector('.zahl').textContent = neue;
+    if (neue) bestellkachel.querySelector('.zahl').style.color = '#a3341f';
+  }).catch(function () { bestellkachel.querySelector('.zahl').textContent = '0'; });
 
   var seitenkachel = neu('div', { klasse: 'zahlkachel' }, [
     neu('div', { klasse: 'zahl', text: '…' }),
@@ -1357,12 +1581,16 @@ var BEREICHE = [
   { id: 'team', name: 'Team', zeigen: function () { return sammlungZeigen('team'); } },
   { id: 'texte', name: 'Textbausteine', zeigen: function () { return sammlungZeigen('texte'); } },
   { trenner: true },
+  { id: 'produkte', name: 'Produkte', zeigen: function () { return sammlungZeigen('produkte'); } },
+  { id: 'bestellungen', name: 'Bestellungen', zeigen: bestellungenZeigen },
+  { trenner: true },
   { id: 'seiten', name: 'Seiten', zeigen: seitenZeigen },
   { id: 'medien', name: 'Bilder', zeigen: medienZeigen },
   { trenner: true },
   { id: 'sprachen', name: 'Sprachen', zeigen: sprachenZeigen },
   { id: 'menue', name: 'Menü & Fusszeile', zeigen: menueZeigen },
   { id: 'spenden', name: 'Spenden', zeigen: spendenZeigen },
+  { id: 'shop', name: 'Shop', zeigen: shopZeigen },
   { id: 'einstellungen', name: 'Einstellungen', zeigen: einstellungenZeigen },
 ];
 

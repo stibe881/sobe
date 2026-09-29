@@ -34,6 +34,16 @@ try {
     <a class="logo" href="/fr/" aria-label="SONNENBERG, vers la page d'accueil"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <!-- Der Warenkorb steht im Kopf, nicht im Menü: Wer etwas hineingelegt
+           hat, will es jederzeit sehen. Die Zahl setzt das Skript; ohne
+           Skript bleibt der Knopf ein gewöhnlicher Verweis. -->
+      <a class="werkzeug korbknopf" href="/fr/warenkorb/" aria-label="Panier">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M4 5h2.2l2.3 10.2h9.1L20 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="korbzahl" id="korbzahl" hidden></span>
+      </a>
       <a class="werkzeug suchknopf-kopf" href="/fr/suche/" aria-label="Rechercher">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
           <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -76,11 +86,12 @@ try {
 
     <nav id="menue" class="menue" aria-label="Navigation principale">
       <a href="/fr/" aria-current="page">Start</a>
-      <a href="/fr/angebot/">Angebot</a>
+      <a href="/fr/angebot/">Assortiment</a>
       <a href="/fr/aufnahme/">Aufnahme</a>
       <a href="/fr/aktuell/">Actualités</a>
       <a href="/fr/ueber-uns/">Über uns</a>
       <a href="/fr/jobs/">Jobs</a>
+      <a href="/fr/shop/">Boutique</a>
       <form class="suchform" role="search" action="/fr/suche/" method="get">
         <label class="nurlesen" for="suchfeld">Rechercher sur tout le site</label>
         <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Rechercher" autocomplete="off">
@@ -150,7 +161,7 @@ try {
   </div>
 </main>
 
-<script>window.SOBE = {"wurzel":"/fr/","sprache":"fr","gebietsschema":"fr-CH","texte":{"Vorlese-Modus":"Lecture à voix haute","Vorlesen":"Lire à voix haute","Pause":"Pause","Beenden":"Arrêter","Bereit. Auf «Vorlesen» drücken.":"Prêt. Appuyez sur « Lire à voix haute ».","Liest vor …":"Lecture en cours …","Fertig gelesen.":"Lecture terminée.","Auf dieser Seite ist nichts zu lesen.":"Il n'y a rien à lire sur cette page.","Dieser Browser kann nicht vorlesen.":"Ce navigateur ne peut pas lire à voix haute.","Bitte geben Sie einen Suchbegriff ein.":"Veuillez saisir un terme de recherche.","Wird gesucht …":"Recherche en cours …","Keine Treffer für":"Aucun résultat pour","Treffer":"résultats","Stelle":"poste","Stellen":"postes","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Essayez un terme plus court ou consultez le menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"L'index n'a pas pu être chargé. Veuillez recharger la page."}};</script>
+<script>window.SOBE = {"wurzel":"/fr/","sprache":"fr","gebietsschema":"fr-CH","texte":{"Vorlese-Modus":"Lecture à voix haute","Vorlesen":"Lire à voix haute","Pause":"Pause","Beenden":"Arrêter","Bereit. Auf «Vorlesen» drücken.":"Prêt. Appuyez sur « Lire à voix haute ».","Liest vor …":"Lecture en cours …","Fertig gelesen.":"Lecture terminée.","Auf dieser Seite ist nichts zu lesen.":"Il n'y a rien à lire sur cette page.","Dieser Browser kann nicht vorlesen.":"Ce navigateur ne peut pas lire à voix haute.","Bitte geben Sie einen Suchbegriff ein.":"Veuillez saisir un terme de recherche.","Wird gesucht …":"Recherche en cours …","Keine Treffer für":"Aucun résultat pour","Treffer":"résultats","Stelle":"poste","Stellen":"postes","Zwischensumme":"Sous-total","Versand":"Frais de port","Gesamt":"Total","Abholung":"Retrait sur place","Entfernen":"Retirer","Anzahl":"Quantité","Ihr Warenkorb ist leer.":"Votre panier est vide.","Ist im Warenkorb.":"Ajouté au panier.","Wird abgeschickt …":"Envoi en cours …","Vielen Dank für Ihre Bestellung.":"Merci pour votre commande.","Ihre Bestellnummer":"Votre numéro de commande","Stück":"pièce","Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.":"Aucun paiement en ligne. Nous confirmons votre commande par e-mail, à la main.","Die Bestellung konnte nicht abgeschickt werden. Bitte später nochmals versuchen.":"La commande n'a pas pu être envoyée. Veuillez réessayer plus tard.","Bitte füllen Sie die mit * bezeichneten Felder aus.":"Veuillez remplir les champs marqués d'un *.","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Essayez un terme plus court ou consultez le menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"L'index n'a pas pu être chargé. Veuillez recharger la page."}};</script>
 <script src="/seite.js" defer></script>
 </body>
 </html>

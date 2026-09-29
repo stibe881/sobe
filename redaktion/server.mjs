@@ -14,6 +14,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bauen } from '../bauen.mjs';
 import { fehlendeUebersetzen } from '../werkzeuge/uebersetzen.mjs';
+import { sammlungLesen } from '../vorlagen/inhalte.mjs';
 import {
   zugangLesen, stimmt, sitzungAusstellen, sitzungGueltig,
   gesperrt, fehlversuchZaehlen, fehlversucheLoeschen,
@@ -34,6 +35,7 @@ const SCHREIBBAR = [
   'inhalt/',                        // feste Seiten, Menü, Einstellungen
   'bilder/',                        // Bildbestand der Webseite
   'statisch/wp-content/uploads/',   // übernommene und neu geladene Bilder
+  'bestellungen/',                  // eingegangene Bestellungen (nie im Repository)
 ];
 
 const TYPEN = {
@@ -122,6 +124,86 @@ async function dateiAusliefern(res, datei) {
 }
 
 const GESTARTET = new Date().toISOString();
+
+/* ---------------------------------------------------------- Bestellungen */
+
+const BESTELLUNGEN = path.join(WURZEL, 'bestellungen');
+const versuche = new Map();
+
+// Zwanzig Versuche je Viertelstunde und Adresse. Beim ersten Entwurf waren
+// es fünf – dabei zählten auch abgewiesene Anfragen mit, und wer sich
+// dreimal bei der E-Mail vertippt hatte, war für eine Viertelstunde
+// ausgesperrt. Zwanzig erreicht niemand beim Einkaufen, ein Skript sofort.
+function zuHaeufig(kennzeichen) {
+  const jetzt = Date.now();
+  const liste = (versuche.get(kennzeichen) || []).filter((z) => jetzt - z < 15 * 60 * 1000);
+  liste.push(jetzt);
+  versuche.set(kennzeichen, liste);
+  // Alte Einträge räumen, damit die Liste nicht unbegrenzt wächst.
+  if (versuche.size > 5000) versuche.clear();
+  return liste.length > 20;
+}
+
+const text = (wert, hoechstens) => String(wert ?? '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, hoechstens);
+
+async function bestellungAnnehmen(wunsch) {
+  const shop = JSON.parse(await readFile(path.join(WURZEL, 'inhalt/shop.json'), 'utf8'));
+  const waren = await sammlungLesen(WURZEL, 'produkte');
+
+  const positionen = Array.isArray(wunsch.positionen) ? wunsch.positionen.slice(0, 50) : [];
+  if (!positionen.length) throw new Error('Der Warenkorb ist leer.');
+
+  const gerechnet = [];
+  let warensumme = 0;
+  for (const p of positionen) {
+    const ware = waren.find((w) => w.kennung === text(p.kennung, 120) && !w.entwurf);
+    if (!ware) throw new Error('Ein Produkt gibt es nicht mehr. Bitte den Warenkorb neu laden.');
+    let anzahl = Math.floor(Number(p.anzahl));
+    if (!Number.isFinite(anzahl) || anzahl < 1) anzahl = 1;
+    if (anzahl > 99) anzahl = 99;
+    if (ware.lager > 0 && anzahl > ware.lager) anzahl = ware.lager;
+    // Der Preis kommt aus der Datei, nie aus der Anfrage.
+    const zeile = { kennung: ware.kennung, titel: ware.titel, variante: text(p.variante, 80),
+      anzahl, preis: Number(ware.preis) || 0 };
+    zeile.summe = Math.round(zeile.preis * anzahl * 100) / 100;
+    warensumme += zeile.summe;
+    gerechnet.push(zeile);
+  }
+  warensumme = Math.round(warensumme * 100) / 100;
+
+  const abholung = wunsch.versandart === 'abholung' && shop.abholung;
+  const versand = abholung || (shop.versandfreiAb && warensumme >= shop.versandfreiAb)
+    ? 0 : Number(shop.versandkosten) || 0;
+  const gesamt = Math.round((warensumme + versand) * 100) / 100;
+
+  const k = wunsch.kunde || {};
+  const kunde = {
+    vorname: text(k.vorname, 80), name: text(k.name, 80), strasse: text(k.strasse, 160),
+    plz: text(k.plz, 20), ort: text(k.ort, 80), mail: text(k.mail, 160),
+    telefon: text(k.telefon, 40), bemerkung: text(k.bemerkung, 2000),
+  };
+  for (const pflicht of ['vorname', 'name', 'strasse', 'plz', 'ort', 'mail']) {
+    if (!kunde[pflicht]) throw new Error('Bitte alle Pflichtfelder ausfüllen.');
+  }
+  if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(kunde.mail)) throw new Error('Die E-Mail-Adresse sieht nicht richtig aus.');
+
+  const zahlung = shop.zahlungsarten.some((z) => z.kennung === wunsch.zahlung)
+    ? wunsch.zahlung : shop.zahlungsarten[0].kennung;
+
+  await mkdir(BESTELLUNGEN, { recursive: true });
+  const nummer = `${shop.nummernkreis || 'SB'}-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${
+    Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+  const bestellung = {
+    nummer, eingegangen: new Date().toISOString(), zustand: 'neu',
+    sprache: text(wunsch.sprache, 5) || 'de',
+    positionen: gerechnet, warensumme, versand, gesamt,
+    versandart: abholung ? 'abholung' : 'versand', zahlung, kunde,
+  };
+  await writeFile(path.join(BESTELLUNGEN, `${nummer}.json`),
+    JSON.stringify(bestellung, null, 2) + '\n', 'utf8');
+  console.log(`Bestellung ${nummer}: ${gesamt} ${shop.waehrung}, ${gerechnet.length} Position(en)`);
+  return bestellung;
+}
 
 // Ein Übersetzer gilt als eingerichtet, sobald ein Schlüssel dasteht.
 const uebersetzerBereit = () =>
@@ -267,6 +349,27 @@ const server = createServer(async (req, res) => {
         return antwort(res, 200, { gut: true });
       }
       return antwort(res, 405, { fehler: 'Nicht erlaubt.' });
+    }
+
+    // ------------------------------------------------------------ Bestellung
+    //
+    // Diese Stelle ist offen – sie muss es sein, sonst könnte niemand
+    // bestellen. Darum drei Vorkehrungen: Der Server rechnet die Preise aus
+    // den Produktdateien neu und glaubt dem Browser keine Zahl; jede Angabe
+    // wird auf Länge und Form geprüft; und pro Adresse sind nur wenige
+    // Bestellungen in kurzer Folge möglich.
+    if (pfad === '/api/bestellung' && req.method === 'POST') {
+      const kennzeichen = req.socket.remoteAddress || 'unbekannt';
+      if (zuHaeufig(kennzeichen)) {
+        return antwort(res, 429, { fehler: 'Zu viele Bestellungen in kurzer Folge. Bitte in einer Viertelstunde erneut.' });
+      }
+      try {
+        const wunsch = await koerper(req);
+        const bestellung = await bestellungAnnehmen(wunsch);
+        return antwort(res, 200, { gut: true, nummer: bestellung.nummer, gesamt: bestellung.gesamt });
+      } catch (fehler) {
+        return antwort(res, 400, { fehler: fehler.message });
+      }
     }
 
     // ------------------------------------------------------------ Übersetzen

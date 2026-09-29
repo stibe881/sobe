@@ -88,6 +88,9 @@
 /jobs/schulische-heilpaedagogin-oder-lehrperson-in-einem-pensum-von-43/
 /jobs/angebotsleitung-schulleitung-verhalten-plus-55-65/
 /jobs/dipl-sozialpaedagogein-40-bis-60/
+/shop/
+/shop/beispielprodukt/
+/warenkorb/
 /suche/
 /fr/
 /fr/angebot/
@@ -179,6 +182,9 @@
 /fr/jobs/schulische-heilpaedagogin-oder-lehrperson-in-einem-pensum-von-43/
 /fr/jobs/angebotsleitung-schulleitung-verhalten-plus-55-65/
 /fr/jobs/dipl-sozialpaedagogein-40-bis-60/
+/fr/shop/
+/fr/shop/beispielprodukt/
+/fr/warenkorb/
 /fr/suche/
 /it/
 /it/angebot/
@@ -270,6 +276,9 @@
 /it/jobs/schulische-heilpaedagogin-oder-lehrperson-in-einem-pensum-von-43/
 /it/jobs/angebotsleitung-schulleitung-verhalten-plus-55-65/
 /it/jobs/dipl-sozialpaedagogein-40-bis-60/
+/it/shop/
+/it/shop/beispielprodukt/
+/it/warenkorb/
 /it/suche/
 /en/
 /en/angebot/
@@ -361,4 +370,7 @@
 /en/jobs/schulische-heilpaedagogin-oder-lehrperson-in-einem-pensum-von-43/
 /en/jobs/angebotsleitung-schulleitung-verhalten-plus-55-65/
 /en/jobs/dipl-sozialpaedagogein-40-bis-60/
+/en/shop/
+/en/shop/beispielprodukt/
+/en/warenkorb/
 /en/suche/

@@ -145,6 +145,158 @@ const arten = {
         <div class="lauftext">${b.html || ''}</div>
       </div>`,
 
+  // ------------------------------------------------------------------ Shop
+  //
+  // Preise werden hier nur angezeigt. Gerechnet wird beim Bestellen auf dem
+  // Server, aus den Produktdateien – was der Browser schickt, ist ein Wunsch,
+  // keine Rechnung. Sonst könnte jemand den Preis im Warenkorb ändern.
+  produkte: (b, hilfe) => {
+    const { produkte, t, sprache, geld } = hilfe;
+    const sichtbar = produkte.filter((p) => !p.entwurf);
+    const kategorien = [...new Set(sichtbar.map((p) => p.kategorie).filter(Boolean))];
+    if (!sichtbar.length) {
+      return `<div class="kachel ${spalte(b)}">
+        <h2>${schuetzen(b.titel || t('Shop'))}</h2>
+        <p class="fliess" style="margin-top: 10px;">${schuetzen(t('Zurzeit ist nichts im Angebot.'))}</p>
+      </div>`;
+    }
+    return `<div class="kachel ${spalte(b)}">
+        <div class="paar" style="justify-content: space-between; align-items: baseline;">
+          <h2>${schuetzen(b.titel || t('Shop'))}</h2>
+          <p class="marke" id="anzahl-produkte" aria-live="polite"></p>
+        </div>
+        ${kategorien.length > 1 ? `<div class="filterzeile">
+          <button type="button" class="filter" data-kategorie="alle" aria-pressed="false">${schuetzen(t('Alle'))}</button>
+          ${kategorien.map((k) => `<button type="button" class="filter" data-kategorie="${schuetzen(k)}" aria-pressed="false">${schuetzen(k)}</button>`).join('')}
+        </div>` : ''}
+        <div class="regal">${sichtbar.map((p) => `
+          <a class="ware" href="${schuetzen(pfadFuer(`/shop/${p.kennung}/`, sprache))}" data-kategorie="${schuetzen(p.kategorie || '')}">
+            ${p.bild ? `<img src="${schuetzen(p.bild.charAt(0) === '/' ? p.bild : '/bilder/' + p.bild)}" alt="${schuetzen(p.bildAlt || '')}" loading="lazy">`
+              : '<span class="warebildlos" aria-hidden="true"></span>'}
+            <span class="waretext">
+              <span class="warename">${schuetzen(p.titel)}</span>
+              ${p.kurz ? `<span class="warekurz">${schuetzen(p.kurz)}</span>` : ''}
+              <span class="warepreis">${schuetzen(geld(p.preis))}</span>
+              ${p.lager === 0 ? `<span class="wareaus">${schuetzen(t('Zurzeit nicht lieferbar'))}</span>` : ''}
+            </span>
+          </a>`).join('')}
+        </div>
+        <p id="regal-leer" class="fliess" style="margin-top: 14px;" hidden>${schuetzen(t('In dieser Kategorie ist zurzeit nichts im Angebot.'))}</p>
+      </div>`;
+  },
+
+  produkt: (b, hilfe) => {
+    const { t, geld, shop } = hilfe;
+    const p = b.produkt;
+    const aus = p.lager === 0;
+    return `<div class="kachel ${spalte(b)} produktkachel">
+        ${p.kategorie ? `<p class="marke">${schuetzen(p.kategorie)}</p>` : ''}
+        <h1 class="gross" style="margin-top: 8px;">${schuetzen(p.titel)}</h1>
+        ${p.kurz ? `<p class="fliess" style="margin-top: 10px;">${schuetzen(p.kurz)}</p>` : ''}
+        <p class="produktpreis">${schuetzen(geld(p.preis))}</p>
+        <form class="inwarenkorb" data-kennung="${schuetzen(p.kennung)}"${aus ? ' data-aus="ja"' : ''}>
+          ${p.varianten?.length ? `<p class="feld">
+            <label for="variante">${schuetzen(t('Ausführung'))}</label>
+            <select id="variante" name="variante">${p.varianten.map((v) => `<option value="${schuetzen(v)}">${schuetzen(v)}</option>`).join('')}</select>
+          </p>` : ''}
+          <p class="feld" style="max-width: 130px;">
+            <label for="anzahl">${schuetzen(t('Anzahl'))}</label>
+            <input id="anzahl" name="anzahl" type="number" min="1" step="1" value="1"${
+              p.lager > 0 ? ` max="${p.lager}"` : ''} inputmode="numeric">
+          </p>
+          ${aus
+            ? `<p class="hinweis" style="margin: 0;">${schuetzen(t('Zurzeit nicht lieferbar'))}</p>`
+            : `<button class="knopf spende" type="submit">${schuetzen(t('In den Warenkorb'))}</button>`}
+          <p class="fliess kleinerhinweis" id="gelegt" hidden>${schuetzen(t('Ist im Warenkorb.'))}</p>
+        </form>
+        ${p.lager > 0 && p.lager <= 5 ? `<p class="hinweis">${schuetzen(t('Nur noch wenige an Lager'))}: ${p.lager}</p>` : ''}
+        <div class="lauftext">${b.html || ''}</div>
+        ${shop.hinweis ? `<p class="hinweis">${schuetzen(shop.hinweis)}</p>` : ''}
+      </div>`;
+  },
+
+  warenkorb: (b, hilfe) => {
+    const { t, shop, einstellungen, sprache } = hilfe;
+    const zahlung = shop.zahlungsarten.map((z, i) => `
+            <label class="wahlkarte schmal">
+              <input type="radio" name="zahlung" value="${schuetzen(z.kennung)}"${i === 0 ? ' checked' : ''}>
+              <span class="wahltext"><span class="wahlname">${schuetzen(t(z.titel))}</span>
+                ${z.hinweis ? `<span class="wahlhilfe">${schuetzen(t(z.hinweis))}</span>` : ''}</span>
+            </label>`).join('');
+    const feld = (name, beschriftung, typ = 'text', breit = false, pflicht = false) => `
+            <p class="feld${breit ? ' breit' : ''}">
+              <label for="k-${name}">${schuetzen(t(beschriftung))}${pflicht ? ' <span class="pflicht" aria-hidden="true">*</span>' : ''}</label>
+              <input id="k-${name}" name="${name}" type="${typ}" autocomplete="${
+                { vorname: 'given-name', name: 'family-name', strasse: 'street-address',
+                  plz: 'postal-code', ort: 'address-level2', mail: 'email', telefon: 'tel' }[name] || 'off'
+              }"${pflicht ? ' required' : ''}>
+            </p>`;
+
+    return `<div class="kachel ${spalte(b)} korbkachel">
+        <form id="kasse" class="spende">
+          <fieldset class="schrittfeld">
+            <legend><span class="schrittzahl">1</span> ${schuetzen(t('Ihre Bestellung'))}</legend>
+            <div id="korbliste"></div>
+            <p id="korbleer" class="fliess" style="margin-top: 12px;">${schuetzen(t('Ihr Warenkorb ist leer.'))}
+              <a href="${schuetzen(pfadFuer('/shop/', sprache))}">${schuetzen(t('Zum Shop'))}</a></p>
+            <table class="korbsumme" id="korbsumme" hidden>
+              <tbody>
+                <tr><th scope="row">${schuetzen(t('Zwischensumme'))}</th><td id="summe-waren"></td></tr>
+                <tr><th scope="row">${schuetzen(t('Versand'))}</th><td id="summe-versand"></td></tr>
+                <tr class="gesamt"><th scope="row">${schuetzen(t('Gesamt'))}</th><td id="summe-gesamt"></td></tr>
+              </tbody>
+            </table>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-rest" hidden>
+            <legend><span class="schrittzahl">2</span> ${schuetzen(t('Lieferung'))}</legend>
+            <div class="wahlreihe">
+              <label class="wahlkarte schmal">
+                <input type="radio" name="versandart" value="versand" checked>
+                <span class="wahltext"><span class="wahlname">${schuetzen(t('Versand'))}</span>
+                  <span class="wahlhilfe">${schuetzen(t('Pauschale'))} ${schuetzen(hilfe.geld(shop.versandkosten))}${
+                    shop.versandfreiAb ? `, ${schuetzen(t('ab'))} ${schuetzen(hilfe.geld(shop.versandfreiAb))} ${schuetzen(t('versandkostenfrei'))}` : ''}</span></span>
+              </label>
+              ${shop.abholung ? `<label class="wahlkarte schmal">
+                <input type="radio" name="versandart" value="abholung">
+                <span class="wahltext"><span class="wahlname">${schuetzen(t('Abholung'))}</span>
+                  <span class="wahlhilfe">${schuetzen(shop.abholort || '')}</span></span>
+              </label>` : ''}
+            </div>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-zahlung" hidden>
+            <legend><span class="schrittzahl">3</span> ${schuetzen(t('Zahlung'))}</legend>
+            <div class="wahlreihe">${zahlung}</div>
+          </fieldset>
+
+          <fieldset class="schrittfeld" id="kasse-angaben" hidden>
+            <legend><span class="schrittzahl">4</span> ${schuetzen(t('Ihre Angaben'))}</legend>
+            <div class="felder">
+              ${feld('vorname', 'Vorname', 'text', false, true)}
+              ${feld('name', 'Name', 'text', false, true)}
+              ${feld('strasse', 'Strasse und Nummer', 'text', true, true)}
+              ${feld('plz', 'PLZ', 'text', false, true)}
+              ${feld('ort', 'Ort', 'text', false, true)}
+              ${feld('mail', 'E-Mail', 'email', false, true)}
+              ${feld('telefon', 'Telefon')}
+            </div>
+            <p class="feld">
+              <label for="k-bemerkung">${schuetzen(t('Bemerkung'))}</label>
+              <textarea id="k-bemerkung" name="bemerkung" rows="3"></textarea>
+            </p>
+          </fieldset>
+
+          <div class="abschluss" id="kasse-abschluss" hidden>
+            <p class="summe" id="kassenlage" role="status" aria-live="polite"></p>
+            <button class="knopf spende" type="submit">${schuetzen(t('Bestellung abschicken'))}</button>
+            <p class="hinweis" style="flex-basis: 100%; margin: 0;">${schuetzen(t('Es wird nichts online bezahlt. Wir bestätigen Ihre Bestellung von Hand per E-Mail.'))} ${schuetzen(einstellungen.mail)}</p>
+          </div>
+        </form>
+        <div id="bestaetigung" hidden></div>
+      </div>`;
+  },
+
   hinweis: (b) => `<div class="kachel ${spalte(b)}"><p class="hinweis" style="margin: 0;">${schuetzen(b.text)}</p></div>`,
 
   // Das Spendenformular. Drei Schritte auf einer Seite, der Betrag zuoberst:
