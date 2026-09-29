@@ -111,6 +111,8 @@ async function dateiAusliefern(res, datei) {
   res.end(await readFile(datei));
 }
 
+const GESTARTET = new Date().toISOString();
+
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
@@ -149,6 +151,29 @@ const server = createServer(async (req, res) => {
         'set-cookie': 'redaktion=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0',
       });
       return res.end(JSON.stringify({ gut: true }));
+    }
+
+    // ------------------------------------------------------------ Auskunft
+    //
+    // Sagt, welcher Stand gerade läuft. Node lädt die Dateien beim Start
+    // einmal und behält sie im Speicher: Ein Pull ohne Neustart ändert
+    // nichts, sieht aber von aussen genauso aus wie ein misslungener Pull.
+    // Dieses Fenster unterscheidet die beiden Fälle ohne Screenshots.
+    if (pfad === '/api/stand') {
+      let stand = 'unbekannt';
+      try {
+        const kopf = (await readFile(path.join(WURZEL, '.git/HEAD'), 'utf8')).trim();
+        const zeiger = kopf.startsWith('ref: ') ? kopf.slice(5) : null;
+        stand = zeiger
+          ? (await readFile(path.join(WURZEL, '.git', zeiger), 'utf8')).trim().slice(0, 7)
+          : kopf.slice(0, 7);
+      } catch { /* kein Klon – dann bleibt es bei «unbekannt» */ }
+      return antwort(res, 200, {
+        stand,
+        gestartet: GESTARTET,
+        wurzel: 'Webseite',          // seit der Trennung: / ist die Webseite
+        oeffentlich: process.env.OEFFENTLICH || null,
+      });
     }
 
     // ------------------------------------------------------------ Oberfläche
