@@ -36,10 +36,30 @@ Erster Bau und erste Auslieferung von Hand:
 
 ```bash
 npm run bauen
-mkdir -p ~/public_html/sobe-webseite
-cp werkzeuge/hetzner.htaccess ~/public_html/sobe-webseite/.htaccess
-cp -r ~/projekt/statisch/. ~/public_html/sobe-webseite/
 ```
+
+`public_html` aufräumen und die Seite ablegen. **Vorher sichern** – was dort
+liegt, ist danach weg:
+
+```bash
+cd ~
+cp -a public_html public_html-sicherung-$(date +%Y%m%d)   # Rettungsanker
+rm -rf public_html/*  public_html/.htaccess               # aufräumen
+
+mkdir -p public_html/sobe-webseite
+cp -r ~/projekt/statisch/. public_html/sobe-webseite/
+cp ~/projekt/werkzeuge/hetzner.htaccess public_html/sobe-webseite/.htaccess
+cp ~/projekt/werkzeuge/wurzel.htaccess  public_html/.htaccess
+```
+
+Die zweite `.htaccess` liegt in `public_html` selbst und enthält nur eine
+Weiterleitung: Wer die blosse Domain aufruft, landet auf der Webseite im
+Unterverzeichnis. Ohne sie zeigt die Domainwurzel ins Leere.
+
+Die Seite ist dann unter `ihre-domain.ch/sobe-webseite/` erreichbar.
+
+Das **Redaktionssystem gehört nicht nach `public_html`** – es bleibt in
+`~/projekt` und wird über seine eigene Subdomain erreicht (Schritt 2).
 
 Damit ist die Seite online.
 

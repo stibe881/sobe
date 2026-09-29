@@ -1,0 +1,16 @@
+# Gehört als .htaccess direkt nach public_html/ – nicht in den Ordner der
+# Webseite. Sie enthält nur eine Weiterleitung: Wer die blosse Domain
+# aufruft, landet auf der Webseite im Unterverzeichnis.
+#
+# Ohne diese Datei zeigt die Domainwurzel nach dem Aufräumen ins Leere.
+
+RewriteEngine On
+
+# Immer über HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Nur die Wurzel selbst weiterleiten, alles Übrige unberührt lassen
+RewriteRule ^$ /sobe-webseite/ [R=302,L]
+
+Options -Indexes
