@@ -110,6 +110,17 @@ liefert sie nach `public_html` aus – das dauert wenige Sekunden.
 Beiträge mit 🔒 stammen aus dem alten WordPress; sie lassen sich ansehen und
 löschen, aber nicht bearbeiten.
 
+## Neuen Stand holen
+
+```bash
+cd ~/projekt
+./aktualisieren.sh
+```
+
+Das verwirft den erzeugten Stand in `statisch/`, holt den neuen Code, prüft
+die Abhängigkeiten und baut die Seite. Danach in der Redaktion
+«Veröffentlichen» drücken.
+
 ## 4. Sichern
 
 Der ganze Inhalt sind Dateien. Nach grösseren Änderungen:
@@ -135,7 +146,13 @@ zurückholen. Ein Cronjob kann das auch nachts erledigen.
   `cp werkzeuge/hetzner.htaccess ~/public_html/sobe-webseite/.htaccess`.
   Dateien, die mit einem Punkt beginnen, rührt das Veröffentlichen nicht an –
   eine von Hand abgelegte `.htaccess` bleibt also erhalten.
-- **Nach einem `git pull` fehlt etwas.** `npm install` erneut ausführen.
+- **`git pull` bricht ab** mit «Your local changes would be overwritten»:
+  `statisch/` wird beim Bauen überschrieben und ist darum auf dem Server
+  immer verändert. Nehmen Sie `./aktualisieren.sh` – das verwirft den
+  erzeugten Stand, holt den neuen und baut. Von Hand:
+  `git checkout -- statisch/ && git pull`.
+- **Nach einem `git pull` fehlt etwas.** `npm install` erneut ausführen –
+  oder gleich `./aktualisieren.sh`, das erledigt beides.
 
 ## Barrierefreiheit
 
