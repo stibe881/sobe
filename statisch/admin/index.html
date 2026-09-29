@@ -172,7 +172,7 @@
     <div class="karte">
       <p>Zum Arbeiten braucht es ein GitHub-Zugangstoken für das
       Repository der Webseite (Fine-grained Token, nur Repository
-      «sobe», Berechtigung «Contents: Read and write»).</p>
+      «sobe-webseite», Berechtigung «Contents: Read and write»).</p>
       <form id="form-anmelden">
         <label for="token">Zugangstoken</label>
         <input type="text" id="token" autocomplete="off" spellcheck="false" required>
@@ -215,7 +215,7 @@
 
 <script>
 'use strict';
-const REPO = 'stibe881/sobe';
+const REPO = 'stibe881/sobe-webseite';
 const API = 'https://api.github.com/repos/' + REPO + '/contents/';
 const ACTIONS_URL = 'https://github.com/' + REPO + '/actions';
 /* Wurzel der Webseite, funktioniert unter /sobe/ und an der Domain-Wurzel */
