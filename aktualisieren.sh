@@ -13,7 +13,7 @@ vorher="$(git rev-parse --short HEAD)"
 echo "Stand auf der Platte: $vorher"
 echo
 
-echo "1/3  Erzeugten Stand verwerfen …"
+echo "1/4  Erzeugten Stand verwerfen …"
 git checkout -- statisch/ 2>/dev/null || true
 # Nicht nur verfolgte Dateien zurücksetzen: Das Bauen legt auch neue Seiten
 # an, die noch nicht im Repository stehen. Liefert der neue Stand dieselbe
@@ -21,11 +21,37 @@ git checkout -- statisch/ 2>/dev/null || true
 # be overwritten»). Sie entstehen eine Zeile später ohnehin neu.
 git clean -fdq statisch/
 
-echo "2/3  Neuen Stand holen …"
+echo "2/4  Neuen Stand holen …"
 git pull --ff-only
 
-echo "3/3  Seite bauen …"
+echo "3/4  Seite bauen …"
 npm run bauen
+
+echo "4/4  Auf public_html aufschalten …"
+# Ziel wie beim Server: die Umgebungsvariable, sonst der übliche Ort.
+ZIEL="${OEFFENTLICH:-$HOME/public_html/sobe-webseite}"
+if [ ! -d "$ZIEL" ]; then
+  echo "    $ZIEL gibt es nicht – übersprungen."
+  echo "    Liegt die Webseite woanders: OEFFENTLICH=<pfad> ./aktualisieren.sh"
+elif command -v rsync >/dev/null 2>&1; then
+  # --exclude '.*' schützt Punktdateien auf beiden Seiten: Eine von Hand
+  # gelegte .htaccess überlebt das Aufschalten, statt bei jedem Lauf
+  # wegzufallen.
+  rsync -a --delete --exclude '.*' statisch/ "$ZIEL/"
+  echo "    aufgeschaltet nach $ZIEL"
+else
+  # Ohne rsync von Hand abgleichen. Blosses Kopieren würde nur hinzufügen
+  # und überschreiben – eine gelöschte Seite bliebe stehen und wäre weiter
+  # abrufbar. Genau so hielten sich die alten WordPress-Ordner.
+  # Zuerst räumen, dann kopieren; Punktdateien bleiben unangetastet, damit
+  # eine von Hand gelegte .htaccess überlebt.
+  ( cd "$ZIEL" && find . -mindepth 1 -name '.*' -prune -o -print ) |
+  while IFS= read -r eintrag; do
+    [ -e "statisch/${eintrag#./}" ] || rm -rf -- "$ZIEL/${eintrag#./}"
+  done
+  cp -a statisch/. "$ZIEL/"
+  echo "    aufgeschaltet nach $ZIEL (ohne rsync, von Hand abgeglichen)"
+fi
 
 nachher="$(git rev-parse --short HEAD)"
 echo
@@ -35,6 +61,10 @@ else
   echo "Neuer Stand: $vorher → $nachher"
 fi
 echo
-echo "WICHTIG: Node lädt die Dateien nur beim Start. Jetzt in konsoleH die"
-echo "Anwendung stoppen und wieder starten, sonst läuft weiter die alte"
-echo "Fassung. Danach prüfen:  <ihre-domain>/api/stand  muss $nachher nennen."
+echo "Die Seiteninhalte sind damit aktuell – sie werden bei jedem Aufruf neu"
+echo "von der Platte gelesen."
+echo
+echo "Hat sich der Redaktionsserver selbst geändert (redaktion/, bauen.mjs,"
+echo "vorlagen/*.mjs), braucht es zusätzlich einen Neustart: in konsoleH die"
+echo "Node-Anwendung stoppen und wieder starten. Node liest diese Dateien nur"
+echo "beim Start. Prüfen mit:  <ihre-domain>/api/stand  muss $nachher nennen."
