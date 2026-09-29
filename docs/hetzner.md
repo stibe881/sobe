@@ -58,7 +58,7 @@ Unterverzeichnis. Ohne sie zeigt die Domainwurzel ins Leere.
 Die Seite ist dann unter `ihre-domain.ch/sobe-webseite/` erreichbar.
 
 Das **Redaktionssystem gehört nicht nach `public_html`** – es bleibt in
-`~/projekt` und wird über seine eigene Subdomain erreicht (Schritt 2).
+`~/projekt` und wird über seine eigene Adresse erreicht (Schritt 2).
 
 Damit ist die Seite online.
 
@@ -73,10 +73,29 @@ Damit ist die Seite online.
 Node-Anwendung bekommt dann sämtliche Anfragen dieser Domain – der Apache
 liefert dort keine Dateien mehr aus.
 
-Deshalb: **Node.js nur auf einer eigenen Subdomain aktivieren**, etwa
-`redaktion.sonnenberg-baar.ch`. Die Domain, unter der die Webseite liegt,
-bleibt unangetastet und wird weiterhin vom Apache ausgeliefert – schnell,
-und unabhängig davon, ob die Redaktion gerade läuft.
+Daraus folgen zwei gangbare Wege.
+
+**Weg A – getrennt (empfohlen).** Node.js nur auf einer eigenen Subdomain
+aktivieren, etwa `redaktion.sonnenberg-baar.ch`. Die Domain, unter der die
+Webseite liegt, bleibt unangetastet und wird weiterhin vom Apache
+ausgeliefert – schnell, und unabhängig davon, ob die Redaktion gerade
+läuft. Fällt Node aus, steht die Webseite trotzdem.
+
+**Weg B – alles über Node.** Node.js auf der Domain der Webseite selbst
+aktivieren. Dann liefert der Server beides aus:
+
+| Adresse | Was kommt |
+| --- | --- |
+| `ihre-domain.ch/` | die Webseite |
+| `ihre-domain.ch/redaktion/` | die Anmeldung zur Redaktion |
+
+Die Wurzel gehört dabei bewusst der Webseite. Lag die Redaktion dort,
+bekamen Besucher die Anmeldemaske statt der Startseite zu sehen – genau
+das ist beim ersten Versuch passiert.
+
+Weg B ist der kürzere, hat aber einen Preis: Steht Node still, ist auch
+die Webseite weg. Für eine Testadresse ist das in Ordnung, für die
+öffentliche Seite ist Weg A der ruhigere.
 
 Werte für die Maske (Ihr Zuhause ist `/usr/home/e3z3sy`, der Klon liegt in
 `projekt`):
