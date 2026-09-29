@@ -49,6 +49,23 @@ neue Baustein-Art erbt die Mehrsprachigkeit dadurch von selbst.
 Bewusst **nicht** übersetzt: die Anschrift (»Landhausstrasse 20 · 6340
 Baar« bleibt dieselbe Anschrift), Pfade, Farben, Kennungen, Dateinamen.
 
+## Ein Wort, zwei Bedeutungen
+
+Der Schlüssel ist der deutsche Satz – das hat eine Kehrseite: Trägt
+dasselbe Wort an zwei Stellen zwei Bedeutungen, bekommt es nur eine
+Übersetzung. Zwei Fälle sind beim Aufbau aufgefallen:
+
+- **«Eintritt»** meinte im Aufnahmeverfahren den Eintritt des Kindes, im
+  Stelleninserat den Stellenantritt. Auf Französisch stand über dem
+  vierten Aufnahmeschritt «Entrée en fonction» – Dienstantritt.
+- **«Angebot»** meinte im Menü die Angebote des Hauses, im Shop das
+  Warensortiment. Im französischen Menü stand «Assortiment».
+
+Behoben, indem die **deutsche Quelle** unterscheidet: Das Stelleninserat
+sagt jetzt «Eintritt ab», der Shop «Sortiment». Wer eine neue Übersetzung
+schräg findet, prüfe zuerst, ob derselbe deutsche Satz anderswo etwas
+anderes meint.
+
 ## Nachführen
 
 In der Redaktion unter **Sprachen**: Der Knopf «Jetzt übersetzen» führt
@@ -96,3 +113,19 @@ wieder überschrieben.
 
 Vor dem Aufschalten sollte jemand mit der jeweiligen Sprache einmal über
 die wichtigsten Seiten lesen.
+
+## Was von Hand übersetzt ist
+
+240 Sätze je Sprache, von Hand eingetragen und geprüft: die feste
+Oberfläche (Menü, Knöpfe, Barrierefreiheit, Suche, Spendenformular, Shop)
+und der gesamte Text der zehn festen Seiten samt Fusszeile.
+
+Offen sind rund 184 Sätze je Sprache: die Rümpfe der 73 Beiträge und der
+Stelleninserate. Das sind lange Texte – sie übernimmt die Maschine.
+
+**Eine Entscheidung, die jemand prüfen sollte:** Die Namen der Angebote –
+Sehen, Sehen Plus, Verhalten und Sprache, Verhalten Plus, Erwachsene
+Sehen Plus – sind mitübersetzt (Vision, Vista, …). Wer sie lieber als
+Eigennamen deutsch stehen lässt, weil sie so in Verfügungen und
+Vereinbarungen mit dem Kanton stehen, ändert das in der Redaktion unter
+**Sprachen** in drei Minuten.

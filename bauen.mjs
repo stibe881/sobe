@@ -293,7 +293,7 @@ export async function bauen() {
       const titel = t(s.titel);
       const teile = [
         { art: 'held', spalten: 6, marke: t('Offene Stellen'), markeZiel: pfadFuer('/jobs/', sprache),
-          titel, text: [t(s.pensum || ''), s.eintritt && `${t('Eintritt')} ${t(s.eintritt)}`, 'Baar']
+          titel, text: [t(s.pensum || ''), s.eintritt && `${t('Eintritt ab')} ${t(s.eintritt)}`, 'Baar']
             .filter(Boolean).join(' · ') },
         { art: 'rohtext', spalten: 4, html: rumpf || `<p>${t('Diese Ausschreibung hat noch keinen Text.')}</p>` },
         { art: 'aufruf', spalten: 2, farbe: 'gelb', titel: t('Bewerbung'),
@@ -316,7 +316,7 @@ export async function bauen() {
       inhalt: [
         { art: 'held', spalten: 6, marke: t('Shop'), titel: t('Shop'),
           text: t('Bücher, Hilfsmittel und Erzeugnisse aus dem SONNENBERG.') },
-        { art: 'produkte', spalten: 6, titel: t('Angebot') },
+        { art: 'produkte', spalten: 6, titel: t('Sortiment') },
       ].map((b) => '    ' + baustein(b, hilfe)).join('\n') }));
     verzeichnis.push({ t: t('Shop'), p: pfadFuer('/shop/', sprache), a: t('Seite'),
       x: sichtbareWaren.map((w) => w.titel + ' ' + (w.kurz || '')).join(' ') });

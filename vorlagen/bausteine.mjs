@@ -131,7 +131,7 @@ const arten = {
               ${s.bereich ? `<p class="marke" style="font-size: 12px;">${schuetzen(s.bereich)}</p>` : ''}
               <span style="font-size: 18px; font-weight: 700;"><a href="${schuetzen(pfadFuer(`/jobs/${s.kennung}/`, sprache))}">${schuetzen(s.titel)}</a></span>
             </div>
-            <div class="datum" style="width: auto; text-align: right; min-width: 140px;">${schuetzen([s.pensum, s.eintritt && t('Eintritt') + ' ' + s.eintritt].filter(Boolean).join(' · '))}</div>
+            <div class="datum" style="width: auto; text-align: right; min-width: 140px;">${schuetzen([s.pensum, s.eintritt && t('Eintritt ab') + ' ' + s.eintritt].filter(Boolean).join(' · '))}</div>
           </div>`).join('')}
         </div>
         <p id="leer" class="fliess" style="margin-top: 14px;" hidden>${schuetzen(t('In diesem Bereich ist zurzeit keine Stelle ausgeschrieben.'))}</p>
