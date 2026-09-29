@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
+<title>Attualità · SONNENBERG</title>
+<meta name="description" content="Einblicke in den Alltag im SONNENBERG.">
+<link rel="alternate" hreflang="de" href="/aktuell/">
+<link rel="alternate" hreflang="fr" href="/fr/aktuell/">
+<link rel="alternate" hreflang="it" href="/it/aktuell/">
+<link rel="alternate" hreflang="en" href="/en/aktuell/">
+<link rel="alternate" hreflang="x-default" href="/aktuell/">
+<link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
+</head>
+<body>
+<a class="springen" href="#inhalt">Vai al contenuto</a>
+
+<header class="kopf">
+  <div class="kopfband">
+    <a class="logo" href="/it/" aria-label="SONNENBERG, alla pagina iniziale"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <a class="werkzeug suchknopf-kopf" href="/it/suche/" aria-label="Cerca">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Lingua: Italiano"><span aria-hidden="true">IT</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Lingua</p>
+          <a lang="de" hreflang="de" href="/aktuell/">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/aktuell/">Français</a>
+          <a lang="it" hreflang="it" href="/it/aktuell/" aria-current="true">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/aktuell/">English</a>
+        </div>
+      </details>
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibilità">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Accessibilità</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Lettura ad alta voce</span><span class="schalterhilfe">Legge ad alta voce il contenuto della pagina.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Testo più grande</span><span class="schalterhilfe">Ingrandisce tutti i testi di un quarto.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Modalità scura</span><span class="schalterhilfe">Testo chiaro su sfondo scuro.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Le impostazioni restano salvate su questo dispositivo.</p>
+      </div>
+    </div>
+
+    <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menu">☰</button>
+
+    <nav id="menue" class="menue" aria-label="Navigazione principale">
+      <a href="/it/">Start</a>
+      <a href="/it/angebot/">Angebot</a>
+      <a href="/it/aufnahme/">Aufnahme</a>
+      <a href="/it/aktuell/" aria-current="page">Attualità</a>
+      <a href="/it/ueber-uns/">Über uns</a>
+      <a href="/it/jobs/">Jobs</a>
+      <form class="suchform" role="search" action="/it/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Cerca in tutto il sito</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Cerca" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Cerca">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <a class="knopf gelb nurschmal" href="/it/aufnahme/">Beratung</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/it/spenden/">Spenden</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <div class="raster">
+    <div class="kachel petrol s6">
+        
+        <h1 class="held">Attualità</h1>
+        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Einblicke in den Alltag im SONNENBERG.</p>
+        
+      </div>
+    <div class="kachel bild s3" style="display: flex; flex-direction: column; padding: 0;">
+        
+        <div style="padding: 22px 26px 26px;">
+          <p class="marke" style="font-size: 12.5px;">13 agosto 2026</p>
+          <h2 style="margin-top: 6px;"><a href="/it/aktuell/european-inclusion-cup-ein-wochenende-voller-fussball-begegnungen-und-gelebter-inklusion/">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a></h2>
+        </div>
+      </div>
+      <div class="kachel s3">
+        <div class="reihe"><div class="datum">12 giugno 2026</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-sporttag-spiel-spass-und-teamgeist/">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a></div></div><div class="reihe"><div class="datum">1 giugno 2026</div><div class="inhalt"><a href="/it/aktuell/feuerwehruebung-auf-dem-sonnenberg-areal/">Feuerwehrübung auf dem SONNENBERG-Areal</a></div></div><div class="reihe"><div class="datum">30 maggio 2026</div><div class="inhalt"><a href="/it/aktuell/bruecken-schlagen-jugendliche-vom-sonnenberg-und-jugendtreff-baar/">Brücken schlagen: Jugendliche vom SONNENBERG und Jugendtreff Baar</a></div></div><div class="reihe"><div class="datum">7 maggio 2026</div><div class="inhalt"><a href="/it/aktuell/fussball-fuer-alle/">Fussball für alle</a></div></div><div class="reihe"><div class="datum">14 aprile 2026</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-magazin-gemeinsam-sorge-tragen-gemeinsam-zukunft-gestalten/">SONNENBERG Magazin – Gemeinsam Sorge tragen, gemeinsam Zukunft gestalten</a></div></div><div class="reihe"><div class="datum">16 marzo 2026</div><div class="inhalt"><a href="/it/aktuell/fcl-match-live-in-der-swissporarena/">FCL Match live in der Swissporarena</a></div></div><div class="reihe"><div class="datum">9 marzo 2026</div><div class="inhalt"><a href="/it/aktuell/skilager-in-arosa-war-ein-voller-erfolg/">Skilager in Arosa war ein voller Erfolg!</a></div></div><div class="reihe"><div class="datum">6 febbraio 2026</div><div class="inhalt"><a href="/it/aktuell/skilager-celerina/">Skilager Celerina</a></div></div><div class="reihe"><div class="datum">2 dicembre 2025</div><div class="inhalt"><a href="/it/aktuell/stimmungsvoller-start-in-die-adventszeit/">Stimmungsvoller Start in die Adventszeit</a></div></div><div class="reihe"><div class="datum">21 ottobre 2025</div><div class="inhalt"><a href="/it/aktuell/3544-2/">SONNENBERG Herbstmagazin</a></div></div><div class="reihe"><div class="datum">7 ottobre 2025</div><div class="inhalt"><a href="/it/aktuell/neue-gesichter-in-der-geschaeftsleitung/">Neue Gesichter in der Geschäftsleitung</a></div></div><div class="reihe"><div class="datum">3 ottobre 2025</div><div class="inhalt"><a href="/it/aktuell/carlo-meier-und-seine-kaminski-kids-begeistern-im-sonnenberg/">Carlo Meier und seine Kaminski-Kids begeistern im SONNENBERG</a></div></div><div class="reihe"><div class="datum">29 settembre 2025</div><div class="inhalt"><a href="/it/aktuell/tenero-lager-vom-19-21-september-2025/">Tenero Lager vom 19.-21. September 2025</a></div></div><div class="reihe"><div class="datum">23 settembre 2025</div><div class="inhalt"><a href="/it/aktuell/orientierung-fuer-alle-sinne-neue-signaletik-im-sonnenberg/">Orientierung für alle Sinne – neue Signaletik im SONNENBERG</a></div></div><div class="reihe"><div class="datum">16 settembre 2025</div><div class="inhalt"><a href="/it/aktuell/specialadventurecamp-schaan-2025/">SpecialAdventureCamp Schaan 2025</a></div></div><div class="reihe"><div class="datum">30 luglio 2025</div><div class="inhalt"><a href="/it/aktuell/ein-leben-im-dienst-der-jugend/">Ein Leben im Dienst der Jugend</a></div></div><div class="reihe"><div class="datum">4 luglio 2025</div><div class="inhalt"><a href="/it/aktuell/astona-international-2025-sommermusikakademie-fuer-junge-musikerinnen-zu-gast-im-sonnenberg/">Astona International 2025 – Sommermusikakademie für junge Musiker*innen zu Gast im SONNENBERG</a></div></div><div class="reihe"><div class="datum">4 luglio 2025</div><div class="inhalt"><a href="/it/aktuell/geschaeftsfuehrer-mit-persoenlichem-bezug/">Geschäftsführer mit persönlichem Bezug</a></div></div><div class="reihe"><div class="datum">4 luglio 2025</div><div class="inhalt"><a href="/it/aktuell/teamgeist-ohne-grenzen/">Teamgeist ohne Grenzen…</a></div></div><div class="reihe"><div class="datum">30 giugno 2025</div><div class="inhalt"><a href="/it/aktuell/baarer-zytig-100-jahre-geschichte-traeume-und-erlebnisse/">Baarer Zytig - 100 Jahre Geschichte, Träume und Erlebnisse</a></div></div><div class="reihe"><div class="datum">30 giugno 2025</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-jahresbericht-2024/">SONNENBERG Jahresbericht 2024</a></div></div><div class="reihe"><div class="datum">30 giugno 2025</div><div class="inhalt"><a href="/it/aktuell/zuger-zeitung-seit-100-jahren-engagiert-fuer-kinder-mit-besonderen-beduerfnissen/">Zuger Zeitung - Seit 100 Jahren engagiert für Kinder mit besonderen Bedürfnissen</a></div></div><div class="reihe"><div class="datum">20 giugno 2025</div><div class="inhalt"><a href="/it/aktuell/astona-international-summermusikakademie-zu-gast-im-sonnenberg/">Astona International Summermusikakademie zu Gast im SONNENBERG</a></div></div><div class="reihe"><div class="datum">19 giugno 2025</div><div class="inhalt"><a href="/it/aktuell/mit-zuversicht-ins-2-jahrhundert/">Mit Zuversicht ins 2. Jahrhundert</a></div></div><div class="reihe"><div class="datum">28 aprile 2025</div><div class="inhalt"><a href="/it/aktuell/benefizgala-zum-100-jaehrigen-jubilaeum/">Benefizgala zum 100-jährigen Jubiläum</a></div></div><div class="reihe"><div class="datum">10 aprile 2025</div><div class="inhalt"><a href="/it/aktuell/stoebern-sie-im-neuen-sonnenberg-magazin/">Stöbern Sie im neuen SONNENBERG Magazin</a></div></div><div class="reihe"><div class="datum">1 marzo 2025</div><div class="inhalt"><a href="/it/aktuell/lebhafter-und-farbenfroher-fasnachtsauftakt-im-sonnenberg/">Lebhafter und farbenfroher Fasnachtsauftakt im SONNENBERG</a></div></div><div class="reihe"><div class="datum">3 gennaio 2025</div><div class="inhalt"><a href="/it/aktuell/100-jahre-sonnenberg/">100 Jahre SONNENBERG</a></div></div><div class="reihe"><div class="datum">2 ottobre 2024</div><div class="inhalt"><a href="/it/aktuell/fachstelle-autismus-anlaufstelle-fuer-fachpersonen-betroffene-und-angehoerige/">Fachstelle Autismus - Anlaufstelle für Fachpersonen, Betroffene und Angehörige</a></div></div><div class="reihe"><div class="datum">1 ottobre 2024</div><div class="inhalt"><a href="/it/aktuell/der-sonnenberg-praesentiert-neues-erscheinungsbild/">Der SONNENBERG präsentiert neues Erscheinungsbild</a></div></div><div class="reihe"><div class="datum">1 ottobre 2024</div><div class="inhalt"><a href="/it/aktuell/neuauflage-des-sonnenberg-magazins/">Neuauflage des SONNENBERG Magazins</a></div></div><div class="reihe"><div class="datum">24 settembre 2024</div><div class="inhalt"><a href="/it/aktuell/2643-2/">Tenero Lager vom 13.-15. September 2024</a></div></div><div class="reihe"><div class="datum">18 settembre 2024</div><div class="inhalt"><a href="/it/aktuell/herbstwanderung-auf-den-zugerberg/">Herbstwanderung auf den Zugerberg</a></div></div><div class="reihe"><div class="datum">13 settembre 2024</div><div class="inhalt"><a href="/it/aktuell/hinterlassen-sie-spuren/">Hinterlassen Sie Spuren</a></div></div><div class="reihe"><div class="datum">6 settembre 2024</div><div class="inhalt"><a href="/it/aktuell/roman-della-rossa-uebernimmt-die-geschaeftsfuehrung/">Roman Della Rossa übernimmt die Geschäftsführung</a></div></div><div class="reihe"><div class="datum">22 agosto 2024</div><div class="inhalt"><a href="/it/aktuell/nachfolgeregelung-geschaeftsfuehrung-sonnenberg/">Nachfolgeregelung Geschäftsführung SONNENBERG</a></div></div><div class="reihe"><div class="datum">20 agosto 2024</div><div class="inhalt"><a href="/it/aktuell/artikel-in-der-baarer-zytig-neue-leitlinien-fuer-mehr-unabhaengigkeit/">Artikel in der Baarer Zytig - Neue Leitlinien für mehr Unabhängigkeit</a></div></div><div class="reihe"><div class="datum">29 luglio 2024</div><div class="inhalt"><a href="/it/aktuell/astona-international-musikklaenge-erfuellen-den-sonnenberg/">Astona International – Musikklänge erfüllen den SONNENBERG</a></div></div><div class="reihe"><div class="datum">12 luglio 2024</div><div class="inhalt"><a href="/it/aktuell/schuljahresabschlus-2023-24/">Schuljahresabschlus 2023/24</a></div></div><div class="reihe"><div class="datum">5 luglio 2024</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-jahresbericht-2023-zeit-gestalten-zeit-schenken-zeit-geniessen/">SONNENBERG Jahresbericht 2023 – Zeit gestalten. Zeit schenken. Zeit geniessen.</a></div></div><div class="reihe"><div class="datum">1 luglio 2024</div><div class="inhalt"><a href="/it/aktuell/astona-sommermusikakademie-im-sonnenberg/">Astona Sommermusikakademie im SONNENBERG</a></div></div><div class="reihe"><div class="datum">1 luglio 2024</div><div class="inhalt"><a href="/it/aktuell/zukunft-inklusion/">Zukunft Inklusion</a></div></div><div class="reihe"><div class="datum">15 aprile 2024</div><div class="inhalt"><a href="/it/aktuell/am-steuer-eines-zvb-busses/">Am Steuer eines ZVB-Busses</a></div></div><div class="reihe"><div class="datum">12 aprile 2024</div><div class="inhalt"><a href="/it/aktuell/koenigliches-chaos-um-die-jahreszeiten/">Königliches Chaos um die Jahreszeiten</a></div></div><div class="reihe"><div class="datum">12 aprile 2024</div><div class="inhalt"><a href="/it/aktuell/skilager-in-arosa/">Skilager in Arosa</a></div></div><div class="reihe"><div class="datum">8 aprile 2024</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-fruehlingsmagazin/">SONNENBERG Frühlingsmagazin</a></div></div><div class="reihe"><div class="datum">18 marzo 2024</div><div class="inhalt"><a href="/it/aktuell/en-tag-im-laebe-vom-elia/">En Tag im Läbe vom Elia</a></div></div><div class="reihe"><div class="datum">9 febbraio 2024</div><div class="inhalt"><a href="/it/aktuell/2109-2/">Skilager Celerina vom 14. bis 19. Januar 2024</a></div></div><div class="reihe"><div class="datum">9 novembre 2023</div><div class="inhalt"><a href="/it/aktuell/ihre-spende-fuer-sport-kultur-und-schullager/">Ihre Spende für Sport, Kultur und Schullager</a></div></div><div class="reihe"><div class="datum">9 novembre 2023</div><div class="inhalt"><a href="/it/aktuell/ihre-spende-fuer-therapie-und-betreuungsformen-mit-tieren/">Ihre Spende für Therapie und Betreuungsformen mit Tieren</a></div></div><div class="reihe"><div class="datum">4 settembre 2023</div><div class="inhalt"><a href="/it/aktuell/schuljahreseroeffnung-23-24/">Schuljahreseröffnung 23/24</a></div></div><div class="reihe"><div class="datum">4 settembre 2023</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-september-magazin-2/">SONNENBERG September Magazin</a></div></div><div class="reihe"><div class="datum">21 agosto 2023</div><div class="inhalt"><a href="/it/aktuell/uk-und-sehen-am-kongress-des-vbs-verband-fuer-blinden-und-sehbehindertenpaedagogik/">«UK und Sehen» am Kongress des VBS (Verband für Blinden- und Sehbehindertenpädagogik)</a></div></div><div class="reihe"><div class="datum">21 agosto 2023</div><div class="inhalt"><a href="/it/aktuell/willkommen-im-sonnenberg/">Willkommen im SONNENBERG</a></div></div><div class="reihe"><div class="datum">19 giugno 2023</div><div class="inhalt"><a href="/it/aktuell/special-adventure-camp-vom-13-bis-15-juni-2023/">Special Adventure Camp vom 13. bis 15. Juni 2023</a></div></div><div class="reihe"><div class="datum">13 giugno 2023</div><div class="inhalt"><a href="/it/aktuell/sonnenberg-sporttag/">SONNENBERG-Sporttag</a></div></div><div class="reihe"><div class="datum">12 giugno 2023</div><div class="inhalt"><a href="/it/aktuell/torball-jugendschweizermeisterschaft-in-glarus/">Torball – Jugendschweizermeisterschaft in Glarus</a></div></div><div class="reihe"><div class="datum">6 giugno 2023</div><div class="inhalt"><a href="/it/aktuell/ihre-spende-fuer-skilager-in-st-moritz/">Ihre Spende für Skilager in St. Moritz</a></div></div><div class="reihe"><div class="datum">19 maggio 2023</div><div class="inhalt"><a href="/it/aktuell/erlebniswoche-regenwald/">Erlebniswoche Regenwald</a></div></div><div class="reihe"><div class="datum">1 maggio 2023</div><div class="inhalt"><a href="/it/aktuell/en-tag-im-laebe-vo/">En Tag im Läbe vo</a></div></div><div class="reihe"><div class="datum">17 aprile 2023</div><div class="inhalt"><a href="/it/aktuell/wunderwaelt/">«Wunderwält»</a></div></div><div class="reihe"><div class="datum">14 aprile 2023</div><div class="inhalt"><a href="/it/aktuell/die-fruehlingsausgabe-des-sonnenberg-magazin-ist-da/">Die Frühlingsausgabe des SONNENBERG Magazin ist da!</a></div></div><div class="reihe"><div class="datum">4 aprile 2023</div><div class="inhalt"><a href="/it/aktuell/stanser-hoergaenge/">Stanser Hörgänge</a></div></div><div class="reihe"><div class="datum">31 marzo 2023</div><div class="inhalt"><a href="/it/aktuell/wir-nehmen-abschied-von-unserem-ehemaligen-vereinspraesidenten/">Wir nehmen Abschied von unserem ehemaligen Vereinspräsidenten</a></div></div><div class="reihe"><div class="datum">17 marzo 2023</div><div class="inhalt"><a href="/it/aktuell/skilager-arosa-des-angebots-verhalten-und-sprache/">Skilager Arosa des Angebots Verhalten und Sprache</a></div></div><div class="reihe"><div class="datum">17 marzo 2023</div><div class="inhalt"><a href="/it/aktuell/srf-schweiz-aktuell-berichtet-ueber-unser-skilager-in-celerina/">SRF Schweiz aktuell berichtet über unser Skilager in Celerina</a></div></div><div class="reihe"><div class="datum">10 febbraio 2023</div><div class="inhalt"><a href="/it/aktuell/forum-sonnenberg-zuger-medien-berichten-2/">Forum SONNENBERG – Zuger Medien Berichten</a></div></div><div class="reihe"><div class="datum">9 febbraio 2023</div><div class="inhalt"><a href="/it/aktuell/konfetti-guggenmusik-und-tanz/">Konfetti, Guggenmusik und Tanz</a></div></div><div class="reihe"><div class="datum">8 febbraio 2023</div><div class="inhalt"><a href="/it/aktuell/fasnaechtliches-treiben-im-sonnenberg/">Fasnächtliches Treiben im SONNENBERG</a></div></div><div class="reihe"><div class="datum">2 febbraio 2023</div><div class="inhalt"><a href="/it/aktuell/buntes-fasnachtstreiben-im-sonnenberg/">Buntes Fasnachtstreiben im SONNENBERG</a></div></div><div class="reihe"><div class="datum">27 gennaio 2023</div><div class="inhalt"><a href="/it/aktuell/skilager-celerina-rtr-telesgrund-berichtet-aus-dem-lager/">Skilager Celerina – RTR Telesgrund berichtet aus dem Lager</a></div></div>
+      </div>
+    <div class="kachel nacht fussk">
+      <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
+      <p class="fussort"><span class="anschrift"><span class="zusammen">Landhausstrasse 20</span><span class="punkt" aria-hidden="true">·</span><span class="zusammen">6340 Baar</span></span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:+41417677833">041 767 78 33</a></p>
+      <nav class="rechts" aria-label="Note legali"><a href="/it/jobs/">Jobs</a><a href="/it/impressum/">Impressum</a><a href="/it/datenschutz/">Datenschutz</a><a href="/it/barrierefreiheit/">Accessibilità</a></nav>
+    </div>
+  </div>
+</main>
+
+<script>window.SOBE = {"wurzel":"/it/","sprache":"it","gebietsschema":"it-CH","texte":{"Vorlese-Modus":"Lettura ad alta voce","Vorlesen":"Leggi ad alta voce","Pause":"Pausa","Beenden":"Termina","Bereit. Auf «Vorlesen» drücken.":"Pronto. Prema «Leggi ad alta voce».","Liest vor …":"Lettura in corso …","Fertig gelesen.":"Lettura terminata.","Auf dieser Seite ist nichts zu lesen.":"In questa pagina non c'è nulla da leggere.","Dieser Browser kann nicht vorlesen.":"Questo browser non può leggere ad alta voce.","Bitte geben Sie einen Suchbegriff ein.":"Inserisca un termine di ricerca.","Wird gesucht …":"Ricerca in corso …","Keine Treffer für":"Nessun risultato per","Treffer":"risultati","Stelle":"posto","Stellen":"posti","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Provi un termine più breve oppure consulti il menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Non è stato possibile caricare l'indice. Ricarichi la pagina."}};</script>
+<script src="/seite.js" defer></script>
+</body>
+</html>

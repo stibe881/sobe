@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
+<title>Stöbern Sie im neuen SONNENBERG Magazin · SONNENBERG</title>
+<meta name="description" content="Stöbern Sie im neuen SONNENBERG Magazin">
+<link rel="alternate" hreflang="de" href="/aktuell/">
+<link rel="alternate" hreflang="fr" href="/fr/aktuell/">
+<link rel="alternate" hreflang="it" href="/it/aktuell/">
+<link rel="alternate" hreflang="en" href="/en/aktuell/">
+<link rel="alternate" hreflang="x-default" href="/aktuell/">
+<link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
+</head>
+<body>
+<a class="springen" href="#inhalt">Vai al contenuto</a>
+
+<header class="kopf">
+  <div class="kopfband">
+    <a class="logo" href="/it/" aria-label="SONNENBERG, alla pagina iniziale"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <a class="werkzeug suchknopf-kopf" href="/it/suche/" aria-label="Cerca">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Lingua: Italiano"><span aria-hidden="true">IT</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Lingua</p>
+          <a lang="de" hreflang="de" href="/aktuell/">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/aktuell/">Français</a>
+          <a lang="it" hreflang="it" href="/it/aktuell/" aria-current="true">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/aktuell/">English</a>
+        </div>
+      </details>
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibilità">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Accessibilità</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Lettura ad alta voce</span><span class="schalterhilfe">Legge ad alta voce il contenuto della pagina.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Testo più grande</span><span class="schalterhilfe">Ingrandisce tutti i testi di un quarto.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Modalità scura</span><span class="schalterhilfe">Testo chiaro su sfondo scuro.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Le impostazioni restano salvate su questo dispositivo.</p>
+      </div>
+    </div>
+
+    <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menu">☰</button>
+
+    <nav id="menue" class="menue" aria-label="Navigazione principale">
+      <a href="/it/">Start</a>
+      <a href="/it/angebot/">Angebot</a>
+      <a href="/it/aufnahme/">Aufnahme</a>
+      <a href="/it/aktuell/" aria-current="page">Attualità</a>
+      <a href="/it/ueber-uns/">Über uns</a>
+      <a href="/it/jobs/">Jobs</a>
+      <form class="suchform" role="search" action="/it/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Cerca in tutto il sito</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Cerca" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Cerca">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <a class="knopf gelb nurschmal" href="/it/aufnahme/">Beratung</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/it/spenden/">Spenden</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <div class="raster">
+    <div class="kachel s4">
+        <p class="marke">Attualità · 10 aprile 2025</p>
+        <h1 class="gross" style="margin-top: 8px;">Stöbern Sie im neuen SONNENBERG Magazin</h1>
+        <div class="lauftext"><p>Veröffentlicht am: 10. April 2025</p>
+<p>Das neue SONNENBERG-Magazin ist da. Nach 19 Jahren wird Thomas Dietziker im Sommer, aufgrund seiner Pensionierung, die Geschäftsführung des SONNENBERG an Roman Della Rossa übergeben. In einem Gespräch erfahren Sie mehr dazu und können Roman Della Rossa im Interview sowie im Portrait kennenlernen. Wir danken Ihnen von Herzen für Ihr Wohlwollen und Ihre Unterstützung unserer Arbeit in den letzten 19 Jahren!</p>
+<p>100 Jahre SONNENBERG – ein Jahrhundert Geschichten, Träume und Erlebnisse. An den Tagen der offenen Tür vom 13. und 14. Juni 2025 laden wir Sie herzlich ein, dies mit uns in Baar an der Landhausstrasse 20 zu feiern. Tauchen Sie ein in die faszinierende SONNENBERG-Welt und freuen Sie sich auf ein abwechslungsreiches Programm. Kommen Sie vorbei und feiern Sie mit uns!</p></div>
+      </div>
+    <div class="kachel s2 gelb">
+        <h2>Altri articoli</h2>
+        
+        <div class="liste"><a href="/it/aktuell/european-inclusion-cup-ein-wochenende-voller-fussball-begegnungen-und-gelebter-inklusion/">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a><a href="/it/aktuell/sonnenberg-sporttag-spiel-spass-und-teamgeist/">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a><a href="/it/aktuell/feuerwehruebung-auf-dem-sonnenberg-areal/">Feuerwehrübung auf dem SONNENBERG-Areal</a></div>
+      </div>
+    <div class="kachel nacht fussk">
+      <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
+      <p class="fussort"><span class="anschrift"><span class="zusammen">Landhausstrasse 20</span><span class="punkt" aria-hidden="true">·</span><span class="zusammen">6340 Baar</span></span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:+41417677833">041 767 78 33</a></p>
+      <nav class="rechts" aria-label="Note legali"><a href="/it/jobs/">Jobs</a><a href="/it/impressum/">Impressum</a><a href="/it/datenschutz/">Datenschutz</a><a href="/it/barrierefreiheit/">Accessibilità</a></nav>
+    </div>
+  </div>
+</main>
+
+<script>window.SOBE = {"wurzel":"/it/","sprache":"it","gebietsschema":"it-CH","texte":{"Vorlese-Modus":"Lettura ad alta voce","Vorlesen":"Leggi ad alta voce","Pause":"Pausa","Beenden":"Termina","Bereit. Auf «Vorlesen» drücken.":"Pronto. Prema «Leggi ad alta voce».","Liest vor …":"Lettura in corso …","Fertig gelesen.":"Lettura terminata.","Auf dieser Seite ist nichts zu lesen.":"In questa pagina non c'è nulla da leggere.","Dieser Browser kann nicht vorlesen.":"Questo browser non può leggere ad alta voce.","Bitte geben Sie einen Suchbegriff ein.":"Inserisca un termine di ricerca.","Wird gesucht …":"Ricerca in corso …","Keine Treffer für":"Nessun risultato per","Treffer":"risultati","Stelle":"posto","Stellen":"posti","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Provi un termine più breve oppure consulti il menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Non è stato possibile caricare l'indice. Ricarichi la pagina."}};</script>
+<script src="/seite.js" defer></script>
+</body>
+</html>

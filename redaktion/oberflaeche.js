@@ -1145,6 +1145,141 @@ async function medienZeigen() {
   }
 }
 
+/* ============================================================== Sprachen
+   Deutsch ist die Quelle, alles andere ist Übersetzung davon. Diese Maske
+   zeigt, was noch fehlt, stösst die maschinelle Übersetzung an und lässt
+   einzelne Sätze von Hand nachbessern – denn eine Maschine trifft den Ton
+   eines Hauses nicht immer. */
+async function sprachenZeigen() {
+  var arbeit = leeren($('#arbeit'));
+  arbeit.appendChild(neu('p', { klasse: 'wo', text:
+    'Die Webseite gibt es auf Deutsch, Französisch, Italienisch und Englisch. '
+    + 'Deutsch ist die Quelle: Was hier geschrieben wird, wird in die anderen '
+    + 'Sprachen übersetzt. Beim Veröffentlichen geschieht das von selbst.' }));
+
+  var sprachen = (await jsonLesen('inhalt/sprachen.json')).daten;
+  var fehlend = {};
+  try { fehlend = (await jsonLesen('inhalt/uebersetzungen/fehlend.json')).daten; } catch (e) { /* noch nie gebaut */ }
+
+  var gitter = neu('div', { klasse: 'kacheln' });
+  sprachen.forEach(function (sp) {
+    if (sp.standard) return;
+    var offen = (fehlend[sp.kennung] || []).length;
+    gitter.appendChild(neu('div', { klasse: 'zahlkachel' }, [
+      neu('div', { klasse: 'zahl', text: String(offen) }),
+      neu('div', { klasse: 'was', text: 'Sätze offen in ' + sp.name }),
+      neu('button', { klasse: 'klein', text: 'Durchsehen',
+        onclick: function () { wortschatzZeigen(sp); } }),
+    ]));
+  });
+  arbeit.appendChild(gitter);
+
+  var lage = neu('p', { klasse: 'still' });
+  arbeit.appendChild(neu('div', { klasse: 'karte' }, [
+    neu('h2', { text: 'Fehlende Übersetzungen nachführen' }),
+    neu('p', { klasse: 'still', text:
+      'Übersetzt alles, was noch offen ist, und baut die Webseite neu. '
+      + 'Das kann je nach Menge ein paar Minuten dauern und kostet beim '
+      + 'Übersetzungsdienst etwas.' }),
+    neu('div', { klasse: 'zeile' }, [
+      neu('button', { klasse: 'primaer', text: 'Jetzt übersetzen', onclick: async function (e) {
+        var knopf = e.target;
+        knopf.disabled = true;
+        lage.textContent = 'Läuft – bitte das Fenster offen lassen.';
+        try {
+          var antwort = await (await fetch('/api/uebersetzen', {
+            method: 'POST', headers: { 'x-redaktion': 'ja' } })).json();
+          if (antwort.fehler) throw new Error(antwort.fehler);
+          var zeilen = Object.keys(antwort.bilanz).map(function (k) {
+            return k + ': ' + antwort.bilanz[k].uebersetzt + ' von ' + antwort.bilanz[k].offen;
+          });
+          lage.textContent = zeilen.length ? zeilen.join(', ') : 'Es war nichts offen.';
+          meldung('Übersetzt.', 'ok');
+          bereichOeffnen('sprachen');
+        } catch (f) {
+          lage.textContent = '';
+          meldung('Übersetzen fehlgeschlagen: ' + f.message, 'fehler');
+        }
+        knopf.disabled = false;
+      } }),
+      lage,
+    ]),
+  ]));
+}
+
+async function wortschatzZeigen(sprache) {
+  var arbeit = leeren($('#arbeit'));
+  $('#bereich-titel').textContent = sprache.name;
+  arbeit.appendChild(neu('p', { klasse: 'wo', text:
+    'Links steht der deutsche Satz, rechts die Übersetzung. Was leer ist, '
+    + 'erscheint auf der Webseite auf Deutsch.' }));
+
+  var akte;
+  try { akte = await jsonLesen('inhalt/uebersetzungen/' + sprache.kennung + '.json'); }
+  catch (e) { akte = { daten: {}, sha: undefined, pfad: 'inhalt/uebersetzungen/' + sprache.kennung + '.json' }; }
+  var fehlend = [];
+  try { fehlend = (await jsonLesen('inhalt/uebersetzungen/fehlend.json')).daten[sprache.kennung] || []; }
+  catch (e) { /* egal */ }
+
+  var suchfeld = neu('input', { type: 'text', placeholder: 'Im Wortschatz suchen' });
+  var nurOffene = neu('input', { type: 'checkbox' });
+  var liste = neu('div');
+  var felder = {};
+
+  function zeichnen() {
+    leeren(liste);
+    var suche = suchfeld.value.toLowerCase();
+    // Offene zuerst: Wer hier hereinkommt, will meist das Fehlende sehen.
+    var saetze = fehlend.concat(Object.keys(akte.daten).filter(function (s) {
+      return fehlend.indexOf(s) === -1;
+    }));
+    var gezeigt = 0;
+    var zuviel = false;
+    saetze.forEach(function (satz) {
+      if (nurOffene.checked && fehlend.indexOf(satz) === -1) return;
+      if (suche && satz.toLowerCase().indexOf(suche) === -1
+        && String(akte.daten[satz] || '').toLowerCase().indexOf(suche) === -1) return;
+      // Bei dreihundert ist Schluss: Mehrere tausend Textfelder auf einmal
+      // machen den Browser zäh, und suchen ist ohnehin schneller als
+      // scrollen.
+      if (gezeigt >= 300) { zuviel = true; return; }
+      gezeigt++;
+      var eingabe = felder[satz] || neu('textarea', { klasse: 'klein' });
+      eingabe.value = akte.daten[satz] || '';
+      felder[satz] = eingabe;
+      liste.appendChild(neu('div', { klasse: 'unterzeile' }, [
+        neu('p', { klasse: 'still', text: satz.length > 400 ? satz.slice(0, 400) + ' …' : satz }),
+        eingabe,
+      ]));
+    });
+    if (!gezeigt) liste.appendChild(neu('p', { klasse: 'still', text: 'Nichts gefunden.' }));
+    else if (zuviel) liste.appendChild(neu('p', { klasse: 'still',
+      text: 'Nur die ersten 300 gezeigt – bitte die Suche benutzen.' }));
+  }
+
+  suchfeld.addEventListener('input', zeichnen);
+  nurOffene.addEventListener('change', zeichnen);
+  arbeit.appendChild(neu('div', { klasse: 'karte' }, [
+    neu('div', { klasse: 'zeile oben' }, [suchfeld,
+      neu('label', { klasse: 'haken' }, [nurOffene, 'Nur offene zeigen'])]),
+    liste,
+  ]));
+  arbeit.appendChild(neu('div', { klasse: 'zeile' }, [
+    neu('button', { klasse: 'primaer', text: 'Speichern', onclick: async function () {
+      Object.keys(felder).forEach(function (satz) {
+        var wert = felder[satz].value.trim();
+        if (wert) akte.daten[satz] = wert; else delete akte.daten[satz];
+      });
+      meldung('Wird gespeichert …');
+      try { await jsonSchreiben(akte, 'Redaktion: Übersetzungen ' + sprache.kennung); }
+      catch (f) { meldung('Speichern fehlgeschlagen: ' + f.message, 'fehler'); return; }
+      meldung('Gespeichert. Mit «Veröffentlichen» kommt es auf die Webseite.', 'ok');
+    } }),
+    neu('button', { text: 'Zurück', onclick: function () { bereichOeffnen('sprachen'); } }),
+  ]));
+  zeichnen();
+}
+
 /* ============================================================== Übersicht */
 async function uebersichtZeigen() {
   var arbeit = leeren($('#arbeit'));
@@ -1225,6 +1360,7 @@ var BEREICHE = [
   { id: 'seiten', name: 'Seiten', zeigen: seitenZeigen },
   { id: 'medien', name: 'Bilder', zeigen: medienZeigen },
   { trenner: true },
+  { id: 'sprachen', name: 'Sprachen', zeigen: sprachenZeigen },
   { id: 'menue', name: 'Menü & Fusszeile', zeigen: menueZeigen },
   { id: 'spenden', name: 'Spenden', zeigen: spendenZeigen },
   { id: 'einstellungen', name: 'Einstellungen', zeigen: einstellungenZeigen },

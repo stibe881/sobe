@@ -13,6 +13,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bauen } from '../bauen.mjs';
+import { fehlendeUebersetzen } from '../werkzeuge/uebersetzen.mjs';
 import {
   zugangLesen, stimmt, sitzungAusstellen, sitzungGueltig,
   gesperrt, fehlversuchZaehlen, fehlversucheLoeschen,
@@ -121,6 +122,17 @@ async function dateiAusliefern(res, datei) {
 }
 
 const GESTARTET = new Date().toISOString();
+
+// Ein Übersetzer gilt als eingerichtet, sobald ein Schlüssel dasteht.
+const uebersetzerBereit = () =>
+  Boolean(process.env.ANTHROPIC_API_KEY || process.env.DEEPL_API_KEY);
+
+async function uebersetzungslauf() {
+  await bauen();                       // damit fehlend.json aktuell ist
+  const bilanz = await fehlendeUebersetzen(WURZEL);
+  await bauen();                       // damit das Übersetzte in den Seiten steht
+  return bilanz;
+}
 
 const server = createServer(async (req, res) => {
   try {
@@ -257,14 +269,46 @@ const server = createServer(async (req, res) => {
       return antwort(res, 405, { fehler: 'Nicht erlaubt.' });
     }
 
+    // ------------------------------------------------------------ Übersetzen
+    //
+    // Getrennt vom Veröffentlichen, damit man auch ohne Aufschalten
+    // nachführen kann. Beide Wege rufen dieselbe Kette: bauen, damit die
+    // Liste der fehlenden Sätze stimmt – übersetzen – nochmals bauen.
+    if (pfad === '/api/uebersetzen' && req.method === 'POST') {
+      if (!angemeldet) return antwort(res, 401, { fehler: 'Nicht angemeldet.' });
+      if (!eigeneAnfrage) return antwort(res, 403, { fehler: 'Ungültige Anfrage.' });
+      try {
+        const bilanz = await uebersetzungslauf();
+        return antwort(res, 200, { gut: true, bilanz });
+      } catch (fehler) {
+        return antwort(res, 500, { fehler: fehler.message });
+      }
+    }
+
     // --------------------------------------------------------- Veröffentlichen
     if (pfad === '/api/veroeffentlichen' && req.method === 'POST') {
       if (!angemeldet) return antwort(res, 401, { fehler: 'Nicht angemeldet.' });
       if (!eigeneAnfrage) return antwort(res, 403, { fehler: 'Ungültige Anfrage.' });
       const schritte = [];
       try {
-        const anzahl = await bauen();
+        let anzahl = await bauen();
         schritte.push(`${anzahl} Seiten gebaut`);
+        // Neue Einträge sollen übersetzt aufgeschaltet werden, ohne dass
+        // jemand daran denken muss. Schlägt es fehl – kein Schlüssel, kein
+        // Netz –, geht die Lieferung trotzdem raus: Dann steht dort Deutsch,
+        // und das ist besser als eine Webseite, die nicht aufgeschaltet wird.
+        if (uebersetzerBereit()) {
+          try {
+            const bilanz = await uebersetzungslauf();
+            const zahl = Object.values(bilanz).reduce((s, b) => s + b.uebersetzt, 0);
+            schritte.push(zahl ? `${zahl} Sätze übersetzt` : 'nichts zu übersetzen');
+            anzahl = await bauen();
+          } catch (fehler) {
+            schritte.push(`Übersetzen fehlgeschlagen (${fehler.message}) – Deutsch bleibt stehen`);
+          }
+        } else {
+          schritte.push('kein Übersetzer eingerichtet');
+        }
         const ziel = process.env.OEFFENTLICH;
         if (ziel) {
           await abgleichen(path.join(WURZEL, 'statisch'), ziel);

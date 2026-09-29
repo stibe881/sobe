@@ -1,0 +1,6 @@
+[
+  { "kennung": "de", "name": "Deutsch",    "gebietsschema": "de-CH", "wurzel": "/",    "standard": true },
+  { "kennung": "fr", "name": "Français",   "gebietsschema": "fr-CH", "wurzel": "/fr/" },
+  { "kennung": "it", "name": "Italiano",   "gebietsschema": "it-CH", "wurzel": "/it/" },
+  { "kennung": "en", "name": "English",    "gebietsschema": "en-GB", "wurzel": "/en/" }
+]

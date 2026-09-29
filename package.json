@@ -9,6 +9,7 @@
   "scripts": {
     "bauen": "node bauen.mjs",
     "redaktion": "node redaktion/server.mjs",
-    "passwort": "node redaktion/passwort.mjs"
+    "passwort": "node redaktion/passwort.mjs",
+    "uebersetzen": "node werkzeuge/uebersetzen.mjs"
   }
 }

@@ -9,6 +9,11 @@
 <meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
 <title>Roman Della Rossa übernimmt die Geschäftsführung · SONNENBERG</title>
 <meta name="description" content="Roman Della Rossa übernimmt die Geschäftsführung">
+<link rel="alternate" hreflang="de" href="/aktuell/">
+<link rel="alternate" hreflang="fr" href="/fr/aktuell/">
+<link rel="alternate" hreflang="it" href="/it/aktuell/">
+<link rel="alternate" hreflang="en" href="/en/aktuell/">
+<link rel="alternate" hreflang="x-default" href="/aktuell/">
 <link rel="stylesheet" href="/stil.css">
 <script>
 /* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
@@ -29,6 +34,22 @@ try {
     <a class="logo" href="/" aria-label="SONNENBERG, zur Startseite"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
 
     <div class="werkzeuge">
+      <a class="werkzeug suchknopf-kopf" href="/suche/" aria-label="Suchen">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Sprache: Deutsch"><span aria-hidden="true">DE</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Sprache</p>
+          <a lang="de" hreflang="de" href="/aktuell/" aria-current="true">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/aktuell/">Français</a>
+          <a lang="it" hreflang="it" href="/it/aktuell/">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/aktuell/">English</a>
+        </div>
+      </details>
       <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Barrierefreiheit">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
           <circle cx="12" cy="4" r="2" fill="currentColor"/>
@@ -71,9 +92,10 @@ try {
         </button>
       </form>
       <a class="knopf gelb nurschmal" href="/aufnahme/">Beratung</a>
-      <a class="knopf spende" href="/spenden/">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="17" height="17"><path d="M12 20.5C6.5 16.9 3 14 3 10.2 3 7.6 5 5.6 7.5 5.6c1.6 0 3.3.8 4.5 2.4 1.2-1.6 2.9-2.4 4.5-2.4 2.5 0 4.5 2 4.5 4.6 0 3.8-3.5 6.7-9 10.3z" fill="currentColor"/></svg>
-        Spenden</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/spenden/">Spenden</a>
     </nav>
   </div>
 </header>
@@ -100,6 +122,7 @@ try {
   </div>
 </main>
 
+<script>window.SOBE = {"wurzel":"/","sprache":"de","gebietsschema":"de-CH","texte":{"Vorlese-Modus":"Vorlese-Modus","Vorlesen":"Vorlesen","Pause":"Pause","Beenden":"Beenden","Bereit. Auf «Vorlesen» drücken.":"Bereit. Auf «Vorlesen» drücken.","Liest vor …":"Liest vor …","Fertig gelesen.":"Fertig gelesen.","Auf dieser Seite ist nichts zu lesen.":"Auf dieser Seite ist nichts zu lesen.","Dieser Browser kann nicht vorlesen.":"Dieser Browser kann nicht vorlesen.","Bitte geben Sie einen Suchbegriff ein.":"Bitte geben Sie einen Suchbegriff ein.","Wird gesucht …":"Wird gesucht …","Keine Treffer für":"Keine Treffer für","Treffer":"Treffer","Stelle":"Stelle","Stellen":"Stellen","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden."}};</script>
 <script src="/seite.js" defer></script>
 </body>
 </html>

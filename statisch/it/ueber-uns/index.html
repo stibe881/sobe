@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
+<title>Über uns · SONNENBERG</title>
+<meta name="description" content="Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da.">
+<link rel="alternate" hreflang="de" href="/ueber-uns/">
+<link rel="alternate" hreflang="fr" href="/fr/ueber-uns/">
+<link rel="alternate" hreflang="it" href="/it/ueber-uns/">
+<link rel="alternate" hreflang="en" href="/en/ueber-uns/">
+<link rel="alternate" hreflang="x-default" href="/ueber-uns/">
+<link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
+</head>
+<body>
+<a class="springen" href="#inhalt">Vai al contenuto</a>
+
+<header class="kopf">
+  <div class="kopfband">
+    <a class="logo" href="/it/" aria-label="SONNENBERG, alla pagina iniziale"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <a class="werkzeug suchknopf-kopf" href="/it/suche/" aria-label="Cerca">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Lingua: Italiano"><span aria-hidden="true">IT</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Lingua</p>
+          <a lang="de" hreflang="de" href="/ueber-uns/">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/ueber-uns/">Français</a>
+          <a lang="it" hreflang="it" href="/it/ueber-uns/" aria-current="true">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/ueber-uns/">English</a>
+        </div>
+      </details>
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibilità">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Accessibilità</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Lettura ad alta voce</span><span class="schalterhilfe">Legge ad alta voce il contenuto della pagina.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Testo più grande</span><span class="schalterhilfe">Ingrandisce tutti i testi di un quarto.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Modalità scura</span><span class="schalterhilfe">Testo chiaro su sfondo scuro.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Le impostazioni restano salvate su questo dispositivo.</p>
+      </div>
+    </div>
+
+    <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menu">☰</button>
+
+    <nav id="menue" class="menue" aria-label="Navigazione principale">
+      <a href="/it/">Start</a>
+      <a href="/it/angebot/">Angebot</a>
+      <a href="/it/aufnahme/">Aufnahme</a>
+      <a href="/it/aktuell/">Attualità</a>
+      <a href="/it/ueber-uns/" aria-current="page">Über uns</a>
+      <a href="/it/jobs/">Jobs</a>
+      <form class="suchform" role="search" action="/it/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Cerca in tutto il sito</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Cerca" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Cerca">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <a class="knopf gelb nurschmal" href="/it/aufnahme/">Beratung</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/it/spenden/">Spenden</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <div class="raster">
+    <div class="kachel petrol s3">
+        
+        <h1 class="held">Über uns</h1>
+        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da – getragen vom Verein SONNENBERG, im Auftrag von Gemeinden und Kanton.</p>
+        
+      </div>
+    <div class="kachel bild s3"><img src="/bilder/campus.jpg" alt="Luftaufnahme des SONNENBERG-Areals in Baar" loading="lazy"></div>
+    <div class="kachel s6">
+        
+        
+        <p class="fliess" style="margin-top: 12px;">Der SONNENBERG ist das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung liegen unter einem Dach – an der Seite der Familien.</p>
+      </div>
+    <div class="kachel s2">
+        <h2>Auftrag</h2>
+        <p class="fliess" style="margin-top: 8px;">Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens.</p>
+        
+      </div>
+    <div class="kachel s2">
+        <h2>Träger</h2>
+        <p class="fliess" style="margin-top: 8px;">Verein SONNENBERG – Vorstand, Statuten und Jahresberichte.</p>
+        <div class="liste"><a href="/it/gemeinden/">Unterlagen für Gemeinden &amp; Kanton</a></div>
+      </div>
+    <div class="kachel s2">
+        <h2>Arbeiten bei uns</h2>
+        <p class="fliess" style="margin-top: 8px;">In Schule, Internat, Therapie und Verwaltung.</p>
+        <div class="liste"><a href="/it/jobs/">Posti vacanti</a></div>
+      </div>
+    <div class="kachel s6 gelb">
+        <h2>Kontakt</h2>
+        
+        <p class="tel" style="margin-top: 10px;"><a href="tel:+41417677833" style="color: var(--nacht);">041 767 78 33</a></p>
+        <p style="margin-top: 4px;"><a href="mailto:info@sonnenberg-baar.ch" style="color: var(--nacht);">info@sonnenberg-baar.ch</a></p>
+        <p style="margin-top: 8px;">Landhausstrasse 20 · 6340 Baar</p>
+      </div>
+    <div class="kachel nacht fussk">
+      <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
+      <p class="fussort"><span class="anschrift"><span class="zusammen">Landhausstrasse 20</span><span class="punkt" aria-hidden="true">·</span><span class="zusammen">6340 Baar</span></span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:+41417677833">041 767 78 33</a></p>
+      <nav class="rechts" aria-label="Note legali"><a href="/it/jobs/">Jobs</a><a href="/it/impressum/">Impressum</a><a href="/it/datenschutz/">Datenschutz</a><a href="/it/barrierefreiheit/">Accessibilità</a></nav>
+    </div>
+  </div>
+</main>
+
+<script>window.SOBE = {"wurzel":"/it/","sprache":"it","gebietsschema":"it-CH","texte":{"Vorlese-Modus":"Lettura ad alta voce","Vorlesen":"Leggi ad alta voce","Pause":"Pausa","Beenden":"Termina","Bereit. Auf «Vorlesen» drücken.":"Pronto. Prema «Leggi ad alta voce».","Liest vor …":"Lettura in corso …","Fertig gelesen.":"Lettura terminata.","Auf dieser Seite ist nichts zu lesen.":"In questa pagina non c'è nulla da leggere.","Dieser Browser kann nicht vorlesen.":"Questo browser non può leggere ad alta voce.","Bitte geben Sie einen Suchbegriff ein.":"Inserisca un termine di ricerca.","Wird gesucht …":"Ricerca in corso …","Keine Treffer für":"Nessun risultato per","Treffer":"risultati","Stelle":"posto","Stellen":"posti","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Provi un termine più breve oppure consulti il menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"Non è stato possibile caricare l'indice. Ricarichi la pagina."}};</script>
+<script src="/seite.js" defer></script>
+</body>
+</html>

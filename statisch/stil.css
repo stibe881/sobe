@@ -42,9 +42,17 @@ p { margin: 0; }
 /* Die Menüpunkte brechen nie im Wort. Wird es eng – etwa bei grösserer
    Schrift –, darf die Leiste zweizeilig werden; «Über uns» mitten im
    Wort umgebrochen war vorher das Ergebnis. */
-.menue { display: flex; gap: 22px; margin-left: auto; align-items: center;
+/* Der Abstand war 22 Punkte. Mit der Sprachwahl im Kopf reicht das nicht
+   mehr: Bei 1240 Punkten Bandbreite fehlten rund sechzig, und die Leiste
+   wurde zweizeilig. Sechzehn sind eng genug und lesen sich noch. */
+.menue { display: flex; gap: 16px; margin-left: auto; align-items: center;
   flex-wrap: wrap; row-gap: 8px; justify-content: flex-end; }
 .menue > a { white-space: nowrap; }
+/* Nichts in der Leiste darf unter seine eigene Breite gedrückt werden.
+   Ohne das schrumpfte der Spendenknopf, bis sein Text unter das Herz
+   rutschte – die Leiste blieb «einzeilig», der Knopf war zweizeilig. */
+.menue > a, .menue .suchform, .menue .knopf { flex: none; }
+.menue .knopf { white-space: nowrap; }
 .menue a { color: var(--text); font-weight: 600; padding: 6px 2px; border-bottom: 2px solid transparent; }
 .menue a:hover { text-decoration: none; border-bottom-color: var(--linie); }
 .menue a[aria-current="page"] { border-bottom-color: var(--gelb); }
@@ -181,10 +189,21 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 /* Suche                                                                 */
 /* ===================================================================== */
 
+/* Auf dem breiten Bildschirm ist die Suche ein Knopf neben Sprache und
+   Barrierefreiheit. Als offenes Feld passte sie nicht mehr in die Leiste,
+   seit die Sprachwahl dazukam – und ein Knopf, der zur Suchseite führt,
+   sagt dasselbe auf einem Viertel des Platzes. Im aufgeklappten Menü auf
+   dem Telefon bleibt das Feld, dort ist Platz. */
+.werkzeuge .suchknopf-kopf { margin-right: 8px; }
+.menue .suchform { display: none; }
+@media (max-width: 68em) {
+  .menue .suchform { display: flex; }
+  .werkzeuge .suchknopf-kopf { display: none; }
+}
 .suchform { display: flex; align-items: center; gap: 4px; background: var(--grund);
   border-radius: 999px; padding: 3px 3px 3px 12px; }
 .suchfeld { font: inherit; font-size: 0.9375rem; border: 0; background: none; color: var(--text);
-  width: 130px; padding: 6px 0; min-width: 0; }
+  width: 100px; padding: 6px 0; min-width: 0; }
 .suchfeld::placeholder { color: var(--grau); }
 .suchknopf { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
   border: 0; border-radius: 999px; background: var(--petrol); color: var(--weiss); cursor: pointer; padding: 0; }
@@ -323,9 +342,15 @@ html.dunkel .logo .fuerdunkel { display: block; }
 /* Spenden- und Beratungsknopf                                           */
 /* ===================================================================== */
 
-.knopf.spende { background: var(--petrol); color: var(--weiss);
-  display: inline-flex; align-items: center; gap: 8px; }
-.knopf.spende svg { flex: none; }
+/* Der Knopf trägt ein Herz und ein Wort nebeneinander. Ohne die drei
+   ausdrücklichen Zeilen darunter rutschte das Wort unter das Herz, sobald
+   die Kopfleiste eng wurde – aus dem Knopf wurde ein Kreis. Die Leiste
+   soll lieber umbrechen als den Knopf verformen. */
+.knopf.spende { background: var(--petrol); color: var(--weiss); }
+/* Nur in der Kopfleiste bleibt der Knopf in einer Zeile. Im Seitenkörper
+   muss er umbrechen dürfen: «Annunciare la donazione per e-mail» ist
+   breiter als ein Telefon. */
+.menue .knopf.spende { white-space: nowrap; }
 /* Auf dem breiten Bildschirm steht nur der Spendenknopf: Zwei gefüllte
    Knöpfe nebeneinander heben sich gegenseitig auf, und die Beratung ist
    über den Menüpunkt «Aufnahme» ohnehin einen Klick entfernt. Im
@@ -440,4 +465,30 @@ html.dunkel .pflicht { color: #ff9b83; }
   .fussk .fussort > .trenner { display: none; }
   .fussk .fussort a { font-size: 1.125rem; font-weight: 700; }
   .fussk .rechts { margin-left: 0; gap: 10px 18px; }
+}
+
+/* ===================================================================== */
+/* Sprachwahl                                                            */
+/* ===================================================================== */
+
+.sprachwahl { position: relative; margin-right: 8px; }
+.sprachwahl > summary { list-style: none; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; width: 42px; height: 42px;
+  background: var(--grund); color: var(--text); border-radius: 999px;
+  font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.04em; white-space: nowrap; }
+.sprachwahl > summary::-webkit-details-marker { display: none; }
+.sprachwahl > summary:hover { background: var(--linie); }
+.sprachwahl[open] > summary { background: var(--petrol); color: var(--weiss); }
+.sprachfeld { position: absolute; right: 0; top: 52px; z-index: 40; width: 190px;
+  background: var(--flaeche); color: var(--text); border-radius: var(--rund);
+  box-shadow: 0 10px 30px rgba(33, 41, 52, 0.18); padding: 12px; text-align: left; }
+.sprachfeld a { display: block; padding: 9px 12px; border-radius: 12px;
+  color: var(--text); font-weight: 600; }
+.sprachfeld a:hover { background: var(--grund); text-decoration: none; }
+.sprachfeld a[aria-current="true"] { background: var(--petrol); color: var(--weiss); }
+html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+
+@media (max-width: 68em) {
+  .sprachwahl { margin-right: 4px; }
+  .sprachfeld { right: -6px; width: min(190px, calc(100vw - 52px)); }
 }

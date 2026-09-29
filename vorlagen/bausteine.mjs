@@ -2,23 +2,20 @@
 // wer eine neue Art braucht, ergänzt hier eine und im Redaktionssystem das
 // passende Formular.
 
+import { datumLang, pfadFuer } from './sprache.mjs';
+
 export const schuetzen = (wert) => String(wert ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
-const datumLang = (iso) => {
-  const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
-    'August', 'September', 'Oktober', 'November', 'Dezember'];
-  const [j, m, t] = iso.split('-').map(Number);
-  return `${t}. ${monate[m - 1]} ${j}`;
-};
 
 const spalte = (b) => `s${b.spalten || 6}`;
 const farbe = (b) => (b.farbe ? ` ${b.farbe}` : '');
 
-const verweis = (l, e) => {
+const verweis = (l, hilfe) => {
+  const t = hilfe?.t || ((x) => x);
   if (l.nurText) return `<span class="fliess">${schuetzen(l.titel)}</span>`;
-  if (!l.pfad) return `<span class="fliess" title="Noch nicht hinterlegt">${schuetzen(l.titel)}</span>`;
+  if (!l.pfad) return `<span class="fliess" title="${schuetzen(t('Noch nicht hinterlegt'))}">${schuetzen(l.titel)}</span>`;
   return `<a href="${schuetzen(l.pfad)}">${schuetzen(l.titel)}</a>`;
 };
 
@@ -87,19 +84,21 @@ const arten = {
       </div>`;
   },
 
-  beitraege: (b, { beitraege }) => {
+  beitraege: (b, hilfe) => {
+    const { beitraege, sprache } = hilfe;
+    const zu = (k) => pfadFuer(`/aktuell/${k}/`, sprache);
     const liste = b.alle ? beitraege : beitraege.slice(0, b.anzahl || 3);
     if (b.alle) {
       const [erster, ...rest] = liste;
       return `<div class="kachel bild s3" style="display: flex; flex-direction: column; padding: 0;">
         ${erster.bild ? `<img src="/bilder/${schuetzen(erster.bild)}" alt="${schuetzen(erster.bildAlt)}" style="height: 220px; min-height: 0;" loading="lazy">` : ''}
         <div style="padding: 22px 26px 26px;">
-          <p class="marke" style="font-size: 12.5px;">${datumLang(erster.datum)}</p>
-          <h2 style="margin-top: 6px;"><a href="/aktuell/${schuetzen(erster.kennung)}/">${schuetzen(erster.titel)}</a></h2>
+          <p class="marke" style="font-size: 12.5px;">${datumLang(erster.datum, sprache)}</p>
+          <h2 style="margin-top: 6px;"><a href="${schuetzen(zu(erster.kennung))}">${schuetzen(erster.titel)}</a></h2>
         </div>
       </div>
       <div class="kachel s3">
-        ${rest.map((p) => `<div class="reihe"><div class="datum">${datumLang(p.datum)}</div><div class="inhalt"><a href="/aktuell/${schuetzen(p.kennung)}/">${schuetzen(p.titel)}</a></div></div>`).join('')}
+        ${rest.map((p) => `<div class="reihe"><div class="datum">${datumLang(p.datum, sprache)}</div><div class="inhalt"><a href="${schuetzen(zu(p.kennung))}">${schuetzen(p.titel)}</a></div></div>`).join('')}
       </div>`;
     }
     return `<div class="kachel ${spalte(b)}">
@@ -108,12 +107,13 @@ const arten = {
           ${b.mehr ? `<a href="${schuetzen(b.mehr.pfad)}">${schuetzen(b.mehr.titel)}</a>` : ''}
         </div>
         <div style="margin-top: 10px;">${liste.map((p) => `
-          <div class="reihe"><div class="datum">${datumLang(p.datum)}</div><div class="inhalt"><a href="/aktuell/${schuetzen(p.kennung)}/">${schuetzen(p.titel)}</a></div></div>`).join('')}
+          <div class="reihe"><div class="datum">${datumLang(p.datum, sprache)}</div><div class="inhalt"><a href="${schuetzen(zu(p.kennung))}">${schuetzen(p.titel)}</a></div></div>`).join('')}
         </div>
       </div>`;
   },
 
-  stellen: (b, { stellen }) => {
+  stellen: (b, hilfe) => {
+    const { stellen, t, sprache } = hilfe;
     const bereiche = [...new Set(stellen.map((s) => s.bereich).filter(Boolean))];
     const entwurf = stellen.some((s) => s.entwurf === true || s.entwurf === 'true');
     return `<div class="kachel ${spalte(b)}">
@@ -122,20 +122,20 @@ const arten = {
           <p class="marke" id="anzahl" aria-live="polite"></p>
         </div>
         <div class="filterzeile">
-          <button type="button" class="filter" data-bereich="alle" aria-pressed="false">Alle</button>
+          <button type="button" class="filter" data-bereich="alle" aria-pressed="false">${schuetzen(t('Alle'))}</button>
           ${bereiche.map((x) => `<button type="button" class="filter" data-bereich="${schuetzen(x)}" aria-pressed="false">${schuetzen(x)}</button>`).join('')}
         </div>
         <div style="margin-top: 6px;">${stellen.map((s) => `
           <div class="reihe stelle" data-bereich="${schuetzen(s.bereich || 'alle')}">
             <div class="inhalt">
               ${s.bereich ? `<p class="marke" style="font-size: 12px;">${schuetzen(s.bereich)}</p>` : ''}
-              <span style="font-size: 18px; font-weight: 700;"><a href="/jobs/${schuetzen(s.kennung)}/">${schuetzen(s.titel)}</a></span>
+              <span style="font-size: 18px; font-weight: 700;"><a href="${schuetzen(pfadFuer(`/jobs/${s.kennung}/`, sprache))}">${schuetzen(s.titel)}</a></span>
             </div>
-            <div class="datum" style="width: auto; text-align: right; min-width: 140px;">${schuetzen([s.pensum, s.eintritt && 'Eintritt ' + s.eintritt].filter(Boolean).join(' · '))}</div>
+            <div class="datum" style="width: auto; text-align: right; min-width: 140px;">${schuetzen([s.pensum, s.eintritt && t('Eintritt') + ' ' + s.eintritt].filter(Boolean).join(' · '))}</div>
           </div>`).join('')}
         </div>
-        <p id="leer" class="fliess" style="margin-top: 14px;" hidden>In diesem Bereich ist zurzeit keine Stelle ausgeschrieben.</p>
-        ${entwurf ? '<p class="hinweis">Einzelne Ausschreibungen sind noch als Entwurf hinterlegt.</p>' : ''}
+        <p id="leer" class="fliess" style="margin-top: 14px;" hidden>${schuetzen(t('In diesem Bereich ist zurzeit keine Stelle ausgeschrieben.'))}</p>
+        ${entwurf ? `<p class="hinweis">${schuetzen(t('Einzelne Ausschreibungen sind noch als Entwurf hinterlegt.'))}</p>` : ''}
       </div>`;
   },
 
@@ -157,7 +157,8 @@ const arten = {
   // barrierefrei» – für ein Kompetenzzentrum für Sehen wäre das der falsche
   // Massstab. Darum: echte Beschriftungen, Gruppen mit <fieldset>/<legend>,
   // alles mit der Tastatur erreichbar.
-  spende: (b, { einstellungen }) => {
+  spende: (b, hilfe) => {
+    const { einstellungen, t } = hilfe;
     const s = einstellungen.spenden;
     const eingerichtet = Boolean(s.zahlungsziel);
 
@@ -189,7 +190,7 @@ const arten = {
 
     const feld = (name, beschriftung, typ = 'text', breit = false, pflicht = false) => `
             <p class="feld${breit ? ' breit' : ''}">
-              <label for="f-${name}">${schuetzen(beschriftung)}${pflicht ? ' <span class="pflicht" aria-hidden="true">*</span>' : ''}</label>
+              <label for="f-${name}">${schuetzen(t(beschriftung))}${pflicht ? ' <span class="pflicht" aria-hidden="true">*</span>' : ''}</label>
               <input id="f-${name}" name="${name}" type="${typ}" autocomplete="${
                 { vorname: 'given-name', name: 'family-name', strasse: 'street-address',
                   plz: 'postal-code', ort: 'address-level2', mail: 'email' }[name] || 'off'
@@ -201,25 +202,25 @@ const arten = {
         eingerichtet ? ` action="${schuetzen(s.zahlungsziel)}"` : ''}>
 
         <fieldset class="schrittfeld">
-          <legend><span class="schrittzahl">1</span> Ihr Beitrag</legend>
+          <legend><span class="schrittzahl">1</span> ${schuetzen(t('Ihr Beitrag'))}</legend>
 
-          <div class="umschalter" role="radiogroup" aria-label="Wie oft">
-            <label><input type="radio" name="intervall" value="einmalig" checked><span>Einmalig</span></label>
-            <label><input type="radio" name="intervall" value="monatlich"><span>Monatlich</span></label>
+          <div class="umschalter" role="radiogroup" aria-label="${schuetzen(t('Wie oft'))}">
+            <label><input type="radio" name="intervall" value="einmalig" checked><span>${schuetzen(t('Einmalig'))}</span></label>
+            <label><input type="radio" name="intervall" value="monatlich"><span>${schuetzen(t('Monatlich'))}</span></label>
           </div>
 
           <div class="betraege" id="betraege-einmalig">
             ${s.betraegeEinmalig.map((w, i) => betragsfeld(w, 'einmalig', i)).join('')}
             <label class="betrag frei">
               <input type="radio" name="betrag" value="frei" data-art="einmalig">
-              <span class="betragzahl">Anderer</span>
+              <span class="betragzahl">${schuetzen(t('Anderer'))}</span>
             </label>
           </div>
           <div class="betraege" id="betraege-monatlich" hidden>
             ${s.betraegeMonatlich.map((w, i) => betragsfeld(w, 'monatlich', i)).join('')}
             <label class="betrag frei">
               <input type="radio" name="betrag" value="frei" data-art="monatlich" disabled>
-              <span class="betragzahl">Anderer</span>
+              <span class="betragzahl">${schuetzen(t('Anderer'))}</span>
             </label>
           </div>
 
@@ -227,22 +228,22 @@ const arten = {
                Kontoangaben sichtbar statt für immer verborgen. Das Skript
                blendet sie beim Laden aus und bei Bedarf wieder ein. -->
           <p class="feld freibetrag" id="freibetrag">
-            <label for="f-eigenerbetrag">Eigener Betrag in Franken</label>
+            <label for="f-eigenerbetrag">${schuetzen(t('Eigener Betrag in Franken'))}</label>
             <input id="f-eigenerbetrag" name="eigenerbetrag" type="number" min="1" step="1" inputmode="numeric">
           </p>
         </fieldset>
 
         <fieldset class="schrittfeld">
-          <legend><span class="schrittzahl">2</span> Wofür</legend>
+          <legend><span class="schrittzahl">2</span> ${schuetzen(t('Wofür'))}</legend>
           <div class="wahlreihe">${s.zwecke.map(zweck).join('')}</div>
         </fieldset>
 
         <fieldset class="schrittfeld">
-          <legend><span class="schrittzahl">3</span> Zahlungsart</legend>
+          <legend><span class="schrittzahl">3</span> ${schuetzen(t('Zahlungsart'))}</legend>
           <div class="wahlreihe">${s.zahlungsarten.map(art).join('')}</div>
 
           <div class="kontoangaben" id="kontoangaben">
-            <p class="marke">Unser Spendenkonto</p>
+            <p class="marke">${schuetzen(t('Unser Spendenkonto'))}</p>
             <p><strong>${schuetzen(s.konto.inhaber)}</strong></p>
             <p class="iban">${schuetzen(s.konto.iban)}</p>
             <p class="fliess">${schuetzen(s.konto.bank)}</p>
@@ -250,8 +251,8 @@ const arten = {
         </fieldset>
 
         <fieldset class="schrittfeld">
-          <legend><span class="schrittzahl">4</span> Ihre Angaben</legend>
-          <p class="fliess kleinerhinweis">Für die Spendenbescheinigung. Wenn Sie keine brauchen, genügt die E-Mail-Adresse.</p>
+          <legend><span class="schrittzahl">4</span> ${schuetzen(t('Ihre Angaben'))}</legend>
+          <p class="fliess kleinerhinweis">${schuetzen(t('Für die Spendenbescheinigung. Wenn Sie keine brauchen, genügt die E-Mail-Adresse.'))}</p>
           <div class="felder">
             ${feld('vorname', 'Vorname')}
             ${feld('name', 'Name')}
@@ -261,19 +262,19 @@ const arten = {
             ${feld('mail', 'E-Mail', 'email', true, true)}
           </div>
           <p class="haken">
-            <label><input type="checkbox" name="bescheinigung" value="ja"> Ich möchte eine Spendenbescheinigung</label>
+            <label><input type="checkbox" name="bescheinigung" value="ja"> ${schuetzen(t('Ich möchte eine Spendenbescheinigung'))}</label>
           </p>
           <p class="haken">
-            <label><input type="checkbox" name="anonym" value="ja"> Meine Spende soll nicht öffentlich genannt werden</label>
+            <label><input type="checkbox" name="anonym" value="ja"> ${schuetzen(t('Meine Spende soll nicht öffentlich genannt werden'))}</label>
           </p>
         </fieldset>
 
         <div class="abschluss">
-          <p class="summe" id="spendensumme" role="status" aria-live="polite">Ihre Spende: <strong>CHF 50</strong> einmalig</p>
+          <p class="summe" id="spendensumme" role="status" aria-live="polite">${schuetzen(t('Ihre Spende'))}: <strong>CHF 50</strong> ${schuetzen(t('einmalig'))}</p>
           ${eingerichtet
-            ? '<button class="knopf spende" type="submit">Weiter zur Zahlung</button>'
-            : `<p class="hinweis" id="nochkeinweg">Die Online-Zahlung ist noch nicht eingerichtet – es fehlt der Vertrag mit einem Zahlungsdienstleister. Bis dahin führt der Weg über eine Überweisung oder über <a href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(einstellungen.mail)}</a>.</p>
-             <a class="knopf spende" id="spendenmail" href="mailto:${schuetzen(einstellungen.mail)}">Spende per E-Mail anmelden</a>`}
+            ? `<button class="knopf spende" type="submit">${schuetzen(t('Weiter zur Zahlung'))}</button>`
+            : `<p class="hinweis" id="nochkeinweg">${schuetzen(t('Die Online-Zahlung ist noch nicht eingerichtet – es fehlt der Vertrag mit einem Zahlungsdienstleister. Bis dahin führt der Weg über eine Überweisung oder über'))} <a href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(einstellungen.mail)}</a>.</p>
+             <a class="knopf spende" id="spendenmail" href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(t('Spende per E-Mail anmelden'))}</a>`}
         </div>
       </form>
     </div>`;
@@ -286,4 +287,3 @@ export function baustein(b, hilfe) {
   return bauen(b, hilfe);
 }
 
-export { datumLang };

@@ -14,6 +14,13 @@
 (function () {
   'use strict';
 
+  // Die Seite legt unter window.SOBE ab, in welcher Sprache sie steht und
+  // wie ihre Texte lauten. Diese Datei ist für alle Sprachen dieselbe – sie
+  // wird kopiert, nicht gebaut –, darum kommen die Wörter von dort.
+  var SOBE = window.SOBE || {};
+  var WURZEL = SOBE.wurzel || '/';
+  function T(satz) { return (SOBE.texte && SOBE.texte[satz]) || satz; }
+
   // ------------------------------------------------------------ 1. Menü
   var burger = document.getElementById('burger');
   var menue = document.getElementById('menue');
@@ -48,7 +55,7 @@
       filter.forEach(function (f) {
         f.setAttribute('aria-pressed', f.dataset.bereich === bereich ? 'true' : 'false');
       });
-      if (anzahl) anzahl.textContent = sichtbar === 1 ? '1 Stelle' : sichtbar + ' Stellen';
+      if (anzahl) anzahl.textContent = sichtbar + ' ' + (sichtbar === 1 ? T('Stelle') : T('Stellen'));
       if (leer) leer.hidden = sichtbar > 0;
     }
     filter.forEach(function (f) { f.addEventListener('click', function () { filtern(f.dataset.bereich); }); });
@@ -112,7 +119,7 @@
       // sucht den Fehler bei sich.
       s.disabled = true;
       var hilfe = s.querySelector('.schalterhilfe');
-      if (hilfe) hilfe.textContent = 'Dieser Browser kann nicht vorlesen.';
+      if (hilfe) hilfe.textContent = T('Dieser Browser kann nicht vorlesen.');
       return;
     }
     s.addEventListener('click', function () {
@@ -167,20 +174,20 @@
     leiste = document.createElement('div');
     leiste.className = 'vorleseleiste';
     leiste.setAttribute('role', 'region');
-    leiste.setAttribute('aria-label', 'Vorlesen');
+    leiste.setAttribute('aria-label', T('Vorlesen'));
     leiste.innerHTML =
-      '<p>Vorlese-Modus</p>' +
-      '<button type="button" data-tun="start">Vorlesen</button>' +
-      '<button type="button" data-tun="pause" class="still">Pause</button>' +
-      '<button type="button" data-tun="stopp" class="still">Beenden</button>';
+      '<p></p>' +
+      '<button type="button" data-tun="start"></button>' +
+      '<button type="button" data-tun="pause" class="still"></button>' +
+      '<button type="button" data-tun="stopp" class="still"></button>';
     leiste.addEventListener('click', function (e) {
       var b = e.target.closest('button');
       if (!b) return;
       if (b.dataset.tun === 'start') {
-        if (speechSynthesis.paused) { speechSynthesis.resume(); melden('Liest vor …'); }
+        if (speechSynthesis.paused) { speechSynthesis.resume(); melden(T('Liest vor …')); }
         else { vonVornLesen(); }
       } else if (b.dataset.tun === 'pause') {
-        if (speechSynthesis.speaking && !speechSynthesis.paused) { speechSynthesis.pause(); melden('Pause'); }
+        if (speechSynthesis.speaking && !speechSynthesis.paused) { speechSynthesis.pause(); melden(T('Pause')); }
       } else {
         vorlesenBeenden();
         zustand.vorlesen = false;
@@ -188,6 +195,10 @@
         anzeigen();
       }
     });
+    leiste.querySelector('p').textContent = T('Vorlese-Modus');
+    leiste.querySelector('[data-tun="start"]').textContent = T('Vorlesen');
+    leiste.querySelector('[data-tun="pause"]').textContent = T('Pause');
+    leiste.querySelector('[data-tun="stopp"]').textContent = T('Beenden');
     document.body.appendChild(leiste);
     document.body.classList.add('liest');
     return leiste;
@@ -210,21 +221,21 @@
 
   function stimmeWaehlen() {
     var stimmen = speechSynthesis.getVoices() || [];
-    return stimmen.filter(function (s) { return /^de[-_]CH/i.test(s.lang); })[0]
-      || stimmen.filter(function (s) { return /^de/i.test(s.lang); })[0]
+    return stimmen.filter(function (s) { return s.lang.toLowerCase().indexOf((SOBE.sprache || 'de') + '-') === 0; })[0]
+      || stimmen.filter(function (s) { return s.lang.toLowerCase().indexOf(SOBE.sprache || 'de') === 0; })[0]
       || null;
   }
 
   function weiterlesen() {
     if (!laeuft) return;
-    if (bei >= stuecke.length) { melden('Fertig gelesen.'); markieren(null); laeuft = false; return; }
+    if (bei >= stuecke.length) { melden(T('Fertig gelesen.')); markieren(null); laeuft = false; return; }
     var stueck = stuecke[bei];
     markieren(stueck.element);
     var teile = zerlegen(stueck.text);
     var stimme = stimmeWaehlen();
     teile.forEach(function (teil, i) {
       var sprich = new SpeechSynthesisUtterance(teil);
-      sprich.lang = 'de-CH';
+      sprich.lang = SOBE.gebietsschema || SOBE.sprache || 'de';
       if (stimme) sprich.voice = stimme;
       sprich.rate = 0.95;
       if (i === teile.length - 1) {
@@ -240,8 +251,8 @@
     stuecke = vorleseStuecke();
     bei = 0;
     laeuft = true;
-    if (!stuecke.length) { melden('Auf dieser Seite ist nichts zu lesen.'); laeuft = false; return; }
-    melden('Liest vor …');
+    if (!stuecke.length) { melden(T('Auf dieser Seite ist nichts zu lesen.')); laeuft = false; return; }
+    melden(T('Liest vor …'));
     weiterlesen();
   }
 
@@ -256,7 +267,7 @@
         speechSynthesis.removeEventListener('voiceschanged', nurEinmal);
       });
     }
-    melden('Bereit. Auf «Vorlesen» drücken.');
+    melden(T('Bereit. Auf «Vorlesen» drücken.'));
   }
 
   function vorlesenBeenden() {
@@ -412,7 +423,7 @@
 
   function verzeichnisHolen() {
     if (holen) return holen;
-    holen = fetch('/suche.json')
+    holen = fetch(WURZEL + 'suche.json')
       .then(function (a) { if (!a.ok) throw new Error('HTTP ' + a.status); return a.json(); })
       .then(function (liste) {
         verzeichnis = liste.map(function (e) {
@@ -482,10 +493,10 @@
     ergebnis.textContent = '';
     var woerter = falten(frage).split(/\s+/).filter(function (w) { return w.length >= 2; });
     if (!woerter.length) {
-      lage.textContent = 'Bitte geben Sie einen Suchbegriff ein.';
+      lage.textContent = T('Bitte geben Sie einen Suchbegriff ein.');
       return;
     }
-    lage.textContent = 'Wird gesucht …';
+    lage.textContent = T('Wird gesucht …');
     verzeichnisHolen().then(function (liste) {
       var funde = liste
         .map(function (e) { return { e: e, punkte: bewerten(e, woerter) }; })
@@ -494,16 +505,16 @@
         .slice(0, 40);
 
       if (!funde.length) {
-        lage.textContent = 'Keine Treffer für «' + frage + '».';
+        lage.textContent = T('Keine Treffer für') + ' «' + frage + '».';
         var tipp = document.createElement('p');
         tipp.className = 'fliess';
         tipp.style.marginTop = '10px';
-        tipp.textContent = 'Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü unter Angebot, Aufnahme, Aktuell und Jobs nach.';
+        tipp.textContent = T('Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.');
         ergebnis.appendChild(tipp);
         return;
       }
 
-      lage.textContent = funde.length === 1 ? '1 Treffer' : funde.length + ' Treffer';
+      lage.textContent = funde.length + ' ' + T('Treffer');
       funde.forEach(function (f) {
         var a = document.createElement('a');
         a.className = 'treffer';
@@ -530,7 +541,7 @@
         ergebnis.appendChild(a);
       });
     }).catch(function () {
-      lage.textContent = 'Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.';
+      lage.textContent = T('Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.');
     });
   }
 
@@ -545,7 +556,7 @@
         // Die Adresse mitführen, damit ein Treffer teilbar und der
         // Zurück-Knopf nicht nutzlos ist.
         try {
-          history.replaceState(null, '', wert ? '/suche/?q=' + encodeURIComponent(wert) : '/suche/');
+          history.replaceState(null, '', WURZEL + 'suche/' + (wert ? '?q=' + encodeURIComponent(wert) : ''));
         } catch (e) { /* egal */ }
         zeigen(wert);
       }, 180);

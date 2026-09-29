@@ -114,9 +114,16 @@ Bei den **Umgebungsvariablen** eintragen:
 | Schlüssel | Wert |
 | --- | --- |
 | `OEFFENTLICH` | `/usr/home/e3z3sy/public_html/sobe-webseite` |
+| `ANTHROPIC_API_KEY` | der Schlüssel für die Übersetzungen (siehe `docs/sprachen.md`) |
 
 `OEFFENTLICH` sagt dem Server, wohin er nach dem Bauen ausliefern soll. Fehlt
 die Angabe, baut er nur – aufgeschaltet wird dann nichts.
+
+`ANTHROPIC_API_KEY` schaltet die Übersetzung ins Französische, Italienische
+und Englische frei; sie läuft beim Veröffentlichen von selbst mit. Fehlt der
+Schlüssel, wird nicht übersetzt und die noch nicht übersetzten Stellen
+bleiben deutsch – aufgeschaltet wird trotzdem. Einzelheiten in
+`docs/sprachen.md`.
 
 Den Port setzt Hetzner selbst; der Server übernimmt ihn aus `PORT`.
 
@@ -145,6 +152,7 @@ Links stehen die Bereiche:
 | Textbausteine | einzelne Texte auf festen Seiten | `quelle/texte/` |
 | Seiten | die festen Seiten und ihre Bausteine | `inhalt/seiten.json` |
 | Bilder | Bildbestand ansehen, hochladen, löschen | `bilder/`, `statisch/wp-content/uploads/` |
+| Sprachen | offene Übersetzungen nachführen und nachbessern | `inhalt/uebersetzungen/` |
 | Menü & Fusszeile | Menüpunkte, Knöpfe, Zeile im Fuss | `inhalt/einstellungen.json` |
 | Spenden | Beträge, Zwecke, Zahlungsarten, Konto | `inhalt/einstellungen.json` |
 | Einstellungen | Name, Adresse, Telefon, E-Mail | `inhalt/einstellungen.json` |

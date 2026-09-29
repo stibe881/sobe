@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
+<title>Spenden · SONNENBERG</title>
+<meta name="description" content="In drei Schritten spenden – einmalig oder monatlich.">
+<link rel="alternate" hreflang="de" href="/spenden/">
+<link rel="alternate" hreflang="fr" href="/fr/spenden/">
+<link rel="alternate" hreflang="it" href="/it/spenden/">
+<link rel="alternate" hreflang="en" href="/en/spenden/">
+<link rel="alternate" hreflang="x-default" href="/spenden/">
+<link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
+</head>
+<body>
+<a class="springen" href="#inhalt">Aller au contenu</a>
+
+<header class="kopf">
+  <div class="kopfband">
+    <a class="logo" href="/fr/" aria-label="SONNENBERG, vers la page d'accueil"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <a class="werkzeug suchknopf-kopf" href="/fr/suche/" aria-label="Rechercher">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="19" height="19">
+          <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <details class="sprachwahl">
+        <summary aria-label="Langue: Français"><span aria-hidden="true">FR</span></summary>
+        <div class="sprachfeld">
+          <p class="zugangstitel">Langue</p>
+          <a lang="de" hreflang="de" href="/spenden/">Deutsch</a>
+          <a lang="fr" hreflang="fr" href="/fr/spenden/" aria-current="true">Français</a>
+          <a lang="it" hreflang="it" href="/it/spenden/">Italiano</a>
+          <a lang="en" hreflang="en" href="/en/spenden/">English</a>
+        </div>
+      </details>
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibilité">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Accessibilité</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Lecture à voix haute</span><span class="schalterhilfe">Lit le contenu de la page à voix haute.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Texte plus grand</span><span class="schalterhilfe">Agrandit tous les textes d'un quart.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Mode sombre</span><span class="schalterhilfe">Texte clair sur fond sombre.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Les réglages sont enregistrés sur cet appareil.</p>
+      </div>
+    </div>
+
+    <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menu">☰</button>
+
+    <nav id="menue" class="menue" aria-label="Navigation principale">
+      <a href="/fr/">Start</a>
+      <a href="/fr/angebot/">Angebot</a>
+      <a href="/fr/aufnahme/">Aufnahme</a>
+      <a href="/fr/aktuell/">Actualités</a>
+      <a href="/fr/ueber-uns/">Über uns</a>
+      <a href="/fr/jobs/">Jobs</a>
+      <form class="suchform" role="search" action="/fr/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Rechercher sur tout le site</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Rechercher" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Rechercher">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <a class="knopf gelb nurschmal" href="/fr/aufnahme/">Beratung</a>
+      <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
+           der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
+           Das Wort allein sagt dasselbe und verträgt jede Breite. -->
+      <a class="knopf spende" href="/fr/spenden/">Spenden</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <div class="raster">
+    <div class="kachel petrol s6">
+        <p class="marke">Unterstützen</p>
+        <h1 class="held" style="margin-top: 8px;">Spenden</h1>
+        <p class="fliess" style="margin-top: 12px; font-size: 18px;">Betrag wählen, Angaben eintragen, fertig. Einmalig oder monatlich.</p>
+        
+      </div>
+    <div class="kachel s4 spendenkachel">
+      <form id="spendenform" class="spende" method="post">
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">1</span> Votre contribution</legend>
+
+          <div class="umschalter" role="radiogroup" aria-label="Fréquence">
+            <label><input type="radio" name="intervall" value="einmalig" checked><span>Unique</span></label>
+            <label><input type="radio" name="intervall" value="monatlich"><span>Mensuel</span></label>
+          </div>
+
+          <div class="betraege" id="betraege-einmalig">
+            
+            <label class="betrag">
+              <input type="radio" name="betrag" value="30" data-art="einmalig">
+              <span class="betragzahl">30</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="50" data-art="einmalig" checked>
+              <span class="betragzahl">50</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="100" data-art="einmalig">
+              <span class="betragzahl">100</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="250" data-art="einmalig">
+              <span class="betragzahl">250</span>
+            </label>
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="einmalig">
+              <span class="betragzahl">Autre</span>
+            </label>
+          </div>
+          <div class="betraege" id="betraege-monatlich" hidden>
+            
+            <label class="betrag">
+              <input type="radio" name="betrag" value="10" data-art="monatlich" disabled>
+              <span class="betragzahl">10</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="20" data-art="monatlich" disabled>
+              <span class="betragzahl">20</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="40" data-art="monatlich" disabled>
+              <span class="betragzahl">40</span>
+            </label>
+            <label class="betrag">
+              <input type="radio" name="betrag" value="80" data-art="monatlich" disabled>
+              <span class="betragzahl">80</span>
+            </label>
+            <label class="betrag frei">
+              <input type="radio" name="betrag" value="frei" data-art="monatlich" disabled>
+              <span class="betragzahl">Autre</span>
+            </label>
+          </div>
+
+          <!-- Ohne «hidden» im Markup: Fällt das Skript aus, sind Feld und
+               Kontoangaben sichtbar statt für immer verborgen. Das Skript
+               blendet sie beim Laden aus und bei Bedarf wieder ein. -->
+          <p class="feld freibetrag" id="freibetrag">
+            <label for="f-eigenerbetrag">Montant libre en francs</label>
+            <input id="f-eigenerbetrag" name="eigenerbetrag" type="number" min="1" step="1" inputmode="numeric">
+          </p>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">2</span> Affectation</legend>
+          <div class="wahlreihe">
+          <label class="wahlkarte">
+            <input type="radio" name="zweck" value="allgemein" checked>
+            <span class="wahltext"><span class="wahlname">Wo es am nötigsten ist</span>
+              <span class="wahlhilfe">Wir setzen Ihre Spende dort ein, wo sie am meisten bewirkt.</span></span>
+          </label>
+          <label class="wahlkarte">
+            <input type="radio" name="zweck" value="projekt">
+            <span class="wahltext"><span class="wahlname">[Bitte ergänzen: Projekt]</span>
+              <span class="wahlhilfe">[Bitte ergänzen: Wofür genau. Nur aufführen, wenn es das Projekt wirklich gibt.]</span></span>
+          </label></div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">3</span> Moyen de paiement</legend>
+          <div class="wahlreihe">
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="twint" checked>
+            <span class="wahltext"><span class="wahlname">TWINT</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="karte">
+            <span class="wahltext"><span class="wahlname">Kreditkarte</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="postfinance">
+            <span class="wahltext"><span class="wahlname">PostFinance</span>
+              </span>
+          </label>
+          <label class="wahlkarte schmal">
+            <input type="radio" name="zahlungsart" value="ueberweisung">
+            <span class="wahltext"><span class="wahlname">Überweisung</span>
+              <span class="wahlhilfe">Ohne Gebühren für uns – Sie tragen die Angaben in Ihr E-Banking ein.</span></span>
+          </label></div>
+
+          <div class="kontoangaben" id="kontoangaben">
+            <p class="marke">Notre compte de dons</p>
+            <p><strong>[Bitte ergänzen: Kontoinhaber]</strong></p>
+            <p class="iban">[Bitte ergänzen: IBAN]</p>
+            <p class="fliess">[Bitte ergänzen: Bank und Ort]</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="schrittfeld">
+          <legend><span class="schrittzahl">4</span> Vos coordonnées</legend>
+          <p class="fliess kleinerhinweis">Pour l'attestation de don. Si vous n'en avez pas besoin, l'adresse e-mail suffit.</p>
+          <div class="felder">
+            
+            <p class="feld">
+              <label for="f-vorname">Prénom</label>
+              <input id="f-vorname" name="vorname" type="text" autocomplete="given-name">
+            </p>
+            
+            <p class="feld">
+              <label for="f-name">Nom</label>
+              <input id="f-name" name="name" type="text" autocomplete="family-name">
+            </p>
+            
+            <p class="feld breit">
+              <label for="f-strasse">Rue et numéro</label>
+              <input id="f-strasse" name="strasse" type="text" autocomplete="street-address">
+            </p>
+            
+            <p class="feld">
+              <label for="f-plz">NPA</label>
+              <input id="f-plz" name="plz" type="text" autocomplete="postal-code">
+            </p>
+            
+            <p class="feld">
+              <label for="f-ort">Localité</label>
+              <input id="f-ort" name="ort" type="text" autocomplete="address-level2">
+            </p>
+            
+            <p class="feld breit">
+              <label for="f-mail">E-mail <span class="pflicht" aria-hidden="true">*</span></label>
+              <input id="f-mail" name="mail" type="email" autocomplete="email" required>
+            </p>
+          </div>
+          <p class="haken">
+            <label><input type="checkbox" name="bescheinigung" value="ja"> Je souhaite une attestation de don</label>
+          </p>
+          <p class="haken">
+            <label><input type="checkbox" name="anonym" value="ja"> Mon don ne doit pas être mentionné publiquement</label>
+          </p>
+        </fieldset>
+
+        <div class="abschluss">
+          <p class="summe" id="spendensumme" role="status" aria-live="polite">Votre don: <strong>CHF 50</strong> unique</p>
+          <p class="hinweis" id="nochkeinweg">Le paiement en ligne n'est pas encore en place – il manque le contrat avec un prestataire de paiement. En attendant, le don passe par un virement ou par <a href="mailto:info@sonnenberg-baar.ch">info@sonnenberg-baar.ch</a>.</p>
+             <a class="knopf spende" id="spendenmail" href="mailto:info@sonnenberg-baar.ch">Annoncer le don par e-mail</a>
+        </div>
+      </form>
+    </div>
+    <div class="kachel s2">
+        <h2>Wofür Ihre Spende eingesetzt wird</h2>
+        
+        <p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Wofür werden Spenden verwendet? Zwei bis drei Sätze, möglichst konkret – was wird damit möglich, das sonst nicht möglich wäre.]</p><p class="fliess" style="margin-top: 12px;">[Bitte ergänzen: Ob und in welchen Kantonen Spenden an den SONNENBERG von den Steuern abgezogen werden können. Diese Angabe erst aufschalten, wenn sie geprüft ist.]</p>
+      </div>
+    <div class="kachel s2 petrol">
+        <h2>Fragen zu einer Spende</h2>
+        <p style="margin-top: 8px;">Auch zu grösseren Zuwendungen und zu Legaten geben wir gerne Auskunft.</p>
+        <p class="tel" style="margin-top: 10px;"><a href="tel:+41417677833">041 767 78 33</a></p>
+        <p style="margin-top: 4px;"><a href="mailto:info@sonnenberg-baar.ch">info@sonnenberg-baar.ch</a></p>
+        <p style="margin-top: 8px;">Landhausstrasse 20 · 6340 Baar</p>
+      </div>
+    <div class="kachel s6"><p class="hinweis" style="margin: 0;">Hinweis an die Redaktion: Die mit [ ] markierten Stellen stehen in inhalt/einstellungen.json unter «spenden» und in dieser Seite. Spendenkonto, Verwendungszweck und Steuerabzug sind bewusst leer – falsche Angaben auf einer Spendenseite wären schlimmer als gar keine. Die Online-Zahlung wird scharfgeschaltet, sobald unter «zahlungsziel» die Adresse des Zahlungsdienstleisters steht.</p></div>
+    <div class="kachel nacht fussk">
+      <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
+      <p class="fussort"><span class="anschrift"><span class="zusammen">Landhausstrasse 20</span><span class="punkt" aria-hidden="true">·</span><span class="zusammen">6340 Baar</span></span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:+41417677833">041 767 78 33</a></p>
+      <nav class="rechts" aria-label="Mentions légales"><a href="/fr/jobs/">Jobs</a><a href="/fr/impressum/">Impressum</a><a href="/fr/datenschutz/">Datenschutz</a><a href="/fr/barrierefreiheit/">Accessibilité</a></nav>
+    </div>
+  </div>
+</main>
+
+<script>window.SOBE = {"wurzel":"/fr/","sprache":"fr","gebietsschema":"fr-CH","texte":{"Vorlese-Modus":"Lecture à voix haute","Vorlesen":"Lire à voix haute","Pause":"Pause","Beenden":"Arrêter","Bereit. Auf «Vorlesen» drücken.":"Prêt. Appuyez sur « Lire à voix haute ».","Liest vor …":"Lecture en cours …","Fertig gelesen.":"Lecture terminée.","Auf dieser Seite ist nichts zu lesen.":"Il n'y a rien à lire sur cette page.","Dieser Browser kann nicht vorlesen.":"Ce navigateur ne peut pas lire à voix haute.","Bitte geben Sie einen Suchbegriff ein.":"Veuillez saisir un terme de recherche.","Wird gesucht …":"Recherche en cours …","Keine Treffer für":"Aucun résultat pour","Treffer":"résultats","Stelle":"poste","Stellen":"postes","Versuchen Sie einen kürzeren Begriff, oder sehen Sie im Menü nach.":"Essayez un terme plus court ou consultez le menu.","Das Verzeichnis konnte nicht geladen werden. Bitte die Seite neu laden.":"L'index n'a pas pu être chargé. Veuillez recharger la page."}};</script>
+<script src="/seite.js" defer></script>
+</body>
+</html>
