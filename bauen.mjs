@@ -116,6 +116,13 @@ ${sprachwahl}
           <span class="schaltertext"><span class="schaltername">${schuetzen(t('Dunkler Modus'))}</span><span class="schalterhilfe">${schuetzen(t('Heller Text auf dunklem Grund.'))}</span></span><span class="ampel" aria-hidden="true"></span>
         </button>
         <p class="zugangsfuss">${schuetzen(t('Die Einstellungen bleiben auf diesem Gerät gespeichert.'))}</p>
+        <!-- Die Sprachwahl steht auch hier, nicht nur im eigenen Knopf: Wer
+             das Feld öffnet, um die Seite lesbarer zu machen, sucht die
+             Sprache am selben Ort. Es sind dieselben Verweise. -->
+        <p class="zugangstitel zweiterteil">${schuetzen(t('Sprache'))}</p>
+        <div class="sprachzeile">
+${sprachwahl}
+        </div>
       </div>
     </div>
 

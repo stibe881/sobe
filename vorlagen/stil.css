@@ -490,7 +490,17 @@ html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
 
 @media (max-width: 68em) {
   .sprachwahl { margin-right: 4px; }
-  .sprachfeld { right: -6px; width: min(190px, calc(100vw - 52px)); }
+}
+/* Auf schmalen Geräten hängen die aufklappbaren Felder am Fenster, nicht am
+   Knopf. Rechtsbündig an einem schmalen Knopf ragte das Feld über die linke
+   Kante hinaus – bei 320 Punkten um 47 davon, und dort stand die
+   Sprachwahl. Mit festem Rand links und rechts kann das nicht passieren,
+   egal wie breit der Inhalt wird. */
+@media (max-width: 34em) {
+  .zugangsfeld, .sprachfeld {
+    position: fixed; left: 16px; right: 16px; width: auto; top: 76px;
+    max-height: calc(100vh - 92px); overflow-y: auto;
+  }
 }
 
 /* ===================================================================== */
@@ -556,3 +566,12 @@ html.dunkel .wareaus { color: #ff9b83; }
   .korbbild { width: 52px; height: 52px; }
   .korbzeile { gap: 10px; }
 }
+
+/* Die Sprachwahl im Barrierefreiheits-Feld: dieselben Verweise wie im
+   eigenen Knopf, hier als Zeile nebeneinander. */
+.zugangstitel.zweiterteil { border-top: 1px solid var(--linie); padding-top: 12px; margin-top: 4px; }
+.sprachzeile { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 4px 4px; }
+.sprachzeile a { padding: 8px 12px; border-radius: 999px; background: var(--grund);
+  color: var(--text); font-weight: 600; font-size: 0.9375rem; }
+.sprachzeile a:hover { background: var(--linie); text-decoration: none; }
+.sprachzeile a[aria-current="true"] { background: var(--petrol); color: var(--weiss); }
