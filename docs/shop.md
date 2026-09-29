@@ -30,6 +30,17 @@ Der Lagerbestand wird beim Bestellen **nicht** heruntergezählt – er begrenzt
 nur, wie viel jemand in den Korb legen kann. Wer den Bestand führen will,
 trägt ihn nach dem Versand von Hand nach.
 
+## Speichern ist nicht Veröffentlichen
+
+Der häufigste Stolperstein: Wer den Haken bei «Entwurf» entfernt und
+speichert, hat die **Datei** geändert – die **Webseite** noch nicht. Erst
+«Veröffentlichen» baut die Seiten neu.
+
+Damit das nicht wieder jemanden kostet, steht oben in der Redaktion neben
+dem Knopf, ob etwas aussteht: «Änderungen noch nicht auf der Webseite»,
+und der Knopf ist dann gelb umrandet. Der Server vergleicht dafür das Alter
+der Inhaltsdateien mit dem der gebauten Startseite.
+
 ## Warum der Preis zweimal gerechnet wird
 
 Der Warenkorb lebt im Browser und zeigt Preise aus `produkte.json`. Beim

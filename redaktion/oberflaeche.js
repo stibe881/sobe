@@ -1042,6 +1042,7 @@ function seiteEditor(akte, index) {
       catch (f) { meldung('Speichern fehlgeschlagen: ' + f.message, 'fehler'); return; }
       await bereichOeffnen('seiten');
       meldung('Gespeichert. Mit «Veröffentlichen» kommt es auf die Webseite.', 'ok');
+      standPruefen();
     } }),
     neu('button', { text: 'Zurück ohne Speichern', onclick: function () { bereichOeffnen('seiten'); } }),
   ]));
@@ -1074,6 +1075,7 @@ async function einstellungsmaske(titel, wo, plan, datei) {
       try { await jsonSchreiben(akte, 'Redaktion: ' + titel); }
       catch (f) { meldung('Speichern fehlgeschlagen: ' + f.message, 'fehler'); return; }
       meldung('Gespeichert. Mit «Veröffentlichen» kommt es auf die Webseite.', 'ok');
+      standPruefen();
     } }),
   ]));
 }
@@ -1477,6 +1479,7 @@ async function wortschatzZeigen(sprache) {
       try { await jsonSchreiben(akte, 'Redaktion: Übersetzungen ' + sprache.kennung); }
       catch (f) { meldung('Speichern fehlgeschlagen: ' + f.message, 'fehler'); return; }
       meldung('Gespeichert. Mit «Veröffentlichen» kommt es auf die Webseite.', 'ok');
+      standPruefen();
     } }),
     neu('button', { text: 'Zurück', onclick: function () { bereichOeffnen('sprachen'); } }),
   ]));
@@ -1611,6 +1614,26 @@ function navAuffrischen() {
   });
 }
 
+/* Zeigt oben an, dass etwas gespeichert, aber noch nicht veroeffentlicht
+   ist. Ohne diesen Hinweis speichert jemand ein Produkt, sucht es im Shop
+   und findet es nicht – der haeufigste Stolperstein dieses Systems. */
+async function standPruefen() {
+  var zeichen = $('#stand');
+  var knopf = $('#knopf-veroeffentlichen');
+  try {
+    var s = await (await fetch('/api/stand')).json();
+    if (s.offen) {
+      zeichen.textContent = 'Änderungen noch nicht auf der Webseite';
+      zeichen.className = 'offen';
+      knopf.classList.add('draengt');
+    } else {
+      zeichen.textContent = 'Webseite ist auf dem neuesten Stand';
+      zeichen.className = 'still';
+      knopf.classList.remove('draengt');
+    }
+  } catch (e) { zeichen.textContent = ''; }
+}
+
 async function bereichOeffnen(id) {
   var b = BEREICHE.filter(function (x) { return x.id === id; })[0];
   if (!b) return;
@@ -1623,6 +1646,7 @@ async function bereichOeffnen(id) {
   leeren($('#arbeit')).appendChild(neu('p', { klasse: 'still', text: 'wird geladen …' }));
   try { await b.zeigen(); }
   catch (f) { meldung('Konnte nicht geladen werden: ' + f.message, 'fehler'); }
+  standPruefen();
 }
 
 /* ========================================================= Veröffentlichen */
@@ -1640,6 +1664,7 @@ async function veroeffentlichen() {
   } catch (f) { meldung('Veröffentlichen fehlgeschlagen: ' + f.message, 'fehler'); }
   knopf.disabled = false;
   knopf.textContent = alt;
+  standPruefen();
 }
 
 /* ================================================================ Anmeldung */

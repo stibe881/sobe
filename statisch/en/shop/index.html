@@ -130,8 +130,23 @@ try {
         
       </div>
     <div class="kachel s6">
-        <h2>Range</h2>
-        <p class="fliess" style="margin-top: 10px;">Nothing is on offer at the moment.</p>
+        <div class="paar" style="justify-content: space-between; align-items: baseline;">
+          <h2>Range</h2>
+          <p class="marke" id="anzahl-produkte" aria-live="polite"></p>
+        </div>
+        
+        <div class="regal">
+          <a class="ware" href="/en/shop/beispielprodukt/" data-kategorie="Beispiel">
+            <span class="warebildlos" aria-hidden="true"></span>
+            <span class="waretext">
+              <span class="warename">Beispielprodukt – bitte ersetzen</span>
+              <span class="warekurz">Ein Platzhalter, damit der Shop etwas zu zeigen hat.</span>
+              <span class="warepreis">CHF 25.00</span>
+              
+            </span>
+          </a>
+        </div>
+        <p id="regal-leer" class="fliess" style="margin-top: 14px;" hidden>There is nothing in this category at the moment.</p>
       </div>
     <div class="kachel nacht fussk">
       <img src="/bilder/logo-weiss.png" alt="SONNENBERG">

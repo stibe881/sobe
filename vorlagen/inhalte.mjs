@@ -22,9 +22,24 @@ export function vorspannLesen(text) {
     for (const zeile of treffer[1].split('\n')) {
       const paar = zeile.match(/^([A-Za-zäöü_]+):\s*(.*)$/);
       if (!paar) continue;
-      let wert = paar[2].trim().replace(/^"(.*)"$/, '$1');
-      if (/^\[.*\]$/.test(wert)) {
-        try { wert = JSON.parse(wert); } catch { /* bleibt Text */ }
+      const roh = paar[2].trim();
+      let wert;
+      if (/^".*"$/.test(roh)) {
+        wert = roh.slice(1, -1);                       // in Anführungszeichen: immer Text
+      } else if (/^\[.*\]$/.test(roh)) {
+        try { wert = JSON.parse(roh); } catch { wert = roh; }
+      } else if (roh === 'true' || roh === 'false') {
+        // Ohne diese Zeile wäre «entwurf: false» die Zeichenkette "false" –
+        // und die ist wahr. Ein Produkt, das ausdrücklich kein Entwurf ist,
+        // verschwände damit lautlos aus dem Shop.
+        wert = roh === 'true';
+      } else if (roh !== '' && !Number.isNaN(Number(roh))) {
+        // Ebenso bei Zahlen: «lager: 0» war die Zeichenkette "0", und der
+        // Vergleich auf 0 schlug fehl – ein ausverkauftes Produkt galt als
+        // lieferbar.
+        wert = Number(roh);
+      } else {
+        wert = roh;
       }
       daten[paar[1]] = wert;
     }

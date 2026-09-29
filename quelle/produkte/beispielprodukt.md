@@ -6,8 +6,8 @@ kategorie: "Beispiel"
 varianten: ["klein", "gross"]
 lager: 5
 reihenfolge: 100
-entwurf: true
 ---
+
 Dieses Produkt ist ein Platzhalter. Es steht auf «Entwurf» und erscheint
 darum nicht im Shop.
 

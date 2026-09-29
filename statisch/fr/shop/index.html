@@ -130,8 +130,23 @@ try {
         
       </div>
     <div class="kachel s6">
-        <h2>Assortiment</h2>
-        <p class="fliess" style="margin-top: 10px;">Aucun article n'est proposé pour le moment.</p>
+        <div class="paar" style="justify-content: space-between; align-items: baseline;">
+          <h2>Assortiment</h2>
+          <p class="marke" id="anzahl-produkte" aria-live="polite"></p>
+        </div>
+        
+        <div class="regal">
+          <a class="ware" href="/fr/shop/beispielprodukt/" data-kategorie="Beispiel">
+            <span class="warebildlos" aria-hidden="true"></span>
+            <span class="waretext">
+              <span class="warename">Beispielprodukt – bitte ersetzen</span>
+              <span class="warekurz">Ein Platzhalter, damit der Shop etwas zu zeigen hat.</span>
+              <span class="warepreis">25.00 CHF</span>
+              
+            </span>
+          </a>
+        </div>
+        <p id="regal-leer" class="fliess" style="margin-top: 14px;" hidden>Aucun article dans cette catégorie pour le moment.</p>
       </div>
     <div class="kachel nacht fussk">
       <img src="/bilder/logo-weiss.png" alt="SONNENBERG">

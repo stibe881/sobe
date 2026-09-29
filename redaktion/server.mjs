@@ -125,6 +125,40 @@ async function dateiAusliefern(res, datei) {
 
 const GESTARTET = new Date().toISOString();
 
+/* Gibt es Änderungen, die noch nicht auf der Webseite sind?
+   Speichern schreibt nur die Datei; erst «Veröffentlichen» baut die Seiten
+   neu. Das ist richtig so – aber man sieht es der Redaktion nicht an, und
+   dann wundert man sich, warum ein Produkt nicht im Shop steht. Darum der
+   Vergleich: Ist eine Inhaltsdatei jünger als die gebaute Startseite,
+   steht etwas aus. */
+async function neuesteAenderung(ordner) {
+  let neuste = 0;
+  const gehen = async (ort) => {
+    let eintraege;
+    try { eintraege = await readdir(ort, { withFileTypes: true }); } catch { return; }
+    for (const e of eintraege) {
+      if (e.name.startsWith('.')) continue;
+      // fehlend.json schreibt der Bau selbst – es liegt in inhalt/ und wäre
+      // nach jedem Bau sofort wieder jünger als die Seiten. Dann stünde für
+      // immer «Änderungen noch nicht auf der Webseite» da.
+      if (e.name === 'fehlend.json') continue;
+      const voll = path.join(ort, e.name);
+      if (e.isDirectory()) await gehen(voll);
+      else neuste = Math.max(neuste, (await stat(voll)).mtimeMs);
+    }
+  };
+  await gehen(path.join(WURZEL, ordner));
+  return neuste;
+}
+
+async function unveroeffentlicht() {
+  try {
+    const gebaut = (await stat(path.join(WURZEL, 'statisch/index.html'))).mtimeMs;
+    const quellen = Math.max(await neuesteAenderung('quelle'), await neuesteAenderung('inhalt'));
+    return quellen > gebaut;
+  } catch { return false; }
+}
+
 /* ---------------------------------------------------------- Bestellungen */
 
 const BESTELLUNGEN = path.join(WURZEL, 'bestellungen');
@@ -276,6 +310,7 @@ const server = createServer(async (req, res) => {
         gestartet: GESTARTET,
         wurzel: 'Webseite',          // seit der Trennung: / ist die Webseite
         oeffentlich: process.env.OEFFENTLICH || null,
+        offen: await unveroeffentlicht(),
       });
     }
 

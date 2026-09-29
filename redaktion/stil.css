@@ -173,3 +173,9 @@ ul.liste .titel strong { display: block; }
   .kopf { padding: 12px 16px; }
   #meldung { margin: 0 16px; }
 }
+
+/* Offene Änderungen: Der Hinweis steht neben dem Knopf, und der Knopf
+   selbst drängt. Ohne das speichert jemand ein Produkt, sucht es im Shop
+   und findet es nicht. */
+#stand.offen { color: var(--rot); font-weight: 700; }
+button.primaer.draengt { box-shadow: 0 0 0 3px rgba(251, 181, 0, 0.55); }
