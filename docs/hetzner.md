@@ -1,102 +1,126 @@
-# Auf das Hetzner-Webhosting L bringen
+# Webseite und Redaktion auf dem eigenen Webhosting
 
-Die Seite liegt schon fertig im Repository (`statisch/`). Zum Aufschalten
-braucht es nur noch den Weg dorthin. Der Workflow erledigt das automatisch,
-sobald die Zugangsdaten hinterlegt sind.
+Alles läuft auf Ihrem Hetzner-Webhosting L. GitHub ist nur noch Ablage und
+Versionsverlauf – kein Dienst dort baut oder veröffentlicht etwas.
 
-## Was Ihr Paket kann
-
-Webhosting L enthält alles Nötige: SSH-Zugang, 100 GB Platz, SSL, 10 Cronjobs
-und Node.js. Für die **öffentliche Seite** wird Node gar nicht gebraucht – sie
-besteht aus fertigen Dateien, die der Apache ausliefert. Das ist schnell und
-bietet keine Angriffsfläche.
-
-## 1. SSH-Schlüssel anlegen
-
-Auf Ihrem Rechner, nicht auf dem Server:
-
-```bash
-ssh-keygen -t ed25519 -C "github-actions sonnenberg" -f ~/.ssh/sonnenberg_deploy
+```
+Hetzner Webhosting L
+├── ~/projekt/          Klon des Repositories
+│   ├── quelle/         Inhalte – das bearbeitet die Redaktion
+│   ├── statisch/       die gebaute Webseite
+│   ├── redaktion/      der Redaktionsserver (Node.js)
+│   └── werkzeuge/      Eleventy-Konfiguration
+└── ~/public_html/  ←   erhält bei jedem Veröffentlichen den Inhalt von statisch/
 ```
 
-Den **öffentlichen** Teil (`~/.ssh/sonnenberg_deploy.pub`) in konsoleH beim
-SSH-Zugang hinterlegen. Der **private** Teil bleibt geheim und geht nur in die
-GitHub-Geheimnisse (nächster Schritt) – nie ins Repository.
+Die **öffentliche Seite** braucht kein Node: Der Apache liefert fertige
+Dateien aus. Node läuft nur für die **Redaktion**.
 
-Fingerabdruck des Servers holen, damit die Auslieferung nicht blind vertraut:
+---
 
-```bash
-ssh-keyscan -p 22 ihr-server.hosting.hetzner.com
-```
-
-## 2. In GitHub hinterlegen
-
-Unter **Settings → Secrets and variables → Actions**:
-
-Als *Secrets* (verschlüsselt, nicht mehr lesbar):
-
-| Name | Inhalt |
-| --- | --- |
-| `HETZNER_SSH_KEY` | der ganze private Schlüssel, inklusive der BEGIN- und END-Zeilen |
-| `HETZNER_KNOWN_HOSTS` | die Ausgabe von `ssh-keyscan` aus Schritt 1 |
-
-Als *Variables* (sichtbar, keine Geheimnisse):
-
-| Name | Beispiel |
-| --- | --- |
-| `HETZNER_ZIEL` | `benutzer@ihr-server.hosting.hetzner.com` |
-| `HETZNER_PFAD` | `/usr/home/benutzer/public_html` |
-| `HETZNER_PORT` | `22` (nur nötig, wenn abweichend) |
-
-Solange `HETZNER_ZIEL` leer ist, überspringt der Workflow die Auslieferung –
-Sie können also alles vorbereiten, ohne dass etwas passiert.
-
-## 3. Zuerst auf eine Testadresse
-
-**Nicht direkt auf die Hauptdomain.** In konsoleH eine Subdomain anlegen, etwa
-`neu.sonnenberg-baar.ch`, mit eigenem Verzeichnis. Dieses Verzeichnis als
-`HETZNER_PFAD` eintragen. Die heutige Seite bleibt unberührt, bis Sie
-umschalten.
-
-Danach genügt ein Push auf `main` – oder in GitHub unter *Actions* der Knopf
-*Run workflow*. Der Lauf baut, prüft die Barrierefreiheit und liefert erst bei
-sauberem Ergebnis aus.
-
-## 4. Umschalten auf die Hauptdomain
-
-Wenn die Testadresse stimmt: `HETZNER_PFAD` auf das Verzeichnis der
-Hauptdomain ändern und den Workflow erneut laufen lassen.
-
-Vorher sichern, was heute online ist:
+## 1. Einmalig einrichten
 
 ```bash
 ssh benutzer@ihr-server.hosting.hetzner.com
-cp -a public_html public_html-alt-$(date +%Y%m%d)
+
+echo 22 > ~/.nodeversion          # Node 22 (20 und 24 gehen auch)
+node --version                    # zur Kontrolle
+
+git clone https://github.com/stibe881/sobe-webseite.git ~/projekt
+cd ~/projekt
+npm install                       # Eleventy und die Suche, sonst nichts
+node redaktion/passwort.mjs       # Redaktionspasswort setzen
 ```
 
-## Das Redaktionssystem
+Erster Bau und erste Auslieferung von Hand:
 
-Es gibt es bereits: `statisch/admin/`. Es arbeitet über die GitHub-API –
-gespeichert wird als Commit, danach läuft der Workflow und liefert nach
-Hetzner aus. Vorteil: keine zweite Anmeldung, keine Datenbank, jede Änderung
-ist nachvollziehbar und lässt sich zurücknehmen.
-
-Damit läuft die Kette so:
-
+```bash
+npm run bauen
+cp werkzeuge/hetzner.htaccess ~/public_html/.htaccess
+rsync -rl --delete ~/projekt/statisch/ ~/public_html/
 ```
-Redaktion speichert  →  Commit auf main  →  Workflow baut und prüft
-                                         →  GitHub Pages (Vorschau)
-                                         →  Hetzner (öffentlich)
+
+Damit ist die Seite online.
+
+> **Zuerst auf eine Testadresse.** Legen Sie in konsoleH eine Subdomain an,
+> etwa `neu.sonnenberg-baar.ch`, mit eigenem Verzeichnis, und liefern Sie
+> dorthin aus. Die heutige Seite bleibt unberührt, bis Sie umschalten.
+
+## 2. Redaktionsserver starten
+
+```bash
+cd ~/projekt
+OEFFENTLICH=/usr/home/benutzer/public_html PORT=3000 node redaktion/server.mjs
 ```
+
+`OEFFENTLICH` sagt dem Server, wohin er nach dem Bauen ausliefern soll. Fehlt
+die Angabe, baut er nur – aufgeschaltet wird dann nichts.
+
+In konsoleH die Node-Anwendung eintragen, damit sie dauerhaft läuft und unter
+einer eigenen Adresse erreichbar ist, etwa `redaktion.sonnenberg-baar.ch`:
+
+| Feld | Wert |
+| --- | --- |
+| Arbeitsverzeichnis | `/usr/home/benutzer/projekt` |
+| Startbefehl | `node redaktion/server.mjs` |
+| Port | der in konsoleH zugewiesene |
+| Umgebung | `OEFFENTLICH=/usr/home/benutzer/public_html` |
+
+> Geht das Dauerbetreiben auf Ihrem Paket nicht, läuft die Redaktion genauso
+> auf einem Arbeitsplatzrechner: dort `npm run redaktion`, redigieren, und
+> mit `rsync` aufschalten. Die öffentliche Seite merkt davon nichts.
+
+## 3. Arbeiten
+
+Die Redaktion öffnen, mit dem Passwort anmelden. Bearbeitet werden:
+
+| Bereich | Wo es landet |
+| --- | --- |
+| News-Beiträge | `quelle/news/` → Pinnwand und je eine eigene Seite |
+| Stelleninserate | `quelle/stellen/` → Stellenübersicht |
+| Team | `quelle/team/` → Organisationsseite |
+| Textbausteine | `quelle/texte/` |
+
+Speichern schreibt die Datei. **Veröffentlichen** baut die Seite neu und
+liefert sie nach `public_html` aus – das dauert wenige Sekunden.
+
+Beiträge mit 🔒 stammen aus dem alten WordPress; sie lassen sich ansehen und
+löschen, aber nicht bearbeiten.
+
+## 4. Sichern
+
+Der ganze Inhalt sind Dateien. Nach grösseren Änderungen:
+
+```bash
+cd ~/projekt
+git add quelle statisch
+git commit -m "Redaktion: Stand $(date +%F)"
+git push
+```
+
+Das ist die Sicherung und gleichzeitig der Verlauf: Jede Fassung lässt sich
+zurückholen. Ein Cronjob kann das auch nachts erledigen.
 
 ## Wenn etwas schiefgeht
 
-- **Der Lauf bricht bei der Barrierefreiheitsprüfung ab.** Gewollt: So kommt
-  kein Rückschritt online. Der Bericht im Lauf nennt die Stelle.
-- **`Permission denied (publickey)`**: Der öffentliche Schlüssel ist in
-  konsoleH noch nicht hinterlegt, oder `HETZNER_ZIEL` stimmt nicht.
-- **`Host key verification failed`**: `HETZNER_KNOWN_HOSTS` fehlt oder ist
-  veraltet – `ssh-keyscan` erneut ausführen.
-- **Die Seite ist da, sieht aber unformatiert aus**: Die `.htaccess` fehlt.
-  Der Workflow legt sie mit; von Hand:
-  `cp werkzeuge/hetzner.htaccess public_html/.htaccess`.
+- **«Veröffentlichen» meldet einen Fehler.** Die Meldung nennt die Stelle.
+  Meist ist ein Feld leer, das nicht leer sein darf. Die Seite bleibt
+  unverändert online – ein misslungener Bau schaltet nichts auf.
+- **Anmeldung klemmt.** Nach fünf Fehlversuchen ist eine Viertelstunde Ruhe.
+  Passwort vergessen: `node redaktion/passwort.mjs` setzt ein neues.
+- **Die Seite sieht unformatiert aus.** Die `.htaccess` fehlt in
+  `public_html`: `cp werkzeuge/hetzner.htaccess ~/public_html/.htaccess`.
+- **Nach einem `git pull` fehlt etwas.** `npm install` erneut ausführen.
+
+## Barrierefreiheit
+
+Die Prüfung mit axe-core lief früher bei GitHub. Sie läuft weiterhin, aber
+von Hand – auf dem Arbeitsplatzrechner, nicht auf dem Webhosting:
+
+```bash
+cd werkzeuge && npm install && npx playwright install chromium
+python3 -m http.server 8189 --directory ../statisch &
+node a11y-pruefung.js http://127.0.0.1:8189
+```
+
+Sinnvoll vor jeder grösseren Änderung am Aufbau der Seite.

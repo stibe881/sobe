@@ -1,0 +1,226 @@
+// Redaktionssystem des SONNENBERG – läuft auf dem eigenen Webhosting.
+//
+// Bewusst ohne Fremdpakete: Node bringt alles mit, was dieser Server braucht.
+// Die Oberfläche spricht dieselbe Schnittstelle, die früher zur GitHub-API
+// ging (/api/contents/…) – darum ist die ganze Redaktionslogik unverändert
+// geblieben, getauscht wurde nur der Unterbau.
+//
+// Aufruf:  node redaktion/server.mjs        (Port 3000, oder PORT=…)
+import { createServer } from 'node:http';
+import { readFile, writeFile, readdir, unlink, mkdir, stat } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import {
+  zugangLesen, stimmt, sitzungAusstellen, sitzungGueltig,
+  gesperrt, fehlversuchZaehlen, fehlversucheLoeschen,
+} from './zugang.mjs';
+
+const WURZEL = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const PORT = Number(process.env.PORT || 3000);
+const GROESSTE_ANFRAGE = 12 * 1024 * 1024;
+
+// Beschreibbar ist nur, was die Redaktion pflegt – der Rest des Repositories
+// bleibt für diesen Server unerreichbar.
+const SCHREIBBAR = ['quelle/', 'statisch/wp-content/uploads/'];
+
+const TYPEN = {
+  '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8', '.md': 'text/markdown; charset=utf-8',
+  '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif',
+  '.webp': 'image/webp', '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
+  '.pdf': 'application/pdf', '.woff2': 'font/woff2', '.woff': 'font/woff',
+  '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
+};
+
+const abdruck = (inhalt) => createHash('sha256').update(inhalt).digest('hex');
+
+function imBaum(pfad) {
+  const voll = path.resolve(WURZEL, pfad);
+  return voll.startsWith(WURZEL + path.sep) ? voll : null;
+}
+
+const darfSchreiben = (pfad) =>
+  SCHREIBBAR.some((erlaubt) => pfad.startsWith(erlaubt)) && !pfad.includes('..');
+
+const antwort = (res, status, daten) => {
+  res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
+  res.end(JSON.stringify(daten));
+};
+
+function plaetzchen(req, name) {
+  for (const teil of (req.headers.cookie || '').split(';')) {
+    const [k, ...rest] = teil.trim().split('=');
+    if (k === name) return decodeURIComponent(rest.join('='));
+  }
+  return null;
+}
+
+async function koerper(req) {
+  let laenge = 0;
+  const stuecke = [];
+  for await (const stueck of req) {
+    laenge += stueck.length;
+    if (laenge > GROESSTE_ANFRAGE) throw new Error('Anfrage zu gross');
+    stuecke.push(stueck);
+  }
+  if (!stuecke.length) return {};
+  return JSON.parse(Buffer.concat(stuecke).toString('utf8'));
+}
+
+function laufen(befehl, argumente, ordner) {
+  return new Promise((fertig, scheitern) => {
+    const kind = spawn(befehl, argumente, { cwd: ordner, env: process.env });
+    let ausgabe = '';
+    kind.stdout.on('data', (d) => { ausgabe += d; });
+    kind.stderr.on('data', (d) => { ausgabe += d; });
+    kind.on('error', scheitern);
+    kind.on('close', (code) => (code === 0
+      ? fertig(ausgabe)
+      : scheitern(new Error(`${befehl} endete mit ${code}:\n${ausgabe.slice(-2000)}`))));
+  });
+}
+
+async function dateiAusliefern(res, datei) {
+  if (!existsSync(datei)) { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); return res.end('Nicht gefunden'); }
+  const angaben = await stat(datei);
+  if (angaben.isDirectory()) return dateiAusliefern(res, path.join(datei, 'index.html'));
+  res.writeHead(200, { 'content-type': TYPEN[path.extname(datei).toLowerCase()] || 'application/octet-stream' });
+  res.end(await readFile(datei));
+}
+
+const server = createServer(async (req, res) => {
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    const pfad = decodeURIComponent(url.pathname);
+    const zugang = await zugangLesen(WURZEL);
+
+    if (!zugang) {
+      res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' });
+      return res.end('Kein Zugang eingerichtet. Zuerst auf dem Server: node redaktion/passwort.mjs');
+    }
+
+    const angemeldet = sitzungGueltig(plaetzchen(req, 'redaktion'), zugang.geheimnis);
+    const eigeneAnfrage = req.headers['x-redaktion'] === 'ja';
+
+    // ------------------------------------------------------------- Anmeldung
+    if (pfad === '/api/anmelden' && req.method === 'POST') {
+      const kennzeichen = req.socket.remoteAddress || 'unbekannt';
+      if (gesperrt(kennzeichen)) return antwort(res, 429, { fehler: 'Zu viele Versuche. Bitte in einer Viertelstunde erneut.' });
+      const { passwort } = await koerper(req);
+      if (!passwort || !stimmt(passwort, zugang.passwort)) {
+        fehlversuchZaehlen(kennzeichen);
+        return antwort(res, 401, { fehler: 'Passwort stimmt nicht.' });
+      }
+      fehlversucheLoeschen(kennzeichen);
+      const sicher = req.headers['x-forwarded-proto'] === 'https';
+      res.writeHead(200, {
+        'content-type': 'application/json; charset=utf-8',
+        'set-cookie': `redaktion=${sitzungAusstellen(zugang.geheimnis)}; Path=/; HttpOnly; SameSite=Strict; Max-Age=28800${sicher ? '; Secure' : ''}`,
+      });
+      return res.end(JSON.stringify({ gut: true }));
+    }
+
+    if (pfad === '/api/abmelden' && req.method === 'POST') {
+      res.writeHead(200, {
+        'content-type': 'application/json; charset=utf-8',
+        'set-cookie': 'redaktion=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0',
+      });
+      return res.end(JSON.stringify({ gut: true }));
+    }
+
+    // ------------------------------------------------------------ Oberfläche
+    if (pfad === '/' || pfad === '/redaktion' || pfad === '/redaktion/') {
+      return dateiAusliefern(res, path.join(WURZEL, 'redaktion/oberflaeche.html'));
+    }
+
+    // --------------------------------------------------------------- Dateien
+    if (pfad.startsWith('/api/contents/') || pfad === '/api/contents') {
+      if (!angemeldet) return antwort(res, 401, { fehler: 'Nicht angemeldet.' });
+      if (req.method !== 'GET' && !eigeneAnfrage) return antwort(res, 403, { fehler: 'Ungültige Anfrage.' });
+
+      const teil = pfad.slice('/api/contents/'.length);
+      const voll = imBaum(teil);
+      if (!voll) return antwort(res, 400, { fehler: 'Ungültiger Pfad.' });
+
+      if (req.method === 'GET') {
+        if (!existsSync(voll)) return antwort(res, 404, { fehler: 'Nicht gefunden.' });
+        const angaben = await stat(voll);
+        if (angaben.isDirectory()) {
+          const namen = await readdir(voll);
+          const eintraege = await Promise.all(namen.filter((n) => !n.startsWith('.')).map(async (n) => {
+            const kind = await stat(path.join(voll, n));
+            return { name: n, path: `${teil}/${n}`, type: kind.isDirectory() ? 'dir' : 'file' };
+          }));
+          return antwort(res, 200, eintraege);
+        }
+        const roh = await readFile(voll);
+        return antwort(res, 200, {
+          name: path.basename(voll), path: teil,
+          sha: abdruck(roh), content: roh.toString('base64'), encoding: 'base64',
+        });
+      }
+
+      if (!darfSchreiben(teil)) return antwort(res, 403, { fehler: 'Dieser Ort ist für die Redaktion gesperrt.' });
+
+      if (req.method === 'PUT') {
+        const { content, sha } = await koerper(req);
+        // Denselben Schutz wie GitHub: Wer eine veraltete Fassung schickt,
+        // überschreibt nicht stillschweigend die Arbeit einer anderen Person.
+        if (existsSync(voll)) {
+          const jetzt = abdruck(await readFile(voll));
+          if (sha && sha !== jetzt) {
+            return antwort(res, 409, { fehler: 'Die Datei wurde zwischenzeitlich geändert. Bitte neu laden.' });
+          }
+        }
+        const roh = Buffer.from(String(content), 'base64');
+        await mkdir(path.dirname(voll), { recursive: true });
+        await writeFile(voll, roh);
+        return antwort(res, 200, { content: { name: path.basename(voll), path: teil, sha: abdruck(roh) } });
+      }
+
+      if (req.method === 'DELETE') {
+        if (existsSync(voll)) await unlink(voll);
+        return antwort(res, 200, { gut: true });
+      }
+      return antwort(res, 405, { fehler: 'Nicht erlaubt.' });
+    }
+
+    // --------------------------------------------------------- Veröffentlichen
+    if (pfad === '/api/veroeffentlichen' && req.method === 'POST') {
+      if (!angemeldet) return antwort(res, 401, { fehler: 'Nicht angemeldet.' });
+      if (!eigeneAnfrage) return antwort(res, 403, { fehler: 'Ungültige Anfrage.' });
+      const schritte = [];
+      try {
+        await laufen('npx', ['eleventy', '--config=eleventy.config.js'], path.join(WURZEL, 'werkzeuge'));
+        schritte.push('Seiten gebaut');
+        await laufen('npx', ['pagefind', '--site', '../statisch'], path.join(WURZEL, 'werkzeuge'));
+        schritte.push('Suche erneuert');
+        const ziel = process.env.OEFFENTLICH;
+        if (ziel) {
+          await laufen('rsync', ['-rl', '--delete', `${path.join(WURZEL, 'statisch')}/`, `${ziel}/`], WURZEL);
+          schritte.push('aufgeschaltet');
+        } else {
+          schritte.push('nicht aufgeschaltet (OEFFENTLICH nicht gesetzt)');
+        }
+        return antwort(res, 200, { gut: true, schritte, zeitpunkt: new Date().toISOString() });
+      } catch (fehler) {
+        return antwort(res, 500, { fehler: fehler.message, schritte });
+      }
+    }
+
+    // ---------------------------------------- Vorschau der gebauten Webseite
+    const ziel = imBaum(path.join('statisch', pfad));
+    if (!ziel) { res.writeHead(400); return res.end('Ungültiger Pfad'); }
+    return dateiAusliefern(res, ziel);
+  } catch (fehler) {
+    console.error(fehler);
+    if (!res.headersSent) antwort(res, 500, { fehler: 'Serverfehler.' });
+    else res.end();
+  }
+});
+
+server.listen(PORT, () => console.log(`Redaktion läuft auf http://127.0.0.1:${PORT}`));

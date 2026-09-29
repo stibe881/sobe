@@ -22,6 +22,17 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection('texte', (api) =>
     api.getFilteredByGlob('../quelle/texte/*'));
 
+  // Eine einzelne Kategorie darf als Text ankommen, ohne den ganzen Bau zu
+  // stoppen: Vorher legte ein Eintrag mit «kategorien: aktuelles» statt einer
+  // Liste die Pinnwand lahm – und damit die Veröffentlichung der ganzen Seite.
+  eleventyConfig.addFilter('alsListe', (wert) => {
+    if (Array.isArray(wert)) return wert;
+    if (typeof wert === 'string' && wert.trim()) {
+      return wert.split(',').map((t) => t.trim()).filter(Boolean);
+    }
+    return [];
+  });
+
   // «2026-08-13» → «13. August 2026», wie es die Pinnwand-Kacheln zeigen.
   eleventyConfig.addFilter('datumDeutsch', (iso) => {
     const [j, m, t] = String(iso).slice(0, 10).split('-').map(Number);

@@ -20,9 +20,10 @@ GitHub Pages …) kann sie ausliefern.
   Filter daraus. Der Generator (Eleventy) schreibt das Ergebnis nach
   `statisch/` – lokal mit `cd werkzeuge && npx eleventy
   --config=eleventy.config.js`, in der Pipeline automatisch.
-- **`statisch/admin/`** – die **Redaktionsoberfläche**: ein eigenes,
-  schlankes System (eine einzige Seite, keine fremde CMS-Software,
-  keine fremden Server). Sie spricht direkt mit der GitHub-API;
+- **`redaktion/`** – das **Redaktionssystem**: ein eigener, schlanker
+  Server (Node.js, ohne Fremdpakete) und eine einzige Oberflächenseite.
+  Er bearbeitet die Dateien in `quelle/`, baut danach die Seite neu und
+  liefert sie aus. Er läuft auf dem eigenen Webhosting;
   Anmeldung mit einem GitHub-Zugangstoken (fein granuliert, nur
   dieses Repository, Contents: Read/Write), auf Wunsch auf dem Gerät
   gemerkt. Vier Bereiche: News, Team, Stelleninserate, Textbausteine

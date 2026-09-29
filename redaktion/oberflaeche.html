@@ -8,10 +8,9 @@
 <link rel="icon" href="data:,">
 <!--
   Eigenes Redaktionssystem des SONNENBERG – bewusst ohne fremde
-  CMS-Software: eine einzelne Seite, die direkt mit der GitHub-API
-  arbeitet. Jede Speicherung wird ein Commit im Repository und läuft
-  automatisch durch Bau und Barrierefreiheits-Prüfung, bevor sie
-  live geht.
+  CMS-Software: eine einzelne Seite, die mit dem Redaktionsserver auf
+  dem eigenen Webhosting spricht. Gespeichert wird direkt in quelle/;
+  mit «Veröffentlichen» wird die Seite neu gebaut und aufgeschaltet.
 
   Bereiche und Dateiformate sind auf quelle/ abgestimmt:
   - News:            quelle/news/*.md    (Alt-Beiträge .html: nur löschen)
@@ -36,7 +35,9 @@
   }
   header .marke { font-weight: 700; letter-spacing: 0.04em; font-size: 1.2rem; }
   header .zusatz { opacity: 0.85; }
-  header button { margin-left: auto; background: transparent; color: #fff; border-color: #fff; }
+  header button { background: transparent; color: #fff; border: 1px solid #fff; }
+  header #knopf-veroeffentlichen { margin-left: auto; background: var(--gelb); color: #1c1c1c; border-color: var(--gelb); font-weight: 700; }
+  header #knopf-veroeffentlichen:disabled { opacity: .6; }
   main { max-width: 76rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
   h1 { font-size: 1.6rem; margin: 0.5rem 0 1rem; }
   nav.bereiche { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1rem 0 1rem; }
@@ -161,6 +162,7 @@
 <header>
   <span class="marke">SONNENBERG</span>
   <span class="zusatz">Redaktion der Webseite</span>
+  <button id="knopf-veroeffentlichen" hidden>Veröffentlichen</button>
   <button id="abmelden" hidden>Abmelden</button>
 </header>
 <main>
@@ -170,14 +172,12 @@
   <section id="ansicht-anmelden" hidden>
     <h1>Anmelden</h1>
     <div class="karte">
-      <p>Zum Arbeiten braucht es ein GitHub-Zugangstoken für das
-      Repository der Webseite (Fine-grained Token, nur Repository
-      «sobe-webseite», Berechtigung «Contents: Read and write»).</p>
+      <p>Bitte melden Sie sich mit dem Redaktionspasswort an.</p>
       <form id="form-anmelden">
-        <label for="token">Zugangstoken</label>
-        <input type="text" id="token" autocomplete="off" spellcheck="false" required>
+        <label for="token">Passwort</label>
+        <input type="password" id="token" autocomplete="current-password" required>
         <label style="font-weight:400; display:inline-flex; gap:0.4rem; align-items:center;">
-          <input type="checkbox" id="token-merken"> Auf diesem Gerät merken
+          <input type="checkbox" id="token-merken" hidden>
         </label>
         <div class="zeile">
           <button type="submit" class="primaer">Anmelden</button>
@@ -215,9 +215,7 @@
 
 <script>
 'use strict';
-const REPO = 'stibe881/sobe-webseite';
-const API = 'https://api.github.com/repos/' + REPO + '/contents/';
-const ACTIONS_URL = 'https://github.com/' + REPO + '/actions';
+const API = '/api/contents/';
 /* Wurzel der Webseite, funktioniert unter /sobe/ und an der Domain-Wurzel */
 const SEITE = location.pathname.replace(/admin\/?(index\.html)?$/, '');
 
@@ -318,7 +316,6 @@ const BEREICHE = {
 };
 
 /* ---------- Zustand ---------- */
-let token = '';
 let bereichId = 'news';
 let aktuelleDatei = null;
 
@@ -445,44 +442,68 @@ function frontmatterLesen(text) {
 async function api(pfad, optionen = {}) {
   const antwort = await fetch(API + pfad, {
     ...optionen,
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'Accept': 'application/vnd.github+json',
-      ...(optionen.headers || {}),
-    },
+    headers: { 'x-redaktion': 'ja', ...(optionen.headers || {}) },
   });
+  if (antwort.status === 401) { abmelden(); throw new Error('Nicht angemeldet'); }
   if (!antwort.ok) {
     let details = '';
-    try { details = (await antwort.json()).message || ''; } catch (e) { /* egal */ }
-    throw new Error('GitHub antwortet mit ' + antwort.status +
+    try { details = (await antwort.json()).fehler || ''; } catch (e) { /* egal */ }
+    throw new Error('Der Server antwortet mit ' + antwort.status +
       (details ? ' – ' + details : ''));
   }
   return antwort.status === 204 ? null : antwort.json();
 }
 
-/* ---------- Anmeldung ---------- */
+function abmelden() {
+  fetch('/api/abmelden', { method: 'POST', headers: { 'x-redaktion': 'ja' } });
+  $('#ansicht-anmelden').hidden = false;
+  document.querySelectorAll('main > section:not(#ansicht-anmelden)').forEach((s) => { s.hidden = true; });
+}
+
+async function veroeffentlichen() {
+  const knopf = $('#knopf-veroeffentlichen');
+  if (knopf) { knopf.disabled = true; knopf.textContent = 'Wird aufgeschaltet …'; }
+  meldung('Die Seite wird gebaut – das dauert einen Moment.');
+  try {
+    const e = await (await fetch('/api/veroeffentlichen', {
+      method: 'POST', headers: { 'x-redaktion': 'ja' },
+    })).json();
+    if (e.fehler) meldung('Veröffentlichen fehlgeschlagen: ' + e.fehler, 'fehler');
+    else meldung('Veröffentlicht: ' + e.schritte.join(', ') + '.', 'ok');
+  } catch (f) {
+    meldung('Veröffentlichen fehlgeschlagen: ' + f.message, 'fehler');
+  }
+  if (knopf) { knopf.disabled = false; knopf.textContent = 'Veröffentlichen'; }
+}
+
+/* ---------- Anmeldung ----------
+   Das Passwort geht einmal an den Server; danach trägt ein signiertes
+   Plätzchen die Sitzung. Im Browser wird nichts davon gespeichert. */
 function anmeldungAufbauen() {
   $('#form-anmelden').addEventListener('submit', async (e) => {
     e.preventDefault();
-    token = $('#token').value.trim();
     meldung('');
     try {
-      await api('README.md');
+      const antwort = await fetch('/api/anmelden', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-redaktion': 'ja' },
+        body: JSON.stringify({ passwort: $('#token').value }),
+      });
+      const ergebnis = await antwort.json().catch(() => ({}));
+      if (!antwort.ok) throw new Error(ergebnis.fehler || 'Anmeldung fehlgeschlagen');
     } catch (fehler) {
-      meldung('Anmeldung fehlgeschlagen: ' + fehler.message +
-        ' – stimmt das Token, und hat es Zugriff auf «' + REPO + '»?', 'fehler');
+      meldung('Anmeldung fehlgeschlagen: ' + fehler.message, 'fehler');
       return;
     }
-    if ($('#token-merken').checked) {
-      try { localStorage.setItem('sonnenberg.redaktion.token', token); } catch (e2) { /* privat */ }
-    }
+    $('#token').value = '';
     $('#abmelden').hidden = false;
+    $('#knopf-veroeffentlichen').hidden = false;
     bereichZeigen(bereichId);
   });
-  $('#abmelden').addEventListener('click', () => {
-    token = '';
-    try { localStorage.removeItem('sonnenberg.redaktion.token'); } catch (e) { /* egal */ }
+  $('#abmelden').addEventListener('click', async () => {
+    await fetch('/api/abmelden', { method: 'POST', headers: { 'x-redaktion': 'ja' } });
     $('#abmelden').hidden = true;
+    $('#knopf-veroeffentlichen').hidden = true;
     $('#token').value = '';
     meldung('');
     zeige('anmelden');
@@ -864,9 +885,7 @@ async function eintragSpeichern(e) {
     return;
   }
   await bereichZeigen(bereichId);
-  meldung('Gespeichert. Die Veröffentlichung läuft automatisch und ist ' +
-    'in wenigen Minuten online.', 'ok',
-    { url: ACTIONS_URL, text: 'Stand der Veröffentlichung ansehen' });
+  meldung('Gespeichert. Mit «Veröffentlichen» kommt es auf die Webseite.', 'ok');
 }
 
 async function eintragLoeschen(datei) {
@@ -886,22 +905,27 @@ async function eintragLoeschen(datei) {
     return;
   }
   await bereichZeigen(bereichId);
-  meldung('Gelöscht. Die Änderung ist in wenigen Minuten online.', 'ok',
-    { url: ACTIONS_URL, text: 'Stand der Veröffentlichung ansehen' });
+  meldung('Gelöscht. Mit «Veröffentlichen» wird die Webseite neu gebaut.', 'ok');
 }
 
-/* ---------- Start ---------- */
+/* ---------- Start ----------
+   Besteht die Sitzung noch, geht es ohne Anmeldung weiter. */
 anmeldungAufbauen();
 tabsAufbauen();
-let gemerkt = '';
-try { gemerkt = localStorage.getItem('sonnenberg.redaktion.token') || ''; } catch (e) { /* egal */ }
-if (gemerkt) {
-  token = gemerkt;
-  $('#abmelden').hidden = false;
-  bereichZeigen('news');
-} else {
+const knopfVeroeffentlichen = $('#knopf-veroeffentlichen');
+if (knopfVeroeffentlichen) knopfVeroeffentlichen.addEventListener('click', veroeffentlichen);
+(async function starten() {
+  try {
+    const probe = await fetch(API + 'quelle', { headers: { 'x-redaktion': 'ja' } });
+    if (probe.ok) {
+      $('#abmelden').hidden = false;
+      $('#knopf-veroeffentlichen').hidden = false;
+      bereichZeigen('news');
+      return;
+    }
+  } catch (e) { /* kein Server erreichbar */ }
   zeige('anmelden');
-}
+})();
 </script>
 </body>
 </html>

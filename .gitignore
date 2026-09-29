@@ -2,3 +2,7 @@
 werkzeuge/node_modules/
 # Zusammengebaute Tafel ist abgeleitet – Quelle sind die .dc.html-Dateien
 entwuerfe/redesign/redesign-sonnenberg.html
+
+# Zugangsdaten der Redaktion gehören nie ins Repository
+redaktion/zugang.json
+node_modules/
