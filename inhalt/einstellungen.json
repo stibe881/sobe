@@ -7,18 +7,55 @@
   "mail": "info@sonnenberg-baar.ch",
   "mailIntake": "anfrage@sonnenberg-baar.ch",
   "menue": [
-    { "titel": "Start", "pfad": "/" },
-    { "titel": "Angebot", "pfad": "/angebot/" },
-    { "titel": "Aufnahme", "pfad": "/aufnahme/" },
-    { "titel": "Aktuell", "pfad": "/aktuell/" },
-    { "titel": "Über uns", "pfad": "/ueber-uns/" },
-    { "titel": "Jobs", "pfad": "/jobs/" }
+    {
+      "titel": "Start",
+      "pfad": "/"
+    },
+    {
+      "titel": "Angebot",
+      "pfad": "/angebot/"
+    },
+    {
+      "titel": "Aufnahme",
+      "pfad": "/aufnahme/"
+    },
+    {
+      "titel": "Aktuell",
+      "pfad": "/aktuell/"
+    },
+    {
+      "titel": "Über uns",
+      "pfad": "/ueber-uns/"
+    },
+    {
+      "titel": "Jobs",
+      "pfad": "/jobs/"
+    }
   ],
-  "menueKnopf": { "titel": "Beratung", "pfad": "/aufnahme/" },
+  "menueKnopf": {
+    "titel": "Beratung",
+    "pfad": "/aufnahme/"
+  },
+  "spendenKnopf": {
+    "titel": "Spenden",
+    "pfad": "/spenden/"
+  },
   "fusszeile": [
-    { "titel": "Jobs", "pfad": "/jobs/" },
-    { "titel": "Impressum", "pfad": "/impressum/" },
-    { "titel": "Datenschutz", "pfad": "/datenschutz/" },
-    { "titel": "Barrierefreiheit", "pfad": "/barrierefreiheit/" }
+    {
+      "titel": "Jobs",
+      "pfad": "/jobs/"
+    },
+    {
+      "titel": "Impressum",
+      "pfad": "/impressum/"
+    },
+    {
+      "titel": "Datenschutz",
+      "pfad": "/datenschutz/"
+    },
+    {
+      "titel": "Barrierefreiheit",
+      "pfad": "/barrierefreiheit/"
+    }
   ]
 }

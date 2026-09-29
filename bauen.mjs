@@ -83,7 +83,10 @@ ${menue}
           </svg>
         </button>
       </form>
-      <a class="knopf gelb" href="${schuetzen(einstellungen.menueKnopf.pfad)}">${schuetzen(einstellungen.menueKnopf.titel)}</a>
+      <a class="knopf gelb nurschmal" href="${schuetzen(einstellungen.menueKnopf.pfad)}">${schuetzen(einstellungen.menueKnopf.titel)}</a>
+      <a class="knopf spende" href="${schuetzen(einstellungen.spendenKnopf.pfad)}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="17" height="17"><path d="M12 20.5C6.5 16.9 3 14 3 10.2 3 7.6 5 5.6 7.5 5.6c1.6 0 3.3.8 4.5 2.4 1.2-1.6 2.9-2.4 4.5-2.4 2.5 0 4.5 2 4.5 4.6 0 3.8-3.5 6.7-9 10.3z" fill="currentColor"/></svg>
+        ${schuetzen(einstellungen.spendenKnopf.titel)}</a>
     </nav>
   </div>
 </header>

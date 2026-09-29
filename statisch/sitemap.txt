@@ -5,6 +5,7 @@
 /gemeinden/
 /fachpersonen/
 /aktuell/
+/spenden/
 /jobs/
 /ueber-uns/
 /suche/

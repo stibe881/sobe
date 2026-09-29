@@ -100,7 +100,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    gequetschten Leiste. Die Klasse «grossschrift» wirkt anders: Sie lässt die
    Leiste auf breiten Bildschirmen zweizeilig werden. Auch gut, nur eben
    nicht dasselbe. */
-@media (max-width: 64em) {
+@media (max-width: 68em) {
   body { font-size: 1rem; }
   .menue { display: none; position: absolute; left: 20px; right: 20px; top: 74px; background: var(--flaeche);
     border-radius: var(--rund); box-shadow: 0 10px 30px rgba(33, 41, 52, 0.16);
@@ -264,7 +264,7 @@ html.dunkel .kachel.bild img { filter: brightness(0.9); }
 .werkzeuge { order: 3; margin-left: 10px; }
 .burger { order: 4; }
 
-@media (max-width: 64em) {
+@media (max-width: 68em) {
   .werkzeuge { order: 2; margin-left: auto; }
   .burger { order: 3; margin-left: 4px; }
   .menue { order: 5; }
@@ -283,15 +283,44 @@ html.dunkel .kachel.bild img { filter: brightness(0.9); }
 html.dunkel .logo .fuerhell { display: none; }
 html.dunkel .logo .fuerdunkel { display: block; }
 
-/* Der Umschaltpunkt liegt bei 64em – bei üblicher Schrift also 1024 px.
-   Sechs Menüpunkte, Suchfeld und Knopf passen darunter nicht mehr in
-   eine Zeile; zweizeilig sah der Knopf verloren aus.
+/* Der Umschaltpunkt liegt bei 68em – bei üblicher Schrift also 1088 px.
+   Sechs Menüpunkte, Suchfeld und der Spendenknopf passen darunter nicht
+   mehr in eine Zeile; zweizeilig sah der Knopf verloren aus. Der Punkt lag
+   erst bei 64em – mit dem Spendenknopf, der breiter ist als der frühere
+   «Beratung», reichte das nicht mehr.
    Zwischen Burger-Punkt und breitem Bildschirm wird es eng: Menü, Suchfeld
    und Knopf zusammen sprengen eine Zeile, und der Knopf stand allein auf
    der zweiten. Etwas weniger Abstand und ein schmaleres Suchfeld halten
    alles beieinander. */
-@media (min-width: 64.0625em) and (max-width: 75em) {
+@media (min-width: 68.0625em) and (max-width: 75em) {
   .menue { gap: 15px; }
   .suchfeld { width: 86px; }
   .kopfband { padding-left: 20px; }
+}
+/* Knapp über dem Burger-Punkt reicht das noch nicht: Der Spendenknopf mit
+   Herz ist breiter als der frühere «Beratung», und die Leiste wurde
+   zwischen 1025 und 1150 Pixeln zweizeilig. Hier wird weiter gestrafft. */
+@media (min-width: 68.0625em) and (max-width: 72em) {
+  .menue { gap: 10px; }
+  .suchfeld { width: 62px; }
+  .knopf { padding: 12px 18px; }
+  .werkzeuge { margin-left: 6px; }
+}
+
+/* ===================================================================== */
+/* Spenden- und Beratungsknopf                                           */
+/* ===================================================================== */
+
+.knopf.spende { background: var(--petrol); color: var(--weiss);
+  display: inline-flex; align-items: center; gap: 8px; }
+.knopf.spende svg { flex: none; }
+/* Auf dem breiten Bildschirm steht nur der Spendenknopf: Zwei gefüllte
+   Knöpfe nebeneinander heben sich gegenseitig auf, und die Beratung ist
+   über den Menüpunkt «Aufnahme» ohnehin einen Klick entfernt. Im
+   aufgeklappten Menü auf dem Telefon ist der Platz da – dort stehen
+   beide untereinander. */
+.nurschmal { display: none; }
+@media (max-width: 68em) {
+  .nurschmal { display: inline-block; }
+  .menue .knopf.spende { text-align: center; justify-content: center; margin: 8px 4px 4px; }
 }

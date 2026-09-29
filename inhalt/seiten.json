@@ -431,6 +431,70 @@
     ]
   },
   {
+    "pfad": "/spenden/",
+    "titel": "Spenden",
+    "beschreibung": "Wie Sie den SONNENBERG unterstützen können.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 6,
+        "marke": "Unterstützen",
+        "titel": "Spenden",
+        "text": "Wie Sie den SONNENBERG unterstützen können."
+      },
+      {
+        "art": "hinweis",
+        "spalten": 6,
+        "text": "Diese Seite ist ein Gerüst. Alle mit [ ] markierten Stellen müssen von der Redaktion mit den tatsächlichen Angaben gefüllt werden. Spendenkonto, Verwendungszweck und Steuerabzug sind bewusst leer gelassen und nicht erfunden – falsche Zahlen auf einer Spendenseite wären schlimmer als gar keine."
+      },
+      {
+        "art": "text",
+        "spalten": 3,
+        "titel": "Wofür Ihre Spende eingesetzt wird",
+        "absaetze": [
+          "[Bitte ergänzen: Wofür werden Spenden verwendet? Zwei bis drei Sätze, möglichst konkret – was wird damit möglich, das sonst nicht möglich wäre.]",
+          "[Bitte ergänzen: Gibt es einzelne Projekte, für die gezielt gespendet werden kann?]"
+        ]
+      },
+      {
+        "art": "text",
+        "spalten": 3,
+        "titel": "Spendenkonto",
+        "marke": "Von der Redaktion zu füllen",
+        "absaetze": [
+          "[Bitte ergänzen: Kontoinhaber]",
+          "[Bitte ergänzen: IBAN]",
+          "[Bitte ergänzen: Bank und Ort]",
+          "[Bitte ergänzen: Falls es einen QR-Einzahlungsschein oder eine Spendenmöglichkeit über TWINT gibt, hier verlinken.]"
+        ]
+      },
+      {
+        "art": "text",
+        "spalten": 3,
+        "titel": "Steuern",
+        "absaetze": [
+          "[Bitte ergänzen: Ob und in welchen Kantonen Spenden an den SONNENBERG von den Steuern abgezogen werden können, und ob eine Spendenbescheinigung ausgestellt wird. Diese Angabe erst aufschalten, wenn sie geprüft ist.]"
+        ]
+      },
+      {
+        "art": "text",
+        "spalten": 3,
+        "titel": "Andere Wege zu helfen",
+        "absaetze": [
+          "[Bitte ergänzen: Was trifft zu? Zum Beispiel Legate und Erbschaften, Patenschaften, Sachspenden, freiwillige Mitarbeit, Unterstützung durch Firmen. Nur aufführen, was tatsächlich besteht.]"
+        ]
+      },
+      {
+        "art": "kontakt",
+        "spalten": 6,
+        "farbe": "petrol",
+        "titel": "Fragen zu einer Spende",
+        "text": "Wir geben gerne Auskunft – auch zu grösseren Zuwendungen und zu Legaten.",
+        "adresse": true
+      }
+    ]
+  },
+  {
     "pfad": "/jobs/",
     "titel": "Jobs",
     "beschreibung": "Offene Stellen in Schule, Internat, Therapie und Verwaltung.",
