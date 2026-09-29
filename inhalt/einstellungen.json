@@ -1,0 +1,24 @@
+{
+  "name": "SONNENBERG",
+  "untertitel": "Kompetenzzentrum für Sehen, Verhalten und Sprechen",
+  "adresse": "Landhausstrasse 20 · 6340 Baar",
+  "telefon": "041 767 78 33",
+  "telefonWahl": "+41417677833",
+  "mail": "info@sonnenberg-baar.ch",
+  "mailIntake": "anfrage@sonnenberg-baar.ch",
+  "menue": [
+    { "titel": "Start", "pfad": "/" },
+    { "titel": "Angebot", "pfad": "/angebot/" },
+    { "titel": "Aufnahme", "pfad": "/aufnahme/" },
+    { "titel": "Aktuell", "pfad": "/aktuell/" },
+    { "titel": "Über uns", "pfad": "/ueber-uns/" },
+    { "titel": "Jobs", "pfad": "/jobs/" }
+  ],
+  "menueKnopf": { "titel": "Beratung", "pfad": "/aufnahme/" },
+  "fusszeile": [
+    { "titel": "Jobs", "pfad": "/jobs/" },
+    { "titel": "Impressum", "pfad": "/impressum/" },
+    { "titel": "Datenschutz", "pfad": "/datenschutz/" },
+    { "titel": "Barrierefreiheit", "pfad": "/barrierefreiheit/" }
+  ]
+}

@@ -9,16 +9,13 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-echo "1/4  Erzeugten Stand verwerfen …"
+echo "1/3  Erzeugten Stand verwerfen …"
 git checkout -- statisch/ 2>/dev/null || true
 
-echo "2/4  Neuen Stand holen …"
+echo "2/3  Neuen Stand holen …"
 git pull --ff-only
 
-echo "3/4  Abhängigkeiten prüfen …"
-npm install --no-audit --no-fund
-
-echo "4/4  Seite bauen …"
+echo "3/3  Seite bauen …"
 npm run bauen
 
 echo

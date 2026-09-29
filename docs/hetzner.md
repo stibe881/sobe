@@ -28,7 +28,6 @@ node --version                    # zur Kontrolle
 
 git clone https://github.com/stibe881/sobe-webseite.git ~/projekt
 cd ~/projekt
-npm install                       # Eleventy und die Suche, sonst nichts
 node redaktion/passwort.mjs       # Redaktionspasswort setzen
 ```
 
@@ -171,13 +170,13 @@ zurückholen. Ein Cronjob kann das auch nachts erledigen.
   immer verändert. Nehmen Sie `./aktualisieren.sh` – das verwirft den
   erzeugten Stand, holt den neuen und baut. Von Hand:
   `git checkout -- statisch/ && git pull`.
-- **Nach einem `git pull` fehlt etwas.** `npm install` erneut ausführen –
-  oder gleich `./aktualisieren.sh`, das erledigt beides.
+- **Nach einem `git pull` fehlt etwas.** `./aktualisieren.sh` holt und baut
+  in einem Zug.
 
 ## Barrierefreiheit
 
-Die Prüfung mit axe-core lief früher bei GitHub. Sie läuft weiterhin, aber
-von Hand – auf dem Arbeitsplatzrechner, nicht auf dem Webhosting:
+Die Prüfung mit axe-core läuft von Hand auf dem Arbeitsplatzrechner, nicht
+auf dem Webhosting (sie bringt eigene Abhängigkeiten mit):
 
 ```bash
 cd werkzeuge && npm install && npx playwright install chromium

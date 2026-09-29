@@ -1,0 +1,552 @@
+[
+  {
+    "pfad": "/",
+    "titel": "Start",
+    "beschreibung": "Das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung unter einem Dach.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 4,
+        "titel": "Wir begleiten, fördern und unterstützen mit Herz.",
+        "text": "Das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar.",
+        "knopf": {
+          "titel": "Aufnahme & Beratung",
+          "pfad": "/aufnahme/"
+        }
+      },
+      {
+        "art": "bild",
+        "spalten": 2,
+        "quelle": "aquarell.jpg",
+        "alt": "Kinder malen mit Wasserfarben"
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Für Eltern",
+        "ziel": "/angebot/",
+        "links": [
+          {
+            "titel": "So läuft eine Aufnahme ab",
+            "pfad": "/aufnahme/"
+          },
+          {
+            "titel": "Unsere Angebote",
+            "pfad": "/angebot/"
+          },
+          {
+            "titel": "Beratungsgespräch vereinbaren",
+            "pfad": "/aufnahme/"
+          }
+        ]
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Für Gemeinden & Kanton",
+        "ziel": "/gemeinden/",
+        "links": [
+          {
+            "titel": "Zuweisung & Platzsituation",
+            "pfad": "/gemeinden/"
+          },
+          {
+            "titel": "Jahresberichte & Kennzahlen",
+            "pfad": "/gemeinden/"
+          },
+          {
+            "titel": "Ansprechpersonen Intake",
+            "pfad": "/gemeinden/"
+          }
+        ]
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Für Fachpersonen",
+        "ziel": "/fachpersonen/",
+        "links": [
+          {
+            "titel": "Fachstellen Sehen & Autismus",
+            "pfad": "/fachpersonen/"
+          },
+          {
+            "titel": "Beratung für Regelschulen",
+            "pfad": "/fachpersonen/"
+          },
+          {
+            "titel": "Lehrmittel & Shop",
+            "pfad": "/fachpersonen/"
+          }
+        ]
+      },
+      {
+        "art": "kontakt",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Direkt erreichbar",
+        "text": "Das Intake hört zu und hilft weiter."
+      },
+      {
+        "art": "beitraege",
+        "spalten": 4,
+        "titel": "Aktuell",
+        "anzahl": 3,
+        "mehr": {
+          "titel": "Alle Beiträge",
+          "pfad": "/aktuell/"
+        }
+      }
+    ]
+  },
+  {
+    "pfad": "/angebot/",
+    "titel": "Angebot",
+    "beschreibung": "Fünf Angebote unter einem Dach – dazu Therapie, Internat und Beratung.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 6,
+        "titel": "Angebot",
+        "text": "Fünf Angebote unter einem Dach – dazu Therapie, Internat und Beratung."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Sehen",
+        "ziel": "/angebot/sehen/",
+        "text": "Schule und Beratung für blinde und sehbeeinträchtigte Kinder und Jugendliche."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Sehen Plus",
+        "text": "Für Kinder mit Sehbeeinträchtigung und weiteren Behinderungen."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Erwachsene Sehen Plus",
+        "text": "Wohnen und Tagesstruktur für Erwachsene."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Verhalten und Sprache",
+        "text": "Sonderschule mit Sprachheil- und Verhaltenspädagogik."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Verhalten Plus",
+        "text": "Spezialisierter Unterricht in kleinsten Gruppen."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Ergänzend",
+        "links": [
+          {
+            "titel": "Therapieangebot"
+          },
+          {
+            "titel": "Internat"
+          }
+        ]
+      },
+      {
+        "art": "aufruf",
+        "spalten": 6,
+        "titel": "Nicht sicher, welches Angebot passt? Wir klären es gemeinsam.",
+        "knopf": {
+          "titel": "Zur Aufnahme",
+          "pfad": "/aufnahme/"
+        }
+      }
+    ]
+  },
+  {
+    "pfad": "/angebot/sehen/",
+    "titel": "Sehen",
+    "beschreibung": "Schule und Beratung für blinde und sehbeeinträchtigte Kinder und Jugendliche.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 4,
+        "marke": "Angebot",
+        "markeZiel": "/angebot/",
+        "titel": "Sehen",
+        "text": "Schule und Beratung für blinde und sehbeeinträchtigte Kinder und Jugendliche – von der Primarschule bis zur Berufsintegration."
+      },
+      {
+        "art": "bild",
+        "spalten": 2,
+        "quelle": "malen.jpg",
+        "alt": "Eine Hand malt mit Pinsel und grüner Farbe"
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Für wen",
+        "text": "Blinde und sehbeeinträchtigte Kinder und Jugendliche in Primarschule und Oberstufe, begleitet bis in die Berufswelt."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Unterricht",
+        "text": "Kleingruppen nach dem Lehrplan der öffentlichen Schule, bei Bedarf mit angepassten Lernzielen – separativ oder integrativ."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Begleitung",
+        "text": "Lehrpersonen, Rehabilitationsfachpersonen und Therapeut*innen – für ein selbstständiges, integriertes Erwachsenenleben."
+      },
+      {
+        "art": "person",
+        "spalten": 3,
+        "titel": "Ansprechperson",
+        "name": "Claudia Friedli-Hutter",
+        "mail": "claudia.friedli@sonnenberg-baar.ch"
+      },
+      {
+        "art": "kachel",
+        "spalten": 3,
+        "titel": "Unterlagen",
+        "links": [
+          {
+            "titel": "Flyer Blinden- und Low Vision-Pädagogik"
+          },
+          {
+            "titel": "Therapieangebot"
+          },
+          {
+            "titel": "Schulferien und schulfreie Tage"
+          }
+        ]
+      },
+      {
+        "art": "aufruf",
+        "spalten": 6,
+        "farbe": "gelb",
+        "titel": "Könnte das Angebot Sehen zu Ihrem Kind passen?",
+        "knopf": {
+          "titel": "Aufnahme & Beratung",
+          "pfad": "/aufnahme/"
+        }
+      }
+    ]
+  },
+  {
+    "pfad": "/aufnahme/",
+    "titel": "Aufnahme & Beratung",
+    "beschreibung": "Vier Schritte zum Platz im SONNENBERG – für Eltern gleich wie für zuweisende Stellen.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 6,
+        "titel": "Aufnahme & Beratung",
+        "text": "Vier Schritte zum Platz im SONNENBERG – für Eltern gleich wie für zuweisende Stellen."
+      },
+      {
+        "art": "schritt",
+        "spalten": 3,
+        "nummer": "1",
+        "titel": "Kontakt aufnehmen",
+        "text": "Ein Anruf oder eine Mail ans Intake genügt. Wir hören zu und klären die erste Frage: Passt der SONNENBERG?"
+      },
+      {
+        "art": "schritt",
+        "spalten": 3,
+        "nummer": "2",
+        "titel": "Abklärung",
+        "text": "Gespräch, Unterlagen, Schnuppern: Gemeinsam mit Eltern und zuweisender Stelle klären wir den Bedarf."
+      },
+      {
+        "art": "schritt",
+        "spalten": 3,
+        "nummer": "3",
+        "titel": "Entscheid",
+        "text": "Die Kostengutsprache läuft über Wohngemeinde und Kanton – wir begleiten den Ablauf und wissen, was wo nötig ist."
+      },
+      {
+        "art": "schritt",
+        "spalten": 3,
+        "nummer": "4",
+        "titel": "Eintritt",
+        "text": "Sorgfältig vorbereitet, mit fester Bezugsperson – in Schule, Internat oder Tagesstruktur."
+      },
+      {
+        "art": "text",
+        "spalten": 4,
+        "titel": "Platzsituation",
+        "marke": "Stand August 2026 · wird von der Redaktion laufend nachgeführt",
+        "absaetze": [
+          "Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low Vision-Pädagogik kann sich nach Absprache eventuell noch eine Möglichkeit für das Schuljahr 2026/27 ergeben. Anfragen für das Schuljahr 2027/28 werden ab Anfang September 2026 bearbeitet."
+        ]
+      },
+      {
+        "art": "kontakt",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Das Intake hört zu.",
+        "intake": true
+      }
+    ]
+  },
+  {
+    "pfad": "/gemeinden/",
+    "titel": "Für Gemeinden & Kanton",
+    "beschreibung": "Zuweisung, Kostengutsprache, Berichte und Ansprechpersonen – gebündelt, ohne Suchen.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 6,
+        "marke": "Aufnahme",
+        "markeZiel": "/aufnahme/",
+        "titel": "Für Gemeinden & Kanton",
+        "text": "Zuweisung, Kostengutsprache, Berichte und Ansprechpersonen – gebündelt, ohne Suchen."
+      },
+      {
+        "art": "dokumente",
+        "spalten": 4,
+        "titel": "Unterlagen",
+        "eintraege": [
+          {
+            "titel": "Anmeldeunterlagen"
+          },
+          {
+            "titel": "Jahresbericht & Jahresrechnung"
+          },
+          {
+            "titel": "Angebotsübersicht & Tarife"
+          },
+          {
+            "titel": "Statuten des Vereins SONNENBERG"
+          }
+        ]
+      },
+      {
+        "art": "text",
+        "spalten": 2,
+        "titel": "So läuft die Zuweisung",
+        "absaetze": [
+          "Die zuweisende Stelle meldet sich direkt beim Intake; die Kostengutsprache läuft über Wohngemeinde und Kanton. Wir begleiten den Ablauf.",
+          "Ältere Jahrgänge der Berichte stellt die Geschäftsstelle gerne zu."
+        ]
+      },
+      {
+        "art": "text",
+        "spalten": 4,
+        "titel": "Platzsituation",
+        "marke": "Stand August 2026 · wird von der Redaktion laufend nachgeführt",
+        "absaetze": [
+          "Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low Vision-Pädagogik kann sich nach Absprache eventuell noch eine Möglichkeit für das Schuljahr 2026/27 ergeben. Anfragen für das Schuljahr 2027/28 werden ab Anfang September 2026 bearbeitet."
+        ]
+      },
+      {
+        "art": "kontakt",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Fragen zur Zuweisung?",
+        "intake": true
+      }
+    ]
+  },
+  {
+    "pfad": "/fachpersonen/",
+    "titel": "Für Fachpersonen",
+    "beschreibung": "Fachstellen, Beratung für Regelschulen sowie Lehrmittel und Shop.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 4,
+        "marke": "Für Fachpersonen",
+        "titel": "Fachwissen, das wir teilen",
+        "text": "Was im SONNENBERG täglich gebraucht wird, steht auch Regelschulen, Therapeut*innen und Behörden offen – als Beratung, als Fachstelle, als Lehrmittel."
+      },
+      {
+        "art": "bild",
+        "spalten": 2,
+        "quelle": "malen.jpg",
+        "alt": "Eine Hand malt mit Pinsel und grüner Farbe"
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Fachstellen Sehen & Autismus",
+        "text": "Spezialisierte Anlaufstellen für Fragen rund um Sehbeeinträchtigung und Autismus – für Fachpersonen, die ein Kind begleiten."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Beratung für Regelschulen",
+        "text": "Unterstützung für Lehrpersonen, die ein Kind mit besonderem Bedarf integrativ unterrichten: Einschätzung, Hilfsmittel, Begleitung im Schulalltag."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Lehrmittel & Shop",
+        "text": "Angepasste Lehrmittel und Hilfsmittel aus der eigenen Herstellung – bestellbar für Schulen und Institutionen."
+      },
+      {
+        "art": "aufruf",
+        "spalten": 4,
+        "titel": "Ein Kind aus Ihrer Schule könnte hierher passen?",
+        "text": "Die Zuweisung läuft über das Intake – gemeinsam mit Eltern und Wohngemeinde.",
+        "knopf": {
+          "titel": "Zur Aufnahme",
+          "pfad": "/aufnahme/"
+        },
+        "zweitlink": {
+          "titel": "Für Gemeinden & Kanton",
+          "pfad": "/gemeinden/"
+        }
+      },
+      {
+        "art": "kontakt",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Direkt fragen"
+      }
+    ]
+  },
+  {
+    "pfad": "/aktuell/",
+    "titel": "Aktuell",
+    "beschreibung": "Einblicke in den Alltag im SONNENBERG.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 6,
+        "titel": "Aktuell",
+        "text": "Einblicke in den Alltag im SONNENBERG."
+      },
+      {
+        "art": "beitraege",
+        "spalten": 6,
+        "alle": true
+      }
+    ]
+  },
+  {
+    "pfad": "/jobs/",
+    "titel": "Jobs",
+    "beschreibung": "Offene Stellen in Schule, Internat, Therapie und Verwaltung.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 4,
+        "titel": "Arbeiten im SONNENBERG",
+        "text": "Schule, Internat, Therapie und Verwaltung unter einem Dach."
+      },
+      {
+        "art": "bild",
+        "spalten": 2,
+        "quelle": "campus.jpg",
+        "alt": "Luftaufnahme des SONNENBERG-Areals in Baar"
+      },
+      {
+        "art": "stellen",
+        "spalten": 4,
+        "titel": "Offene Stellen"
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Was wir bieten",
+        "links": [
+          {
+            "titel": "Eine feste Bezugsperson für jedes Kind – und dieselbe Verlässlichkeit im Team.",
+            "nurText": true
+          },
+          {
+            "titel": "Interdisziplinäre Zusammenarbeit von Pädagogik, Therapie und Betreuung.",
+            "nurText": true
+          },
+          {
+            "titel": "Weiterbildung im eigenen Haus, fünf Gehminuten vom Bahnhof Baar.",
+            "nurText": true
+          }
+        ]
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Ausbildung & Praktika",
+        "text": "Wir bilden aus und bieten Praktikumsplätze in Schule, Internat und Therapie an."
+      },
+      {
+        "art": "kontakt",
+        "spalten": 2,
+        "farbe": "gelb",
+        "titel": "Spontanbewerbung",
+        "text": "Keine passende Stelle dabei? Schreiben Sie uns."
+      }
+    ]
+  },
+  {
+    "pfad": "/ueber-uns/",
+    "titel": "Über uns",
+    "beschreibung": "Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da.",
+    "bausteine": [
+      {
+        "art": "held",
+        "spalten": 3,
+        "titel": "Über uns",
+        "text": "Seit über 100 Jahren für Kinder und Jugendliche mit besonderen Bedürfnissen da – getragen vom Verein SONNENBERG, im Auftrag von Gemeinden und Kanton."
+      },
+      {
+        "art": "bild",
+        "spalten": 3,
+        "quelle": "campus.jpg",
+        "alt": "Luftaufnahme des SONNENBERG-Areals in Baar"
+      },
+      {
+        "art": "text",
+        "spalten": 6,
+        "absaetze": [
+          "Der SONNENBERG ist das Kompetenzzentrum für Sehen, Verhalten und Sprechen in Baar. Schule, Internat, Therapie und Beratung liegen unter einem Dach – an der Seite der Familien."
+        ]
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Auftrag",
+        "text": "Begleiten, fördern und unterstützen – mit dem Ziel eines selbstständigen, integrierten Lebens."
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Träger",
+        "text": "Verein SONNENBERG – Vorstand, Statuten und Jahresberichte.",
+        "links": [
+          {
+            "titel": "Unterlagen für Gemeinden & Kanton",
+            "pfad": "/gemeinden/"
+          }
+        ]
+      },
+      {
+        "art": "kachel",
+        "spalten": 2,
+        "titel": "Arbeiten bei uns",
+        "text": "In Schule, Internat, Therapie und Verwaltung.",
+        "links": [
+          {
+            "titel": "Offene Stellen",
+            "pfad": "/jobs/"
+          }
+        ]
+      },
+      {
+        "art": "kontakt",
+        "spalten": 6,
+        "farbe": "gelb",
+        "titel": "Kontakt",
+        "adresse": true
+      }
+    ]
+  }
+]

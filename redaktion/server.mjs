@@ -10,9 +10,9 @@ import { createServer } from 'node:http';
 import { readFile, writeFile, readdir, unlink, mkdir, stat, copyFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { bauen } from '../bauen.mjs';
 import {
   zugangLesen, stimmt, sitzungAusstellen, sitzungGueltig,
   gesperrt, fehlversuchZaehlen, fehlversucheLoeschen,
@@ -101,19 +101,6 @@ async function abgleichen(quelle, ziel) {
     if (eintrag.name.startsWith('.')) continue;
     await rm(path.join(ziel, eintrag.name), { recursive: true, force: true });
   }
-}
-
-function laufen(befehl, argumente, ordner) {
-  return new Promise((fertig, scheitern) => {
-    const kind = spawn(befehl, argumente, { cwd: ordner, env: process.env });
-    let ausgabe = '';
-    kind.stdout.on('data', (d) => { ausgabe += d; });
-    kind.stderr.on('data', (d) => { ausgabe += d; });
-    kind.on('error', scheitern);
-    kind.on('close', (code) => (code === 0
-      ? fertig(ausgabe)
-      : scheitern(new Error(`${befehl} endete mit ${code}:\n${ausgabe.slice(-2000)}`))));
-  });
 }
 
 async function dateiAusliefern(res, datei) {
@@ -227,10 +214,8 @@ const server = createServer(async (req, res) => {
       if (!eigeneAnfrage) return antwort(res, 403, { fehler: 'Ungültige Anfrage.' });
       const schritte = [];
       try {
-        await laufen('npx', ['eleventy', '--config=eleventy.config.js'], path.join(WURZEL, 'werkzeuge'));
-        schritte.push('Seiten gebaut');
-        await laufen('npx', ['pagefind', '--site', '../statisch'], path.join(WURZEL, 'werkzeuge'));
-        schritte.push('Suche erneuert');
+        const anzahl = await bauen();
+        schritte.push(`${anzahl} Seiten gebaut`);
         const ziel = process.env.OEFFENTLICH;
         if (ziel) {
           await abgleichen(path.join(WURZEL, 'statisch'), ziel);
