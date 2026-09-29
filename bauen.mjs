@@ -25,6 +25,10 @@ function huelle({ titel, beschreibung, pfad, inhalt, einstellungen }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- iOS unterstreicht selbst erkannte Adressen und Nummern gepunktet.
+     Im Fuss sah das aus wie ein Fehler; die Telefonnummer ist dort
+     ohnehin schon ein richtiger Verweis. -->
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
 <title>${schuetzen(titel)} · ${schuetzen(einstellungen.name)}</title>
 <meta name="description" content="${schuetzen(beschreibung)}">
 <link rel="stylesheet" href="/stil.css">
@@ -96,8 +100,8 @@ ${menue}
 ${inhalt}
     <div class="kachel nacht fussk">
       <img src="/bilder/logo-weiss.png" alt="${schuetzen(einstellungen.name)}">
-      <div>${schuetzen(einstellungen.adresse)} · <a class="hell" href="tel:${schuetzen(einstellungen.telefonWahl)}">${schuetzen(einstellungen.telefon)}</a></div>
-      <div class="rechts">${einstellungen.fusszeile.map((f) => `<a href="${schuetzen(f.pfad)}">${schuetzen(f.titel)}</a>`).join('')}</div>
+      <p class="fussort"><span class="anschrift">${einstellungen.adresse.split('·').map((teil) => `<span class="zusammen">${schuetzen(teil.trim())}</span>`).join('<span class="punkt" aria-hidden="true">·</span>')}</span><span class="punkt trenner" aria-hidden="true">·</span><a class="hell zusammen" href="tel:${schuetzen(einstellungen.telefonWahl)}">${schuetzen(einstellungen.telefon)}</a></p>
+      <nav class="rechts" aria-label="Rechtliche Hinweise">${einstellungen.fusszeile.map((f) => `<a href="${schuetzen(f.pfad)}">${schuetzen(f.titel)}</a>`).join('')}</nav>
     </div>
   </div>
 </main>
