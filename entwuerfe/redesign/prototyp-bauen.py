@@ -104,6 +104,20 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .fussk a { color: #cfd3da; font-weight: 500; }
 .protokoll { grid-column: span 6; font-size: 14px; color: var(--grau); text-align: center; padding: 6px 0 0; }
 
+.kachel.klickbar { cursor: pointer; transition: box-shadow 140ms ease, transform 140ms ease; }
+.kachel.klickbar:hover { box-shadow: 0 6px 22px rgba(33, 41, 52, 0.14); transform: translateY(-2px); }
+.kachel.klickbar h2 a { color: inherit; }
+.kachel.klickbar h2 a:hover { text-decoration: none; }
+
+.filterzeile { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+.filter {
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  background: var(--grund); color: var(--text); border: 0; border-radius: 999px; padding: 8px 16px;
+}
+.filter:hover { background: var(--linie); }
+.filter[aria-pressed="true"] { background: var(--petrol); color: var(--weiss); }
+.stelle[hidden] { display: none; }
+
 /* Spannweiten nur ab Tablet – darunter steht jede Kachel allein. */
 @media (min-width: 720px) {
   .s2 { grid-column: span 3; } .s3 { grid-column: span 3; }
@@ -177,13 +191,46 @@ JS = """
     meldung._t = setTimeout(function () { meldung.hidden = true; }, 4000);
   });
 
+  // Ganze Kacheln führen mit – ausser man hat einen Verweis darin getroffen,
+  // der ein eigenes Ziel hat.
+  document.addEventListener('click', function (e) {
+    var kachel = e.target.closest('.kachel.klickbar');
+    if (!kachel || e.target.closest('a')) return;
+    location.hash = '#/' + kachel.dataset.ziel;
+  });
+
+  // Bereichsfilter auf der Stellenseite
+  var filter = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var stellen = Array.prototype.slice.call(document.querySelectorAll('.stelle'));
+  var anzahl = document.getElementById('anzahl');
+  var leer = document.getElementById('leer');
+
+  function filtern(bereich) {
+    var sichtbar = 0;
+    stellen.forEach(function (s) {
+      var passt = bereich === 'alle' || s.dataset.bereich === bereich;
+      s.hidden = !passt;
+      if (passt) sichtbar++;
+    });
+    filter.forEach(function (f) {
+      f.setAttribute('aria-pressed', f.dataset.bereich === bereich ? 'true' : 'false');
+    });
+    anzahl.textContent = sichtbar === 1 ? '1 Stelle' : sichtbar + ' Stellen';
+    leer.hidden = sichtbar > 0;
+  }
+
+  filter.forEach(function (f) {
+    f.addEventListener('click', function () { filtern(f.dataset.bereich); });
+  });
+  if (filter.length) filtern('alle');
+
   ausAnker();
 })();
 """
 
 MENUE = [
     ('start', 'Start'), ('angebot', 'Angebot'), ('aufnahme', 'Aufnahme'),
-    ('aktuell', 'Aktuell'), ('ueber-uns', 'Über uns'),
+    ('aktuell', 'Aktuell'), ('ueber-uns', 'Über uns'), ('jobs', 'Jobs'),
 ]
 
 PLATZ = ('Aktuell sind unsere Plätze in allen Angeboten belegt. Im Bereich Blinden- und Low '
@@ -200,7 +247,7 @@ def fuss():
         <img src="{B['logoweiss']}" alt="SONNENBERG">
         <div>Landhausstrasse 20 · 6340 Baar · <a href="tel:+41417677833">041 767 78 33</a></div>
         <div class="rechts">
-          <a href="#" data-offen="{KEINE_SEITE}">Jobs</a>
+          <a href="#/jobs">Jobs</a>
           <a href="#" data-offen="{KEINE_SEITE}">Impressum</a>
           <a href="#" data-offen="{KEINE_SEITE}">Datenschutz</a>
           <a href="#" data-offen="{KEINE_SEITE}">Barrierefreiheit</a>
@@ -229,16 +276,16 @@ SEITEN.append(seite('start', 'Start', f"""      <div class="kachel petrol s4" st
       </div>
       <div class="kachel bild s2"><img src="{B['aquarell']}" alt="Kinder malen mit Wasserfarben"></div>
 
-      <div class="kachel s2">
-        <h2>Für Eltern</h2>
+      <div class="kachel s2 klickbar" data-ziel="angebot">
+        <h2><a href="#/angebot">Für Eltern</a></h2>
         <div class="liste">
           <a href="#/aufnahme">So läuft eine Aufnahme ab</a>
           <a href="#/angebot">Unsere Angebote</a>
           <a href="#/aufnahme">Beratungsgespräch vereinbaren</a>
         </div>
       </div>
-      <div class="kachel s2">
-        <h2>Für Gemeinden &amp; Kanton</h2>
+      <div class="kachel s2 klickbar" data-ziel="gemeinden">
+        <h2><a href="#/gemeinden">Für Gemeinden &amp; Kanton</a></h2>
         <div class="liste">
           <a href="#/gemeinden">Zuweisung &amp; Platzsituation</a>
           <a href="#/gemeinden">Jahresberichte &amp; Kennzahlen</a>
@@ -476,7 +523,7 @@ SEITEN.append(seite('ueber-uns', 'Über uns', f"""      <div class="kachel petro
       </div>
       <div class="kachel s2">
         <h2 style="font-size: 20px;">Arbeiten bei uns</h2>
-        <p class="fliess" style="margin: 8px 0 0;"><a href="#" data-offen="{KEINE_SEITE}">Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</p>
+        <p class="fliess" style="margin: 8px 0 0;"><a href="#/jobs">Offene Stellen</a> in Schule, Internat, Therapie und Verwaltung.</p>
       </div>
 
       <div class="kachel gelb s4">
@@ -486,6 +533,112 @@ SEITEN.append(seite('ueber-uns', 'Über uns', f"""      <div class="kachel petro
       </div>
       <div class="kachel s2">
         <div class="paar"><a class="knopf" href="#/aufnahme">Besuchen Sie uns</a></div>
+      </div>"""))
+
+# -------------------------------------------------------------------- Jobs
+# Die einzelnen Ausschreibungen sind Beispiele: Welche Stellen offen sind,
+# weiss nur das Haus. Die Seite zeigt den Aufbau, ein sichtbarer Hinweis
+# sagt das auch den Betrachtenden.
+STELLEN = [
+    ('schule', 'Schule', 'Heilpädagogin / Heilpädagoge Sehen', '60–80 %', 'nach Vereinbarung', '#/jobs-stelle'),
+    ('internat', 'Internat', 'Sozialpädagogin / Sozialpädagoge Internat', '70–100 %', '1. Februar 2027', None),
+    ('therapie', 'Therapie', 'Logopädin / Logopäde', '40–60 %', 'nach Vereinbarung', None),
+    ('verwaltung', 'Verwaltung', 'Sachbearbeiterin / Sachbearbeiter Administration', '50 %', 'nach Vereinbarung', None),
+    ('schule', 'Schule', 'Klassenassistenz Verhalten und Sprache', '50–70 %', 'August 2027', None),
+]
+
+filter_html = ''.join(
+    f'          <button type="button" class="filter" data-bereich="{b}" aria-pressed="false">{n}</button>\n'
+    for b, n in [('alle', 'Alle'), ('schule', 'Schule'), ('internat', 'Internat'),
+                 ('therapie', 'Therapie'), ('verwaltung', 'Verwaltung')])
+
+stellen_html = ''
+for bereich, bezeichnung, titel, pensum, eintritt, ziel in STELLEN:
+    verweis = (f'<a href="{ziel}">{titel}</a>' if ziel
+               else f'<a href="#" data-offen="{KEINE_SEITE}">{titel}</a>')
+    stellen_html += f"""          <div class="reihe stelle" data-bereich="{bereich}">
+            <div class="inhalt">
+              <p class="marke" style="margin: 0 0 4px; font-size: 12px;">{bezeichnung}</p>
+              <span style="font-size: 18px; font-weight: 700;">{verweis}</span>
+            </div>
+            <div class="datum" style="width: auto; text-align: right; min-width: 150px;">{pensum} · Eintritt {eintritt}</div>
+          </div>
+"""
+
+SEITEN.append(seite('jobs', 'Jobs', f"""      <div class="kachel petrol s4">
+        <h1 class="held" style="font-size: clamp(26px, 4vw, 38px);">Arbeiten im SONNENBERG</h1>
+        <p class="fliess" style="margin: 12px 0 0;">Schule, Internat, Therapie und Verwaltung unter einem Dach – rund 300 Menschen arbeiten hier an derselben Aufgabe.</p>
+        <p style="margin: 20px 0 0;"><a class="knopf gelb" href="#bewerbung">Direkt bewerben</a></p>
+      </div>
+      <div class="kachel bild s2"><img src="{B['campus']}" alt="Luftaufnahme des SONNENBERG-Areals in Baar"></div>
+
+      <div class="kachel s4">
+        <div class="paar" style="justify-content: space-between; align-items: baseline;">
+          <h2>Offene Stellen</h2>
+          <p class="marke" id="anzahl" style="margin: 0;" aria-live="polite"></p>
+        </div>
+        <div class="filterzeile">
+{filter_html}        </div>
+        <div style="margin-top: 6px;">
+{stellen_html}        </div>
+        <p id="leer" class="fliess" style="margin: 14px 0 0;" hidden>In diesem Bereich ist zurzeit keine Stelle ausgeschrieben.</p>
+        <p class="hinweis">Die Ausschreibungen auf dieser Seite sind Beispiele für den Aufbau. Welche Stellen wirklich offen sind, pflegt die Redaktion später selbst im Backend.</p>
+      </div>
+
+      <div class="kachel s2">
+        <h2 style="font-size: 20px;">Was wir bieten</h2>
+        <div class="liste">
+          <span class="fliess">Eine feste Bezugsperson für jedes Kind – und dieselbe Verlässlichkeit im Team.</span>
+          <span class="fliess">Interdisziplinäre Zusammenarbeit von Pädagogik, Therapie und Betreuung.</span>
+          <span class="fliess">Weiterbildung im eigenen Haus, fünf Gehminuten vom Bahnhof Baar.</span>
+        </div>
+      </div>
+      <div class="kachel s2">
+        <h2 style="font-size: 20px;">Ausbildung &amp; Praktika</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Wir bilden aus und bieten Praktikumsplätze in Schule, Internat und Therapie an.</p>
+        <p style="margin: 12px 0 0;"><a href="#" data-offen="{KEINE_SEITE}">Ausbildungsplätze ansehen</a></p>
+      </div>
+      <div class="kachel gelb s2" id="bewerbung">
+        <h2 style="font-size: 20px;">Spontanbewerbung</h2>
+        <p class="lauf" style="color: #4a3c00; margin: 8px 0 12px;">Keine passende Stelle dabei? Schreiben Sie uns.</p>
+        <p class="tel" style="margin: 0 0 4px;"><a href="mailto:info@sonnenberg-baar.ch" style="color: var(--nacht);">info@sonnenberg-baar.ch</a></p>
+        <p style="margin: 0;"><a href="tel:+41417677833" style="color: var(--nacht);">041 767 78 33</a></p>
+      </div>"""))
+
+# --------------------------------------------------------- Stelle im Detail
+SEITEN.append(seite('jobs-stelle', 'Stelle', f"""      <div class="kachel petrol s4">
+        <p class="marke" style="margin: 0;"><a href="#/jobs" style="color: #8fb8b0;">Offene Stellen</a> · Schule</p>
+        <h1 class="held" style="font-size: clamp(24px, 3.6vw, 34px); margin-top: 8px;">Heilpädagogin / Heilpädagoge Sehen</h1>
+        <p class="fliess" style="margin: 12px 0 0;">60–80 % · Eintritt nach Vereinbarung · Baar</p>
+      </div>
+      <div class="kachel bild s2"><img src="{B['malen']}" alt="Eine Hand malt mit Pinsel und grüner Farbe"></div>
+
+      <div class="kachel s3">
+        <h2 style="font-size: 20px;">Ihre Aufgabe</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Sie unterrichten blinde und sehbeeinträchtigte Kinder und Jugendliche in einer Kleingruppe, nach dem Lehrplan der öffentlichen Schule und bei Bedarf mit angepassten Lernzielen.</p>
+        <p class="fliess" style="margin: 10px 0 0;">Sie arbeiten eng mit Rehabilitationsfachpersonen, Therapeut*innen und dem Internat zusammen und begleiten die Familien.</p>
+      </div>
+      <div class="kachel s3">
+        <h2 style="font-size: 20px;">Ihr Profil</h2>
+        <div class="liste">
+          <span class="fliess">Abschluss in Schulischer Heilpädagogik oder vergleichbare Ausbildung.</span>
+          <span class="fliess">Erfahrung oder Interesse an Blinden- und Low Vision-Pädagogik.</span>
+          <span class="fliess">Freude an Teamarbeit über die Fachgrenzen hinweg.</span>
+        </div>
+      </div>
+
+      <div class="kachel s4">
+        <h2 style="font-size: 20px;">Bewerbung</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Senden Sie uns Ihre Unterlagen per Mail. Für Fragen zur Stelle steht Ihnen die Schulleitung gerne zur Verfügung.</p>
+        <p class="paar" style="margin: 16px 0 0;">
+          <a class="knopf" href="mailto:info@sonnenberg-baar.ch?subject=Bewerbung%20Heilp%C3%A4dagogin%20Sehen">Bewerbung senden</a>
+          <a href="tel:+41417677833">041 767 78 33</a>
+        </p>
+        <p class="hinweis">Beispielhafte Ausschreibung – sie zeigt den Aufbau einer Stellenseite, nicht eine wirklich offene Stelle.</p>
+      </div>
+      <div class="kachel gelb s2">
+        <h2 style="font-size: 20px;">Weitere Stellen</h2>
+        <p style="margin: 10px 0 0;"><a href="#/jobs" style="color: var(--nacht);">Alle offenen Stellen ansehen</a></p>
       </div>"""))
 
 # ----------------------------------------------------------------- Zusammenbau
