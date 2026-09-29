@@ -6,7 +6,8 @@
 # (nur quelle/news/…) läuft hier durch – gebaut wird immer frisch,
 # ein Barrierefreiheits-Rückschritt stoppt die Veröffentlichung.
 #
-# URL nach dem Lauf: https://stibe881.github.io/sobe/
+# URL nach dem Lauf: https://stibe881.github.io/sobe/ (interne Vorschau)
+# und – sobald die Geheimnisse hinterlegt sind – das Hetzner-Webhosting.
 name: Webseite bauen, prüfen und veröffentlichen
 
 on:
@@ -61,3 +62,40 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  hetzner:
+    name: Auf das Hetzner-Webhosting ausliefern
+    needs: bauen-und-pruefen
+    runs-on: ubuntu-latest
+    # Läuft nur, wenn die Zugangsdaten hinterlegt sind – so stört dieser
+    # Schritt niemanden, solange die Seite noch nicht dorthin soll.
+    if: vars.HETZNER_ZIEL != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Werkzeuge installieren
+        working-directory: werkzeuge
+        run: npm install --no-audit --no-fund
+      - name: Generierte Seiten und Suchindex bauen
+        working-directory: werkzeuge
+        run: |
+          npx eleventy --config=eleventy.config.js
+          npx pagefind --site ../statisch
+      - name: .htaccess mitliefern
+        run: cp werkzeuge/hetzner.htaccess statisch/.htaccess
+      - name: SSH-Schlüssel bereitlegen
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HETZNER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # Fingerabdruck des Servers vorab hinterlegen, statt blind zu vertrauen
+          echo "${{ secrets.HETZNER_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      - name: Hochladen
+        # --delete räumt auf dem Server weg, was hier gelöscht wurde.
+        # Der Ordner der Redaktion liegt ausserhalb und wird nicht berührt.
+        run: |
+          rsync -rlvz --delete --checksum \
+            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ vars.HETZNER_PORT || 22 }}" \
+            statisch/ "${{ vars.HETZNER_ZIEL }}:${{ vars.HETZNER_PFAD }}/"
