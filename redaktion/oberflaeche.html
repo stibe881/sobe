@@ -216,8 +216,10 @@
 <script>
 'use strict';
 const API = '/api/contents/';
+/* Wurzel der Webseite – die Redaktion liegt daneben, unter /redaktion/ */
+const SEITE_WURZEL = '/';
 /* Wurzel der Webseite, funktioniert unter /sobe/ und an der Domain-Wurzel */
-const SEITE = location.pathname.replace(/admin\/?(index\.html)?$/, '');
+const SEITE = SEITE_WURZEL;
 
 const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
   'August', 'September', 'Oktober', 'November', 'Dezember'];

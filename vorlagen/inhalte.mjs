@@ -94,21 +94,33 @@ export function markdownZuHtml(text) {
 }
 
 // Aus dem WordPress-Markup bleibt nur der lesbare Teil: Absätze, Listen,
-// Überschriften, Verweise. Die Fusion-Gerüste fallen weg – im neuen Auftritt
-// würden sie nur stören.
+// Überschriften, Bilder, Verweise. Die Fusion-Gerüste fallen weg – im neuen
+// Auftritt würden sie nur stören.
 export function wordpressAufraeumen(html) {
   const erlaubt = [];
-  const regel = /<(p|h2|h3|h4|ul|ol|li|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  const regel = /<(p|h2|h3|h4|ul|ol|li|blockquote|figure)\b[^>]*>([\s\S]*?)<\/\1>/gi;
   let treffer;
   while ((treffer = regel.exec(html))) {
-    const marke = treffer[1].toLowerCase();
+    let marke = treffer[1].toLowerCase();
     if (marke === 'li') continue; // kommt über die Liste mit
-    const inhalt = treffer[2]
-      .replace(/<(?!\/?(a|strong|em|b|i|br|li|ul|ol)\b)[^>]*>/gi, '')
+    if (marke === 'figure') marke = 'p';
+    const inhalt = verweiseBereinigen(treffer[2]
+      .replace(/<(?!\/?(a|strong|em|b|i|br|li|ul|ol|img)\b)[^>]*>/gi, '')
       .replace(/\s+/g, ' ')
-      .trim();
+      .trim());
     if (!inhalt || inhalt === '&nbsp;') continue;
     erlaubt.push(`<${marke}>${inhalt}</${marke}>`);
   }
   return erlaubt.join('\n');
+}
+
+// Die übernommenen Texte verweisen auf Seiten der alten WordPress-Struktur,
+// die es im neuen Auftritt nicht mehr gibt («../100jahrjubilaeum/»). Solche
+// Verweise würden ins Leere führen; der Text bleibt, der Verweis fällt weg.
+// Mail, Telefon und fremde Adressen bleiben unangetastet.
+function verweiseBereinigen(inhalt) {
+  return inhalt.replace(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (ganz, ziel, text) => {
+    if (/^(https?:|mailto:|tel:|#)/i.test(ziel)) return ganz;
+    return text;
+  });
 }

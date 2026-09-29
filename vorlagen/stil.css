@@ -6,6 +6,9 @@
 * { box-sizing: border-box; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 body { margin: 0; background: var(--grund); color: var(--text);
+  /* Übernommene Inseratstexte enthalten lange Wörter und Adressen; ohne
+     diese Regel schieben sie die Seite auf dem Telefon seitlich auf. */
+  overflow-wrap: anywhere;
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   font-size: 17px; line-height: 1.55; }
 a { color: var(--petrol); text-decoration: none; font-weight: 600; }
@@ -101,3 +104,4 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .lauftext blockquote { margin: 18px 0; padding: 14px 18px; background: var(--gelb);
   color: var(--nacht); border-radius: 14px; font-weight: 600; }
 .lauftext a { color: var(--petrol); }
+.lauftext img { border-radius: 14px; margin: 14px 0; }

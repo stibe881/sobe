@@ -152,7 +152,15 @@ const server = createServer(async (req, res) => {
     }
 
     // ------------------------------------------------------------ Oberfläche
-    if (pfad === '/' || pfad === '/redaktion' || pfad === '/redaktion/') {
+    //
+    // Die Redaktion liegt unter /redaktion/, nicht an der Wurzel: Wird Node
+    // für eine Domain aktiviert, bekommt diese Anwendung deren sämtliche
+    // Anfragen – die Wurzel gehört dann der Webseite, nicht dem Backend.
+    if (pfad === '/redaktion' || pfad === '/redaktion/') {
+      if (pfad === '/redaktion') {
+        res.writeHead(301, { location: '/redaktion/' });
+        return res.end();
+      }
       return dateiAusliefern(res, path.join(WURZEL, 'redaktion/oberflaeche.html'));
     }
 
