@@ -6,14 +6,49 @@
 <title>Baarer Zytig - 100 Jahre Geschichte, Träume und Erlebnisse · SONNENBERG</title>
 <meta name="description" content="Baarer Zytig - 100 Jahre Geschichte, Träume und Erlebnisse">
 <link rel="stylesheet" href="/stil.css">
+<script>
+/* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
+   das Skript am Seitenende den Dunkelmodus setzt – gerade für Menschen mit
+   Lichtempfindlichkeit das Gegenteil von hilfreich. */
+try {
+  var z = JSON.parse(localStorage.getItem('sobe.zugang') || '{}');
+  if (z.dunkel) document.documentElement.classList.add('dunkel');
+  if (z.gross) document.documentElement.classList.add('grossschrift');
+} catch (e) { /* Privates Fenster ohne Speicher: dann eben ohne Vorwahl. */ }
+</script>
 </head>
 <body>
 <a class="springen" href="#inhalt">Zum Inhalt springen</a>
 
 <header class="kopf">
   <div class="kopfband">
-    <a href="/" aria-label="SONNENBERG, zur Startseite"><img src="/bilder/logo.png" alt="SONNENBERG"></a>
+    <a class="logo" href="/" aria-label="SONNENBERG, zur Startseite"><img class="fuerhell" src="/bilder/logo.png" alt="SONNENBERG"><img class="fuerdunkel" src="/bilder/logo-weiss.png" alt="" aria-hidden="true"></a>
+
+    <div class="werkzeuge">
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Barrierefreiheit">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
+          <circle cx="12" cy="4" r="2" fill="currentColor"/>
+          <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 9.5v5m0 0l-3 7m3-7l3 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="zugangsfeld" class="zugangsfeld" hidden>
+        <p class="zugangstitel">Barrierefreiheit</p>
+        <button type="button" class="schalter" data-schalter="vorlesen" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Vorlese-Modus</span><span class="schalterhilfe">Liest den Seiteninhalt laut vor.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="gross" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Grössere Schrift</span><span class="schalterhilfe">Vergrössert alle Texte um einen Viertel.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="schalter" data-schalter="dunkel" aria-pressed="false">
+          <span class="schaltertext"><span class="schaltername">Dunkler Modus</span><span class="schalterhilfe">Heller Text auf dunklem Grund.</span></span><span class="ampel" aria-hidden="true"></span>
+        </button>
+        <p class="zugangsfuss">Die Einstellungen bleiben auf diesem Gerät gespeichert.</p>
+      </div>
+    </div>
+
     <button id="burger" class="burger" aria-expanded="false" aria-controls="menue" aria-label="Menü">☰</button>
+
     <nav id="menue" class="menue" aria-label="Hauptnavigation">
       <a href="/">Start</a>
       <a href="/angebot/">Angebot</a>
@@ -21,6 +56,16 @@
       <a href="/aktuell/" aria-current="page">Aktuell</a>
       <a href="/ueber-uns/">Über uns</a>
       <a href="/jobs/">Jobs</a>
+      <form class="suchform" role="search" action="/suche/" method="get">
+        <label class="nurlesen" for="suchfeld">Auf der ganzen Webseite suchen</label>
+        <input id="suchfeld" class="suchfeld" type="search" name="q" placeholder="Suchen" autocomplete="off">
+        <button class="suchknopf" type="submit" aria-label="Suchen">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="18" height="18">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
       <a class="knopf gelb" href="/aufnahme/">Beratung</a>
     </nav>
   </div>

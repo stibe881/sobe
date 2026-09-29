@@ -119,3 +119,77 @@ auf einem frischen Abzug wiederholbar.
   EN 301 549 (WCAG 2.1 AA).
 - Erklärung zur Barrierefreiheit mit Feedback-Kanal: vorhanden (siehe
   oben).
+
+---
+
+# Neue Webseite: Werkzeuge im Kopf
+
+Alles oben Stehende beschreibt die **alte** WordPress-Seite. Die neue
+Seite bringt drei Einstellungen mit, die die Besucherin selbst setzt.
+Sie liegen hinter dem Knopf mit dem Personen-Zeichen im Kopf – auf dem
+Telefon links vom Burger-Menü.
+
+| Einstellung | Was passiert | Wo im Code |
+| --- | --- | --- |
+| Vorlese-Modus | Eine Leiste am unteren Rand liest den Seiteninhalt vor (Web Speech API). Der gelesene Abschnitt wird gelb hervorgehoben und mitgeführt. | `vorlagen/seite.js`, Abschnitt «Vorlese-Modus» |
+| Grössere Schrift | Der Wurzelwert steigt auf 125 %. Alle Schriftgrössen sind in `rem` angegeben, darum wächst die ganze Seite mit. | `html.grossschrift` in `vorlagen/stil.css` |
+| Dunkler Modus | Heller Text auf dunklem Grund. | `html.dunkel` in `vorlagen/stil.css` |
+
+Die Wahl liegt in `localStorage` unter `sobe.zugang` und wird schon im
+`<head>` gesetzt – sonst blitzt beim Laden kurz die helle Fassung auf.
+
+## Drei Dinge, die dabei schiefgingen
+
+**`--weiss` war zweierlei.** Die Variable stand sowohl für die Fläche
+einer Kachel als auch für weisse Schrift auf farbigem Grund. Im dunklen
+Modus wurde daraus dunkle Schrift auf dunklem Knopf – der Knopf «Zur
+Aufnahme» war unlesbar. Jetzt gibt es `--flaeche` (Fläche) und `--weiss`
+(bleibt weiss). Dieselbe Trennung gilt für `--petrol` (Fläche) und
+`--tinte` (Schrift).
+
+**Die gelbe Kachel.** Ihr Gelb ist in beiden Fassungen dasselbe. Eine im
+dunklen Modus aufgehellte Schriftfarbe wäre darauf blind – dort gilt
+weiter die dunkle Schrift.
+
+**Das Menü brach mitten im Wort um.** Bei 125 % Schrift stand da «Über
+un s». Die Menüpunkte brechen jetzt nie im Wort; wird es eng, wird die
+Leiste zweizeilig.
+
+## Was der Vorlese-Modus nicht ist
+
+Er ist **kein Ersatz für einen Bildschirmleser**. Wer einen benutzt,
+braucht ihn nicht – die Seite ist dafür ausgezeichnet. Er ist für
+Menschen gedacht, die keinen Bildschirmleser eingerichtet haben und
+trotzdem lieber zuhören.
+
+Grenzen, die man kennen muss:
+
+- Er hängt an der Sprachausgabe des Browsers. Fehlt sie, ist der
+  Schalter abgeschaltet und sagt das auch – statt still nichts zu tun.
+- Welche Stimme kommt, entscheidet das Gerät. Bevorzugt wird eine
+  Schweizer, sonst irgendeine deutsche, sonst die Vorgabe.
+- Lange Texte werden in Stücke unter 200 Zeichen zerlegt. Mehrere
+  Browser brechen das Vorlesen sonst nach etwa fünfzehn Sekunden ohne
+  Meldung ab.
+
+# Suche
+
+Die Suche läuft **im Browser** über `statisch/suche.json` – ein
+Verzeichnis aller Seiten, das `bauen.mjs` beim Bauen aus genau dem Text
+erzeugt, der auch auf der Seite steht. Zurzeit 89 Einträge, rund 130 KB,
+geladen erst beim ersten Suchen.
+
+Warum nicht auf dem Server: Die Webseite soll auch dann vollständig
+funktionieren, wenn der Apache sie als blosse Dateien ausliefert – ohne
+laufendes Node. Eine Suche auf dem Server wäre genau dann weg.
+
+Das Feld im Kopf ist ein echtes `<form>` auf `/suche/`. Ohne JavaScript
+landet man dort mit `?q=…` und liest einen Hinweis, statt in einem toten
+Feld zu tippen.
+
+**Umlaute:** Die Faltung ist zeichentreu (`ä` → `a`), sonst verschieben
+sich alle Fundstellen gegenüber dem Originaltext und der Ausschnitt im
+Ergebnis zeigt auf die falsche Stelle. Die Schreibweise «Logopaedie»
+wird über Varianten des Suchworts abgedeckt – gesucht werden immer
+beide, sonst verschwände «Museum», bloss weil «ue» auch für ü stehen
+könnte.

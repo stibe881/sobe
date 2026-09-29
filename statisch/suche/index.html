@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Am Steuer eines ZVB-Busses · SONNENBERG</title>
-<meta name="description" content="Am Steuer eines ZVB-Busses">
+<title>Suche · SONNENBERG</title>
+<meta name="description" content="Suche auf der Webseite des SONNENBERG">
 <link rel="stylesheet" href="/stil.css">
 <script>
 /* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
@@ -53,7 +53,7 @@ try {
       <a href="/">Start</a>
       <a href="/angebot/">Angebot</a>
       <a href="/aufnahme/">Aufnahme</a>
-      <a href="/aktuell/" aria-current="page">Aktuell</a>
+      <a href="/aktuell/">Aktuell</a>
       <a href="/ueber-uns/">Über uns</a>
       <a href="/jobs/">Jobs</a>
       <form class="suchform" role="search" action="/suche/" method="get">
@@ -73,18 +73,20 @@ try {
 
 <main id="inhalt">
   <div class="raster">
-    <div class="kachel s4">
-        <p class="marke">Aktuell · 15. April 2024</p>
-        <h1 class="gross" style="margin-top: 8px;">Am Steuer eines ZVB-Busses</h1>
-        <div class="lauftext"><p>Veröffentlicht am: 15. April 2024</p>
-<p>Am vergangenen Mittwoch, 10. April 2024 durften die Schüler*innen der Angebote Sehen und Sehen Plus gemeinsam mit den REHA-Fachpersonen einen ZVB-Bus begehen und explorieren. In Ruhe durften die Kinder und Jugendlichen den Bus entdecken und ertasten. Als besonderes Highlight durften sich die Schüler*innen ans Steuer des meterlangen Busses setzen und eine Lautsprecherdurchsage machen.</p>
-<p>Der Bus wurde von den Zugerland Verkehrsbetrieben (ZVB) kostenlos zur Verfügung gestellt. Herzlichen Dank für das grossartige Engagement zu Gunsten unserer Klient*innen.</p></div>
-      </div>
-    <div class="kachel s2 gelb">
-        <h2>Weitere Beiträge</h2>
-        
-        <div class="liste"><a href="/aktuell/european-inclusion-cup-ein-wochenende-voller-fussball-begegnungen-und-gelebter-inklusion/">European Inclusion Cup: Ein Wochenende voller Fussball, Begegnungen und gelebter Inklusion</a><a href="/aktuell/sonnenberg-sporttag-spiel-spass-und-teamgeist/">SONNENBERG Sporttag – Spiel, Spass und Teamgeist</a><a href="/aktuell/feuerwehruebung-auf-dem-sonnenberg-areal/">Feuerwehrübung auf dem SONNENBERG-Areal</a></div>
-      </div>
+    <div class="kachel petrol s6">
+      <p class="marke">Suche</p>
+      <h1>Auf der ganzen Webseite suchen</h1>
+      <form class="grosssuche" role="search" action="/suche/" method="get">
+        <label class="nurlesen" for="grossfeld">Suchbegriff</label>
+        <input id="grossfeld" name="q" type="search" placeholder="Zum Beispiel: Logopädie, Aufnahme, Sporttag" autocomplete="off" autofocus>
+        <button class="knopf gelb" type="submit">Suchen</button>
+      </form>
+    </div>
+    <div class="kachel s6">
+      <p id="suchlage" class="marke" role="status" aria-live="polite">Bitte geben Sie einen Suchbegriff ein.</p>
+      <div id="suchergebnis"></div>
+      <noscript><p class="hinweis">Die Suche braucht JavaScript. Ohne JavaScript finden Sie die Inhalte über das Menü: Angebot, Aufnahme, Aktuell, Über uns und Jobs.</p></noscript>
+    </div>
     <div class="kachel nacht fussk">
       <img src="/bilder/logo-weiss.png" alt="SONNENBERG">
       <div>Landhausstrasse 20 · 6340 Baar · <a class="hell" href="tel:+41417677833">041 767 78 33</a></div>

@@ -7,6 +7,7 @@
 /aktuell/
 /jobs/
 /ueber-uns/
+/suche/
 /aktuell/european-inclusion-cup-ein-wochenende-voller-fussball-begegnungen-und-gelebter-inklusion/
 /aktuell/sonnenberg-sporttag-spiel-spass-und-teamgeist/
 /aktuell/feuerwehruebung-auf-dem-sonnenberg-areal/
