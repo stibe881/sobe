@@ -292,12 +292,12 @@ SEITEN.append(seite('start', 'Start', f"""      <div class="kachel petrol s4" st
           <a href="#/gemeinden">Ansprechpersonen Intake</a>
         </div>
       </div>
-      <div class="kachel s2">
-        <h2>Für Fachpersonen</h2>
+      <div class="kachel s2 klickbar" data-ziel="fachpersonen">
+        <h2><a href="#/fachpersonen">Für Fachpersonen</a></h2>
         <div class="liste">
-          <a href="#/angebot-sehen">Fachstellen Sehen &amp; Autismus</a>
-          <a href="#" data-offen="{KEINE_SEITE}">Beratung für Regelschulen</a>
-          <a href="#" data-offen="{KEINE_SEITE}">Lehrmittel &amp; Shop</a>
+          <a href="#/fachpersonen">Fachstellen Sehen &amp; Autismus</a>
+          <a href="#/fachpersonen">Beratung für Regelschulen</a>
+          <a href="#/fachpersonen">Lehrmittel &amp; Shop</a>
         </div>
       </div>
 
@@ -533,6 +533,45 @@ SEITEN.append(seite('ueber-uns', 'Über uns', f"""      <div class="kachel petro
       </div>
       <div class="kachel s2">
         <div class="paar"><a class="knopf" href="#/aufnahme">Besuchen Sie uns</a></div>
+      </div>"""))
+
+# --------------------------------------------------------- Für Fachpersonen
+SEITEN.append(seite('fachpersonen', 'Für Fachpersonen', f"""      <div class="kachel petrol s4">
+        <p class="marke" style="margin: 0;">Für Fachpersonen</p>
+        <h1 class="held" style="font-size: clamp(26px, 4vw, 38px); margin-top: 8px;">Fachwissen, das wir teilen</h1>
+        <p class="fliess" style="margin: 12px 0 0;">Was im SONNENBERG täglich gebraucht wird, steht auch Regelschulen, Therapeut*innen und Behörden offen – als Beratung, als Fachstelle, als Lehrmittel.</p>
+      </div>
+      <div class="kachel bild s2"><img src="{B['malen']}" alt="Eine Hand malt mit Pinsel und grüner Farbe"></div>
+
+      <div class="kachel s2">
+        <h2 style="font-size: 20px;">Fachstellen Sehen &amp; Autismus</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Spezialisierte Anlaufstellen für Fragen rund um Sehbeeinträchtigung und Autismus – für Fachpersonen, die ein Kind begleiten.</p>
+        <p style="margin: 12px 0 0;"><a href="#" data-offen="{KEINE_SEITE}">Zur Fachstelle</a></p>
+      </div>
+      <div class="kachel s2">
+        <h2 style="font-size: 20px;">Beratung für Regelschulen</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Unterstützung für Lehrpersonen, die ein Kind mit besonderem Bedarf integrativ unterrichten: Einschätzung, Hilfsmittel, Begleitung im Schulalltag.</p>
+        <p style="margin: 12px 0 0;"><a href="#" data-offen="{KEINE_SEITE}">Beratung anfragen</a></p>
+      </div>
+      <div class="kachel s2">
+        <h2 style="font-size: 20px;">Lehrmittel &amp; Shop</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Angepasste Lehrmittel und Hilfsmittel aus der eigenen Herstellung – bestellbar für Schulen und Institutionen.</p>
+        <p style="margin: 12px 0 0;"><a href="#" data-offen="{KEINE_SEITE}">Zum Shop</a></p>
+      </div>
+
+      <div class="kachel s4">
+        <h2 style="font-size: 20px;">Ein Kind aus Ihrer Schule könnte hierher passen?</h2>
+        <p class="fliess" style="margin: 8px 0 0;">Die Zuweisung läuft über das Intake – gemeinsam mit Eltern und Wohngemeinde. Wie der Weg verläuft, steht auf der Aufnahmeseite; Unterlagen und Ansprechpersonen für Behörden sind gebündelt abgelegt.</p>
+        <p class="paar" style="margin: 16px 0 0;">
+          <a class="knopf" href="#/aufnahme">Zur Aufnahme</a>
+          <a href="#/gemeinden">Für Gemeinden &amp; Kanton</a>
+        </p>
+        <p class="hinweis">Die Kurzbeschriebe auf dieser Seite sind Entwurfstexte und wären fachlich zu verifizieren; die drei Unterseiten sind im Prototyp nicht ausgearbeitet.</p>
+      </div>
+      <div class="kachel gelb s2">
+        <h2 style="font-size: 20px;">Direkt fragen</h2>
+        <p class="tel" style="margin: 10px 0 4px;"><a href="tel:+41417677833" style="color: var(--nacht);">041 767 78 33</a></p>
+        <p style="margin: 0;"><a href="mailto:info@sonnenberg-baar.ch" style="color: var(--nacht);">info@sonnenberg-baar.ch</a></p>
       </div>"""))
 
 # -------------------------------------------------------------------- Jobs
