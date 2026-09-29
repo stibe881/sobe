@@ -133,20 +133,49 @@ OEFFENTLICH=~/public_html/sobe-webseite PORT=3000 node app.js
 
 ## 3. Arbeiten
 
-Die Redaktion öffnen, mit dem Passwort anmelden. Bearbeitet werden:
+Die Redaktion unter `/redaktion/` öffnen und mit dem Passwort anmelden.
+Links stehen die Bereiche:
 
-| Bereich | Wo es landet |
-| --- | --- |
-| News-Beiträge | `quelle/news/` → Pinnwand und je eine eigene Seite |
-| Stelleninserate | `quelle/stellen/` → Stellenübersicht |
-| Team | `quelle/team/` → Organisationsseite |
-| Textbausteine | `quelle/texte/` |
+| Bereich | Was sich ändern lässt | Datei |
+| --- | --- | --- |
+| Übersicht | Zahlen, schnelle Wege, laufender Stand | – |
+| Beiträge | Aktuelles mit Bild, Datum und Kategorien | `quelle/news/` |
+| Offene Stellen | Inserate samt Bereich, Pensum und Eintritt | `quelle/stellen/` |
+| Team | Personen mit Foto, Funktion und Gruppe | `quelle/team/` |
+| Textbausteine | einzelne Texte auf festen Seiten | `quelle/texte/` |
+| Seiten | die festen Seiten und ihre Bausteine | `inhalt/seiten.json` |
+| Bilder | Bildbestand ansehen, hochladen, löschen | `bilder/`, `statisch/wp-content/uploads/` |
+| Menü & Fusszeile | Menüpunkte, Knöpfe, Zeile im Fuss | `inhalt/einstellungen.json` |
+| Spenden | Beträge, Zwecke, Zahlungsarten, Konto | `inhalt/einstellungen.json` |
+| Einstellungen | Name, Adresse, Telefon, E-Mail | `inhalt/einstellungen.json` |
 
-Speichern schreibt die Datei. **Veröffentlichen** baut die Seite neu und
-liefert sie nach `public_html` aus – das dauert wenige Sekunden.
+Speichern schreibt die Datei. **Veröffentlichen** baut die Webseite neu und
+liefert sie nach `public_html` aus – das dauert wenige Sekunden. Bis dahin
+bleibt die Webseite, wie sie ist.
 
-Beiträge mit 🔒 stammen aus dem alten WordPress; sie lassen sich ansehen und
-löschen, aber nicht bearbeiten.
+Beiträge mit einem Schloss stammen aus dem alten WordPress. Ihr Text ist
+rohes HTML; ein Textfeld würde ihn beim ersten Speichern stillschweigend
+zerlegen. Sie lassen sich ansehen und löschen, aber nicht bearbeiten.
+
+### Seiten aus Bausteinen
+
+Eine feste Seite ist eine Reihe von Bausteinen, die im Raster je zu einer
+Kachel werden. Jeder Baustein hat eine Breite (ein Drittel bis ganze
+Breite) und je nach Art Titel, Text, Links oder ein Bild. Bausteine lassen
+sich hinzufügen, verschieben und entfernen.
+
+Jede Baustein-Art hier hat ihr Gegenstück in `vorlagen/bausteine.mjs`. Wer
+dort eine Art ergänzt, ergänzt sie auch in `redaktion/oberflaeche.js` unter
+`BAUSTEIN_PLAN` – sonst lässt sie sich nicht bearbeiten. Eine Art, die die
+Oberfläche nicht kennt, wird beim Speichern unverändert durchgereicht statt
+still verworfen.
+
+### Was die Redaktion nicht darf
+
+Schreiben kann sie nur in `quelle/`, `inhalt/`, `bilder/` und
+`statisch/wp-content/uploads/`. Vorlagen, Skripte und der Server selbst
+bleiben dem Repository vorbehalten: Ein Redaktionssystem, das seinen
+eigenen Code überschreiben kann, ist keines mehr.
 
 ## Neuen Stand holen
 

@@ -24,7 +24,16 @@ const GROESSTE_ANFRAGE = 12 * 1024 * 1024;
 
 // Beschreibbar ist nur, was die Redaktion pflegt – der Rest des Repositories
 // bleibt für diesen Server unerreichbar.
-const SCHREIBBAR = ['quelle/', 'statisch/wp-content/uploads/'];
+// Was die Redaktion ändern darf. Alles andere – Vorlagen, Skripte, der
+// Server selbst – bleibt dem Repository vorbehalten: Ein Redaktionssystem,
+// das seinen eigenen Code überschreiben kann, ist kein Redaktionssystem
+// mehr, sondern eine offene Tür.
+const SCHREIBBAR = [
+  'quelle/',                        // Beiträge, Stellen, Team, Textbausteine
+  'inhalt/',                        // feste Seiten, Menü, Einstellungen
+  'bilder/',                        // Bildbestand der Webseite
+  'statisch/wp-content/uploads/',   // übernommene und neu geladene Bilder
+];
 
 const TYPEN = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -187,6 +196,13 @@ const server = createServer(async (req, res) => {
         return res.end();
       }
       return dateiAusliefern(res, path.join(WURZEL, 'redaktion/oberflaeche.html'));
+    }
+    // Stil und Skript der Oberfläche. Nur diese beiden – der Ordner enthält
+    // auch zugang.json mit dem Passwort-Abdruck, und ein offener Ordner
+    // hätte die früher oder später mitgeliefert.
+    if (pfad === '/redaktion/stil.css' || pfad === '/redaktion/oberflaeche.js') {
+      return dateiAusliefern(res, path.join(WURZEL, pfad.slice('/redaktion/'.length)
+        .replace(/^/, 'redaktion/')));
     }
 
     // --------------------------------------------------------------- Dateien

@@ -1,0 +1,175 @@
+/* Oberfläche der Redaktion.
+   Aufbau wie man ihn von WordPress kennt: dunkle Leiste links, Inhalt
+   rechts, oben eine Kopfzeile mit dem Knopf zum Veröffentlichen. Die
+   Farben sind die des Hauses, nicht die von WordPress – wer hier
+   arbeitet, soll sehen, woran er arbeitet. */
+
+:root {
+  --petrol: #14514a; --nacht: #212934; --gelb: #fbb500;
+  --grund: #f2f1ec; --flaeche: #ffffff; --text: #212934; --grau: #5d6169;
+  --linie: #e0ded4; --rot: #a3341f; --gruen: #16704a;
+  --leiste: 250px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--grund); color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15.5px; line-height: 1.5; overflow-wrap: anywhere; }
+h1, h2, h3 { margin: 0; line-height: 1.25; }
+p { margin: 0; }
+a { color: var(--petrol); }
+:focus-visible { outline: 3px solid var(--gelb); outline-offset: 2px; border-radius: 4px; }
+.nurlesen { position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------------------------------------------------------- Grundgerüst */
+.huelle { display: flex; min-height: 100vh; }
+
+.leiste { width: var(--leiste); flex: none; background: var(--nacht); color: #c9d0d8;
+  display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
+.leiste .marke { padding: 20px 20px 16px; border-bottom: 1px solid #333c49; }
+.leiste .marke strong { display: block; color: #fff; font-size: 17px; letter-spacing: 0.04em; }
+.leiste .marke span { font-size: 12.5px; color: #8e99a6; }
+.leiste nav { padding: 10px 0; overflow-y: auto; flex: 1; }
+.leiste nav button { display: flex; align-items: center; gap: 10px; width: 100%;
+  background: none; border: 0; color: inherit; font: inherit; text-align: left;
+  padding: 10px 20px; cursor: pointer; border-left: 4px solid transparent; }
+.leiste nav button:hover { background: #2c3644; color: #fff; }
+.leiste nav button[aria-current="true"] { background: #2c3644; color: #fff;
+  border-left-color: var(--gelb); font-weight: 700; }
+.leiste nav .trenner { margin: 10px 20px; border-top: 1px solid #333c49; }
+.leiste .fuss { padding: 14px 20px; border-top: 1px solid #333c49; display: flex;
+  flex-direction: column; gap: 8px; font-size: 14px; }
+.leiste .fuss a, .leiste .fuss button { color: #c9d0d8; background: none; border: 0;
+  font: inherit; padding: 0; text-align: left; cursor: pointer; text-decoration: underline; }
+
+.inhalt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.kopf { position: sticky; top: 0; z-index: 10; background: var(--flaeche);
+  border-bottom: 1px solid var(--linie); padding: 14px 26px;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.kopf h1 { font-size: 21px; margin-right: auto; }
+.arbeit { padding: 22px 26px 60px; max-width: 1180px; }
+
+/* ------------------------------------------------------------- Bausteine */
+.karte { background: var(--flaeche); border: 1px solid var(--linie); border-radius: 10px;
+  padding: 20px 22px; margin-bottom: 16px; }
+.karte > h2 { font-size: 17px; margin-bottom: 4px; }
+.wo { font-size: 14px; color: var(--grau); margin-bottom: 14px; }
+.still { color: var(--grau); font-size: 14px; }
+
+button, .knopf { font: inherit; border: 1px solid var(--linie); background: var(--flaeche);
+  color: var(--text); border-radius: 7px; padding: 8px 14px; cursor: pointer;
+  text-decoration: none; display: inline-block; }
+button:hover, .knopf:hover { background: #f6f5f0; }
+button.primaer, .knopf.primaer { background: var(--petrol); border-color: var(--petrol); color: #fff; font-weight: 700; }
+button.primaer:hover { background: #10403a; }
+button.gefahr { color: var(--rot); border-color: #e3c7c0; }
+button.gefahr:hover { background: #fbf1ee; }
+button[disabled] { opacity: 0.55; cursor: default; }
+button.klein { padding: 4px 9px; font-size: 13.5px; }
+
+.zeile { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+.zeile.oben { margin-top: 0; margin-bottom: 14px; }
+
+label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+label .hinweis { font-weight: 400; color: var(--grau); }
+input[type="text"], input[type="date"], input[type="number"], input[type="password"],
+input[type="email"], input[type="url"], textarea, select {
+  font: inherit; width: 100%; border: 1px solid #c8c6bb; border-radius: 7px;
+  padding: 9px 11px; background: #fff; color: var(--text); }
+textarea { min-height: 220px; resize: vertical; line-height: 1.55; }
+textarea.klein { min-height: 90px; }
+.feld { margin-bottom: 16px; }
+.feldreihe { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+fieldset { border: 1px solid var(--linie); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px; }
+fieldset legend { font-weight: 700; font-size: 14px; padding: 0 4px; }
+fieldset label { display: inline-flex; align-items: center; gap: 6px; margin-right: 14px;
+  font-weight: 400; }
+fieldset input[type="checkbox"] { width: auto; }
+.haken { display: flex; align-items: center; gap: 8px; font-weight: 400; }
+.haken input { width: 18px; height: 18px; }
+
+/* ---------------------------------------------------------------- Listen */
+ul.liste { list-style: none; margin: 0; padding: 0; }
+ul.liste li { display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  padding: 12px 4px; border-bottom: 1px solid var(--linie); }
+ul.liste li:last-child { border-bottom: 0; }
+ul.liste .titel { flex: 1; min-width: 180px; }
+ul.liste .titel strong { display: block; }
+.etikett { display: inline-block; background: var(--grund); border: 1px solid var(--linie);
+  border-radius: 999px; padding: 1px 9px; font-size: 12.5px; margin-left: 6px; }
+
+/* ------------------------------------------------------------- Übersicht */
+.kacheln { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.zahlkachel { background: var(--flaeche); border: 1px solid var(--linie); border-radius: 10px;
+  padding: 18px 20px; }
+.zahlkachel .zahl { font-size: 32px; font-weight: 800; color: var(--petrol); }
+.zahlkachel .was { color: var(--grau); font-size: 14px; }
+.zahlkachel button { margin-top: 10px; }
+
+/* --------------------------------------------------------------- Meldung */
+#meldung { margin: 0 26px; }
+#meldung:empty { display: none; }
+#meldung > div { border-radius: 8px; padding: 11px 15px; margin-top: 14px;
+  border-left: 5px solid var(--petrol); background: #fff; border: 1px solid var(--linie);
+  border-left-width: 5px; }
+#meldung .ok { border-left-color: var(--gruen); }
+#meldung .fehler { border-left-color: var(--rot); }
+
+/* ---------------------------------------------------- Bausteine der Seite */
+.baustein { border: 1px solid var(--linie); border-radius: 10px; margin-bottom: 12px;
+  background: var(--flaeche); }
+.bausteinkopf { display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  padding: 10px 14px; background: #f7f6f1; border-bottom: 1px solid var(--linie);
+  border-radius: 9px 9px 0 0; }
+.bausteinkopf .art { font-weight: 800; }
+.bausteinkopf .wozu { color: var(--grau); font-size: 13.5px; margin-right: auto; }
+.bausteinkoerper { padding: 16px 18px; }
+.unterliste { border-left: 3px solid var(--linie); padding-left: 14px; margin-bottom: 12px; }
+.unterzeile { border: 1px solid var(--linie); border-radius: 8px; padding: 12px 14px;
+  margin-bottom: 10px; background: #fcfbf8; }
+
+/* --------------------------------------------------------------- Vorschau */
+.zweispaltig { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: start; }
+@media (max-width: 68em) { .zweispaltig { grid-template-columns: minmax(0, 1fr); } }
+.vorschau { border: 1px solid var(--linie); border-radius: 10px; padding: 18px;
+  background: #fff; }
+.vorschau-titelzeile { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 700; color: var(--grau); margin-bottom: 8px; }
+.v-titel { font-size: 24px; font-weight: 800; line-height: 1.2; }
+.v-datum { color: var(--grau); font-size: 14px; margin-top: 4px; }
+.v-body { margin-top: 10px; }
+.v-body h2 { font-size: 18px; margin: 14px 0 6px; }
+.v-body p { margin: 8px 0; }
+.v-body img { max-width: 100%; border-radius: 8px; }
+.v-kachel { border: 1px solid var(--linie); border-radius: 10px; padding: 14px; background: #fff; }
+.platzhalter { color: #9a9a92; font-style: italic; }
+.werkzeuge { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+
+/* ---------------------------------------------------------------- Medien */
+.medien { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.medium { border: 1px solid var(--linie); border-radius: 10px; overflow: hidden; background: #fff;
+  display: flex; flex-direction: column; }
+.medium img { width: 100%; height: 110px; object-fit: cover; display: block; background: #eee; }
+.medium .name { font-size: 12.5px; padding: 8px 10px 4px; word-break: break-all; flex: 1; }
+.medium .tun { display: flex; gap: 6px; padding: 0 10px 10px; }
+.medium .tun button { flex: 1; padding: 4px 6px; font-size: 13px; }
+
+/* -------------------------------------------------------------- Anmeldung */
+.anmeldekasten { max-width: 380px; margin: 12vh auto; }
+
+/* ------------------------------------------------------------- Schmalbild */
+.burger { display: none; }
+@media (max-width: 56em) {
+  .huelle { flex-direction: column; }
+  .leiste { width: 100%; height: auto; position: static; }
+  .leiste nav { display: none; }
+  .leiste.offen nav { display: block; }
+  .burger { display: inline-block; margin-left: auto; background: #2c3644; color: #fff;
+    border-color: #3c4757; }
+  .leiste .marke { display: flex; align-items: center; gap: 12px; }
+  .arbeit { padding: 18px 16px 50px; }
+  .kopf { padding: 12px 16px; }
+  #meldung { margin: 0 16px; }
+}
