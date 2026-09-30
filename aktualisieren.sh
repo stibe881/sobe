@@ -22,7 +22,38 @@ git checkout -- statisch/ 2>/dev/null || true
 git clean -fdq statisch/
 
 echo "2/4  Neuen Stand holen …"
+# Redaktionelle Inhalte gehören dem Server, nicht dem Repository. Ändert
+# die Redaktion eine Datei, die im neuen Stand auch geändert wurde, bricht
+# «git pull» ab – und dann wird gar nichts mehr gebaut. Genau das ist
+# passiert: Ein Produkt war erfasst, der Shop blieb leer, und niemand sah
+# warum.
+#
+# Darum: Was die Redaktion angefasst hat, wird beiseitegelegt, der neue
+# Stand geholt und die Fassung des Servers zurückgespielt. Bei einem
+# Widerspruch gewinnt der Server – die Arbeit der Redaktion darf ein
+# Update nie wegräumen.
+EIGENE="$(git diff --name-only -- quelle inhalt)"
+if [ -n "$EIGENE" ]; then
+  SICHERUNG="$(mktemp -d)"
+  echo "    Von der Redaktion geändert – wird behalten:"
+  printf '      %s\n' $EIGENE
+  for datei in $EIGENE; do
+    mkdir -p "$SICHERUNG/$(dirname "$datei")"
+    cp -a "$datei" "$SICHERUNG/$datei"
+  done
+  git checkout -- $EIGENE
+fi
+
 git pull --ff-only
+
+if [ -n "${SICHERUNG:-}" ]; then
+  for datei in $EIGENE; do
+    mkdir -p "$(dirname "$datei")"
+    cp -a "$SICHERUNG/$datei" "$datei"
+  done
+  rm -rf "$SICHERUNG"
+  echo "    Die Fassung des Servers ist wiederhergestellt."
+fi
 
 echo "3/4  Seite bauen …"
 npm run bauen

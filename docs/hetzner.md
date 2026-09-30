@@ -59,31 +59,53 @@ Die Seite ist dann unter `ihre-domain.ch/sobe-webseite/` erreichbar.
 
 ### Wo der Projektordner liegt
 
-Zwei Anordnungen sind möglich:
+Auf diesem Hosting werden mit der Zeit mehrere Webseiten liegen. Damit man
+die Übersicht behält, bekommt jede ihren eigenen Ordner – und zwar unter
+einem gemeinsamen Dach **ausserhalb** des Web-Verzeichnisses:
 
-**Getrennt.** Der Klon liegt in `~/projekt`, die gebaute Webseite wird nach
-`~/public_html/sobe-webseite` kopiert (Umgebungsvariable `OEFFENTLICH`).
-Der Quelltext liegt dann ausserhalb des Web-Verzeichnisses.
+```
+~/projekte/sobe-webseite/     der Klon dieser Webseite
+~/projekte/<naechste>/        die nächste Webseite
+~/public_html/sobe-webseite/  was ausgeliefert wird
+```
 
-**Im Web-Verzeichnis.** Der Klon liegt selbst unter
-`~/public_html/sobe-webseite`. Dann wird **nicht kopiert**: Node liefert
-`statisch/` direkt aus, und `OEFFENTLICH` bleibt leer.
+Das ist die empfohlene Anordnung. Sie hält das Heimverzeichnis aufgeräumt
+(ein `projekte/` statt vieler loser Ordner) und lässt den Quelltext
+ausserhalb von `public_html` – dort kann ihn niemand versehentlich
+ausliefern.
 
 ```bash
-# Umzug von der ersten in die zweite Anordnung.
+# Dorthin ziehen, egal wo der Klon gerade liegt.
 # Vorher in konsoleH die Node-Anwendung stoppen.
 cd ~
-ls projekt/bauen.mjs                 # Sicherheitshalber: ist das der Klon?
-rm -rf public_html/sobe-webseite     # die alte Auslieferung – entsteht neu
-mv projekt public_html/sobe-webseite
-cd public_html/sobe-webseite
-cp werkzeuge/projekt.htaccess .htaccess
+mkdir -p projekte
+mv projekt projekte/sobe-webseite          # falls er im Heimverzeichnis liegt
+# oder, falls er schon unter public_html liegt:
+#   mv public_html/sobe-webseite projekte/sobe-webseite
+#   mkdir -p public_html/sobe-webseite
+cd projekte/sobe-webseite
 ./aktualisieren.sh
 ```
 
-Danach in konsoleH beim Node-Eintrag **Arbeitsverzeichnis** auf
-`public_html/sobe-webseite` setzen und die Umgebungsvariable
-`OEFFENTLICH` **löschen**. Dann starten.
+In konsoleH beim Node-Eintrag:
+
+| Feld | Wert |
+| --- | --- |
+| Arbeitsverzeichnis | `projekte/sobe-webseite` |
+| `OEFFENTLICH` | `/usr/home/e3z3sy/public_html/sobe-webseite` |
+
+#### Die Anordnung ohne Kopieren
+
+Wer den Klon lieber direkt unter `~/public_html/sobe-webseite` hat, kann
+das: Dann wird **nicht kopiert**, Node liefert `statisch/` direkt aus und
+`OEFFENTLICH` bleibt leer. Nötig ist dann eine Sperre für Apache:
+
+```bash
+cd ~/public_html/sobe-webseite
+cp werkzeuge/projekt.htaccess .htaccess
+```
+
+Das ist der kürzere, aber nicht der bessere Weg – siehe unten.
 
 > **Warum die `.htaccess`.** Im Projektordner liegen der Quelltext,
 > `redaktion/zugang.json` mit dem Abdruck des Redaktionspassworts,
@@ -93,8 +115,9 @@ Danach in konsoleH beim Node-Eintrag **Arbeitsverzeichnis** auf
 > Sperre alles offen. Die Datei verbietet Apache jede Auslieferung aus
 > diesem Verzeichnis.
 >
-> Wer den Quelltext lieber ganz ausserhalb des Web-Verzeichnisses hat,
-> bleibt bei der ersten Anordnung. Sie ist die sicherere.
+> Deshalb die Empfehlung oben: Quelltext nach `~/projekte/<name>/`. Was
+> gar nicht im Web-Verzeichnis liegt, kann auch nicht ausgeliefert werden –
+> und mehrere Webseiten bleiben trotzdem übersichtlich beisammen.
 
 Aufschalten und Projektordner dürfen **nie dasselbe Verzeichnis** sein:
 Der Abgleich löscht im Ziel alles, was nicht aus `statisch/` stammt – das
@@ -285,3 +308,26 @@ node a11y-pruefung.js http://127.0.0.1:8189
 ```
 
 Sinnvoll vor jeder grösseren Änderung am Aufbau der Seite.
+
+## Was dem Server gehört und was dem Repository
+
+`quelle/` und `inhalt/` sind **redaktionelle Inhalte**. Sie werden auf dem
+Server bearbeitet – über die Redaktion – und liegen zugleich im
+Repository, damit es eine Sicherung gibt.
+
+Das kann sich beissen: Ändert die Redaktion eine Datei, die im neuen Stand
+ebenfalls geändert wurde, bricht `git pull` ab. Und dann wird **gar nichts
+mehr gebaut**, obwohl alles richtig erfasst ist. Genau das ist einmal
+passiert: Ein Produkt war angelegt, der Shop blieb leer, und die Meldung
+stand nur in der SSH-Sitzung.
+
+`aktualisieren.sh` löst das jetzt selbst: Was die Redaktion angefasst hat,
+wird beiseitegelegt, der neue Stand geholt und die Fassung des Servers
+zurückgespielt. **Bei einem Widerspruch gewinnt der Server** – die Arbeit
+der Redaktion darf ein Update nie wegräumen. Das Skript sagt dabei, welche
+Dateien es behalten hat.
+
+Daraus folgt eine Regel für alle, die am Repository arbeiten: **Dateien
+unter `quelle/` nicht mehr ändern.** Sie gehören dem Server. Ändern darf
+man Vorlagen, Skripte und die Anleitung – alles, was niemand über die
+Redaktion bearbeitet.
