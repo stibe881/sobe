@@ -424,9 +424,9 @@ const arten = {
         <div class="abschluss">
           <p class="summe" id="spendensumme" role="status" aria-live="polite">${schuetzen(t('Ihre Spende'))}: <strong>CHF 50</strong> ${schuetzen(t('einmalig'))}</p>
           ${eingerichtet
-            ? `<button class="knopf spende" type="submit">${schuetzen(t('Weiter zur Zahlung'))}</button>`
+            ? `<button class="knopf spende spendenknopf" type="submit">${schuetzen(t('Weiter zur Zahlung'))}</button>`
             : `<p class="hinweis" id="nochkeinweg">${schuetzen(t('Die Online-Zahlung ist noch nicht eingerichtet – es fehlt der Vertrag mit einem Zahlungsdienstleister. Bis dahin führt der Weg über eine Überweisung oder über'))} <a href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(einstellungen.mail)}</a>.</p>
-             <a class="knopf spende" id="spendenmail" href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(t('Spende per E-Mail anmelden'))}</a>`}
+             <a class="knopf spende spendenknopf" id="spendenmail" href="mailto:${schuetzen(einstellungen.mail)}">${schuetzen(t('Spende per E-Mail anmelden'))}</a>`}
         </div>
       </form>
     </div>`;

@@ -53,14 +53,21 @@ p { margin: 0; }
    rutschte – die Leiste blieb «einzeilig», der Knopf war zweizeilig. */
 .menue > a, .menue .suchform, .menue .knopf { flex: none; }
 .menue .knopf { white-space: nowrap; }
-.menue a { color: var(--text); font-weight: 600; padding: 6px 2px; border-bottom: 2px solid transparent; }
-.menue a:hover { text-decoration: none; border-bottom-color: var(--linie); }
-.menue a[aria-current="page"] { border-bottom-color: var(--gelb); }
-.knopf { display: inline-block; background: var(--nacht); color: var(--weiss); border-radius: 999px;
+/* «:not(.knopf)» ist hier keine Feinheit, sondern der Kern: «.menue a» hat
+   die Spezifität 0-1-1 und gewinnt damit gegen «.knopf» (0-1-0). Ohne die
+   Ausnahme bekam der Spendenknopf das Polster eines Menüpunkts – zwei
+   Pixel links und rechts – und war auf die reine Textbreite eingeschnürt.
+   Ein Bildzeichen daneben hatte darin keinen Platz: Es rutschte unter das
+   Wort, und aus dem Knopf wurde ein Kreis. */
+.menue a:not(.knopf) { color: var(--text); font-weight: 600; padding: 6px 2px;
+  border-bottom: 2px solid transparent; }
+.menue a:not(.knopf):hover { text-decoration: none; border-bottom-color: var(--linie); }
+.menue a[aria-current="page"]:not(.knopf) { border-bottom-color: var(--gelb); }
+.knopf { display: inline-block; background-color: var(--nacht); color: var(--weiss); border-radius: 999px;
   padding: 12px 24px; font-weight: 700; font-size: 1rem; border: 0; cursor: pointer; font-family: inherit; }
-.knopf:hover { text-decoration: none; background: #313b48; }
-.knopf.gelb { background: var(--gelb); color: var(--nacht); }
-.knopf.gelb:hover { background: #e5a600; }
+.knopf:hover { text-decoration: none; background-color: #313b48; }
+.knopf.gelb { background-color: var(--gelb); color: var(--nacht); }
+.knopf.gelb:hover { background-color: #e5a600; }
 .burger { display: none; margin-left: auto; background: none; border: 0; padding: 8px 10px;
   font-size: 1.625rem; line-height: 1; cursor: pointer; color: var(--text); border-radius: 12px; }
 
@@ -120,18 +127,28 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    gequetschten Leiste. Die Klasse «grossschrift» wirkt anders: Sie lässt die
    Leiste auf breiten Bildschirmen zweizeilig werden. Auch gut, nur eben
    nicht dasselbe. */
+/* Inhaltsregeln – sie hängen an der Fensterbreite, nicht am Burger, und
+   bleiben deshalb bei 68em. */
 @media (max-width: 68em) {
   body { font-size: 1rem; }
+  .kachel { padding: 22px; }
+  .reihe .datum { width: auto; }
+}
+
+/* Ab hier die Kopfleiste. Der Umschaltpunkt liegt bei 72em statt 68em:
+   Gemessen passt die Zeile mit gestauchten Lücken ab 1153px einzeilig,
+   darunter nicht mehr. Er wanderte über die Jahre von 53.75em auf 64em auf
+   68em – jedes Mal, weil die Zeile etwas mehr zu tragen bekam. Diesmal war
+   es das Polster des Spendenknopfs. */
+@media (max-width: 72em) {
   .menue { display: none; position: absolute; left: 20px; right: 20px; top: 74px; background: var(--flaeche);
     border-radius: var(--rund); box-shadow: 0 10px 30px rgba(33, 41, 52, 0.16);
     flex-direction: column; align-items: stretch; gap: 0; padding: 10px; }
   .menue.offen { display: flex; }
-  .menue a { padding: 13px 14px; border-bottom: 1px solid var(--linie); }
-  .menue a:last-of-type { border-bottom: 0; }
+  .menue a:not(.knopf) { padding: 13px 14px; border-bottom: 1px solid var(--linie); }
+  .menue a:not(.knopf):last-of-type { border-bottom: 0; }
   .menue .knopf { text-align: center; margin: 10px 4px 4px; }
   .burger { display: block; }
-  .kachel { padding: 22px; }
-  .reihe .datum { width: auto; }
 }
 
 /* Lauftext aus Beiträgen und Stelleninseraten */
@@ -198,7 +215,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    sagt dasselbe auf einem Viertel des Platzes. Im aufgeklappten Menü auf
    dem Telefon bleibt das Feld, dort ist Platz. */
 .menue .suchform { display: none; }
-@media (max-width: 68em) {
+@media (max-width: 72em) {
   .menue .suchform { display: flex; }
   .werkzeuge .suchknopf-kopf { display: none; }
 }
@@ -297,7 +314,7 @@ html.dunkel .kachel.bild img { filter: brightness(0.9); }
 .werkzeuge { order: 3; margin-left: 10px; }
 .burger { order: 4; }
 
-@media (max-width: 68em) {
+@media (max-width: 72em) {
   .werkzeuge { order: 2; margin-left: auto; gap: 6px; }
   .burger { order: 3; margin-left: 8px; }
   .menue { order: 5; }
@@ -325,19 +342,36 @@ html.dunkel .logo .fuerdunkel { display: block; }
    und Knopf zusammen sprengen eine Zeile, und der Knopf stand allein auf
    der zweiten. Etwas weniger Abstand und ein schmaleres Suchfeld halten
    alles beieinander. */
-@media (min-width: 68.0625em) and (max-width: 75em) {
+/* Zwei Stauch-Bereiche zwischen Burger und voller Breite. Ihre Obergrenzen
+   sind gemessen, nicht geraten: Seit der Spendenknopf sein richtiges Polster
+   hat (46px links für das Herz), braucht die Zeile rund 60px mehr als vorher
+   und fiel zwischen 1090 und 1260 Pixeln auf zwei Zeilen. Vorher endete die
+   Stauchung bei 75em – oberhalb davon stand sie ungestaucht und brach um. */
+@media (min-width: 72.0625em) and (max-width: 84em) {
   .menue { gap: 15px; }
-  .suchfeld { width: 86px; }
   .kopfband { padding-left: 20px; }
 }
 /* Knapp über dem Burger-Punkt reicht das noch nicht: Der Spendenknopf mit
    Herz ist breiter als der frühere «Beratung», und die Leiste wurde
    zwischen 1025 und 1150 Pixeln zweizeilig. Hier wird weiter gestrafft. */
-@media (min-width: 68.0625em) and (max-width: 72em) {
+@media (min-width: 72.0625em) and (max-width: 78em) {
   .menue { gap: 10px; }
-  .suchfeld { width: 62px; }
   .knopf { padding: 12px 18px; }
+  /* «.menue .spendenknopf» (0-1-1) muss hier gegen «.spendenknopf» (0-1-0)
+     antreten – ohne den Menü-Teil bliebe das breite Polster stehen. */
+  .menue .spendenknopf { padding-left: 38px; background-position: 14px center;
+    background-size: 16px 16px; }
   .werkzeuge { margin-left: 6px; }
+}
+
+/* Der engste Bereich, direkt über dem Burger: Hier hat das Menü 687px und
+   bräuchte 722 – gemessen bei 1160px. Die Lücken zwischen den Punkten sind
+   der billigste Platz: neun Lücken mal vier Pixel sind schon 36. */
+@media (min-width: 72.0625em) and (max-width: 74em) {
+  .menue { gap: 6px; }
+  .menue .knopf { padding: 12px 14px; }
+  .menue .spendenknopf { padding-left: 34px; background-position: 12px center; }
+  .werkzeuge { gap: 4px; }
 }
 
 /* ===================================================================== */
@@ -351,8 +385,12 @@ html.dunkel .logo .fuerdunkel { display: block; }
 /* Die beiden Knöpfe im Kopf: Spenden trägt das Gelb, Beratung das Petrol.
    Eine eigene Klasse statt «.knopf.gelb», damit die gelben Knöpfe im
    Seitenkörper – etwa auf den Titelkacheln – davon unberührt bleiben. */
-.knopf.spende { background: var(--gelb); color: var(--nacht); }
-.knopf.beratung { background: var(--petrol); color: var(--weiss); }
+/* «background-color», nicht «background»: Die Kurzschrift setzt auch
+   «background-image» zurück. Da «.knopf.spende» spezifischer ist als
+   «.spendenknopf», hätte sie dem Knopf das Herz wieder weggenommen –
+   egal, wie weit unten es steht. */
+.knopf.spende { background-color: var(--gelb); color: var(--nacht); }
+.knopf.beratung { background-color: var(--petrol); color: var(--weiss); }
 html.dunkel .knopf.spende { color: #1a1305; }
 /* Nur in der Kopfleiste bleibt der Knopf in einer Zeile. Im Seitenkörper
    muss er umbrechen dürfen: «Annunciare la donazione per e-mail» ist
@@ -364,7 +402,7 @@ html.dunkel .knopf.spende { color: #1a1305; }
    aufgeklappten Menü auf dem Telefon ist der Platz da – dort stehen
    beide untereinander. */
 .nurschmal { display: none; }
-@media (max-width: 68em) {
+@media (max-width: 72em) {
   .nurschmal { display: inline-block; }
   .menue .knopf.spende { text-align: center; justify-content: center; margin: 8px 4px 4px; }
 }
@@ -445,7 +483,7 @@ html.dunkel .pflicht { color: #ff9b83; }
   padding: 22px 30px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
 .abschluss .summe { margin-right: auto; font-size: 1.0625rem; }
 .abschluss .summe strong { color: var(--gelb); font-size: 1.25rem; }
-.abschluss .knopf.spende { background: var(--gelb); color: var(--nacht); font-size: 1.0625rem; padding: 15px 30px; }
+.abschluss .knopf.spende { background-color: var(--gelb); color: var(--nacht); font-size: 1.0625rem; padding: 15px 30px; }
 .abschluss .hinweis { flex-basis: 100%; margin: 0; }
 
 /* Das Formular ist viel höher als die Kacheln daneben. Ohne Zutun füllt die
@@ -495,8 +533,6 @@ html.dunkel .pflicht { color: #ff9b83; }
 .sprachfeld a[aria-current="true"] { background: var(--petrol); color: var(--weiss); }
 html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
 
-@media (max-width: 68em) {
-}
 /* Auf schmalen Geräten hängen die aufklappbaren Felder am Fenster, nicht am
    Knopf. Rechtsbündig an einem schmalen Knopf ragte das Feld über die linke
    Kante hinaus – bei 320 Punkten um 47 davon, und dort stand die
@@ -581,3 +617,47 @@ html.dunkel .wareaus { color: #ff9b83; }
   color: var(--text); font-weight: 600; font-size: 0.9375rem; }
 .sprachzeile a:hover { background: var(--linie); text-decoration: none; }
 .sprachzeile a[aria-current="true"] { background: var(--petrol); color: var(--weiss); }
+
+/* ===================================================================== */
+/* Der Spendenknopf                                                      */
+/* ===================================================================== */
+
+/* Ein Herz vor dem Wort – aber als Hintergrundbild, nicht als eigenes
+   Element. Ein <svg> im Knopf hatte die Kopfleiste schon einmal zerlegt:
+   In der engen Flex-Zeile rutschte das Wort unter das Zeichen und aus dem
+   Knopf wurde ein Kreis. Ein Hintergrund kann nicht umbrechen.
+   Die Farbe steht fest im Bild (Nachtblau) – in einem Hintergrundbild
+   wirkt currentColor nicht; auf dem gelben Grund ist sie in beiden
+   Modi richtig. */
+.spendenknopf {
+  padding-left: 46px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.8C6.3 17 2.6 14 2.6 10.1 2.6 7.3 4.8 5.2 7.5 5.2c1.7 0 3.4.9 4.5 2.5 1.1-1.6 2.8-2.5 4.5-2.5 2.7 0 4.9 2.1 4.9 4.9 0 3.9-3.7 6.9-9.4 10.7z' fill='%23212934'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 18px center;
+  background-size: 18px 18px;
+  /* Ein warmer Schein statt einer harten Kante: Der Knopf soll einladen,
+     nicht befehlen. */
+  box-shadow: 0 3px 12px rgba(251, 181, 0, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.spendenknopf:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(251, 181, 0, 0.7);
+  text-decoration: none;
+}
+.spendenknopf:active { transform: translateY(0); }
+
+/* Im Grossen – auf der Spendenseite – darf das Herz mitwachsen.
+   «.abschluss .knopf.spendenknopf» und nicht «.abschluss .spendenknopf»:
+   Gegenüber steht «.abschluss .knopf.spende { padding: 15px 30px }». Bei
+   gleicher Spezifität entscheidet die Reihenfolge, und die steht hier
+   weiter unten. Mit einer Klasse weniger hätte das Herz auf dem ersten
+   Buchstaben gelegen. */
+.abschluss .knopf.spendenknopf { padding-left: 56px; background-position: 22px center;
+  background-size: 22px 22px; }
+
+@media (max-width: 72em) {
+  /* Im aufgeklappten Menü steht der Knopf über die ganze Breite; das Herz
+     rückt dann zur Schrift, nicht an den Rand. */
+  .menue .spendenknopf { background-position: center left calc(50% - 68px); }
+}

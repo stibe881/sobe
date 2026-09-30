@@ -144,7 +144,7 @@ ${menue}
       <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
            der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
            Das Wort allein sagt dasselbe und verträgt jede Breite. -->
-      <a class="knopf spende" href="${schuetzen(pfadFuer(einstellungen.spendenKnopf.pfad, sprache))}">${schuetzen(t(einstellungen.spendenKnopf.titel))}</a>
+      <a class="knopf spende spendenknopf" href="${schuetzen(pfadFuer(einstellungen.spendenKnopf.pfad, sprache))}">${schuetzen(t(einstellungen.spendenKnopf.titel))}</a>
     </nav>
   </div>
 </header>
