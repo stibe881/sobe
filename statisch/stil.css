@@ -116,7 +116,10 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 /* Das seitliche Polster und der Gegenzug im Rand sind nur dafür da, dass
    die Fläche beim Darüberfahren etwas Luft um die Schrift hat, ohne dass
    die Zeile gegenüber den übrigen Inhalten einrückt. */
-.reihe { display: flex; gap: 20px; padding: 13px 10px; margin: 0 -10px;
+/* Zwei Abstände statt einem: 20 Punkte zwischen Datum und Titel, aber nur
+   4, wenn der Titel darunter rutscht. Mit 20 auch dort hing das Datum in
+   der Luft und sah aus, als gehörte es zur Zeile darüber. */
+.reihe { display: flex; column-gap: 20px; row-gap: 4px; padding: 13px 10px; margin: 0 -10px;
   border-bottom: 1px solid var(--linie); align-items: baseline; flex-wrap: wrap;
   border-radius: 10px; transition: background-color 0.14s ease; }
 /* Nur Zeilen, in denen wirklich etwas zu holen ist – die PDF-Liste führt
@@ -124,6 +127,13 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .reihe:has(a):hover { background-color: var(--wisch); }
 .reihe:has(a):hover a { color: var(--tinte); }
 .reihe:last-child { border-bottom: 0; }
+/* Feste Breite, und zwar auf jedem Gerät. Vorher stand auf schmalen
+   Geräten «width: auto»: Dann ist die Spalte so breit wie ihr eigenes
+   Datum, und die Titel fangen in jeder Zeile woanders an – «1. Juni 2026»
+   ist eben kürzer als «13. August 2026». 130 Punkte fassen auch das
+   längste Datum der vier Sprachen («13. September 2026»).
+   Wird es zu eng, bricht der Titel dank «flex-wrap» unter das Datum –
+   dann in allen Zeilen gleich, und das ist der Punkt. */
 .reihe .datum { flex: none; width: 130px; color: var(--grau); font-size: 0.9062rem; }
 .reihe .inhalt { flex: 1; min-width: 200px; }
 .held { font-size: clamp(1.875rem, 5vw, 2.875rem); font-weight: 800; line-height: 1.08; }
@@ -180,7 +190,6 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 @media (max-width: 68em) {
   body { font-size: 1rem; }
   .kachel { padding: 22px; }
-  .reihe .datum { width: auto; }
 }
 
 /* Ab hier die Kopfleiste – eigener Block, weil ihr Umschaltpunkt an ihrem
