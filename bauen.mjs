@@ -54,6 +54,13 @@ function huelle({ titel, beschreibung, pfad, inhalt, einstellungen, sprache, spr
 <title>${schuetzen(titel)} · ${schuetzen(einstellungen.name)}</title>
 <meta name="description" content="${schuetzen(beschreibung)}">
 ${wechselkoepfe}
+<!-- Das Zeichen der bisherigen Webseite: der offene Ring aus dem
+     Schriftzug, Petrol auf Weiss. Drei Fassungen, weil kein Format überall
+     reicht – ICO für Älteres, PNG für Neueres, 180 Punkte für den
+     Startbildschirm auf dem iPhone. -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/stil.css">
 <script>
 /* Vor dem ersten Zeichnen: Sonst blitzt die helle Fassung kurz auf, bevor
@@ -380,6 +387,11 @@ export async function bauen() {
   // Sprachen dieselben, und pfadFuer lässt Dateien darum unangetastet.
   await cp(path.join(WURZEL, 'vorlagen/stil.css'), path.join(AUS, 'stil.css'));
   await cp(path.join(WURZEL, 'vorlagen/seite.js'), path.join(AUS, 'seite.js'));
+  // In die Wurzel und nicht nach bilder/: Manche Programme fragen «/favicon.ico»
+  // von sich aus ab, ohne je in den Kopf der Seite zu schauen.
+  for (const zeichen of ['favicon.ico', 'favicon.png', 'apple-touch-icon.png']) {
+    await cp(path.join(WURZEL, 'vorlagen', zeichen), path.join(AUS, zeichen));
+  }
   await cp(path.join(WURZEL, 'bilder'), path.join(AUS, 'bilder'), { recursive: true });
   if (existsSync(path.join(WURZEL, 'werkzeuge/404-seite.html'))) {
     await cp(path.join(WURZEL, 'werkzeuge/404-seite.html'), path.join(AUS, '404.html'));
