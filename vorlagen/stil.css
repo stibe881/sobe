@@ -42,7 +42,7 @@ a:hover { color: var(--ruf); }
    Sprachpille, ganze Karte –, bleibt die Schriftfarbe, wie sie ist. Diese
    Bauteile stehen weiter unten und melden ihren eigenen Ruf-Zustand. */
 .knopf:hover, .werkzeug:hover, .logo:hover, .treffer:hover, .ware:hover,
-.kachel.klickbar h2 a:hover, .sprachzeile a:hover, .sprachfeld a:hover,
+.kachel.klickbar h2 a:hover, .sprachzeile a:hover,
 .kachel.klickbar:hover h2 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--tinte); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { margin: 0; line-height: 1.2; }
@@ -183,12 +183,15 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
   .reihe .datum { width: auto; }
 }
 
-/* Ab hier die Kopfleiste. Der Umschaltpunkt liegt bei 72em statt 68em:
-   Gemessen passt die Zeile mit gestauchten Lücken ab 1153px einzeilig,
-   darunter nicht mehr. Er wanderte über die Jahre von 53.75em auf 64em auf
-   68em – jedes Mal, weil die Zeile etwas mehr zu tragen bekam. Diesmal war
-   es das Polster des Spendenknopfs. */
-@media (max-width: 72em) {
+/* Ab hier die Kopfleiste – eigener Block, weil ihr Umschaltpunkt an ihrem
+   Inhalt hängt und nicht am Inhalt der Seite. Er lag zwischenzeitlich bei
+   72em: Der Spendenknopf hatte sein richtiges Polster bekommen und die
+   Zeile brauchte rund 60px mehr. Seit die Sprachwahl nur noch im
+   Barrierefreiheits-Feld steht, fehlt ein Werkzeugkreis von 42px, und
+   gemessen passt die Zeile wieder bis 1089px – also zurück auf 68em.
+   Wer hier etwas hinzufügt, misst nach: Der Punkt wanderte schon von
+   53.75em auf 64em auf 68em, jedes Mal wegen eines neuen Bewohners. */
+@media (max-width: 68em) {
   .menue { display: none; position: absolute; left: 20px; right: 20px; top: 74px; background: var(--flaeche);
     border-radius: var(--rund); box-shadow: 0 10px 30px rgba(33, 41, 52, 0.16);
     flex-direction: column; align-items: stretch; gap: 0; padding: 10px; }
@@ -271,7 +274,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    sagt dasselbe auf einem Viertel des Platzes. Im aufgeklappten Menü auf
    dem Telefon bleibt das Feld, dort ist Platz. */
 .menue .suchform { display: none; }
-@media (max-width: 72em) {
+@media (max-width: 68em) {
   .menue .suchform { display: flex; }
   .werkzeuge .suchknopf-kopf { display: none; }
 }
@@ -374,7 +377,7 @@ html.dunkel .kachel.bild img { filter: brightness(0.9); }
 .werkzeuge { order: 3; margin-left: 10px; }
 .burger { order: 4; }
 
-@media (max-width: 72em) {
+@media (max-width: 68em) {
   .werkzeuge { order: 2; margin-left: auto; gap: 6px; }
   .burger { order: 3; margin-left: 8px; }
   .menue { order: 5; }
@@ -407,14 +410,14 @@ html.dunkel .logo .fuerdunkel { display: block; }
    hat (46px links für das Herz), braucht die Zeile rund 60px mehr als vorher
    und fiel zwischen 1090 und 1260 Pixeln auf zwei Zeilen. Vorher endete die
    Stauchung bei 75em – oberhalb davon stand sie ungestaucht und brach um. */
-@media (min-width: 72.0625em) and (max-width: 84em) {
+@media (min-width: 68.0625em) and (max-width: 84em) {
   .menue { gap: 15px; }
   .kopfband { padding-left: 20px; }
 }
 /* Knapp über dem Burger-Punkt reicht das noch nicht: Der Spendenknopf mit
    Herz ist breiter als der frühere «Beratung», und die Leiste wurde
    zwischen 1025 und 1150 Pixeln zweizeilig. Hier wird weiter gestrafft. */
-@media (min-width: 72.0625em) and (max-width: 78em) {
+@media (min-width: 68.0625em) and (max-width: 78em) {
   .menue { gap: 10px; }
   .knopf { padding: 12px 18px; }
   /* «.menue .spendenknopf» (0-1-1) muss hier gegen «.spendenknopf» (0-1-0)
@@ -427,7 +430,7 @@ html.dunkel .logo .fuerdunkel { display: block; }
 /* Der engste Bereich, direkt über dem Burger: Hier hat das Menü 687px und
    bräuchte 722 – gemessen bei 1160px. Die Lücken zwischen den Punkten sind
    der billigste Platz: neun Lücken mal vier Pixel sind schon 36. */
-@media (min-width: 72.0625em) and (max-width: 74em) {
+@media (min-width: 68.0625em) and (max-width: 74em) {
   .menue { gap: 6px; }
   .menue .knopf { padding: 12px 14px; }
   .menue .spendenknopf { padding-left: 34px; background-position: 12px center; }
@@ -462,7 +465,7 @@ html.dunkel .knopf.spende { color: #1a1305; }
    aufgeklappten Menü auf dem Telefon ist der Platz da – dort stehen
    beide untereinander. */
 .nurschmal { display: none; }
-@media (max-width: 72em) {
+@media (max-width: 68em) {
   .nurschmal { display: inline-block; }
   .menue .knopf.spende { text-align: center; justify-content: center; margin: 8px 4px 4px; }
 }
@@ -576,30 +579,14 @@ html.dunkel .pflicht { color: #ff9b83; }
 /* Sprachwahl                                                            */
 /* ===================================================================== */
 
-.sprachwahl { position: relative; }
-.sprachwahl > summary { list-style: none; cursor: pointer; display: flex;
-  align-items: center; justify-content: center; width: 42px; height: 42px;
-  background: var(--grund); color: var(--text); border-radius: 999px;
-  font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.04em; white-space: nowrap; }
-.sprachwahl > summary::-webkit-details-marker { display: none; }
-.sprachwahl > summary:hover { background: var(--linie); }
-.sprachwahl[open] > summary { background: var(--petrol); color: var(--weiss); }
-.sprachfeld { position: absolute; right: 0; top: 52px; z-index: 40; width: 190px;
-  background: var(--flaeche); color: var(--text); border-radius: var(--rund);
-  box-shadow: 0 10px 30px rgba(33, 41, 52, 0.18); padding: 12px; text-align: left; }
-.sprachfeld a { display: block; padding: 9px 12px; border-radius: 12px;
-  color: var(--text); font-weight: 600; }
-.sprachfeld a:hover { background: var(--grund); text-decoration: none; }
-.sprachfeld a[aria-current="true"] { background: var(--petrol); color: var(--weiss); }
-html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
 
-/* Auf schmalen Geräten hängen die aufklappbaren Felder am Fenster, nicht am
-   Knopf. Rechtsbündig an einem schmalen Knopf ragte das Feld über die linke
+/* Auf schmalen Geräten hängt das aufklappbare Feld am Fenster, nicht am
+   Knopf. Rechtsbündig an einem schmalen Knopf ragte es über die linke
    Kante hinaus – bei 320 Punkten um 47 davon, und dort stand die
    Sprachwahl. Mit festem Rand links und rechts kann das nicht passieren,
    egal wie breit der Inhalt wird. */
 @media (max-width: 34em) {
-  .zugangsfeld, .sprachfeld {
+  .zugangsfeld {
     position: fixed; left: 16px; right: 16px; width: auto; top: 76px;
     max-height: calc(100vh - 92px); overflow-y: auto;
   }
@@ -717,7 +704,7 @@ html.dunkel .wareaus { color: #ff9b83; }
 .abschluss .knopf.spendenknopf { padding-left: 56px; background-position: 22px center;
   background-size: 22px 22px; }
 
-@media (max-width: 72em) {
+@media (max-width: 68em) {
   /* Im aufgeklappten Menü steht der Knopf über die ganze Breite; das Herz
      rückt dann zur Schrift, nicht an den Rand. */
   .menue .spendenknopf { background-position: center left calc(50% - 68px); }

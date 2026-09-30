@@ -90,14 +90,10 @@ try {
           <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </a>
-      <details class="sprachwahl">
-        <summary aria-label="${schuetzen(t('Sprache') + ': ' + sprache.name)}"><span aria-hidden="true">${schuetzen(sprache.kennung.toUpperCase())}</span></summary>
-        <div class="sprachfeld">
-          <p class="zugangstitel">${schuetzen(t('Sprache'))}</p>
-${sprachwahl}
-        </div>
-      </details>
-      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="${schuetzen(t('Barrierefreiheit'))}">
+      <!-- Kein eigener Sprachknopf mehr: Die vier Sprachen standen zweimal
+           in derselben Zeile – hier als «DE»-Kreis und gleich daneben im
+           Barrierefreiheits-Feld. Geblieben ist die Zeile im Feld. -->
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="${schuetzen(t('Barrierefreiheit') + ' · ' + t('Sprache'))}">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
           <circle cx="12" cy="4" r="2" fill="currentColor"/>
           <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>

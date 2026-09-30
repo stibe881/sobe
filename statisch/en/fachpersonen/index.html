@@ -50,17 +50,10 @@ try {
           <path d="M15.4 15.4L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </a>
-      <details class="sprachwahl">
-        <summary aria-label="Language: English"><span aria-hidden="true">EN</span></summary>
-        <div class="sprachfeld">
-          <p class="zugangstitel">Language</p>
-          <a lang="de" hreflang="de" href="/fachpersonen/">Deutsch</a>
-          <a lang="fr" hreflang="fr" href="/fr/fachpersonen/">Français</a>
-          <a lang="it" hreflang="it" href="/it/fachpersonen/">Italiano</a>
-          <a lang="en" hreflang="en" href="/en/fachpersonen/" aria-current="true">English</a>
-        </div>
-      </details>
-      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibility">
+      <!-- Kein eigener Sprachknopf mehr: Die vier Sprachen standen zweimal
+           in derselben Zeile – hier als «DE»-Kreis und gleich daneben im
+           Barrierefreiheits-Feld. Geblieben ist die Zeile im Feld. -->
+      <button id="zugang" class="werkzeug" aria-expanded="false" aria-controls="zugangsfeld" aria-label="Accessibility · Language">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22">
           <circle cx="12" cy="4" r="2" fill="currentColor"/>
           <path d="M3.5 8.2c2.8.9 5.5 1.3 8.5 1.3s5.7-.4 8.5-1.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
