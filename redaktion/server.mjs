@@ -320,13 +320,22 @@ const server = createServer(async (req, res) => {
           ? (await readFile(path.join(WURZEL, '.git', zeiger), 'utf8')).trim().slice(0, 7)
           : kopf.slice(0, 7);
       } catch { /* kein Klon – dann bleibt es bei «unbekannt» */ }
-      return antwort(res, 200, {
-        stand,
-        gestartet: GESTARTET,
-        wurzel: 'Webseite',          // seit der Trennung: / ist die Webseite
-        oeffentlich: process.env.OEFFENTLICH || null,
-        offen: await unveroeffentlicht(),
-      });
+      // Stand und Startzeit bleiben offen: Genau dafür ist die Route da –
+      // von aussen sehen zu können, ob ein Pull angekommen ist, ohne sich
+      // erst anzumelden. Alles Übrige ist Innenleben und geht niemanden
+      // an, der nicht angemeldet ist: ein Pfad auf dem Server, ob etwas
+      // unveröffentlicht daliegt, welcher Übersetzungsdienst eingerichtet
+      // ist. Der Schlüssel selbst wird nirgends herausgegeben, auch nicht
+      // an die eigene Oberfläche – gemeldet wird nur, ob einer dasteht.
+      const auskunft = { stand, gestartet: GESTARTET, wurzel: 'Webseite' };
+      if (angemeldet) {
+        auskunft.oeffentlich = process.env.OEFFENTLICH || null;
+        auskunft.offen = await unveroeffentlicht();
+        auskunft.uebersetzer = uebersetzerBereit()
+          ? (process.env.UEBERSETZER || 'anthropic')
+          : null;
+      }
+      return antwort(res, 200, auskunft);
     }
 
     // ------------------------------------------------------------ Oberfläche

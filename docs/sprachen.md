@@ -98,6 +98,15 @@ Alternativ DeepL:
 | `UEBERSETZER` | `deepl` |
 | `DEEPL_API_KEY` | der Schlüssel |
 
+Die Umgebungsvariablen stehen in konsoleH bei der Node-Anwendung, in
+derselben Tabelle wie `OEFFENTLICH`. Nach dem Eintragen muss die Anwendung
+**neu gestartet** werden – Node liest die Umgebung nur beim Start.
+
+Ob der Schlüssel angekommen ist, steht danach in der Redaktion unter
+**Sprachen**: «Übersetzungsdienst: Anthropic – Schlüssel ist gesetzt.»
+Das kostet nichts und sagt es vor dem ersten Lauf. Gemeldet wird nur, *ob*
+einer dasteht, nie der Schlüssel selbst – und nur an Angemeldete.
+
 Ist **kein** Schlüssel gesetzt, wird nicht übersetzt – das Veröffentlichen
 läuft trotzdem durch und die fehlenden Stellen bleiben deutsch. Eine
 Webseite, die wegen einer fehlenden Übersetzung gar nicht aufgeschaltet

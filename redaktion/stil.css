@@ -56,6 +56,9 @@ a { color: var(--petrol); }
 .karte > h2 { font-size: 17px; margin-bottom: 4px; }
 .wo { font-size: 14px; color: var(--grau); margin-bottom: 14px; }
 .still { color: var(--grau); font-size: 14px; }
+/* Für Hinweise, die kein Fehler sind, aber auch nicht übersehen werden
+   dürfen – etwa ein fehlender Schlüssel beim Übersetzungsdienst. */
+.warnung { color: var(--rot); font-size: 14px; font-weight: 600; }
 
 button, .knopf { font: inherit; border: 1px solid var(--linie); background: var(--flaeche);
   color: var(--text); border-radius: 7px; padding: 8px 14px; cursor: pointer;

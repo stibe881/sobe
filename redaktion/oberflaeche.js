@@ -1380,12 +1380,25 @@ async function sprachenZeigen() {
   arbeit.appendChild(gitter);
 
   var lage = neu('p', { klasse: 'still' });
+  // Ob ein Schlüssel gesetzt ist, sieht man sonst erst, wenn das Übersetzen
+  // fehlschlägt – und das kostet einen Anlauf. Hier steht es vorher.
+  var dienst = neu('p', { klasse: 'still', text: 'Übersetzungsdienst: wird geprüft …' });
+  fetch('/api/stand').then(function (a) { return a.json(); }).then(function (s) {
+    dienst.textContent = s.uebersetzer
+      ? 'Übersetzungsdienst: ' + (s.uebersetzer === 'deepl' ? 'DeepL' : 'Anthropic') + ' – Schlüssel ist gesetzt.'
+      : 'Übersetzungsdienst: kein Schlüssel gesetzt. Ohne ihn bleibt Offenes deutsch. '
+        + 'Der Schlüssel kommt in konsoleH zur Node-Anwendung, als Umgebungsvariable '
+        + 'ANTHROPIC_API_KEY; danach die Anwendung neu starten.';
+    dienst.className = s.uebersetzer ? 'still' : 'warnung';
+  }).catch(function () { dienst.textContent = ''; });
+
   arbeit.appendChild(neu('div', { klasse: 'karte' }, [
     neu('h2', { text: 'Fehlende Übersetzungen nachführen' }),
     neu('p', { klasse: 'still', text:
       'Übersetzt alles, was noch offen ist, und baut die Webseite neu. '
       + 'Das kann je nach Menge ein paar Minuten dauern und kostet beim '
       + 'Übersetzungsdienst etwas.' }),
+    dienst,
     neu('div', { klasse: 'zeile' }, [
       neu('button', { klasse: 'primaer', text: 'Jetzt übersetzen', onclick: async function (e) {
         var knopf = e.target;
