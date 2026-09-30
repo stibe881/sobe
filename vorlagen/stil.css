@@ -9,8 +9,10 @@
   /* Und genauso --weiss: als Fläche wird daraus im dunklen Modus eine
      dunkle Kachel, als Schriftfarbe muss es weiss bleiben. Zwei Namen. */
   --flaeche: #ffffff;
-  /* Der Wisch hinter einem Verweis, über den die Maus fährt. */
+  /* Der Wisch unter einer Zeile, über der die Maus steht, und die Farbe,
+     die ein Verweis im Fliesstext dabei annimmt. */
   --wisch: rgba(251, 181, 0, 0.32);
+  --ruf: #8a5e00;
 }
 * { box-sizing: border-box; }
 /* Das hidden-Attribut kommt vom Browser als «[hidden] { display: none }» –
@@ -26,22 +28,22 @@ body { margin: 0; background: var(--grund); color: var(--text);
   overflow-wrap: anywhere;
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.0625rem; line-height: 1.55; }
-/* Beim Darüberfahren kein Unterstrich, sondern ein warmer Wisch hinter dem
-   Wort. Der Unterstrich sah aus wie ein Fehler im Satz und stand überall
-   gleich – ob Fliesstext, Kachel oder Fusszeile. Der Schatten ohne
-   Weichzeichner dehnt die Fläche nach aussen, ohne dass die Zeile
-   verrutscht; mit Polster wäre alles um vier Pixel gesprungen. */
+/* Beim Darüberfahren kein Unterstrich – er sah aus wie ein Fehler im Satz
+   und stand überall gleich. Stattdessen wechselt der Verweis die Farbe.
+   Eine Fläche hinter dem Text kam zuerst infrage, taugt aber nicht: Bricht
+   der Text um, zerfällt sie in zwei verschieden breite Blöcke mit
+   treppigen Kanten – bei einem zweizeiligen Beitragstitel gut zu sehen.
+   Eine Fläche gehört darum unter die ganze Zeile, nicht hinter das Wort;
+   das steht bei «.reihe» und «.treffer». */
 a { color: var(--tinte); text-decoration: none; font-weight: 600;
-  border-radius: 5px; transition: background-color 0.15s ease, box-shadow 0.15s ease; }
-a:hover { background-color: var(--wisch); box-shadow: 0 0 0 4px var(--wisch); }
+  transition: color 0.14s ease; }
+a:hover { color: var(--ruf); }
 /* Wo der Verweis selbst schon eine Fläche ist – Knopf, Werkzeugkreis,
-   Sprachpille, ganze Karte –, braucht er keinen zweiten Rahmen. Die
-   Regeln dieser Bauteile stehen weiter unten und gewinnen bei gleicher
-   Spezifität durch die Reihenfolge; hier wird nur geräumt, was sie nicht
-   selbst setzen. */
+   Sprachpille, ganze Karte –, bleibt die Schriftfarbe, wie sie ist. Diese
+   Bauteile stehen weiter unten und melden ihren eigenen Ruf-Zustand. */
 .knopf:hover, .werkzeug:hover, .logo:hover, .treffer:hover, .ware:hover,
-.kachel.klickbar h2 a:hover, .sprachzeile a:hover, .sprachfeld a:hover
-  { background-color: transparent; box-shadow: none; }
+.kachel.klickbar h2 a:hover, .sprachzeile a:hover, .sprachfeld a:hover,
+.kachel.klickbar:hover h2 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--tinte); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { margin: 0; line-height: 1.2; }
 img { display: block; max-width: 100%; }
@@ -77,9 +79,11 @@ p { margin: 0; }
    Wort, und aus dem Knopf wurde ein Kreis. */
 .menue a:not(.knopf) { color: var(--text); font-weight: 600; padding: 6px 2px;
   border-bottom: 2px solid transparent; }
-/* Der graue Strich beim Darüberfahren war auch nur ein Unterstrich; der
-   Wisch aus der allgemeinen Regel genügt. Der gelbe Strich der aktuellen
-   Seite bleibt – der sagt etwas anderes. */
+/* Der graue Strich beim Darüberfahren war auch nur ein Unterstrich. Ein
+   Menüpunkt bricht nie um, darum trägt er hier die Fläche selbst. Der
+   gelbe Strich der aktuellen Seite bleibt – der sagt etwas anderes. */
+.menue a:not(.knopf):hover { background-color: var(--wisch); border-radius: 8px;
+  box-shadow: 0 0 0 4px var(--wisch); }
 .menue a[aria-current="page"]:not(.knopf) { border-bottom-color: var(--gelb); }
 .knopf { display: inline-block; background-color: var(--nacht); color: var(--weiss); border-radius: 999px;
   padding: 12px 24px; font-weight: 700; font-size: 1rem; border: 0; cursor: pointer; font-family: inherit; }
@@ -109,7 +113,16 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
   display: flex; gap: 9px; align-items: baseline; }
 .kachel.klickbar .liste .fliess::before { content: "\203A"; color: var(--tinte);
   font-weight: 700; flex: none; }
-.reihe { display: flex; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--linie); align-items: baseline; flex-wrap: wrap; }
+/* Das seitliche Polster und der Gegenzug im Rand sind nur dafür da, dass
+   die Fläche beim Darüberfahren etwas Luft um die Schrift hat, ohne dass
+   die Zeile gegenüber den übrigen Inhalten einrückt. */
+.reihe { display: flex; gap: 20px; padding: 13px 10px; margin: 0 -10px;
+  border-bottom: 1px solid var(--linie); align-items: baseline; flex-wrap: wrap;
+  border-radius: 10px; transition: background-color 0.14s ease; }
+/* Nur Zeilen, in denen wirklich etwas zu holen ist – die PDF-Liste führt
+   auch Einträge ohne hinterlegte Datei. */
+.reihe:has(a):hover { background-color: var(--wisch); }
+.reihe:has(a):hover a { color: var(--tinte); }
 .reihe:last-child { border-bottom: 0; }
 .reihe .datum { flex: none; width: 130px; color: var(--grau); font-size: 0.9062rem; }
 .reihe .inhalt { flex: 1; min-width: 200px; }
@@ -127,7 +140,10 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    schwer lesbar – im Fuss ging der Kontrast auf 4,2 zurück. Die Farbe ist
    eine Eigenschaft, also erbt sie: Ein Satz auf der Fläche genügt, und
    jeder Verweis darin nimmt den hellen Wisch. */
-.fussk, .kachel.petrol, .abschluss, .kachel.nacht { --wisch: rgba(255, 255, 255, 0.18); }
+.fussk, .kachel.petrol, .abschluss, .nacht {
+  --wisch: rgba(255, 255, 255, 0.18); --ruf: #ffffff; }
+/* Auf Gelb wäre das dunkle Ocker des Ruftons kaum zu unterscheiden. */
+.kachel.gelb { --wisch: rgba(33, 41, 52, 0.14); --ruf: #4a3b06; }
 
 .fussk { grid-column: span 6; display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 0.9375rem; }
 .fussk img { height: 22px; width: auto; }
@@ -192,6 +208,14 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .lauftext blockquote { margin: 18px 0; padding: 14px 18px; background: var(--gelb);
   color: var(--nacht); border-radius: 14px; font-weight: 600; }
 .lauftext a { color: var(--tinte); }
+
+/* Diese Flächen setzen für Verweise eine eigene Schriftfarbe. Sie sind
+   genauso spezifisch wie die allgemeine Ruf-Regel weiter oben, stehen aber
+   später im Blatt und gewinnen damit – der Verweis in der Fusszeile blieb
+   beim Darüberfahren völlig unverändert. Darum hier noch einmal, mit dem
+   Rufton der jeweiligen Fläche. */
+.nacht a:hover, .petrol a:hover, .nacht a.hell:hover, .fussk a:hover,
+.lauftext a:hover { color: var(--ruf); }
 .lauftext img { border-radius: 14px; margin: 14px 0; }
 
 /* ===================================================================== */
@@ -269,8 +293,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .treffer:hover { text-decoration: none; }
 .trefferkopf { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .treffertitel { font-weight: 700; color: var(--tinte); font-size: 1.0625rem; }
-.treffer:hover .treffertitel { background-color: var(--wisch); border-radius: 5px;
-  box-shadow: 0 0 0 4px var(--wisch); }
+.treffer:hover { background-color: var(--wisch); border-radius: 10px; }
 .trefferart { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
   font-weight: 700; color: var(--grau); }
 .treffertext { color: var(--grau); margin-top: 4px; font-size: 0.9375rem; }
@@ -320,6 +343,7 @@ html.dunkel {
   /* Gelb hinter der aufgehellten Tinte wird auf dunklem Grund trüb; der
      Wisch nimmt darum dieselbe Farbe wie die Schrift, nur sehr blass. */
   --wisch: rgba(99, 200, 182, 0.22);
+  --ruf: var(--gelb);
 }
 /* Auf der gelben Kachel gilt weiter die dunkle Schrift – das Gelb ist in
    beiden Fassungen dasselbe, eine aufgehellte Tinte wäre darauf blind. */
@@ -595,8 +619,8 @@ html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
   background: var(--grund); }
 .waretext { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
 .warename { font-weight: 700; color: var(--tinte); }
-.ware:hover .warename { background-color: var(--wisch); border-radius: 5px;
-  box-shadow: 0 0 0 4px var(--wisch); }
+/* Die Karte hebt sich beim Darüberfahren schon an; ein zweites Zeichen am
+   Namen wäre zu viel. */
 .warekurz { font-size: 0.9375rem; color: var(--grau); line-height: 1.4; }
 .warepreis { font-weight: 800; font-size: 1.125rem; margin-top: 4px; }
 .wareaus { font-size: 0.8125rem; font-weight: 700; color: #a3341f; }
