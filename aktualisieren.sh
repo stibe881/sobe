@@ -13,6 +13,23 @@ vorher="$(git rev-parse --short HEAD)"
 echo "Stand auf der Platte: $vorher"
 echo
 
+# Ab hier wird an statisch/ gerührt. Bricht irgendetwas danach ab – ein
+# «git pull», das nicht durchgeht, ein Bau, der scheitert –, darf nicht ein
+# halb ausgeräumter Ordner zurückbleiben: Der Server liefert dann auf jeder
+# Seite «Nicht gefunden», und von aussen sieht das aus, als wäre er kaputt.
+# Der letzte eingecheckte Bau steht im Repository und ist eine Zeile
+# entfernt. Also: bei jedem vorzeitigen Ende zurückholen.
+aufraeumen() {
+  ende=$?
+  if [ "$ende" -ne 0 ]; then
+    echo
+    echo "Abgebrochen. Der zuletzt eingecheckte Stand von statisch/ wird"
+    echo "zurückgeholt, damit die Webseite weiter ausgeliefert wird."
+    git checkout -- statisch/ 2>/dev/null || true
+  fi
+}
+trap aufraeumen EXIT
+
 echo "1/4  Erzeugten Stand verwerfen …"
 git checkout -- statisch/ 2>/dev/null || true
 # Nicht nur verfolgte Dateien zurücksetzen: Das Bauen legt auch neue Seiten

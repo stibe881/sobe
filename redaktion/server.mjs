@@ -495,4 +495,18 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => console.log(`Redaktion läuft auf http://127.0.0.1:${PORT}`));
+server.listen(PORT, () => {
+  console.log(`Redaktion läuft auf http://127.0.0.1:${PORT}`);
+  console.log(`Projektordner: ${WURZEL}`);
+  // Fehlt der gebaute Stand, antwortet der Server auf jede Seite mit
+  // «Nicht gefunden» – und das sieht von aussen aus wie ein kaputter
+  // Server, obwohl bloss nichts zum Ausliefern da ist. Genau dieser Fall
+  // kostete einen Abend. Darum steht es hier im Log, beim Start, mit dem
+  // Befehl, der es behebt. Nach aussen bleibt es beim schlichten 404:
+  // Der Pfad auf dem Server geht niemanden etwas an.
+  if (!existsSync(path.join(WURZEL, 'statisch', 'index.html'))) {
+    console.error('ACHTUNG: statisch/index.html fehlt – die Webseite ist nicht gebaut.');
+    console.error('Jede Seite wird «Nicht gefunden» melden. Beheben mit:');
+    console.error(`  cd ${WURZEL} && git checkout -- statisch/ && npm run bauen`);
+  }
+});
