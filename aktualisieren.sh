@@ -30,7 +30,23 @@ npm run bauen
 echo "4/4  Auf public_html aufschalten …"
 # Ziel wie beim Server: die Umgebungsvariable, sonst der übliche Ort.
 ZIEL="${OEFFENTLICH:-$HOME/public_html/sobe-webseite}"
-if [ ! -d "$ZIEL" ]; then
+
+# Dasselbe Verzeichnis zweimal? Der Abgleich löscht im Ziel alles, was
+# nicht aus statisch/ stammt. Zeigt das Ziel auf den Projektordner – etwa
+# weil der Klon selbst unter public_html/sobe-webseite liegt –, wären das
+# der Quelltext, das Redaktionspasswort und die Bestellungen.
+aufloesen() { ( cd "$1" 2>/dev/null && pwd -P ) || printf '%s' "$1"; }
+PROJEKT="$(pwd -P)"
+ZIELP="$(aufloesen "$ZIEL")"
+gefaehrlich=""
+[ "$ZIELP" = "$PROJEKT" ] && gefaehrlich=ja
+case "$PROJEKT/" in "$ZIELP"/*) gefaehrlich=ja ;; esac
+case "$ZIELP/" in "$PROJEKT"/*) gefaehrlich=ja ;; esac
+if [ -n "$gefaehrlich" ]; then
+  echo "    Ziel und Projektordner sind dasselbe ($ZIELP) – nichts aufgeschaltet."
+  echo "    Liegt der Klon selbst im Web-Verzeichnis, wird das auch nicht gebraucht:"
+  echo "    Node liefert statisch/ direkt aus. OEFFENTLICH einfach leer lassen."
+elif [ ! -d "$ZIEL" ]; then
   echo "    $ZIEL gibt es nicht – übersprungen."
   echo "    Liegt die Webseite woanders: OEFFENTLICH=<pfad> ./aktualisieren.sh"
 elif command -v rsync >/dev/null 2>&1; then

@@ -57,8 +57,49 @@ Unterverzeichnis. Ohne sie zeigt die Domainwurzel ins Leere.
 
 Die Seite ist dann unter `ihre-domain.ch/sobe-webseite/` erreichbar.
 
-Das **Redaktionssystem gehört nicht nach `public_html`** – es bleibt in
-`~/projekt` und wird über seine eigene Adresse erreicht (Schritt 2).
+### Wo der Projektordner liegt
+
+Zwei Anordnungen sind möglich:
+
+**Getrennt.** Der Klon liegt in `~/projekt`, die gebaute Webseite wird nach
+`~/public_html/sobe-webseite` kopiert (Umgebungsvariable `OEFFENTLICH`).
+Der Quelltext liegt dann ausserhalb des Web-Verzeichnisses.
+
+**Im Web-Verzeichnis.** Der Klon liegt selbst unter
+`~/public_html/sobe-webseite`. Dann wird **nicht kopiert**: Node liefert
+`statisch/` direkt aus, und `OEFFENTLICH` bleibt leer.
+
+```bash
+# Umzug von der ersten in die zweite Anordnung.
+# Vorher in konsoleH die Node-Anwendung stoppen.
+cd ~
+ls projekt/bauen.mjs                 # Sicherheitshalber: ist das der Klon?
+rm -rf public_html/sobe-webseite     # die alte Auslieferung – entsteht neu
+mv projekt public_html/sobe-webseite
+cd public_html/sobe-webseite
+cp werkzeuge/projekt.htaccess .htaccess
+./aktualisieren.sh
+```
+
+Danach in konsoleH beim Node-Eintrag **Arbeitsverzeichnis** auf
+`public_html/sobe-webseite` setzen und die Umgebungsvariable
+`OEFFENTLICH` **löschen**. Dann starten.
+
+> **Warum die `.htaccess`.** Im Projektordner liegen der Quelltext,
+> `redaktion/zugang.json` mit dem Abdruck des Redaktionspassworts,
+> `bestellungen/` mit Namen und Adressen und `.git` mit der ganzen
+> Geschichte. Solange Node läuft, kommt Apache nicht zum Zug – aber steht
+> Node einmal still oder zeigt eine zweite Domain hierher, wäre ohne
+> Sperre alles offen. Die Datei verbietet Apache jede Auslieferung aus
+> diesem Verzeichnis.
+>
+> Wer den Quelltext lieber ganz ausserhalb des Web-Verzeichnisses hat,
+> bleibt bei der ersten Anordnung. Sie ist die sicherere.
+
+Aufschalten und Projektordner dürfen **nie dasselbe Verzeichnis** sein:
+Der Abgleich löscht im Ziel alles, was nicht aus `statisch/` stammt – das
+wäre der ganze Quelltext. Skript und Server weisen das inzwischen ab,
+statt zu löschen.
 
 Damit ist die Seite online.
 
@@ -103,7 +144,7 @@ Werte für die Maske (Ihr Zuhause ist `/usr/home/e3z3sy`, der Klon liegt in
 | Feld | Wert |
 | --- | --- |
 | Skript-Pfad | `app.js` |
-| Arbeitsverzeichnis | `projekt` |
+| Arbeitsverzeichnis | `projekt` – oder `public_html/sobe-webseite`, wenn der Klon dort liegt |
 | Name der Log-Datei | `redaktion.log` |
 | Arbeitsspeicher-Beschränkung | leer lassen |
 | Version | `24` |
@@ -113,7 +154,7 @@ Bei den **Umgebungsvariablen** eintragen:
 
 | Schlüssel | Wert |
 | --- | --- |
-| `OEFFENTLICH` | `/usr/home/e3z3sy/public_html/sobe-webseite` |
+| `OEFFENTLICH` | `/usr/home/e3z3sy/public_html/sobe-webseite` – **nur bei getrennter Anordnung**, sonst leer lassen |
 | `ANTHROPIC_API_KEY` | der Schlüssel für die Übersetzungen (siehe `docs/sprachen.md`) |
 
 `OEFFENTLICH` sagt dem Server, wohin er nach dem Bauen ausliefern soll. Fehlt

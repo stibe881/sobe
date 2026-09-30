@@ -1,0 +1,22 @@
+# In den Projektordner legen, wenn dieser unter public_html liegt:
+#     cp werkzeuge/projekt.htaccess .htaccess
+#
+# Dieses Verzeichnis ist der Projektordner, nicht die Webseite. Die
+# Webseite liefert die Node-Anwendung aus statisch/ aus; Apache soll hier
+# gar nichts ausliefern.
+#
+# Hier liegen: der Quelltext, redaktion/zugang.json mit dem Abdruck des
+# Redaktionspassworts, bestellungen/ mit Namen und Adressen von Kundinnen
+# und Kunden, und .git mit der ganzen Geschichte. Solange Node läuft,
+# kommt Apache ohnehin nicht zum Zug – aber steht Node einmal still oder
+# zeigt eine zweite Domain hierher, ist ohne diese Sperre alles offen.
+
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order deny,allow
+  Deny from all
+</IfModule>
+
+Options -Indexes

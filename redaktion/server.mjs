@@ -86,7 +86,22 @@ async function koerper(req) {
 // Gleicht zwei Ordner ab, ohne fremde Werkzeuge: kopiert Neues und
 // Geändertes, entfernt, was in der Quelle nicht mehr vorkommt. Kein rsync –
 // auf geteiltem Webhosting ist nicht gesagt, dass es vorhanden ist.
+// Liegt a in b oder ist a gleich b?
+const liegtIn = (a, b) => a === b || a.startsWith(b + path.sep);
+
 async function abgleichen(quelle, ziel) {
+  // Dieser Abgleich löscht im Ziel alles, was nicht aus statisch/ stammt.
+  // Zeigt das Ziel auf den Projektordner – etwa weil der Klon selbst unter
+  // public_html/sobe-webseite liegt –, wäre das der Quelltext, die
+  // Redaktion samt Passwort und die Bestellungen. Lieber gar nicht
+  // aufschalten als das.
+  const zielAbs = path.resolve(ziel);
+  if (liegtIn(zielAbs, WURZEL) || liegtIn(WURZEL, zielAbs)) {
+    throw new Error(`OEFFENTLICH zeigt auf den Projektordner (${zielAbs}). `
+      + 'Nicht aufgeschaltet – das hätte den Quelltext gelöscht. '
+      + 'Liegt der Klon selbst im Web-Verzeichnis, wird OEFFENTLICH nicht gebraucht: '
+      + 'Node liefert statisch/ direkt aus.');
+  }
   await mkdir(ziel, { recursive: true });
   const hier = await readdir(quelle, { withFileTypes: true });
   const gewollt = new Set(hier.map((e) => e.name));

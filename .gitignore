@@ -9,3 +9,7 @@ node_modules/
 
 # Bestellungen enthalten Namen und Adressen von Kundinnen und Kunden.
 bestellungen/
+
+# Eine von Hand gelegte .htaccess im Projektordner gehoert zum Server,
+# nicht ins Repository.
+/.htaccess

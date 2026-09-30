@@ -154,7 +154,10 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .nurlesen { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-.werkzeuge { position: relative; display: flex; align-items: center; }
+/* Ein Abstand für alle Werkzeuge. Vorher trug jedes Kind seinen eigenen
+   Rand – acht Punkte hier, vier dort, und der Warenkorb gar keinen: Er
+   klebte an der Suche, während daneben Lücken standen. */
+.werkzeuge { position: relative; display: flex; align-items: center; gap: 8px; }
 .werkzeug { display: flex; align-items: center; justify-content: center;
   width: 42px; height: 42px; background: var(--grund); color: var(--text);
   border: 0; border-radius: 999px; cursor: pointer; padding: 0; }
@@ -194,7 +197,6 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
    seit die Sprachwahl dazukam – und ein Knopf, der zur Suchseite führt,
    sagt dasselbe auf einem Viertel des Platzes. Im aufgeklappten Menü auf
    dem Telefon bleibt das Feld, dort ist Platz. */
-.werkzeuge .suchknopf-kopf { margin-right: 8px; }
 .menue .suchform { display: none; }
 @media (max-width: 68em) {
   .menue .suchform { display: flex; }
@@ -296,8 +298,8 @@ html.dunkel .kachel.bild img { filter: brightness(0.9); }
 .burger { order: 4; }
 
 @media (max-width: 68em) {
-  .werkzeuge { order: 2; margin-left: auto; }
-  .burger { order: 3; margin-left: 4px; }
+  .werkzeuge { order: 2; margin-left: auto; gap: 6px; }
+  .burger { order: 3; margin-left: 8px; }
   .menue { order: 5; }
   /* Im geöffneten Menü steht die Suche zuoberst: Wer das Menü öffnet, um
      etwas zu finden, soll nicht erst an allen Punkten vorbeilesen. */
@@ -346,7 +348,12 @@ html.dunkel .logo .fuerdunkel { display: block; }
    ausdrücklichen Zeilen darunter rutschte das Wort unter das Herz, sobald
    die Kopfleiste eng wurde – aus dem Knopf wurde ein Kreis. Die Leiste
    soll lieber umbrechen als den Knopf verformen. */
-.knopf.spende { background: var(--petrol); color: var(--weiss); }
+/* Die beiden Knöpfe im Kopf: Spenden trägt das Gelb, Beratung das Petrol.
+   Eine eigene Klasse statt «.knopf.gelb», damit die gelben Knöpfe im
+   Seitenkörper – etwa auf den Titelkacheln – davon unberührt bleiben. */
+.knopf.spende { background: var(--gelb); color: var(--nacht); }
+.knopf.beratung { background: var(--petrol); color: var(--weiss); }
+html.dunkel .knopf.spende { color: #1a1305; }
 /* Nur in der Kopfleiste bleibt der Knopf in einer Zeile. Im Seitenkörper
    muss er umbrechen dürfen: «Annunciare la donazione per e-mail» ist
    breiter als ein Telefon. */
@@ -471,7 +478,7 @@ html.dunkel .pflicht { color: #ff9b83; }
 /* Sprachwahl                                                            */
 /* ===================================================================== */
 
-.sprachwahl { position: relative; margin-right: 8px; }
+.sprachwahl { position: relative; }
 .sprachwahl > summary { list-style: none; cursor: pointer; display: flex;
   align-items: center; justify-content: center; width: 42px; height: 42px;
   background: var(--grund); color: var(--text); border-radius: 999px;
@@ -489,7 +496,6 @@ html.dunkel .pflicht { color: #ff9b83; }
 html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
 
 @media (max-width: 68em) {
-  .sprachwahl { margin-right: 4px; }
 }
 /* Auf schmalen Geräten hängen die aufklappbaren Felder am Fenster, nicht am
    Knopf. Rechtsbündig an einem schmalen Knopf ragte das Feld über die linke

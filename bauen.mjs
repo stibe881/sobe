@@ -140,7 +140,7 @@ ${menue}
           </svg>
         </button>
       </form>
-      <a class="knopf gelb nurschmal" href="${schuetzen(pfadFuer(einstellungen.menueKnopf.pfad, sprache))}">${schuetzen(t(einstellungen.menueKnopf.titel))}</a>
+      <a class="knopf beratung nurschmal" href="${schuetzen(pfadFuer(einstellungen.menueKnopf.pfad, sprache))}">${schuetzen(t(einstellungen.menueKnopf.titel))}</a>
       <!-- Ohne Bildzeichen: Ein Herz neben dem Wort machte aus dem Knopf in
            der engen Kopfleiste einen Kreis, aus dem der Text herauslief.
            Das Wort allein sagt dasselbe und verträgt jede Breite. -->
