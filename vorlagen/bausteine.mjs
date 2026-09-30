@@ -34,7 +34,13 @@ const arten = {
     return `<div class="kachel ${spalte(b)}${farbe(b)}${b.ziel ? ' klickbar' : ''}"${b.ziel ? ` data-ziel="${schuetzen(b.ziel)}"` : ''}>
         <h2>${titel}</h2>
         ${b.text ? `<p class="fliess" style="margin-top: 8px;">${schuetzen(b.text)}</p>` : ''}
-        ${b.links?.length ? `<div class="liste">${b.links.map((l) => verweis(l, hilfe)).join('')}</div>` : ''}
+        ${b.links?.length ? `<div class="liste">${b.links.map((l) =>
+          // Ist die Kachel selbst anklickbar, sind die Zeilen darin keine
+          // eigenen Verweise, sondern eine Aufzählung dessen, was hinter
+          // der Kachel liegt. Ein Verweis im Verweis führt sonst zu zwei
+          // Zielen auf derselben Fläche – bei «Für Gemeinden» zeigten alle
+          // drei Zeilen ohnehin dorthin, wo auch die Kachel hinführt.
+          verweis(b.ziel ? { ...l, nurText: true } : l, hilfe)).join('')}</div>` : ''}
       </div>`;
   },
 

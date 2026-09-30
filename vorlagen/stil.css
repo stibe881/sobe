@@ -9,6 +9,8 @@
   /* Und genauso --weiss: als Fläche wird daraus im dunklen Modus eine
      dunkle Kachel, als Schriftfarbe muss es weiss bleiben. Zwei Namen. */
   --flaeche: #ffffff;
+  /* Der Wisch hinter einem Verweis, über den die Maus fährt. */
+  --wisch: rgba(251, 181, 0, 0.32);
 }
 * { box-sizing: border-box; }
 /* Das hidden-Attribut kommt vom Browser als «[hidden] { display: none }» –
@@ -24,8 +26,22 @@ body { margin: 0; background: var(--grund); color: var(--text);
   overflow-wrap: anywhere;
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.0625rem; line-height: 1.55; }
-a { color: var(--tinte); text-decoration: none; font-weight: 600; }
-a:hover { text-decoration: underline; }
+/* Beim Darüberfahren kein Unterstrich, sondern ein warmer Wisch hinter dem
+   Wort. Der Unterstrich sah aus wie ein Fehler im Satz und stand überall
+   gleich – ob Fliesstext, Kachel oder Fusszeile. Der Schatten ohne
+   Weichzeichner dehnt die Fläche nach aussen, ohne dass die Zeile
+   verrutscht; mit Polster wäre alles um vier Pixel gesprungen. */
+a { color: var(--tinte); text-decoration: none; font-weight: 600;
+  border-radius: 5px; transition: background-color 0.15s ease, box-shadow 0.15s ease; }
+a:hover { background-color: var(--wisch); box-shadow: 0 0 0 4px var(--wisch); }
+/* Wo der Verweis selbst schon eine Fläche ist – Knopf, Werkzeugkreis,
+   Sprachpille, ganze Karte –, braucht er keinen zweiten Rahmen. Die
+   Regeln dieser Bauteile stehen weiter unten und gewinnen bei gleicher
+   Spezifität durch die Reihenfolge; hier wird nur geräumt, was sie nicht
+   selbst setzen. */
+.knopf:hover, .werkzeug:hover, .logo:hover, .treffer:hover, .ware:hover,
+.kachel.klickbar h2 a:hover, .sprachzeile a:hover, .sprachfeld a:hover
+  { background-color: transparent; box-shadow: none; }
 :focus-visible { outline: 3px solid var(--tinte); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { margin: 0; line-height: 1.2; }
 img { display: block; max-width: 100%; }
@@ -61,7 +77,9 @@ p { margin: 0; }
    Wort, und aus dem Knopf wurde ein Kreis. */
 .menue a:not(.knopf) { color: var(--text); font-weight: 600; padding: 6px 2px;
   border-bottom: 2px solid transparent; }
-.menue a:not(.knopf):hover { text-decoration: none; border-bottom-color: var(--linie); }
+/* Der graue Strich beim Darüberfahren war auch nur ein Unterstrich; der
+   Wisch aus der allgemeinen Regel genügt. Der gelbe Strich der aktuellen
+   Seite bleibt – der sagt etwas anderes. */
 .menue a[aria-current="page"]:not(.knopf) { border-bottom-color: var(--gelb); }
 .knopf { display: inline-block; background-color: var(--nacht); color: var(--weiss); border-radius: 999px;
   padding: 12px 24px; font-weight: 700; font-size: 1rem; border: 0; cursor: pointer; font-family: inherit; }
@@ -83,6 +101,14 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .marke { font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--grau); margin: 0; }
 .petrol .marke { color: #8fb8b0; }
 .liste { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+/* In einer anklickbaren Kachel sind das keine Verweise mehr, sondern eine
+   Aufzählung dessen, was hinter der Kachel liegt. Damit sie nicht wie
+   abgeschaltete Verweise wirken: gewöhnliche Schriftfarbe und ein Winkel
+   davor, der nach innen zeigt. */
+.kachel.klickbar .liste .fliess { color: var(--text); font-weight: 500;
+  display: flex; gap: 9px; align-items: baseline; }
+.kachel.klickbar .liste .fliess::before { content: "\203A"; color: var(--tinte);
+  font-weight: 700; flex: none; }
 .reihe { display: flex; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--linie); align-items: baseline; flex-wrap: wrap; }
 .reihe:last-child { border-bottom: 0; }
 .reihe .datum { flex: none; width: 130px; color: var(--grau); font-size: 0.9062rem; }
@@ -97,6 +123,12 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .tel { font-size: 1.25rem; font-weight: 800; }
 .hinweis { font-size: 0.9062rem; color: var(--grau); background: #fdf3da; border-radius: 14px; padding: 12px 16px; margin-top: 16px; }
 .nummer { font-size: 1.875rem; font-weight: 800; color: var(--tinte); margin: 0; }
+/* Auf dunklen Flächen wird der gelbe Wisch trüb und der helle Text darauf
+   schwer lesbar – im Fuss ging der Kontrast auf 4,2 zurück. Die Farbe ist
+   eine Eigenschaft, also erbt sie: Ein Satz auf der Fläche genügt, und
+   jeder Verweis darin nimmt den hellen Wisch. */
+.fussk, .kachel.petrol, .abschluss, .kachel.nacht { --wisch: rgba(255, 255, 255, 0.18); }
+
 .fussk { grid-column: span 6; display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 0.9375rem; }
 .fussk img { height: 22px; width: auto; }
 .fussk .fussort { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; margin: 0; }
@@ -237,7 +269,8 @@ main { max-width: 1240px; margin: 0 auto; padding: 18px 20px 40px; }
 .treffer:hover { text-decoration: none; }
 .trefferkopf { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .treffertitel { font-weight: 700; color: var(--tinte); font-size: 1.0625rem; }
-.treffer:hover .treffertitel { text-decoration: underline; }
+.treffer:hover .treffertitel { background-color: var(--wisch); border-radius: 5px;
+  box-shadow: 0 0 0 4px var(--wisch); }
 .trefferart { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
   font-weight: 700; color: var(--grau); }
 .treffertext { color: var(--grau); margin-top: 4px; font-size: 0.9375rem; }
@@ -284,6 +317,9 @@ html.dunkel {
   --weiss: #ffffff;           /* Schrift auf farbigem Grund: bleibt weiss */
   --petrol: #1a6459;          /* Fläche: dunkel genug für weisse Schrift */
   --tinte: #63c8b6;           /* Schrift: aufgehellt, sonst auf dunklem Grund unlesbar */
+  /* Gelb hinter der aufgehellten Tinte wird auf dunklem Grund trüb; der
+     Wisch nimmt darum dieselbe Farbe wie die Schrift, nur sehr blass. */
+  --wisch: rgba(99, 200, 182, 0.22);
 }
 /* Auf der gelben Kachel gilt weiter die dunkle Schrift – das Gelb ist in
    beiden Fassungen dasselbe, eine aufgehellte Tinte wäre darauf blind. */
@@ -559,7 +595,8 @@ html.dunkel .sprachfeld { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
   background: var(--grund); }
 .waretext { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
 .warename { font-weight: 700; color: var(--tinte); }
-.ware:hover .warename { text-decoration: underline; }
+.ware:hover .warename { background-color: var(--wisch); border-radius: 5px;
+  box-shadow: 0 0 0 4px var(--wisch); }
 .warekurz { font-size: 0.9375rem; color: var(--grau); line-height: 1.4; }
 .warepreis { font-weight: 800; font-size: 1.125rem; margin-top: 4px; }
 .wareaus { font-size: 0.8125rem; font-weight: 700; color: #a3341f; }
